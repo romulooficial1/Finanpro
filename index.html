@@ -964,8 +964,10 @@
           </label>
           <label>Senha
             <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Sua senha" required>
+    
           </label>
           <button class="btn primary" type="submit">Entrar no app</button>
+          <a href="#" onclick="resetSenha()">Esqueci minha senha</a>
         </form>
 
         <form class="auth-form" id="registerForm">
@@ -2335,7 +2337,7 @@
       loginAccount(
         document.querySelector("#loginEmail").value,
         document.querySelector("#loginPassword").value
-        <a href="#" onclick="resetSenha()">Esqueci minha senha</a>
+      
       );
     });
 
