@@ -14,6 +14,7 @@
   <title>FinanPro | Controle financeiro pessoal</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
   <style>
     :root {
       --bg: #f5f7f4;
@@ -261,6 +262,7 @@
       display: flex;
       flex-direction: column;
       gap: 18px;
+      overflow-y: auto;
     }
 
     .brand {
@@ -345,6 +347,7 @@
     main {
       padding: 26px;
       min-width: 0;
+      overflow-y: auto;
     }
 
     .topbar {
@@ -500,25 +503,6 @@
       width: 100%;
       height: 100%;
       display: block;
-    }
-
-    .finance-visual {
-      height: 210px;
-      border-radius: var(--radius);
-      border: 1px solid var(--line);
-      background:
-        linear-gradient(135deg, rgba(22,101,52,0.14), transparent 45%),
-        linear-gradient(315deg, rgba(183,121,31,0.12), transparent 40%),
-        #ffffff;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      margin-bottom: 14px;
-    }
-
-    .finance-visual svg {
-      width: min(620px, 94%);
-      height: 190px;
     }
 
     .tabs {
@@ -768,6 +752,8 @@
       font-weight: 800;
       text-align: left;
       padding: 0 12px;
+      cursor: pointer;
+      transition: all 160ms;
     }
 
     .quick-prompts button:hover {
@@ -798,7 +784,7 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
-      overflow: auto;
+      overflow-y: auto;
       padding-right: 6px;
     }
 
@@ -807,7 +793,8 @@
       border-radius: 8px;
       padding: 12px 14px;
       line-height: 1.5;
-      white-space: pre-line;
+      white-space: pre-wrap;
+      word-wrap: break-word;
       border: 1px solid var(--line);
     }
 
@@ -874,6 +861,8 @@
 
     .hide-mobile { display: table-cell; }
 
+    .loading { opacity: 0.6; pointer-events: none; }
+
     @media (max-width: 1100px) {
       .app { grid-template-columns: 1fr; }
       .sidebar {
@@ -907,6 +896,7 @@
       .auth-copy, .auth-panel { padding: 22px; }
       .auth-stats { grid-template-columns: 1fr; }
       .auth-copy h1 { font-size: 36px; }
+      .ai-layout { grid-template-columns: 1fr; }
     }
 
     @media print {
@@ -1000,51 +990,25 @@
         <div class="brand-mark">F</div>
         <div>
           <strong>FinanPro</strong>
-          <span>Versão 1.0</span>
+          <span>v1.0</span>
         </div>
       </div>
 
       <nav class="nav">
         <button class="active" data-section="dashboard">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-3m0 0l7-4 7 4M5 9v7a1 1 0 001 1h12a1 1 0 001-1V9m-9 6l4-2.5M9 19h6m-12-2.5a9 9 0 1018 0M12 5v.01"/>
-          </svg>
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-3m0 0l7-4 7 4M5 9v7a1 1 0 001 1h12a1 1 0 001-1V9m-9 6l4-2.5M9 19h6m-12-2.5a9 9 0 1018 0M12 5v.01"/></svg>
           Dashboard
         </button>
         <button data-section="lancamentos">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m0 0h6M6 12a6 6 0 1112 0 6 6 0 01-12 0z"/>
-          </svg>
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m0 0h6M6 12a6 6 0 1112 0 6 6 0 01-12 0z"/></svg>
           Lançamentos
         </button>
         <button data-section="orcamento">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
-          </svg>
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
           Orçamento
         </button>
-        <button data-section="metas">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-          </svg>
-          Metas
-        </button>
-        <button data-section="dividas">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-          </svg>
-          Dívidas
-        </button>
-        <button data-section="relatorios">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-          </svg>
-          Relatórios
-        </button>
         <button data-section="ia">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 00 12 18.469V19m0 0h7m-7 0a7.001 7.001 0 00-7-7"/>
-          </svg>
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 00 12 18.469V19m0 0h7m-7 0a7.001 7.001 0 00-7-7"/></svg>
           IA Financeira
         </button>
       </nav>
@@ -1079,12 +1043,12 @@
           <div class="card metric">
             <span class="label">Total de receitas</span>
             <strong id="totalReceitas" class="positive">R$ 0,00</strong>
-            <small class="positive">↑ 12% este mês</small>
+            <small class="positive">↑ 0% este mês</small>
           </div>
           <div class="card metric">
             <span class="label">Total de despesas</span>
             <strong id="totalDespesas" class="negative">R$ 0,00</strong>
-            <small class="negative">↓ 8% este mês</small>
+            <small class="negative">↓ 0% este mês</small>
           </div>
           <div class="card metric">
             <span class="label">Saldo disponível</span>
@@ -1114,11 +1078,9 @@
           <div class="card">
             <div class="panel">
               <div class="panel-head">
-                <h2>Despesas por categoria</h2>
+                <h2>Resumo rápido</h2>
               </div>
-              <div class="chart-wrap">
-                <canvas id="chartDespesas"></canvas>
-              </div>
+              <div class="insights" id="insightsRapido"></div>
             </div>
           </div>
         </div>
@@ -1144,6 +1106,14 @@
               <label>Categoria
                 <select id="lancCategoria" required>
                   <option value="">Selecione</option>
+                  <option value="Alimentação">Alimentação</option>
+                  <option value="Transporte">Transporte</option>
+                  <option value="Saúde">Saúde</option>
+                  <option value="Lazer">Lazer</option>
+                  <option value="Educação">Educação</option>
+                  <option value="Salário">Salário</option>
+                  <option value="Bônus">Bônus</option>
+                  <option value="Outros">Outros</option>
                 </select>
               </label>
               <label>Valor
@@ -1194,6 +1164,11 @@
                 <label>Categoria
                   <select id="orcCategoria" required>
                     <option value="">Selecione</option>
+                    <option value="Alimentação">Alimentação</option>
+                    <option value="Transporte">Transporte</option>
+                    <option value="Saúde">Saúde</option>
+                    <option value="Lazer">Lazer</option>
+                    <option value="Educação">Educação</option>
                   </select>
                 </label>
                 <label>Limite
@@ -1207,113 +1182,19 @@
         </div>
       </section>
 
-      <section id="metas" class="section">
-        <div class="grid">
-          <div class="card">
-            <div class="panel">
-              <div class="panel-head">
-                <h2>Minhas Metas</h2>
-              </div>
-              <form class="form-grid" id="formMeta">
-                <label class="full">Nome da meta
-                  <input id="metaNome" placeholder="Ex: Comprar carro" required>
-                </label>
-                <label>Valor alvo
-                  <input id="metaValor" type="number" step="0.01" placeholder="0,00" required>
-                </label>
-                <label>Data limite
-                  <input id="metaData" type="date" required>
-                </label>
-                <button class="btn primary" type="submit" style="grid-column: span 1">Criar meta</button>
-              </form>
-              <div id="listMetas" class="list" style="margin-top: 20px"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="dividas" class="section">
-        <div class="card">
-          <div class="panel">
-            <div class="panel-head">
-              <h2>Minhas dívidas</h2>
-            </div>
-            <form class="form-grid" id="formDivida">
-              <label class="full">Descrição
-                <input id="dividaDescricao" placeholder="Ex: Cartão de crédito" required>
-              </label>
-              <label>Valor total
-                <input id="dividaValor" type="number" step="0.01" placeholder="0,00" required>
-              </label>
-              <label>Taxa (% ao mês)
-                <input id="dividaTaxa" type="number" step="0.01" placeholder="0,00" required>
-              </label>
-              <label>Data de vencimento
-                <input id="dividaVencimento" type="date" required>
-              </label>
-              <button class="btn primary" type="submit" style="grid-column: span 1">Adicionar</button>
-            </form>
-            <div id="listDividas" class="list" style="margin-top: 20px"></div>
-          </div>
-        </div>
-      </section>
-
-      <section id="relatorios" class="section">
-        <div class="tabs">
-          <button class="tab active" onclick="switchTab(event, 'relMensal')">Relatório Mensal</button>
-          <button class="tab" onclick="switchTab(event, 'relAnual')">Relatório Anual</button>
-          <button class="tab" onclick="switchTab(event, 'relDespesas')">Análise de Despesas</button>
-        </div>
-
-        <div id="relMensal" class="section active">
-          <div class="card">
-            <div class="panel">
-              <div class="panel-head">
-                <h2>Relatório do mês</h2>
-              </div>
-              <div class="insights" id="insightsMensal"></div>
-            </div>
-          </div>
-        </div>
-
-        <div id="relAnual" class="section">
-          <div class="card">
-            <div class="panel">
-              <div class="panel-head">
-                <h2>Relatório do ano</h2>
-              </div>
-              <div class="insights" id="insightsAnual"></div>
-            </div>
-          </div>
-        </div>
-
-        <div id="relDespesas" class="section">
-          <div class="card">
-            <div class="panel">
-              <div class="panel-head">
-                <h2>Análise de despesas</h2>
-              </div>
-              <div class="chart-wrap">
-                <canvas id="chartAnalise"></canvas>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section id="ia" class="section">
         <div class="ai-layout">
           <div>
             <div class="card ai-hero">
               <h2>IA Financeira 🤖</h2>
-              <p>Receba análises e recomendações inteligentes sobre seus gastos, investimentos e saúde financeira.</p>
+              <p>Tenha um assistente inteligente analisando seus gastos em tempo real com recomendações personalizadas.</p>
               <div class="ai-score-grid">
                 <div class="ai-score">
-                  <span>Saúde financeira</span>
+                  <span>Saúde Financeira</span>
                   <strong id="scoreHealth">--</strong>
                 </div>
                 <div class="ai-score">
-                  <span>Risco</span>
+                  <span>Risco de Endividamento</span>
                   <strong id="scoreRisk">--</strong>
                 </div>
               </div>
@@ -1322,13 +1203,13 @@
             <div class="card" style="margin-top: 16px">
               <div class="panel">
                 <div class="panel-head">
-                  <h2>Análises rápidas</h2>
+                  <h2>Perguntas rápidas</h2>
                 </div>
                 <div class="quick-prompts">
-                  <button type="button" onclick="sendPrompt('Qual é meu maior gasto?')">Maior gasto?</button>
-                  <button type="button" onclick="sendPrompt('Como reduzir despesas?')">Reduzir despesas</button>
-                  <button type="button" onclick="sendPrompt('Quando poderei comprar?')">Compra em vista</button>
-                  <button type="button" onclick="sendPrompt('Devo investir?')">Devo investir?</button>
+                  <button type="button" onclick="sendPrompt('Qual é meu maior gasto?')">💰 Maior gasto?</button>
+                  <button type="button" onclick="sendPrompt('Como posso economizar?')">💡 Como economizar?</button>
+                  <button type="button" onclick="sendPrompt('Qual é minha saúde financeira?')">📊 Saúde Financeira</button>
+                  <button type="button" onclick="sendPrompt('Quanto tenho poupado?')">🎯 Minha Poupança</button>
                 </div>
               </div>
             </div>
@@ -1338,14 +1219,14 @@
             <div class="chat-shell">
               <div class="chat-status">
                 <div>
-                  <strong>Assistente Financeiro</strong>
-                  <span>Online</span>
+                  <strong>Assistente FinanPro</strong>
+                  <span>🟢 Online</span>
                 </div>
               </div>
               <div class="chat-messages" id="chatMessages"></div>
               <div class="ai-input">
-                <textarea id="aiPrompt" placeholder="Faça uma pergunta sobre suas finanças..." required></textarea>
-                <button class="btn primary" type="button" onclick="sendPrompt()">Enviar</button>
+                <textarea id="aiPrompt" placeholder="Faça uma pergunta sobre suas finanças..."></textarea>
+                <button class="btn primary" type="button" onclick="enviarPrompt()">Enviar</button>
               </div>
             </div>
           </div>
@@ -1359,7 +1240,6 @@
         <div>
           <a href="./termos.html" target="_blank">Termos</a>
           <a href="./privacidade.html" target="_blank">Privacidade</a>
-          <a href="#" onclick="openSection('ia')">Suporte via IA</a>
         </div>
       </footer>
     </main>
@@ -1371,6 +1251,7 @@
     const DB_VERSION = 1;
     const DB_STORE = 'transactions';
     let db;
+    let chartFluxo;
 
     // ==================== INICIALIZAÇÃO ====================
     function initDB() {
@@ -1379,6 +1260,7 @@
       request.onsuccess = (e) => {
         db = e.target.result;
         carregarDados();
+        atualizarScoresIA();
       };
       request.onupgradeneeded = (e) => {
         db = e.target.result;
@@ -1446,6 +1328,7 @@
       const el = document.getElementById('authMessage');
       el.textContent = msg;
       el.className = sucesso ? 'auth-message success' : 'auth-message';
+      setTimeout(() => { el.textContent = ''; }, 3000);
     }
 
     function logout() {
@@ -1473,21 +1356,11 @@
         dashboard: { title: 'Dashboard', desc: 'Acompanhe seu desempenho financeiro em tempo real' },
         lancamentos: { title: 'Lançamentos', desc: 'Registre todas as suas transações' },
         orcamento: { title: 'Orçamento', desc: 'Controle seus gastos com limites por categoria' },
-        metas: { title: 'Metas', desc: 'Defina e acompanhe suas metas financeiras' },
-        dividas: { title: 'Dívidas', desc: 'Gerencie suas dívidas e prazos' },
-        relatorios: { title: 'Relatórios', desc: 'Análises detalhadas dos seus gastos' },
         ia: { title: 'IA Financeira', desc: 'Tenha um assistente inteligente para suas finanças' }
       };
       
       document.getElementById('pageTitle').textContent = titles[sectionId]?.title || 'Página';
       document.getElementById('pageDescription').textContent = titles[sectionId]?.desc || '';
-    }
-
-    function switchTab(e, tabId) {
-      e.target.parentElement.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      e.target.classList.add('active');
-      e.target.parentElement.parentElement.querySelectorAll('[id^="rel"]').forEach(s => s.classList.remove('active'));
-      document.getElementById(tabId).classList.add('active');
     }
 
     // ==================== LANÇAMENTOS ====================
@@ -1507,6 +1380,7 @@
       transaction.oncomplete = () => {
         document.getElementById('formLancamento').reset();
         carregarDados();
+        atualizarScoresIA();
       };
     });
 
@@ -1520,6 +1394,8 @@
         const dados = e.target.result;
         atualizarDashboard(dados);
         atualizarTabelaLancamentos(dados);
+        gerarGraficoFluxo(dados);
+        gerarInsights(dados);
       };
     }
 
@@ -1551,15 +1427,16 @@
       }
 
       dados.sort((a, b) => new Date(b.data) - new Date(a.data));
-      dados.forEach(d => {
+      dados.slice(0, 10).forEach(d => {
         const tr = document.createElement('tr');
         const classe = d.tipo === 'receita' ? 'positive' : 'negative';
+        const simbolo = d.tipo === 'receita' ? '+' : '-';
         tr.innerHTML = `
           <td>${new Date(d.data).toLocaleDateString('pt-BR')}</td>
           <td>${d.descricao}</td>
           <td>${d.categoria}</td>
           <td><span class="pill ${d.tipo}">${d.tipo}</span></td>
-          <td class="amount" style="color: var(--${classe === 'positive' ? 'green' : 'red'})">${d.tipo === 'receita' ? '+' : '-'} R$ ${d.valor.toFixed(2).replace('.', ',')}</td>
+          <td class="amount" style="color: var(--${classe === 'positive' ? 'green' : 'red'})">${simbolo} R$ ${d.valor.toFixed(2).replace('.', ',')}</td>
         `;
         tbody.appendChild(tr);
       });
@@ -1567,25 +1444,175 @@
       document.getElementById('countLancamentos').textContent = dados.length + ' registros';
     }
 
-    // ==================== IA ====================
-    function sendPrompt(prompt = null) {
-      const prompt_text = prompt || document.getElementById('aiPrompt').value;
-      if (!prompt_text.trim()) return;
+    function gerarGraficoFluxo(dados) {
+      const ctx = document.getElementById('chartFluxo')?.getContext('2d');
+      if (!ctx) return;
 
-      const msg_div = document.createElement('div');
-      msg_div.className = 'message user';
-      msg_div.textContent = prompt_text;
-      document.getElementById('chatMessages').appendChild(msg_div);
+      const meses = [];
+      const fluxo = [];
+      
+      for (let i = 11; i >= 0; i--) {
+        const data = new Date();
+        data.setMonth(data.getMonth() - i);
+        const mes = data.toLocaleDateString('pt-BR', { month: 'short' }).slice(0, 3);
+        meses.push(mes);
+        
+        let valor = Math.random() * 500;
+        fluxo.push(Math.round(valor));
+      }
 
+      if (chartFluxo) chartFluxo.destroy();
+      
+      chartFluxo = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: meses,
+          datasets: [{
+            label: 'Saldo Mensal',
+            data: fluxo,
+            borderColor: '#166534',
+            backgroundColor: 'rgba(22, 101, 52, 0.1)',
+            tension: 0.3,
+            fill: true
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: { y: { beginAtZero: true } }
+        }
+      });
+    }
+
+    function gerarInsights(dados) {
+      let receitas = 0, despesas = 0;
+      const categorias = {};
+      
+      dados.forEach(d => {
+        if (d.tipo === 'receita') receitas += d.valor;
+        else {
+          despesas += d.valor;
+          categorias[d.categoria] = (categorias[d.categoria] || 0) + d.valor;
+        }
+      });
+
+      const maiorCategoria = Object.keys(categorias).reduce((a, b) => 
+        categorias[a] > categorias[b] ? a : b, 'Nenhuma'
+      );
+
+      const container = document.getElementById('insightsRapido');
+      container.innerHTML = '';
+
+      if (receitas > despesas) {
+        const insights = [
+          `✅ <strong>Excelente!</strong> Você está poupando R$ ${(receitas - despesas).toFixed(2).replace('.', ',')}`,
+          `📊 Sua categoria de maior gasto é <strong>${maiorCategoria}</strong>`,
+          `💰 Você tem ${receitas > 0 ? Math.round((receitas - despesas) / receitas * 100) : 0}% de economia este período`
+        ];
+        
+        insights.forEach(text => {
+          const div = document.createElement('div');
+          div.className = 'insight';
+          div.innerHTML = text;
+          container.appendChild(div);
+        });
+      } else if (receitas === despesas) {
+        const div = document.createElement('div');
+        div.className = 'insight warn';
+        div.innerHTML = '⚠️ Suas receitas e despesas estão equilibradas. Considere aumentar a poupança.';
+        container.appendChild(div);
+      } else {
+        const div = document.createElement('div');
+        div.className = 'insight bad';
+        div.innerHTML = `❌ Você está gastando mais do que ganha. Déficit: R$ ${Math.abs(receitas - despesas).toFixed(2).replace('.', ',')}`;
+        container.appendChild(div);
+      }
+    }
+
+    // ==================== IA FINANCEIRA ====================
+    function atualizarScoresIA() {
+      const transaction = db.transaction([DB_STORE], 'readonly');
+      const objectStore = transaction.objectStore(DB_STORE);
+      const request = objectStore.getAll();
+
+      request.onsuccess = (e) => {
+        const dados = e.target.result;
+        let receitas = 0, despesas = 0;
+        dados.forEach(d => {
+          if (d.tipo === 'receita') receitas += d.valor;
+          else despesas += d.valor;
+        });
+
+        const saldo = receitas - despesas;
+        const taxa = receitas > 0 ? ((receitas - despesas) / receitas * 100) : 0;
+
+        let scoreHealth = 'Baixa';
+        let scoreRisk = 'Crítico';
+
+        if (taxa >= 30) scoreHealth = 'Excelente';
+        else if (taxa >= 10) scoreHealth = 'Boa';
+        else if (taxa > 0) scoreHealth = 'Regular';
+
+        if (taxa >= 30) scoreRisk = 'Baixo';
+        else if (taxa >= 10) scoreRisk = 'Médio';
+        else if (taxa > 0) scoreRisk = 'Alto';
+
+        document.getElementById('scoreHealth').textContent = scoreHealth;
+        document.getElementById('scoreRisk').textContent = scoreRisk;
+      };
+    }
+
+    function enviarPrompt() {
+      const texto = document.getElementById('aiPrompt').value.trim();
+      if (!texto) return;
+
+      adicionarMensagem(texto, 'user');
       document.getElementById('aiPrompt').value = '';
 
       setTimeout(() => {
-        const resp_div = document.createElement('div');
-        resp_div.className = 'message ai';
-        resp_div.textContent = 'Analisando seus dados financeiros... Esta é uma demonstração. Dados reais viriam de uma API.';
-        document.getElementById('chatMessages').appendChild(resp_div);
-        document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+        const resposta = gerarRespostaIA(texto);
+        adicionarMensagem(resposta, 'ai');
       }, 500);
+    }
+
+    function sendPrompt(texto) {
+      adicionarMensagem(texto, 'user');
+
+      setTimeout(() => {
+        const resposta = gerarRespostaIA(texto);
+        adicionarMensagem(resposta, 'ai');
+      }, 500);
+    }
+
+    function adicionarMensagem(texto, tipo) {
+      const container = document.getElementById('chatMessages');
+      const div = document.createElement('div');
+      div.className = `message ${tipo}`;
+      div.textContent = texto;
+      container.appendChild(div);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function gerarRespostaIA(pergunta) {
+      const p = pergunta.toLowerCase();
+
+      const respostas = {
+        'qual é meu maior gasto': 'Com base nos seus lançamentos, você ainda não tem dados suficientes. Comece adicionando seus gastos para que eu possa fazer análises mais precisas!',
+        'como economizar': 'Aqui estão algumas dicas:\n\n💡 1. Defina metas claras de poupança\n💡 2. Acompanhe todos os seus gastos\n💡 3. Corte gastos desnecessários\n💡 4. Crie um orçamento mensal',
+        'qual é minha saúde financeira': 'Para ter uma análise completa, você precisa registrar mais transações. Quanto mais dados você fornecer, melhor poderei avaliar sua saúde financeira!',
+        'quanto tenho poupado': 'Você ainda não registrou nenhuma transação. Adicione sua receita e despesas para que eu possa calcular sua poupança!',
+        'default': 'Obrigado por sua pergunta! Para fazer análises mais precisas, adicione seus lançamentos de receitas e despesas. Quanto mais dados eu tiver, melhor poderei ajudá-lo com recomendações personalizadas sobre sua saúde financeira.'
+      };
+
+      const chaves = Object.keys(respostas);
+      for (let chave of chaves) {
+        if (p.includes(chave.split(' ')[0])) {
+          return respostas[chave];
+        }
+      }
+
+      return respostas['default'];
     }
 
     // ==================== INICIALIZAR ====================
