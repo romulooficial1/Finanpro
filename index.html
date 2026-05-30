@@ -2506,34 +2506,7 @@ function resetSenha() {
         prompt("Copie o link do app:", location.href);
       }
     });
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-  import { getAuth, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "SUA_API_KEY",
-    authDomain: "SEU_AUTH_DOMAIN",
-    projectId: "SEU_PROJECT_ID",
-    appId: "SEU_APP_ID"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
-  window.resetSenha = function () {
-    const email = prompt("Digite seu e-mail:");
-
-    if (!email) return;
-
-    sendPasswordResetEmail(auth, email)
-      .then(() => {
-        alert("E-mail de recuperação enviado!");
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
-  }
-</script>
+<script>
     if ("serviceWorker" in navigator && location.protocol !== "file:") {
       window.addEventListener("load", () => {
         navigator.serviceWorker.register("./service-worker.js").catch(() => {});
