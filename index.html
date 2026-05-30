@@ -2329,20 +2329,23 @@
       return String(value).replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[ch]));
     }
 
-    document.querySelectorAll("[data-auth-mode]").forEach(btn => {
-      btn.addEventListener("click", () => switchAuthMode(btn.dataset.authMode));
-    });
+    document.addEventListener("DOMContentLoaded", () => {
 
-    document.querySelector("#loginForm").addEventListener("submit", event => {
+  const loginForm = document.querySelector("#loginForm");
+  const registerForm = document.querySelector("#registerForm");
+
+  if (loginForm) {
+    loginForm.addEventListener("submit", (event) => {
       event.preventDefault();
       loginAccount(
         document.querySelector("#loginEmail").value,
         document.querySelector("#loginPassword").value
-      
       );
     });
+  }
 
-    document.querySelector("#registerForm").addEventListener("submit", event => {
+  if (registerForm) {
+    registerForm.addEventListener("submit", (event) => {
       event.preventDefault();
       registerAccount({
         name: document.querySelector("#registerName").value,
@@ -2352,6 +2355,7 @@
         accepted: document.querySelector("#registerTerms").checked
       });
     });
+
 
     document.querySelectorAll("[data-section], [data-section-jump]").forEach(btn => {
       btn.addEventListener("click", () => {
