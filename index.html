@@ -2499,17 +2499,20 @@
       }
     });
   <script>
-    if ("serviceWorker" in navigator && location.protocol !== "file:") {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./service-worker.js").catch(() => {});
-      });
-    }
+    window.addEventListener("DOMContentLoaded", () => {
+  if ("serviceWorker" in navigator && location.protocol !== "file:") {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./service-worker.js").catch(() => {});
+    });
+  }
 
-    window.addEventListener("resize", () => requestAnimationFrame(renderCharts));
+  window.addEventListener("resize", () => requestAnimationFrame(renderCharts));
 
-    setupSelects();
-    setAuthView();
-    if (currentUser) renderAll();
+  setupSelects?.();
+  setAuthView?.();
+
+  if (currentUser) renderAll?.();
+});
   </script>
 </body>
 </html>
