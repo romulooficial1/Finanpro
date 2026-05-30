@@ -390,6 +390,12 @@
       justify-content: center;
       gap: 8px;
       box-shadow: 0 8px 20px rgba(23,33,28,0.04);
+      transition: all 160ms;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(23,33,28,0.08);
     }
 
     .btn.primary {
@@ -402,6 +408,12 @@
       color: var(--red);
       border-color: #f2b8b5;
       background: #fff8f7;
+    }
+
+    .btn.small {
+      min-height: 32px;
+      padding: 0 10px;
+      font-size: 12px;
     }
 
     .grid {
@@ -520,6 +532,12 @@
       padding: 0 12px;
       color: var(--muted);
       font-weight: 700;
+      cursor: pointer;
+      transition: all 160ms;
+    }
+
+    .tab:hover {
+      border-color: var(--green);
     }
 
     .tab.active {
@@ -560,6 +578,7 @@
       border-radius: 8px;
       padding: 0 12px;
       outline: none;
+      transition: all 160ms;
     }
 
     input:focus, select:focus {
@@ -628,6 +647,7 @@
 
     .row-item strong { display: block; }
     .row-item span { color: var(--muted); font-size: 13px; }
+    .row-item .actions { display: flex; gap: 8px; }
 
     .progress {
       width: 100%;
@@ -642,7 +662,11 @@
       height: 100%;
       background: linear-gradient(90deg, var(--green), var(--teal));
       width: 0%;
+      transition: width 400ms ease;
     }
+
+    .progress.warning div { background: linear-gradient(90deg, var(--amber), #d4a574); }
+    .progress.danger div { background: linear-gradient(90deg, var(--red), #d46565); }
 
     .split {
       display: grid;
@@ -845,6 +869,7 @@
       padding: 24px 4px 4px;
       color: var(--muted);
       font-size: 13px;
+      margin-top: 40px;
     }
 
     .app-footer a {
@@ -862,6 +887,34 @@
     .hide-mobile { display: table-cell; }
 
     .loading { opacity: 0.6; pointer-events: none; }
+
+    .budget-item {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      margin-bottom: 10px;
+    }
+
+    .budget-info h4 {
+      margin: 0;
+      font-size: 15px;
+    }
+
+    .budget-info .budget-amount {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .budget-actions {
+      display: flex;
+      gap: 6px;
+    }
 
     @media (max-width: 1100px) {
       .app { grid-template-columns: 1fr; }
@@ -897,6 +950,9 @@
       .auth-stats { grid-template-columns: 1fr; }
       .auth-copy h1 { font-size: 36px; }
       .ai-layout { grid-template-columns: 1fr; }
+      .ai-layout { grid-template-columns: 1fr; }
+      .budget-item { grid-template-columns: 1fr; }
+      .row-item { grid-template-columns: 1fr; }
     }
 
     @media print {
@@ -956,7 +1012,7 @@
             <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Sua senha" required>
           </label>
           <button class="btn primary" type="submit">Entrar no app</button>
-          <a href="#" onclick="resetSenha()">Esqueci minha senha</a>
+          <a href="#" onclick="event.preventDefault(); alert('Enviaremos um link para redefinir sua senha no email')">Esqueci minha senha</a>
         </form>
 
         <form class="auth-form" id="registerForm">
@@ -1004,11 +1060,11 @@
           Lançamentos
         </button>
         <button data-section="orcamento">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
           Orçamento
         </button>
         <button data-section="ia">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 00 12 18.469V19m0 0h7m-7 0a7.001 7.001 0 00-7-7"/></svg>
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
           IA Financeira
         </button>
       </nav>
@@ -1084,6 +1140,17 @@
             </div>
           </div>
         </div>
+
+        <div class="card" style="margin-top: 16px;">
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Gastos por categoria</h2>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="chartCategoria"></canvas>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section id="lancamentos" class="section">
@@ -1097,7 +1164,7 @@
                 <input id="lancDescricao" placeholder="Descrição do lançamento" required>
               </label>
               <label>Tipo
-                <select id="lancTipo" required>
+                <select id="lancTipo" required onchange="atualizarCategorias()">
                   <option value="">Selecione</option>
                   <option value="receita">Receita</option>
                   <option value="despesa">Despesa</option>
@@ -1106,14 +1173,6 @@
               <label>Categoria
                 <select id="lancCategoria" required>
                   <option value="">Selecione</option>
-                  <option value="Alimentação">Alimentação</option>
-                  <option value="Transporte">Transporte</option>
-                  <option value="Saúde">Saúde</option>
-                  <option value="Lazer">Lazer</option>
-                  <option value="Educação">Educação</option>
-                  <option value="Salário">Salário</option>
-                  <option value="Bônus">Bônus</option>
-                  <option value="Outros">Outros</option>
                 </select>
               </label>
               <label>Valor
@@ -1142,10 +1201,11 @@
                     <th>Categoria</th>
                     <th>Tipo</th>
                     <th class="amount">Valor</th>
+                    <th>Ação</th>
                   </tr>
                 </thead>
                 <tbody id="tableLancamentos">
-                  <tr><td colspan="5" style="text-align: center; color: var(--muted)">Nenhum lançamento ainda</td></tr>
+                  <tr><td colspan="6" style="text-align: center; color: var(--muted)">Nenhum lançamento ainda</td></tr>
                 </tbody>
               </table>
             </div>
@@ -1154,29 +1214,40 @@
       </section>
 
       <section id="orcamento" class="section">
-        <div class="grid">
-          <div class="card">
-            <div class="panel">
-              <div class="panel-head">
-                <h2>Orçamento mensal</h2>
-              </div>
-              <form class="form-grid compact" id="formOrcamento">
-                <label>Categoria
-                  <select id="orcCategoria" required>
-                    <option value="">Selecione</option>
-                    <option value="Alimentação">Alimentação</option>
-                    <option value="Transporte">Transporte</option>
-                    <option value="Saúde">Saúde</option>
-                    <option value="Lazer">Lazer</option>
-                    <option value="Educação">Educação</option>
-                  </select>
-                </label>
-                <label>Limite
-                  <input id="orcLimite" type="number" step="0.01" placeholder="0,00" required>
-                </label>
-                <button class="btn primary" type="submit">Adicionar</button>
-              </form>
-              <div id="listOrcamentos" class="list" style="margin-top: 20px"></div>
+        <div class="card">
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Orçamento mensal</h2>
+            </div>
+            <form class="form-grid compact" id="formOrcamento">
+              <label>Categoria
+                <select id="orcCategoria" required>
+                  <option value="">Selecione</option>
+                  <option value="Alimentação">Alimentação</option>
+                  <option value="Transporte">Transporte</option>
+                  <option value="Saúde">Saúde</option>
+                  <option value="Lazer">Lazer</option>
+                  <option value="Educação">Educação</option>
+                  <option value="Moradia">Moradia</option>
+                  <option value="Utilidades">Utilidades</option>
+                </select>
+              </label>
+              <label>Limite
+                <input id="orcLimite" type="number" step="0.01" placeholder="0,00" required>
+              </label>
+              <button class="btn primary" type="submit">Adicionar</button>
+            </form>
+            <div id="listOrcamentos" style="margin-top: 20px"></div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top: 16px;">
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Utilização de orçamentos</h2>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="chartOrcamento"></canvas>
             </div>
           </div>
         </div>
@@ -1250,24 +1321,40 @@
     const DB_NAME = 'FinanProDB';
     const DB_VERSION = 1;
     const DB_STORE = 'transactions';
+    const BUDGET_STORE = 'budgets';
     let db;
-    let chartFluxo;
+    let chartFluxo, chartCategoria, chartOrcamento;
+
+    const categoriasReceita = ['Salário', 'Bônus', 'Freelance', 'Investimentos', 'Vendas', 'Outros'];
+    const categoriasDespesa = ['Alimentação', 'Transporte', 'Saúde', 'Lazer', 'Educação', 'Moradia', 'Utilidades', 'Outros'];
 
     // ==================== INICIALIZAÇÃO ====================
     function initDB() {
-      const request = indexedDB.open(DB_NAME, DB_VERSION);
-      request.onerror = () => console.error('Erro ao abrir BD');
-      request.onsuccess = (e) => {
-        db = e.target.result;
-        carregarDados();
-        atualizarScoresIA();
-      };
-      request.onupgradeneeded = (e) => {
-        db = e.target.result;
-        if (!db.objectStoreNames.contains(DB_STORE)) {
-          db.createObjectStore(DB_STORE, { keyPath: 'id', autoIncrement: true });
-        }
-      };
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+        
+        request.onerror = () => {
+          console.error('Erro ao abrir BD');
+          reject();
+        };
+        
+        request.onsuccess = (e) => {
+          db = e.target.result;
+          carregarDados();
+          atualizarScoresIA();
+          resolve();
+        };
+        
+        request.onupgradeneeded = (e) => {
+          db = e.target.result;
+          if (!db.objectStoreNames.contains(DB_STORE)) {
+            db.createObjectStore(DB_STORE, { keyPath: 'id', autoIncrement: true });
+          }
+          if (!db.objectStoreNames.contains(BUDGET_STORE)) {
+            db.createObjectStore(BUDGET_STORE, { keyPath: 'id', autoIncrement: true });
+          }
+        };
+      });
     }
 
     // ==================== AUTH ====================
@@ -1315,10 +1402,6 @@
       }
     });
 
-    function resetSenha() {
-      alert('Enviaremos um link para redefinir sua senha no email');
-    }
-
     function limparFormAuth() {
       document.getElementById('loginForm').reset();
       document.getElementById('registerForm').reset();
@@ -1361,6 +1444,27 @@
       
       document.getElementById('pageTitle').textContent = titles[sectionId]?.title || 'Página';
       document.getElementById('pageDescription').textContent = titles[sectionId]?.desc || '';
+
+      if (sectionId === 'orcamento') {
+        setTimeout(() => {
+          if (chartOrcamento) chartOrcamento.destroy();
+          gerarGraficoOrcamento();
+        }, 100);
+      }
+    }
+
+    function atualizarCategorias() {
+      const tipo = document.getElementById('lancTipo').value;
+      const categoriaSelect = document.getElementById('lancCategoria');
+      const categorias = tipo === 'receita' ? categoriasReceita : categoriasDespesa;
+      
+      categoriaSelect.innerHTML = '<option value="">Selecione</option>';
+      categorias.forEach(cat => {
+        const option = document.createElement('option');
+        option.value = cat;
+        option.textContent = cat;
+        categoriaSelect.appendChild(option);
+      });
     }
 
     // ==================== LANÇAMENTOS ====================
@@ -1381,8 +1485,96 @@
         document.getElementById('formLancamento').reset();
         carregarDados();
         atualizarScoresIA();
+        mostrarMensagem('Lançamento registrado com sucesso!', true);
+      };
+      transaction.onerror = () => {
+        mostrarMensagem('Erro ao registrar lançamento', false);
       };
     });
+
+    function deletarLancamento(id) {
+      if (confirm('Tem certeza que deseja deletar este lançamento?')) {
+        const transaction = db.transaction([DB_STORE], 'readwrite');
+        transaction.objectStore(DB_STORE).delete(id);
+        transaction.oncomplete = () => {
+          carregarDados();
+          atualizarScoresIA();
+        };
+      }
+    }
+
+    // ==================== ORÇAMENTO ====================
+    document.getElementById('formOrcamento').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const orcamento = {
+        categoria: document.getElementById('orcCategoria').value,
+        limite: parseFloat(document.getElementById('orcLimite').value),
+        timestamp: Date.now()
+      };
+
+      const transaction = db.transaction([BUDGET_STORE], 'readwrite');
+      transaction.objectStore(BUDGET_STORE).add(orcamento);
+      transaction.oncomplete = () => {
+        document.getElementById('formOrcamento').reset();
+        carregarOrcamentos();
+        mostrarMensagem('Orçamento adicionado com sucesso!', true);
+      };
+    });
+
+    function carregarOrcamentos() {
+      const transaction = db.transaction([BUDGET_STORE], 'readonly');
+      const objectStore = transaction.objectStore(BUDGET_STORE);
+      const request = objectStore.getAll();
+
+      request.onsuccess = (e) => {
+        const orcamentos = e.target.result;
+        const container = document.getElementById('listOrcamentos');
+        container.innerHTML = '';
+
+        if (orcamentos.length === 0) {
+          container.innerHTML = '<div class="empty">Nenhum orçamento definido</div>';
+          return;
+        }
+
+        const transactionLanc = db.transaction([DB_STORE], 'readonly');
+        const lancamentos = [];
+        transactionLanc.objectStore(DB_STORE).getAll().onsuccess = (e) => {
+          const todos = e.target.result;
+          
+          orcamentos.forEach(orc => {
+            const gasto = todos
+              .filter(t => t.tipo === 'despesa' && t.categoria === orc.categoria)
+              .reduce((sum, t) => sum + t.valor, 0);
+            
+            const percentual = (gasto / orc.limite) * 100;
+            const classe = percentual >= 100 ? 'danger' : percentual >= 80 ? 'warning' : '';
+
+            const div = document.createElement('div');
+            div.className = 'budget-item';
+            div.innerHTML = `
+              <div class="budget-info">
+                <h4>${orc.categoria}</h4>
+                <div class="budget-amount">R$ ${gasto.toFixed(2).replace('.', ',')} / R$ ${orc.limite.toFixed(2).replace('.', ',')}</div>
+                <div class="progress ${classe}"><div style="width: ${Math.min(percentual, 100)}%"></div></div>
+              </div>
+              <span style="color: ${percentual >= 100 ? 'var(--red)' : percentual >= 80 ? 'var(--amber)' : 'var(--green)'}; font-weight: bold;">${percentual.toFixed(0)}%</span>
+              <button class="btn btn.small danger" onclick="deletarOrcamento(${orc.id})">✕</button>
+            `;
+            container.appendChild(div);
+          });
+        };
+      };
+    }
+
+    function deletarOrcamento(id) {
+      if (confirm('Tem certeza que deseja deletar este orçamento?')) {
+        const transaction = db.transaction([BUDGET_STORE], 'readwrite');
+        transaction.objectStore(BUDGET_STORE).delete(id);
+        transaction.oncomplete = () => {
+          carregarOrcamentos();
+        };
+      }
+    }
 
     // ==================== DADOS ====================
     function carregarDados() {
@@ -1396,6 +1588,8 @@
         atualizarTabelaLancamentos(dados);
         gerarGraficoFluxo(dados);
         gerarInsights(dados);
+        gerarGraficoCategoria(dados);
+        carregarOrcamentos();
       };
     }
 
@@ -1421,7 +1615,7 @@
       tbody.innerHTML = '';
 
       if (dados.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--muted)">Nenhum lançamento ainda</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--muted)">Nenhum lançamento ainda</td></tr>';
         document.getElementById('countLancamentos').textContent = '0 registros';
         return;
       }
@@ -1437,6 +1631,7 @@
           <td>${d.categoria}</td>
           <td><span class="pill ${d.tipo}">${d.tipo}</span></td>
           <td class="amount" style="color: var(--${classe === 'positive' ? 'green' : 'red'})">${simbolo} R$ ${d.valor.toFixed(2).replace('.', ',')}</td>
+          <td><button class="btn btn.small danger" onclick="deletarLancamento(${d.id})">Deletar</button></td>
         `;
         tbody.appendChild(tr);
       });
@@ -1449,16 +1644,25 @@
       if (!ctx) return;
 
       const meses = [];
-      const fluxo = [];
+      const receitas = [];
+      const despesas = [];
       
       for (let i = 11; i >= 0; i--) {
         const data = new Date();
         data.setMonth(data.getMonth() - i);
-        const mes = data.toLocaleDateString('pt-BR', { month: 'short' }).slice(0, 3);
+        const mes = data.toLocaleDateString('pt-BR', { month: 'short' });
         meses.push(mes);
+
+        const mesStr = data.toISOString().slice(0, 7);
+        const recMes = dados
+          .filter(d => d.data.startsWith(mesStr) && d.tipo === 'receita')
+          .reduce((sum, d) => sum + d.valor, 0);
+        const despMes = dados
+          .filter(d => d.data.startsWith(mesStr) && d.tipo === 'despesa')
+          .reduce((sum, d) => sum + d.valor, 0);
         
-        let valor = Math.random() * 500;
-        fluxo.push(Math.round(valor));
+        receitas.push(recMes);
+        despesas.push(despMes);
       }
 
       if (chartFluxo) chartFluxo.destroy();
@@ -1467,22 +1671,123 @@
         type: 'line',
         data: {
           labels: meses,
+          datasets: [
+            {
+              label: 'Receitas',
+              data: receitas,
+              borderColor: '#166534',
+              backgroundColor: 'rgba(22, 101, 52, 0.1)',
+              tension: 0.3,
+              fill: true
+            },
+            {
+              label: 'Despesas',
+              data: despesas,
+              borderColor: '#b42318',
+              backgroundColor: 'rgba(180, 35, 24, 0.1)',
+              tension: 0.3,
+              fill: true
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: true } },
+          scales: { y: { beginAtZero: true } }
+        }
+      });
+    }
+
+    function gerarGraficoCategoria(dados) {
+      const ctx = document.getElementById('chartCategoria')?.getContext('2d');
+      if (!ctx) return;
+
+      const categorias = {};
+      dados
+        .filter(d => d.tipo === 'despesa')
+        .forEach(d => {
+          categorias[d.categoria] = (categorias[d.categoria] || 0) + d.valor;
+        });
+
+      const labels = Object.keys(categorias);
+      const values = Object.values(categorias);
+
+      if (chartCategoria) chartCategoria.destroy();
+      
+      chartCategoria = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: labels,
           datasets: [{
-            label: 'Saldo Mensal',
-            data: fluxo,
-            borderColor: '#166534',
-            backgroundColor: 'rgba(22, 101, 52, 0.1)',
-            tension: 0.3,
-            fill: true
+            data: values,
+            backgroundColor: [
+              '#166534', '#22c55e', '#0f766e', '#b42318', '#b7791f', '#245b7f', '#f59e0b', '#8b5cf6'
+            ]
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: { y: { beginAtZero: true } }
+          plugins: { legend: { position: 'bottom' } }
         }
       });
+    }
+
+    function gerarGraficoOrcamento() {
+      const ctx = document.getElementById('chartOrcamento')?.getContext('2d');
+      if (!ctx) return;
+
+      const transaction = db.transaction([BUDGET_STORE], 'readonly');
+      const objectStore = transaction.objectStore(BUDGET_STORE);
+      const request = objectStore.getAll();
+
+      request.onsuccess = (e) => {
+        const orcamentos = e.target.result;
+        const labels = [];
+        const limites = [];
+        const gastos = [];
+
+        const transactionLanc = db.transaction([DB_STORE], 'readonly');
+        transactionLanc.objectStore(DB_STORE).getAll().onsuccess = (e2) => {
+          const todos = e2.target.result;
+          
+          orcamentos.forEach(orc => {
+            labels.push(orc.categoria);
+            limites.push(orc.limite);
+            const gasto = todos
+              .filter(t => t.tipo === 'despesa' && t.categoria === orc.categoria)
+              .reduce((sum, t) => sum + t.valor, 0);
+            gastos.push(gasto);
+          });
+
+          if (chartOrcamento) chartOrcamento.destroy();
+          
+          chartOrcamento = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: labels,
+              datasets: [
+                {
+                  label: 'Limite',
+                  data: limites,
+                  backgroundColor: '#22c55e'
+                },
+                {
+                  label: 'Gasto',
+                  data: gastos,
+                  backgroundColor: '#b42318'
+                }
+              ]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: { y: { beginAtZero: true } }
+            }
+          });
+        };
+      };
     }
 
     function gerarInsights(dados) {
@@ -1598,16 +1903,15 @@
       const p = pergunta.toLowerCase();
 
       const respostas = {
-        'qual é meu maior gasto': 'Com base nos seus lançamentos, você ainda não tem dados suficientes. Comece adicionando seus gastos para que eu possa fazer análises mais precisas!',
-        'como economizar': 'Aqui estão algumas dicas:\n\n💡 1. Defina metas claras de poupança\n💡 2. Acompanhe todos os seus gastos\n💡 3. Corte gastos desnecessários\n💡 4. Crie um orçamento mensal',
-        'qual é minha saúde financeira': 'Para ter uma análise completa, você precisa registrar mais transações. Quanto mais dados você fornecer, melhor poderei avaliar sua saúde financeira!',
-        'quanto tenho poupado': 'Você ainda não registrou nenhuma transação. Adicione sua receita e despesas para que eu possa calcular sua poupança!',
+        'maior gasto': 'Com base nos seus lançamentos, vou analisar a sua maior despesa. Comece adicionando seus gastos para que eu possa fazer análises mais precisas!',
+        'economizar': 'Aqui estão algumas dicas para economizar:\n\n💡 1. Defina metas claras de poupança\n💡 2. Acompanhe todos os seus gastos\n💡 3. Corte gastos desnecessários\n💡 4. Crie um orçamento mensal\n💡 5. Use a regra 50/30/20',
+        'saúde financeira': 'Para ter uma análise completa da sua saúde financeira, você precisa registrar mais transações. Quanto mais dados você fornecer, melhor poderei avaliar!',
+        'poupança': 'Você ainda não registrou nenhuma transação. Adicione sua receita e despesas para que eu possa calcular sua poupança!',
         'default': 'Obrigado por sua pergunta! Para fazer análises mais precisas, adicione seus lançamentos de receitas e despesas. Quanto mais dados eu tiver, melhor poderei ajudá-lo com recomendações personalizadas sobre sua saúde financeira.'
       };
 
-      const chaves = Object.keys(respostas);
-      for (let chave of chaves) {
-        if (p.includes(chave.split(' ')[0])) {
+      for (let chave of Object.keys(respostas)) {
+        if (p.includes(chave)) {
           return respostas[chave];
         }
       }
