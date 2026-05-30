@@ -2504,46 +2504,65 @@
     });
   <script>
     window.addEventListener("DOMContentLoaded", () => {
-  if ("serviceWorker" in navigator && location.protocol !== "file:") {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./service-worker.js").catch(() => {});
+
+  console.log("🔥 SCRIPT CARREGOU");
+
+  // proteção total contra erro quebrar tudo
+  try {
+
+    if ("serviceWorker" in navigator && location.protocol !== "file:") {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./service-worker.js").catch(() => {});
+      });
+    }
+
+    window.addEventListener("resize", () => {
+      if (typeof renderCharts === "function") {
+        requestAnimationFrame(renderCharts);
+      }
     });
+
+    if (typeof setupSelects === "function") setupSelects();
+    if (typeof setAuthView === "function") setAuthView();
+
+    const loginForm = document.querySelector("#loginForm");
+    const registerForm = document.querySelector("#registerForm");
+
+    loginForm?.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      loginAccount(
+        document.querySelector("#loginEmail").value,
+        document.querySelector("#loginPassword").value
+      );
+    });
+
+    registerForm?.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      registerAccount({
+        name: document.querySelector("#registerName").value,
+        email: document.querySelector("#registerEmail").value,
+        password: document.querySelector("#registerPassword").value,
+        confirm: document.querySelector("#registerConfirm").value,
+        accepted: document.querySelector("#registerTerms").checked
+      });
+    });
+
+    document.querySelectorAll("[data-auth-mode]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        switchAuthMode(btn.dataset.authMode);
+      });
+    });
+
+    if (typeof renderAll === "function" && typeof currentUser !== "undefined") {
+      if (currentUser) renderAll();
+    }
+
+  } catch (err) {
+    console.error("💥 ERRO NO SCRIPT:", err);
   }
 
-  window.addEventListener("resize", () => requestAnimationFrame(renderCharts));
-
-  setupSelects?.();
-  setAuthView?.();
-      console.log("JS CARREGOU");
-      const loginForm = document.querySelector("#loginForm");
-const registerForm = document.querySelector("#registerForm");
-
-if (loginForm) {
-  loginForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    loginAccount(
-      document.querySelector("#loginEmail").value,
-      document.querySelector("#loginPassword").value
-    );
-  });
-}
-
-if (registerForm) {
-  registerForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    registerAccount({
-      name: document.querySelector("#registerName").value,
-      email: document.querySelector("#registerEmail").value,
-      password: document.querySelector("#registerPassword").value,
-      confirm: document.querySelector("#registerConfirm").value,
-      accepted: document.querySelector("#registerTerms").checked
-    });
-  });
-}
-
-  if (currentUser) renderAll?.();
 });
   </script>
 </body>
