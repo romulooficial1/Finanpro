@@ -7,7 +7,7 @@
      crossorigin="anonymous"></script>
   <meta name="google-site-verification" content="LJX9NfL_f4nRxAFKd0fVhHj3qe9QPERu2LcqwaWDF9U" />
   <meta name="description" content="FinanPro é um app gratuito de controle financeiro com dashboard, lançamentos, metas, dívidas, orçamentos, relatórios e IA financeira.">
-  <meta name="theme-color" content="#
+  <meta name="theme-color" content="#166534">
   <meta property="og:title" content="FinanPro | Controle financeiro pessoal">
   <meta property="og:description" content="Organize gastos, metas, dívidas e orçamento mensal gratuitamente em uma central financeira profissional.">
   <meta property="og:type" content="website">
@@ -964,11 +964,9 @@
           </label>
           <label>Senha
             <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Sua senha" required>
-    
           </label>
           <button class="btn primary" type="submit">Entrar no app</button>
           <a href="#" onclick="resetSenha()">Esqueci minha senha</a>
-
         </form>
 
         <form class="auth-form" id="registerForm">
@@ -1002,1568 +1000,601 @@
         <div class="brand-mark">F</div>
         <div>
           <strong>FinanPro</strong>
-          <span>Controle financeiro</span>
+          <span>Versão 1.0</span>
         </div>
       </div>
 
-      <nav class="nav" aria-label="Navegação principal">
-        <button class="active" data-section="dashboard" title="Dashboard">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 13h6V4H4v9Zm10 7h6V4h-6v16ZM4 20h6v-4H4v4Z"/></svg>
+      <nav class="nav">
+        <button class="active" data-section="dashboard">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-3m0 0l7-4 7 4M5 9v7a1 1 0 001 1h12a1 1 0 001-1V9m-9 6l4-2.5M9 19h6m-12-2.5a9 9 0 1018 0M12 5v.01"/>
+          </svg>
           Dashboard
         </button>
-        <button data-section="transactions" title="Lançamentos">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 7h10M7 12h10M7 17h6M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/></svg>
+        <button data-section="lancamentos">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m0 0h6M6 12a6 6 0 1112 0 6 6 0 01-12 0z"/>
+          </svg>
           Lançamentos
         </button>
-        <button data-section="budgets" title="Orçamentos">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19V5m0 14h16M8 16V9m4 7V6m4 10v-4"/></svg>
-          Orçamentos
+        <button data-section="orcamento">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+          </svg>
+          Orçamento
         </button>
-        <button data-section="goals" title="Metas">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0-4a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0-3a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></svg>
+        <button data-section="metas">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
           Metas
         </button>
-        <button data-section="debts" title="Dívidas">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 7h16M6 7V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2m-1 4h3v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8h3m3 0h4"/></svg>
+        <button data-section="dividas">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
           Dívidas
         </button>
-        <button data-section="reports" title="Relatórios">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 19V5a2 2 0 0 1 2-2h8l4 4v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2Zm9-16v5h5"/></svg>
+        <button data-section="relatorios">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+          </svg>
           Relatórios
         </button>
-        <button data-section="ai" title="IA Financeira">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3v3m0 12v3M3 12h3m12 0h3M6.6 6.6l2.1 2.1m6.6 6.6 2.1 2.1m0-10.8-2.1 2.1m-6.6 6.6-2.1 2.1M9 12a3 3 0 1 0 6 0 3 3 0 0 0-6 0Z"/></svg>
+        <button data-section="ia">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 00 12 18.469V19m0 0h7m-7 0a7.001 7.001 0 00-7-7"/>
+          </svg>
           IA Financeira
         </button>
       </nav>
 
       <div class="side-panel">
-        <div class="caption">Saúde financeira</div>
-        <strong id="healthScore">0%</strong>
-        <span id="healthLabel">Calculando</span>
+        <span class="caption">Saldo Total</span>
+        <strong id="saldoTotal">R$ 0,00</strong>
+        <span id="saldoMes">Mês atual</span>
       </div>
 
-      <div class="legal-links" aria-label="Links legais">
-        <a href="./privacidade.html">Privacidade</a>
-        <a href="./termos.html">Termos</a>
+      <div class="legal-links">
+        <a href="./termos.html" target="_blank">Termos</a>
+        <a href="./privacidade.html" target="_blank">Privacidade</a>
+        <a href="#" onclick="logout()">Sair</a>
       </div>
     </aside>
 
     <main>
-      <header class="topbar">
+      <div class="topbar">
         <div class="title-block">
-          <h1>Central financeira</h1>
-          <p>App 100% gratuito para organizar renda, gastos, metas, dívidas e orçamento mensal em uma visão única.</p>
+          <h1 id="pageTitle">Dashboard</h1>
+          <p id="pageDescription">Acompanhe seu desempenho financeiro em tempo real</p>
         </div>
         <div class="top-actions">
-          <button class="btn" id="exportBtn" title="Exportar dados">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg>
-            Exportar
-          </button>
-          <button class="btn" id="importBtn" title="Importar backup">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21V9m0 0 4 4m-4-4-4 4M5 3h14"/></svg>
-            Importar
-          </button>
-          <input id="importFile" type="file" accept="application/json,.json" hidden>
-          <button class="btn" id="shareBtn" title="Compartilhar app">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 8a3 3 0 1 0-2.8-4M8 12l8-4M8 12l8 4M8 12a3 3 0 1 1-3-3 3 3 0 0 1 3 3Zm11 4a3 3 0 1 1-3 3 3 3 0 0 1 3-3Z"/></svg>
-            Compartilhar
-          </button>
-          <button class="btn danger" id="resetBtn" title="Limpar dados">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 7h16M10 11v6m4-6v6M6 7l1 14h10l1-14M9 7V4h6v3"/></svg>
-            Limpar
-          </button>
-          <span class="pill" id="activeUserLabel">Conta local</span>
-          <button class="btn" id="logoutBtn" title="Sair da conta">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M10 17l5-5-5-5M15 12H3M21 3v18h-6"/></svg>
-            Sair
-          </button>
-          <button class="btn primary" data-section-jump="transactions" title="Novo lançamento">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg>
-            Novo
-          </button>
+          <button class="btn" onclick="print()">📄 Imprimir</button>
+          <button class="btn primary" onclick="openSection('lancamentos')">➕ Novo Lançamento</button>
         </div>
-      </header>
+      </div>
 
-      <section class="section active" id="dashboard">
+      <section id="dashboard" class="section active">
         <div class="grid metrics">
-          <article class="card metric">
-            <div>
-              <div class="label">Saldo do mês</div>
-              <strong id="metricBalance">R$ 0,00</strong>
-            </div>
-            <small id="metricBalanceHint">Receitas menos despesas</small>
-          </article>
-          <article class="card metric">
-            <div>
-              <div class="label">Receitas</div>
-              <strong class="positive" id="metricIncome">R$ 0,00</strong>
-            </div>
-            <small>Entradas registradas</small>
-          </article>
-          <article class="card metric">
-            <div>
-              <div class="label">Despesas</div>
-              <strong class="negative" id="metricExpense">R$ 0,00</strong>
-            </div>
-            <small>Saídas registradas</small>
-          </article>
-          <article class="card metric">
-            <div>
-              <div class="label">Taxa de poupança</div>
-              <strong id="metricSavings">0%</strong>
-            </div>
-            <small>Quanto sobrou da renda</small>
-          </article>
+          <div class="card metric">
+            <span class="label">Total de receitas</span>
+            <strong id="totalReceitas" class="positive">R$ 0,00</strong>
+            <small class="positive">↑ 12% este mês</small>
+          </div>
+          <div class="card metric">
+            <span class="label">Total de despesas</span>
+            <strong id="totalDespesas" class="negative">R$ 0,00</strong>
+            <small class="negative">↓ 8% este mês</small>
+          </div>
+          <div class="card metric">
+            <span class="label">Saldo disponível</span>
+            <strong id="saldoDisponivel">R$ 0,00</strong>
+            <small>Hoje</small>
+          </div>
+          <div class="card metric">
+            <span class="label">Taxa de poupança</span>
+            <strong id="taxaPoupanca" class="positive">0%</strong>
+            <small>Do mês</small>
+          </div>
         </div>
 
         <div class="layout">
-          <article class="card panel">
-            <div class="finance-visual" aria-hidden="true">
-              <svg viewBox="0 0 760 210" fill="none">
-                <rect x="20" y="36" width="210" height="130" rx="8" fill="#e8f3ea" stroke="#b8d8bd"/>
-                <path d="M55 130c36-56 62-70 93-44 31 27 51 21 70-15" stroke="#166534" stroke-width="10" stroke-linecap="round"/>
-                <circle cx="86" cy="93" r="9" fill="#166534"/>
-                <circle cx="150" cy="84" r="9" fill="#166534"/>
-                <circle cx="211" cy="69" r="9" fill="#166534"/>
-                <rect x="278" y="58" width="180" height="110" rx="8" fill="#fff3c4" stroke="#e9c96c"/>
-                <path d="M318 138h100M318 108h70M318 80h110" stroke="#8a6418" stroke-width="9" stroke-linecap="round"/>
-                <rect x="505" y="30" width="220" height="150" rx="8" fill="#dff1f7" stroke="#acd7e4"/>
-                <path d="M550 139V94m50 45V68m50 71v-27m50 27V50" stroke="#245b7f" stroke-width="18" stroke-linecap="round"/>
-                <path d="M42 184h684" stroke="#d6ddd6" stroke-width="3"/>
-              </svg>
-            </div>
-            <div class="panel-head">
-              <div>
-                <h2>Fluxo mensal</h2>
-                <span>Receitas, despesas e saldo acumulado</span>
+          <div class="card">
+            <div class="panel">
+              <div class="panel-head">
+                <h2>Fluxo de caixa</h2>
+                <span>Últimos 12 meses</span>
               </div>
-              <span id="currentMonthLabel"></span>
+              <div class="chart-wrap">
+                <canvas id="chartFluxo"></canvas>
+              </div>
             </div>
-            <div class="chart-wrap"><canvas id="flowChart"></canvas></div>
-          </article>
+          </div>
 
-          <aside class="grid">
-            <article class="card panel">
+          <div class="card">
+            <div class="panel">
               <div class="panel-head">
-                <h2>Distribuição</h2>
-                <span>Despesas por categoria</span>
+                <h2>Despesas por categoria</h2>
               </div>
-              <div class="chart-wrap"><canvas id="donutChart"></canvas></div>
-            </article>
-            <article class="card panel">
-              <div class="panel-head">
-                <h2>Alertas</h2>
-                <span>Leitura rápida</span>
+              <div class="chart-wrap">
+                <canvas id="chartDespesas"></canvas>
               </div>
-              <div class="insights" id="insights"></div>
-            </article>
-          </aside>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section class="section" id="transactions">
-        <article class="card panel">
-          <div class="panel-head">
-            <div>
-              <h2>Novo lançamento</h2>
-              <span>Registre entradas e saídas</span>
-            </div>
-          </div>
-          <form id="transactionForm" class="form-grid">
-            <label>Tipo
-              <select name="type">
-                <option value="income">Receita</option>
-                <option value="expense">Despesa</option>
-              </select>
-            </label>
-            <label>Categoria
-              <select name="category" id="categorySelect"></select>
-            </label>
-            <label>Valor
-              <input name="amount" type="number" min="0" step="0.01" placeholder="0,00" required>
-            </label>
-            <label>Data
-              <input name="date" type="date" required>
-            </label>
-            <label class="full">Descrição
-              <input name="description" type="text" placeholder="Ex.: mercado, salário, aluguel" required>
-            </label>
-            <button class="btn primary full" type="submit">Adicionar lançamento</button>
-          </form>
-        </article>
-
-        <article class="card panel" style="margin-top:16px">
-          <div class="panel-head">
-            <div>
-              <h2>Histórico</h2>
-              <span id="transactionCount">0 lançamentos</span>
-            </div>
-            <div class="top-actions">
-              <select id="filterType" title="Filtrar tipo">
-                <option value="all">Todos</option>
-                <option value="income">Receitas</option>
-                <option value="expense">Despesas</option>
-              </select>
-              <input id="searchInput" type="search" placeholder="Buscar">
-            </div>
-          </div>
-          <div style="overflow:auto">
-            <table>
-              <thead>
-                <tr>
-                  <th>Data</th>
-                  <th>Descrição</th>
-                  <th>Categoria</th>
-                  <th>Tipo</th>
-                  <th style="text-align:right">Valor</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody id="transactionTable"></tbody>
-            </table>
-          </div>
-        </article>
-      </section>
-
-      <section class="section" id="budgets">
-        <div class="split">
-          <article class="card panel">
+      <section id="lancamentos" class="section">
+        <div class="card">
+          <div class="panel">
             <div class="panel-head">
-              <div>
-                <h2>Orçamento mensal</h2>
-                <span>Limites por categoria</span>
-              </div>
+              <h2>Novo Lançamento</h2>
             </div>
-            <form id="budgetForm" class="form-grid compact">
+            <form class="form-grid" id="formLancamento">
+              <label class="full">Descrição
+                <input id="lancDescricao" placeholder="Descrição do lançamento" required>
+              </label>
+              <label>Tipo
+                <select id="lancTipo" required>
+                  <option value="">Selecione</option>
+                  <option value="receita">Receita</option>
+                  <option value="despesa">Despesa</option>
+                </select>
+              </label>
               <label>Categoria
-                <select name="category" id="budgetCategory"></select>
+                <select id="lancCategoria" required>
+                  <option value="">Selecione</option>
+                </select>
               </label>
-              <label>Limite mensal
-                <input name="limit" type="number" min="0" step="0.01" placeholder="0,00" required>
+              <label>Valor
+                <input id="lancValor" type="number" step="0.01" placeholder="0,00" required>
               </label>
-              <button class="btn primary" type="submit">Salvar limite</button>
+              <label>Data
+                <input id="lancData" type="date" required>
+              </label>
+              <button class="btn primary" type="submit" style="grid-column: span 1">Lançar</button>
             </form>
-          </article>
-          <article class="card panel">
+          </div>
+        </div>
+
+        <div class="card" style="margin-top: 20px">
+          <div class="panel">
             <div class="panel-head">
-              <h2>Resumo</h2>
-              <span id="budgetSummary">0 categorias</span>
+              <h2>Histórico de lançamentos</h2>
+              <span id="countLancamentos">0 registros</span>
             </div>
-            <div class="list" id="budgetList"></div>
-          </article>
+            <div style="overflow-x: auto">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Descrição</th>
+                    <th>Categoria</th>
+                    <th>Tipo</th>
+                    <th class="amount">Valor</th>
+                  </tr>
+                </thead>
+                <tbody id="tableLancamentos">
+                  <tr><td colspan="5" style="text-align: center; color: var(--muted)">Nenhum lançamento ainda</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section class="section" id="goals">
-        <div class="split">
-          <article class="card panel">
+      <section id="orcamento" class="section">
+        <div class="grid">
+          <div class="card">
+            <div class="panel">
+              <div class="panel-head">
+                <h2>Orçamento mensal</h2>
+              </div>
+              <form class="form-grid compact" id="formOrcamento">
+                <label>Categoria
+                  <select id="orcCategoria" required>
+                    <option value="">Selecione</option>
+                  </select>
+                </label>
+                <label>Limite
+                  <input id="orcLimite" type="number" step="0.01" placeholder="0,00" required>
+                </label>
+                <button class="btn primary" type="submit">Adicionar</button>
+              </form>
+              <div id="listOrcamentos" class="list" style="margin-top: 20px"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="metas" class="section">
+        <div class="grid">
+          <div class="card">
+            <div class="panel">
+              <div class="panel-head">
+                <h2>Minhas Metas</h2>
+              </div>
+              <form class="form-grid" id="formMeta">
+                <label class="full">Nome da meta
+                  <input id="metaNome" placeholder="Ex: Comprar carro" required>
+                </label>
+                <label>Valor alvo
+                  <input id="metaValor" type="number" step="0.01" placeholder="0,00" required>
+                </label>
+                <label>Data limite
+                  <input id="metaData" type="date" required>
+                </label>
+                <button class="btn primary" type="submit" style="grid-column: span 1">Criar meta</button>
+              </form>
+              <div id="listMetas" class="list" style="margin-top: 20px"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="dividas" class="section">
+        <div class="card">
+          <div class="panel">
             <div class="panel-head">
-              <div>
-                <h2>Meta financeira</h2>
-                <span>Planeje reservas e compras</span>
+              <h2>Minhas dívidas</h2>
+            </div>
+            <form class="form-grid" id="formDivida">
+              <label class="full">Descrição
+                <input id="dividaDescricao" placeholder="Ex: Cartão de crédito" required>
+              </label>
+              <label>Valor total
+                <input id="dividaValor" type="number" step="0.01" placeholder="0,00" required>
+              </label>
+              <label>Taxa (% ao mês)
+                <input id="dividaTaxa" type="number" step="0.01" placeholder="0,00" required>
+              </label>
+              <label>Data de vencimento
+                <input id="dividaVencimento" type="date" required>
+              </label>
+              <button class="btn primary" type="submit" style="grid-column: span 1">Adicionar</button>
+            </form>
+            <div id="listDividas" class="list" style="margin-top: 20px"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="relatorios" class="section">
+        <div class="tabs">
+          <button class="tab active" onclick="switchTab(event, 'relMensal')">Relatório Mensal</button>
+          <button class="tab" onclick="switchTab(event, 'relAnual')">Relatório Anual</button>
+          <button class="tab" onclick="switchTab(event, 'relDespesas')">Análise de Despesas</button>
+        </div>
+
+        <div id="relMensal" class="section active">
+          <div class="card">
+            <div class="panel">
+              <div class="panel-head">
+                <h2>Relatório do mês</h2>
+              </div>
+              <div class="insights" id="insightsMensal"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="relAnual" class="section">
+          <div class="card">
+            <div class="panel">
+              <div class="panel-head">
+                <h2>Relatório do ano</h2>
+              </div>
+              <div class="insights" id="insightsAnual"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="relDespesas" class="section">
+          <div class="card">
+            <div class="panel">
+              <div class="panel-head">
+                <h2>Análise de despesas</h2>
+              </div>
+              <div class="chart-wrap">
+                <canvas id="chartAnalise"></canvas>
               </div>
             </div>
-            <form id="goalForm" class="form-grid compact">
-              <label>Nome
-                <input name="name" placeholder="Reserva de emergência" required>
-              </label>
-              <label>Objetivo
-                <input name="target" type="number" min="0" step="0.01" placeholder="0,00" required>
-              </label>
-              <label>Guardado
-                <input name="saved" type="number" min="0" step="0.01" placeholder="0,00" required>
-              </label>
-              <button class="btn primary full" type="submit">Adicionar meta</button>
-            </form>
-          </article>
-          <article class="card panel">
-            <div class="panel-head">
-              <h2>Metas ativas</h2>
-              <span id="goalSummary">0 metas</span>
-            </div>
-            <div class="list" id="goalList"></div>
-          </article>
+          </div>
         </div>
       </section>
 
-      <section class="section" id="debts">
-        <div class="split">
-          <article class="card panel">
-            <div class="panel-head">
-              <div>
-                <h2>Dívida ou parcela</h2>
-                <span>Acompanhe o saldo devedor</span>
-              </div>
-            </div>
-            <form id="debtForm" class="form-grid compact">
-              <label>Nome
-                <input name="name" placeholder="Cartão, empréstimo, financiamento" required>
-              </label>
-              <label>Total
-                <input name="total" type="number" min="0" step="0.01" placeholder="0,00" required>
-              </label>
-              <label>Pago
-                <input name="paid" type="number" min="0" step="0.01" placeholder="0,00" required>
-              </label>
-              <button class="btn primary full" type="submit">Adicionar dívida</button>
-            </form>
-          </article>
-          <article class="card panel">
-            <div class="panel-head">
-              <h2>Dívidas cadastradas</h2>
-              <span id="debtSummary">0 dívidas</span>
-            </div>
-            <div class="list" id="debtList"></div>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" id="reports">
-        <div class="layout">
-          <article class="card panel">
-            <div class="panel-head">
-              <div>
-                <h2>Relatório de categorias</h2>
-                <span>Onde o dinheiro está indo</span>
-              </div>
-              <button class="btn" id="printReportBtn" type="button" title="Imprimir relatório">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 9V3h10v6M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M7 14h10v7H7v-7Z"/></svg>
-                Imprimir
-              </button>
-            </div>
-            <div class="chart-wrap"><canvas id="categoryChart"></canvas></div>
-          </article>
-          <article class="card panel">
-            <div class="panel-head">
-              <h2>Diagnóstico</h2>
-              <span>Prioridades do mês</span>
-            </div>
-            <div class="insights" id="reportInsights"></div>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" id="ai">
+      <section id="ia" class="section">
         <div class="ai-layout">
-          <aside class="ai-hero">
-            <span class="eyebrow">Assistente inteligente</span>
-            <h2>IA financeira útil para o cliente</h2>
-            <p>A IA analisa os lançamentos, orçamento, metas e dívidas para dar respostas práticas: onde cortar, como sair do vermelho e qual prioridade seguir no mês.</p>
-
-            <div class="ai-score-grid">
-              <div class="ai-score">
-                <span>Diagnóstico</span>
-                <strong id="aiDiagnosis">Calculando</strong>
-              </div>
-              <div class="ai-score">
-                <span>Prioridade</span>
-                <strong id="aiPriority">Analisar mês</strong>
-              </div>
-              <div class="ai-score">
-                <span>Maior gasto</span>
-                <strong id="aiBiggest">R$ 0,00</strong>
-              </div>
-              <div class="ai-score">
-                <span>Próxima ação</span>
-                <strong id="aiAction">Organizar</strong>
+          <div>
+            <div class="card ai-hero">
+              <h2>IA Financeira 🤖</h2>
+              <p>Receba análises e recomendações inteligentes sobre seus gastos, investimentos e saúde financeira.</p>
+              <div class="ai-score-grid">
+                <div class="ai-score">
+                  <span>Saúde financeira</span>
+                  <strong id="scoreHealth">--</strong>
+                </div>
+                <div class="ai-score">
+                  <span>Risco</span>
+                  <strong id="scoreRisk">--</strong>
+                </div>
               </div>
             </div>
 
-            <div class="quick-prompts">
-              <button class="ai-prompt" data-prompt="Analise meu mês e diga o que está bom e ruim.">Analisar meu mês</button>
-              <button class="ai-prompt" data-prompt="Como posso economizar mais dinheiro este mês?">Como economizar?</button>
-              <button class="ai-prompt" data-prompt="Crie um plano para eu pagar minhas dívidas.">Plano para dívidas</button>
-              <button class="ai-prompt" data-prompt="Crie metas financeiras para os próximos 30 dias.">Metas de 30 dias</button>
-              <button class="ai-prompt" data-prompt="Monte uma regra de orçamento para minha renda atual.">Orçamento ideal</button>
-              <button class="ai-prompt" data-prompt="Faça um relatório completo do meu mês.">Relatório completo</button>
-            </div>
-          </aside>
-
-          <article class="card panel chat-shell">
-            <div class="chat-status">
-              <div>
-                <strong>FinanPro IA</strong>
-                <span>Resposta baseada nos dados do app</span>
+            <div class="card" style="margin-top: 16px">
+              <div class="panel">
+                <div class="panel-head">
+                  <h2>Análises rápidas</h2>
+                </div>
+                <div class="quick-prompts">
+                  <button type="button" onclick="sendPrompt('Qual é meu maior gasto?')">Maior gasto?</button>
+                  <button type="button" onclick="sendPrompt('Como reduzir despesas?')">Reduzir despesas</button>
+                  <button type="button" onclick="sendPrompt('Quando poderei comprar?')">Compra em vista</button>
+                  <button type="button" onclick="sendPrompt('Devo investir?')">Devo investir?</button>
+                </div>
               </div>
-              <span class="pill income">Local</span>
             </div>
-            <div class="chat-messages" id="aiMessages"></div>
-            <form class="ai-input" id="aiForm">
-              <textarea id="aiQuestion" placeholder="Pergunte: onde estou gastando mais? como sair do vermelho? qual meta criar?"></textarea>
-              <button class="btn primary" type="submit">Enviar</button>
-            </form>
-          </article>
+          </div>
+
+          <div class="card">
+            <div class="chat-shell">
+              <div class="chat-status">
+                <div>
+                  <strong>Assistente Financeiro</strong>
+                  <span>Online</span>
+                </div>
+              </div>
+              <div class="chat-messages" id="chatMessages"></div>
+              <div class="ai-input">
+                <textarea id="aiPrompt" placeholder="Faça uma pergunta sobre suas finanças..." required></textarea>
+                <button class="btn primary" type="button" onclick="sendPrompt()">Enviar</button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       <footer class="app-footer">
-        <span>Dados salvos neste navegador. Exporte um backup antes de trocar de aparelho.</span>
         <div>
-          <a href="./privacidade.html">Política de privacidade</a>
-          <a href="./termos.html">Termos de uso</a>
+          <span>© 2024 FinanPro. Todos os direitos reservados.</span>
+        </div>
+        <div>
+          <a href="./termos.html" target="_blank">Termos</a>
+          <a href="./privacidade.html" target="_blank">Privacidade</a>
+          <a href="#" onclick="openSection('ia')">Suporte via IA</a>
         </div>
       </footer>
     </main>
   </div>
 
   <script>
-    function showAppError(details) {
-      const existing = document.querySelector("#appErrorBox");
-      if (existing) existing.remove();
-      const box = document.createElement("div");
-      box.id = "appErrorBox";
-      box.style.cssText = "position:fixed;left:16px;right:16px;bottom:16px;z-index:9999;background:#fff8f7;border:1px solid #f2b8b5;color:#7a271a;padding:14px 16px;border-radius:8px;box-shadow:0 18px 40px rgba(23,33,28,.18);font-family:system-ui,sans-serif";
-      box.innerHTML = "<strong>O app encontrou um erro ao abrir.</strong><br>Atualize a página com Ctrl + R. Se continuar, abra o arquivo novamente.";
-      document.body.appendChild(box);
-      console.error(details);
-    }
+    // ==================== CONFIGURAÇÃO ====================
+    const DB_NAME = 'FinanProDB';
+    const DB_VERSION = 1;
+    const DB_STORE = 'transactions';
+    let db;
 
-    window.addEventListener("error", event => showAppError(event.error || event.message));
-    window.addEventListener("unhandledrejection", event => showAppError(event.reason || "Erro inesperado"));
-
-    const BRL = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
-    const today = new Date();
-    const todayKey = localISODate(today);
-    const monthKey = todayKey.slice(0, 7);
-    const categories = ["Salário", "Freelance", "Moradia", "Mercado", "Transporte", "Saúde", "Educação", "Lazer", "Assinaturas", "Investimentos", "Outros"];
-    const expenseCategories = categories.filter(c => !["Salário", "Freelance"].includes(c));
-    const USERS_KEY = "finanpro-users";
-    const SESSION_KEY = "finanpro-session";
-
-    function localISODate(date = new Date()) {
-      const local = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-      return local.toISOString().slice(0, 10);
-    }
-
-    function uid() {
-      return "id-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 10);
-    }
-
-    function clone(value) {
-      return JSON.parse(JSON.stringify(value));
-    }
-
-    function storageGet(key) {
-      try { return localStorage.getItem(key); } catch { return null; }
-    }
-
-    function storageSet(key, value) {
-      try { localStorage.setItem(key, value); } catch {}
-    }
-
-    function storageRemove(key) {
-      try { localStorage.removeItem(key); } catch {}
-    }
-
-    function on(selector, eventName, handler) {
-      const el = document.querySelector(selector);
-      if (el) el.addEventListener(eventName, handler);
-    }
-
-    function normalizeEmail(value) {
-      return String(value || "").trim().toLowerCase();
-    }
-
-    function legacyUserIdFromEmail(email) {
-      return normalizeEmail(email).replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "usuario";
-    }
-
-    function localPasswordHash(value) {
-      let hash = 2166136261;
-      const text = String(value || "");
-      for (let i = 0; i < text.length; i++) {
-        hash ^= text.charCodeAt(i);
-        hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
-      }
-      return (hash >>> 0).toString(36);
-    }
-
-    function userIdFromEmail(email) {
-      return "usuario-" + localPasswordHash(normalizeEmail(email));
-    }
-
-    function readUsers() {
-      try {
-        const users = JSON.parse(storageGet(USERS_KEY) || "{}");
-        return users && typeof users === "object" ? users : {};
-      } catch {
-        return {};
-      }
-    }
-
-    function writeUsers(users) {
-      storageSet(USERS_KEY, JSON.stringify(users));
-    }
-
-    function findUserByEmail(users, email) {
-      const cleanEmail = normalizeEmail(email);
-      const preferredId = userIdFromEmail(cleanEmail);
-      const legacyId = legacyUserIdFromEmail(cleanEmail);
-      for (const id of [preferredId, legacyId]) {
-        const user = users[id];
-        if (user && normalizeEmail(user.email) === cleanEmail) return { id, user };
-      }
-      const entry = Object.entries(users).find(([, user]) => normalizeEmail(user?.email) === cleanEmail);
-      return entry ? { id: entry[0], user: entry[1] } : null;
-    }
-
-    function sessionUser() {
-      const id = storageGet(SESSION_KEY);
-      const users = readUsers();
-      if (!id || !users[id]) return null;
-      return { id, name: users[id].name, email: users[id].email };
-    }
-
-    let currentUser = sessionUser();
-
-    function userStateKey() {
-      return currentUser ? `finanpro-state-${currentUser.id}` : "finanpro-state";
-    }
-
-    function initialAiChat() {
-      return [
-        {
-          role: "ai",
-          text: "Olá! Eu sou a IA financeira do FinanPro. Posso analisar seu mês, sugerir cortes, criar plano para dívidas, montar orçamento e transformar seus dados em próximas ações simples."
+    // ==================== INICIALIZAÇÃO ====================
+    function initDB() {
+      const request = indexedDB.open(DB_NAME, DB_VERSION);
+      request.onerror = () => console.error('Erro ao abrir BD');
+      request.onsuccess = (e) => {
+        db = e.target.result;
+        carregarDados();
+      };
+      request.onupgradeneeded = (e) => {
+        db = e.target.result;
+        if (!db.objectStoreNames.contains(DB_STORE)) {
+          db.createObjectStore(DB_STORE, { keyPath: 'id', autoIncrement: true });
         }
-      ];
+      };
     }
 
-    function showAuthMessage(text, type = "error") {
-      const box = document.querySelector("#authMessage");
-      if (!box) return;
-      box.textContent = text;
-      box.classList.toggle("success", type === "success");
-    }
+    // ==================== AUTH ====================
+    const authTab = document.querySelectorAll('[data-auth-mode]');
+    authTab.forEach(btn => {
+      btn.addEventListener('click', () => {
+        authTab.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+        document.getElementById(btn.dataset.authMode + 'Form').classList.add('active');
+      });
+    });
 
-    function switchAuthMode(mode) {
-      document.querySelectorAll("[data-auth-mode]").forEach(btn => btn.classList.toggle("active", btn.dataset.authMode === mode));
-      document.querySelector("#loginForm").classList.toggle("active", mode === "login");
-      document.querySelector("#registerForm").classList.toggle("active", mode === "register");
-      showAuthMessage("");
-    }
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value;
+      const senha = document.getElementById('loginPassword').value;
+      
+      if (email && senha) {
+        document.body.classList.remove('auth-lock');
+        initDB();
+        limparFormAuth();
+      }
+    });
 
-    function enterAccount(user) {
-      currentUser = { id: user.id, name: user.name, email: user.email };
-      storageSet(SESSION_KEY, user.id);
-      state = load();
-      aiChat = initialAiChat();
-      setupSelects();
-      setAuthView();
-      renderAll();
-    }
+    document.getElementById('registerForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('registerEmail').value;
+      const senha = document.getElementById('registerPassword').value;
+      const confirma = document.getElementById('registerConfirm').value;
+      const terms = document.getElementById('registerTerms').checked;
 
-    function loginAccount(email, password) {
-      const cleanEmail = normalizeEmail(email);
-      const users = readUsers();
-      const found = findUserByEmail(users, cleanEmail);
-      if (!found || found.user.passwordHash !== localPasswordHash(password)) {
-        showAuthMessage("E-mail ou senha incorretos.");
+      if (senha !== confirma) {
+        mostrarMensagem('Senhas não correspondem', false);
         return;
       }
-      enterAccount({ ...found.user, id: found.id });
-    }
-
-    function registerAccount({ name, email, password, confirm, accepted }) {
-      const cleanName = String(name || "").trim();
-      const cleanEmail = normalizeEmail(email);
-      if (!cleanName) return showAuthMessage("Digite seu nome.");
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) return showAuthMessage("Digite um e-mail válido.");
-      if (String(password || "").length < 6) return showAuthMessage("A senha precisa ter pelo menos 6 caracteres.");
-      if (password !== confirm) return showAuthMessage("As senhas não conferem.");
-      if (!accepted) return showAuthMessage("Aceite os termos para criar a conta.");
-
-      const users = readUsers();
-      const existing = findUserByEmail(users, cleanEmail);
-      if (existing) return showAuthMessage("Já existe uma conta com este e-mail.");
-
-      const preferredId = userIdFromEmail(cleanEmail);
-      const id = users[preferredId] ? `${preferredId}-${Date.now().toString(36)}` : preferredId;
-
-      users[id] = {
-        name: cleanName,
-        email: cleanEmail,
-        passwordHash: localPasswordHash(password),
-        createdAt: new Date().toISOString()
-      };
-      writeUsers(users);
-      showAuthMessage("Conta criada. Abrindo o app...", "success");
-      enterAccount({ ...users[id], id });
-    }
-
-    function setAuthView() {
-      const logged = Boolean(currentUser);
-      document.body.classList.toggle("auth-lock", !logged);
-      const label = document.querySelector("#activeUserLabel");
-      if (label) label.textContent = logged ? currentUser.name : "Conta local";
-      if (!logged) {
-        document.querySelector("#loginEmail")?.focus();
-      } else {
-        requestAnimationFrame(renderCharts);
+      if (!terms) {
+        mostrarMensagem('Você deve aceitar os termos', false);
+        return;
       }
-    }
-
-    function logoutAccount() {
-      save();
-      currentUser = null;
-      state = clone(sample);
-      aiChat = initialAiChat();
-      storageRemove(SESSION_KEY);
-      switchAuthMode("login");
-      const loginPassword = document.querySelector("#loginPassword");
-      const registerForm = document.querySelector("#registerForm");
-      if (loginPassword) loginPassword.value = "";
-      if (registerForm) registerForm.reset();
-      setAuthView();
-      showAuthMessage("Sessão encerrada.", "success");
-    }
-
-    const sample = {
-      transactions: [
-        { id: uid(), type: "income", category: "Salário", amount: 4200, date: monthKey + "-05", description: "Salário mensal" },
-        { id: uid(), type: "income", category: "Freelance", amount: 650, date: monthKey + "-12", description: "Projeto extra" },
-        { id: uid(), type: "expense", category: "Moradia", amount: 1200, date: monthKey + "-06", description: "Aluguel" },
-        { id: uid(), type: "expense", category: "Mercado", amount: 740, date: monthKey + "-08", description: "Compras do mês" },
-        { id: uid(), type: "expense", category: "Transporte", amount: 280, date: monthKey + "-10", description: "Combustível e app" },
-        { id: uid(), type: "expense", category: "Lazer", amount: 230, date: monthKey + "-14", description: "Cinema e jantar" },
-        { id: uid(), type: "expense", category: "Assinaturas", amount: 89.9, date: monthKey + "-15", description: "Streaming" },
-        { id: uid(), type: "expense", category: "Investimentos", amount: 500, date: monthKey + "-16", description: "Aporte mensal" }
-      ],
-      budgets: [
-        { category: "Moradia", limit: 1350 },
-        { category: "Mercado", limit: 900 },
-        { category: "Transporte", limit: 420 },
-        { category: "Lazer", limit: 300 },
-        { category: "Assinaturas", limit: 120 }
-      ],
-      goals: [
-        { id: uid(), name: "Reserva de emergência", target: 12000, saved: 4200 },
-        { id: uid(), name: "Notebook novo", target: 5500, saved: 1800 }
-      ],
-      debts: [
-        { id: uid(), name: "Cartão parcelado", total: 1800, paid: 620 },
-        { id: uid(), name: "Empréstimo pessoal", total: 3200, paid: 1100 }
-      ]
-    };
-
-    let state = load();
-    let aiChat = initialAiChat();
-
-    function toNumber(value, fallback = 0) {
-      const number = Number(value);
-      return Number.isFinite(number) ? number : fallback;
-    }
-
-    function validDate(value) {
-      return /^\d{4}-\d{2}-\d{2}$/.test(String(value || ""));
-    }
-
-    function cleanText(value, fallback) {
-      const text = String(value || "").trim();
-      return text || fallback;
-    }
-
-    function cleanTransaction(item) {
-      const type = item?.type === "income" ? "income" : "expense";
-      const category = categories.includes(item?.category) ? item.category : "Outros";
-      const amount = Math.max(0, toNumber(item?.amount));
-      if (!amount) return null;
-      return {
-        id: item?.id || uid(),
-        type,
-        category,
-        amount,
-        date: validDate(item?.date) ? item.date : todayKey,
-        description: cleanText(item?.description, type === "income" ? "Receita" : "Despesa")
-      };
-    }
-
-    function cleanBudget(item) {
-      const category = expenseCategories.includes(item?.category) ? item.category : "Outros";
-      const limit = Math.max(0, toNumber(item?.limit));
-      return limit ? { category, limit } : null;
-    }
-
-    function cleanGoal(item) {
-      const target = Math.max(0, toNumber(item?.target));
-      const saved = Math.max(0, toNumber(item?.saved));
-      if (!target) return null;
-      return {
-        id: item?.id || uid(),
-        name: cleanText(item?.name, "Meta financeira"),
-        target,
-        saved: Math.min(saved, target)
-      };
-    }
-
-    function cleanDebt(item) {
-      const total = Math.max(0, toNumber(item?.total));
-      const paid = Math.max(0, toNumber(item?.paid));
-      if (!total) return null;
-      return {
-        id: item?.id || uid(),
-        name: cleanText(item?.name, "Dívida"),
-        total,
-        paid: Math.min(paid, total)
-      };
-    }
-
-    function normalizeState(value) {
-      const fallback = clone(sample);
-      const next = value && typeof value === "object" ? value : fallback;
-      return {
-        transactions: Array.isArray(next.transactions) ? next.transactions.map(cleanTransaction).filter(Boolean) : fallback.transactions,
-        budgets: Array.isArray(next.budgets) ? next.budgets.map(cleanBudget).filter(Boolean) : fallback.budgets,
-        goals: Array.isArray(next.goals) ? next.goals.map(cleanGoal).filter(Boolean) : fallback.goals,
-        debts: Array.isArray(next.debts) ? next.debts.map(cleanDebt).filter(Boolean) : fallback.debts
-      };
-    }
-
-    function load() {
-      const raw = storageGet(userStateKey()) || (currentUser ? storageGet("finanpro-state") : "");
-      if (!raw) return clone(sample);
-      try { return normalizeState(JSON.parse(raw)); } catch { return clone(sample); }
-    }
-
-    function save() {
-      storageSet(userStateKey(), JSON.stringify(state));
-    }
-
-    function exportData() {
-      const payload = {
-        app: "FinanPro",
-        exportedAt: new Date().toISOString(),
-        data: state
-      };
-      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `finanpro-backup-${todayKey}.json`;
-      a.click();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-    }
-
-    function importData(file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        try {
-          const parsed = JSON.parse(String(reader.result || "{}"));
-          const next = normalizeState(parsed.data || parsed);
-          if (!confirm("Importar este backup vai substituir os dados atuais deste navegador. Deseja continuar?")) return;
-          state = next;
-          save();
-          renderAll();
-          alert("Backup importado com sucesso.");
-        } catch {
-          alert("Não consegui importar este arquivo. Verifique se ele é um backup JSON do FinanPro.");
-        }
-      };
-      reader.readAsText(file);
-    }
-
-    function financialSnapshot() {
-      const t = totals();
-      const expenses = byCategory();
-      const biggest = Object.entries(expenses).sort((a, b) => b[1] - a[1])[0] || ["Sem gastos", 0];
-      const debtTotal = state.debts.reduce((sum, d) => sum + Math.max(0, Number(d.total) - Number(d.paid)), 0);
-      const goalTarget = state.goals.reduce((sum, g) => sum + Number(g.target), 0);
-      const goalSaved = state.goals.reduce((sum, g) => sum + Number(g.saved), 0);
-      const overBudget = state.budgets
-        .map(b => ({ ...b, spent: expenses[b.category] || 0 }))
-        .filter(b => b.spent > b.limit)
-        .sort((a, b) => (b.spent - b.limit) - (a.spent - a.limit));
-      const budgetUse = state.budgets.map(b => ({ ...b, spent: expenses[b.category] || 0, rate: b.limit ? ((expenses[b.category] || 0) / b.limit) * 100 : 0 }));
-      return { ...t, expenses, biggest, debtTotal, goalTarget, goalSaved, overBudget, budgetUse };
-    }
-
-    function aiDiagnosisText(snapshot = financialSnapshot()) {
-      if (!snapshot.income && !snapshot.expense) return "Sem dados";
-      if (snapshot.balance < 0) return "Mês no vermelho";
-      if (snapshot.savingsRate < 10) return "Sobra baixa";
-      if (snapshot.savingsRate < 20) return "Estável";
-      return "Muito saudável";
-    }
-
-    function aiPriorityText(snapshot = financialSnapshot()) {
-      if (snapshot.balance < 0) return "Cortar gastos";
-      if (snapshot.debtTotal > 0) return "Reduzir dívidas";
-      if (snapshot.savingsRate < 20) return "Aumentar reserva";
-      return "Investir melhor";
-    }
-
-    function aiNextAction(snapshot = financialSnapshot()) {
-      if (snapshot.overBudget.length) return `Rever ${snapshot.overBudget[0].category}`;
-      if (snapshot.balance < 0) return "Congelar lazer";
-      if (snapshot.debtTotal > 0) return "Atacar dívida";
-      return "Automatizar meta";
-    }
-
-    function monthlyAnalysis(snapshot) {
-      const lines = [];
-      lines.push(`Diagnóstico do mês: ${aiDiagnosisText(snapshot)}.`);
-      lines.push(`Receitas: ${money(snapshot.income)}. Despesas: ${money(snapshot.expense)}. Saldo: ${money(snapshot.balance)}.`);
-      lines.push(`Sua taxa de poupança está em ${pct(snapshot.savingsRate)}. O ideal inicial é chegar perto de 10% e depois buscar 20%.`);
-      if (snapshot.biggest[1] > 0) lines.push(`Maior gasto: ${snapshot.biggest[0]}, com ${money(snapshot.biggest[1])}. Esse é o primeiro lugar para procurar economia.`);
-      if (snapshot.overBudget.length) lines.push(`Atenção: ${snapshot.overBudget[0].category} passou do orçamento em ${money(snapshot.overBudget[0].spent - snapshot.overBudget[0].limit)}.`);
-      lines.push(`Próxima ação recomendada: ${aiNextAction(snapshot)}.`);
-      return lines.join("\n");
-    }
-
-    function savingsPlan(snapshot) {
-      const targetCut = snapshot.expense ? Math.max(50, snapshot.expense * 0.08) : 100;
-      const biggest = snapshot.biggest[0];
-      return [
-        `Plano para economizar este mês: tente reduzir pelo menos ${money(targetCut)} sem mexer em gastos essenciais.`,
-        `1. Revise primeiro a categoria ${biggest}, porque ela concentra o maior impacto.`,
-        "2. Pause compras por impulso por 7 dias e anote tudo antes de pagar.",
-        "3. Corte ou renegocie uma assinatura que não esteja sendo usada.",
-        "4. Separe o dinheiro da meta no começo do mês, não só se sobrar no final.",
-        snapshot.savingsRate < 10 ? "Prioridade: chegar a 10% de poupança da renda." : "Você já tem alguma sobra; agora o foco é manter constância."
-      ].join("\n");
-    }
-
-    function debtPlan(snapshot) {
-      if (!state.debts.length) {
-        return "Você ainda não cadastrou dívidas. Se tiver cartão, empréstimo ou parcelas, cadastre na aba Dívidas para a IA montar uma ordem de pagamento.";
+      if (email && senha) {
+        document.body.classList.remove('auth-lock');
+        initDB();
+        limparFormAuth();
       }
-      const ordered = [...state.debts]
-        .map(d => ({ ...d, remaining: Math.max(0, Number(d.total) - Number(d.paid)) }))
-        .sort((a, b) => a.remaining - b.remaining);
-      const first = ordered[0];
-      const extra = Math.max(50, Math.min(Math.max(snapshot.balance, 0), 250));
-      return [
-        `Total de dívidas em aberto: ${money(snapshot.debtTotal)}.`,
-        `Estratégia recomendada: método bola de neve. Comece pela menor dívida para ganhar ritmo.`,
-        `Primeira prioridade: ${first.name}, faltando ${money(first.remaining)}.`,
-        `Se possível, pague a parcela normal + ${money(extra)} extra por mês.`,
-        "Evite criar nova dívida enquanto esse plano estiver ativo.",
-        "Quando quitar a menor, use o valor dela para acelerar a próxima."
-      ].join("\n");
+    });
+
+    function resetSenha() {
+      alert('Enviaremos um link para redefinir sua senha no email');
     }
 
-    function budgetPlan(snapshot) {
-      const income = snapshot.income || 3000;
-      const essentials = income * 0.5;
-      const lifestyle = income * 0.3;
-      const future = income * 0.2;
-      return [
-        `Regra de orçamento sugerida para renda de ${money(income)}:`,
-        `Essenciais: até ${money(essentials)} para moradia, mercado, transporte e saúde.`,
-        `Estilo de vida: até ${money(lifestyle)} para lazer, compras e assinaturas.`,
-        `Futuro: pelo menos ${money(future)} para reserva, metas, investimentos ou quitar dívidas.`,
-        snapshot.overBudget.length ? `Categoria para ajustar agora: ${snapshot.overBudget[0].category}.` : "Seu orçamento não mostra estouro grave nas categorias cadastradas.",
-        "A regra pode ser ajustada se a renda for baixa ou se houver dívida urgente."
-      ].join("\n");
+    function limparFormAuth() {
+      document.getElementById('loginForm').reset();
+      document.getElementById('registerForm').reset();
     }
 
-    function goalsPlan(snapshot) {
-      const reserveGoal = Math.max(snapshot.expense * 3, 3000);
-      const monthlySave = Math.max(100, snapshot.income * 0.1);
-      return [
-        "Metas financeiras para os próximos 30 dias:",
-        `1. Criar ou reforçar reserva de emergência. Meta inicial sugerida: ${money(reserveGoal)}.`,
-        `2. Separar pelo menos ${money(monthlySave)} assim que receber a renda.`,
-        "3. Escolher uma meta principal para não dividir dinheiro demais entre várias metas.",
-        "4. Revisar gastos toda semana, principalmente a maior categoria de despesa.",
-        snapshot.goalTarget ? `Hoje você tem ${money(snapshot.goalSaved)} guardados de ${money(snapshot.goalTarget)} em metas cadastradas.` : "Cadastre uma meta para acompanhar evolução visualmente."
-      ].join("\n");
+    function mostrarMensagem(msg, sucesso = true) {
+      const el = document.getElementById('authMessage');
+      el.textContent = msg;
+      el.className = sucesso ? 'auth-message success' : 'auth-message';
     }
 
-    function incomePlan(snapshot) {
-      return [
-        "Ideias para aumentar renda sem mexer no orçamento essencial:",
-        "1. Liste habilidades que você já pode oferecer como serviço simples.",
-        "2. Separe uma meta de renda extra e acompanhe o resultado nos lançamentos.",
-        "3. Reserve horários fixos para freelas, vendas ou trabalhos pontuais.",
-        "4. Use o relatório mensal para entender se a renda extra está virando sobra real.",
-        "5. Evite assumir custo fixo novo antes de validar que a renda extra é recorrente."
-      ].join("\n");
+    function logout() {
+      document.body.classList.add('auth-lock');
+      limparFormAuth();
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.getElementById('dashboard').classList.add('active');
     }
 
-    function salesAiText() {
-      return [
-        "O FinanPro está 100% gratuito.",
-        "Não há cobrança dentro do app.",
-        "Você pode compartilhar o link com outras pessoas para elas organizarem gastos, metas, dívidas e orçamento no próprio navegador.",
-        "Os dados continuam salvos localmente no aparelho de cada usuário."
-      ].join("\n");
+    // ==================== NAVEGAÇÃO ====================
+    document.querySelectorAll('.nav button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        openSection(btn.dataset.section);
+      });
+    });
+
+    function openSection(sectionId) {
+      document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+      document.querySelector(`[data-section="${sectionId}"]`)?.classList.add('active');
+      
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.getElementById(sectionId)?.classList.add('active');
+
+      const titles = {
+        dashboard: { title: 'Dashboard', desc: 'Acompanhe seu desempenho financeiro em tempo real' },
+        lancamentos: { title: 'Lançamentos', desc: 'Registre todas as suas transações' },
+        orcamento: { title: 'Orçamento', desc: 'Controle seus gastos com limites por categoria' },
+        metas: { title: 'Metas', desc: 'Defina e acompanhe suas metas financeiras' },
+        dividas: { title: 'Dívidas', desc: 'Gerencie suas dívidas e prazos' },
+        relatorios: { title: 'Relatórios', desc: 'Análises detalhadas dos seus gastos' },
+        ia: { title: 'IA Financeira', desc: 'Tenha um assistente inteligente para suas finanças' }
+      };
+      
+      document.getElementById('pageTitle').textContent = titles[sectionId]?.title || 'Página';
+      document.getElementById('pageDescription').textContent = titles[sectionId]?.desc || '';
     }
 
-    function normalizeQuestion(value) {
-      return String(value || "")
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .toLowerCase();
+    function switchTab(e, tabId) {
+      e.target.parentElement.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      e.target.classList.add('active');
+      e.target.parentElement.parentElement.querySelectorAll('[id^="rel"]').forEach(s => s.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
     }
 
-    function categoryReportText(snapshot) {
-      const entries = Object.entries(snapshot.expenses).sort((a, b) => b[1] - a[1]);
-      if (!entries.length) return "Ainda não há despesas neste mês. Cadastre seus gastos para eu montar o ranking por categoria.";
-      const total = entries.reduce((sum, [, value]) => sum + value, 0);
-      return [
-        "Ranking de despesas do mês:",
-        ...entries.slice(0, 6).map(([name, value], index) => `${index + 1}. ${name}: ${money(value)} (${pct((value / total) * 100)} das despesas).`),
-        `Total analisado: ${money(total)}.`,
-        `Primeiro ajuste recomendado: revisar ${entries[0][0]}.`
-      ].join("\n");
+    // ==================== LANÇAMENTOS ====================
+    document.getElementById('formLancamento').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const lancamento = {
+        descricao: document.getElementById('lancDescricao').value,
+        tipo: document.getElementById('lancTipo').value,
+        categoria: document.getElementById('lancCategoria').value,
+        valor: parseFloat(document.getElementById('lancValor').value),
+        data: document.getElementById('lancData').value,
+        timestamp: Date.now()
+      };
+
+      const transaction = db.transaction([DB_STORE], 'readwrite');
+      transaction.objectStore(DB_STORE).add(lancamento);
+      transaction.oncomplete = () => {
+        document.getElementById('formLancamento').reset();
+        carregarDados();
+      };
+    });
+
+    // ==================== DADOS ====================
+    function carregarDados() {
+      const transaction = db.transaction([DB_STORE], 'readonly');
+      const objectStore = transaction.objectStore(DB_STORE);
+      const request = objectStore.getAll();
+
+      request.onsuccess = (e) => {
+        const dados = e.target.result;
+        atualizarDashboard(dados);
+        atualizarTabelaLancamentos(dados);
+      };
     }
 
-    function balanceText(snapshot) {
-      const status = snapshot.balance >= 0 ? "positivo" : "negativo";
-      const dailyBudget = Math.max(0, snapshot.balance / Math.max(1, 30 - today.getDate() + 1));
-      return [
-        `Seu saldo do mês está ${status}: ${money(snapshot.balance)}.`,
-        `Receitas registradas: ${money(snapshot.income)}.`,
-        `Despesas registradas: ${money(snapshot.expense)}.`,
-        snapshot.balance >= 0 ? `Se quiser manter o mês no azul, limite novos gastos a cerca de ${money(dailyBudget)} por dia até virar o mês.` : "Prioridade: pausar gastos variáveis e renegociar o que puder antes de assumir nova compra.",
-        `Taxa de poupança atual: ${pct(snapshot.savingsRate)}.`
-      ].join("\n");
-    }
-
-    function reservePlan(snapshot) {
-      const target = Math.max(snapshot.expense * 3, 3000);
-      const saved = snapshot.goalSaved;
-      const missing = Math.max(0, target - saved);
-      const monthly = Math.max(100, snapshot.income * 0.1);
-      const months = monthly ? Math.ceil(missing / monthly) : 0;
-      return [
-        `Reserva recomendada inicial: ${money(target)}.`,
-        `Valor já acompanhado em metas: ${money(saved)}.`,
-        missing ? `Falta aproximadamente ${money(missing)}. Guardando ${money(monthly)} por mês, a estimativa é de ${months} mês(es).` : "Você já aparece bem encaminhado para a reserva mínima.",
-        "Mantenha esse dinheiro separado de gastos do dia a dia e evite usar para consumo."
-      ].join("\n");
-    }
-
-    function riskText(snapshot) {
-      const alerts = [];
-      if (snapshot.balance < 0) alerts.push(`Saldo negativo de ${money(Math.abs(snapshot.balance))}.`);
-      if (snapshot.savingsRate < 10) alerts.push(`Taxa de poupança baixa: ${pct(snapshot.savingsRate)}.`);
-      if (snapshot.debtTotal > 0) alerts.push(`Dívidas em aberto: ${money(snapshot.debtTotal)}.`);
-      if (snapshot.overBudget.length) alerts.push(`${snapshot.overBudget[0].category} passou do limite em ${money(snapshot.overBudget[0].spent - snapshot.overBudget[0].limit)}.`);
-      if (!alerts.length) alerts.push("Nenhum alerta crítico apareceu com os dados atuais.");
-      return [
-        "Alertas financeiros:",
-        ...alerts.map((item, index) => `${index + 1}. ${item}`),
-        `Ação principal: ${aiNextAction(snapshot)}.`
-      ].join("\n");
-    }
-
-    function fullReportText(snapshot) {
-      return [
-        monthlyAnalysis(snapshot),
-        "",
-        categoryReportText(snapshot),
-        "",
-        riskText(snapshot)
-      ].join("\n");
-    }
-
-    function aiAnswer(question) {
-      const snapshot = financialSnapshot();
-      const q = normalizeQuestion(question);
-      if (!q.trim()) return "Digite uma pergunta sobre seu dinheiro, como saldo, gastos, dívidas, metas, reserva ou orçamento.";
-      if (q.includes("relatorio") || q.includes("resumo") || q.includes("analise") || q.includes("analisar") || q.includes("diagnostico")) return fullReportText(snapshot);
-      if (q.includes("saldo") || q.includes("sobrou") || q.includes("quanto tenho") || q.includes("fechar o mes")) return balanceText(snapshot);
-      if (q.includes("categoria") || q.includes("maior gasto") || q.includes("onde gasto") || q.includes("onde estou gastando")) return categoryReportText(snapshot);
-      if (q.includes("alerta") || q.includes("risco") || q.includes("problema") || q.includes("vermelho")) return riskText(snapshot);
-      if (q.includes("divida") || q.includes("cartao") || q.includes("emprestimo") || q.includes("parcela")) return debtPlan(snapshot);
-      if (q.includes("econom") || q.includes("cortar") || q.includes("gasto") || q.includes("poupar") || q.includes("sobrar")) return savingsPlan(snapshot);
-      if (q.includes("orcamento") || q.includes("limite") || q.includes("regra") || q.includes("50")) return budgetPlan(snapshot);
-      if (q.includes("meta") || q.includes("reserva") || q.includes("guardar") || q.includes("invest")) return q.includes("reserva") ? reservePlan(snapshot) : goalsPlan(snapshot);
-      if (q.includes("vender") || q.includes("cliente") || q.includes("pro") || q.includes("ganhar dinheiro")) return salesAiText();
-      if (q.includes("renda") || q.includes("ganhar") || q.includes("dinheiro")) return incomePlan(snapshot);
-      return fullReportText(snapshot) + "\n\nVocê também pode perguntar: 'qual meu maior gasto?', 'como economizar?', 'como pagar dívidas?', 'quanto sobrou?' ou 'qual orçamento ideal?'.";
-    }
-
-    function pushAiMessage(role, text) {
-      aiChat.push({ role, text });
-      renderAI();
-    }
-
-    function renderAI() {
-      const snapshot = financialSnapshot();
-      const diagnosis = document.querySelector("#aiDiagnosis");
-      const priority = document.querySelector("#aiPriority");
-      const biggest = document.querySelector("#aiBiggest");
-      const action = document.querySelector("#aiAction");
-      const messages = document.querySelector("#aiMessages");
-      if (diagnosis) diagnosis.textContent = aiDiagnosisText(snapshot);
-      if (priority) priority.textContent = aiPriorityText(snapshot);
-      if (biggest) biggest.textContent = snapshot.biggest[1] ? `${snapshot.biggest[0]} ${money(snapshot.biggest[1])}` : "Sem gastos";
-      if (action) action.textContent = aiNextAction(snapshot);
-      if (messages) {
-        messages.innerHTML = aiChat.map(m => `<div class="message ${m.role === "user" ? "user" : "ai"}">${escapeHtml(m.text)}</div>`).join("");
-        messages.scrollTop = messages.scrollHeight;
-      }
-    }
-
-    function money(value) { return BRL.format(value || 0); }
-    function pct(value) { return `${Math.round(value || 0)}%`; }
-
-    function monthTransactions() {
-      return state.transactions.filter(t => t.date && t.date.slice(0, 7) === monthKey);
-    }
-
-    function totals() {
-      const tx = monthTransactions();
-      const income = tx.filter(t => t.type === "income").reduce((s, t) => s + Number(t.amount), 0);
-      const expense = tx.filter(t => t.type === "expense").reduce((s, t) => s + Number(t.amount), 0);
-      const balance = income - expense;
-      const savingsRate = income ? (balance / income) * 100 : 0;
-      return { income, expense, balance, savingsRate };
-    }
-
-    function byCategory(type = "expense") {
-      return monthTransactions()
-        .filter(t => t.type === type)
-        .reduce((acc, t) => {
-          acc[t.category] = (acc[t.category] || 0) + Number(t.amount);
-          return acc;
-        }, {});
-    }
-
-    function setupSelects() {
-      const options = categories.map(c => `<option value="${c}">${c}</option>`).join("");
-      const expenseOptions = expenseCategories.map(c => `<option value="${c}">${c}</option>`).join("");
-      document.querySelector("#categorySelect").innerHTML = options;
-      document.querySelector("#budgetCategory").innerHTML = expenseOptions;
-      document.querySelector("[name=date]").value = todayKey;
-    }
-
-    function drawFlowChart() {
-      const canvas = document.querySelector("#flowChart");
-      const ctx = canvas.getContext("2d");
-      const rect = canvas.getBoundingClientRect();
-      if (rect.width < 20 || rect.height < 20) return;
-      canvas.width = rect.width * devicePixelRatio;
-      canvas.height = rect.height * devicePixelRatio;
-      ctx.scale(devicePixelRatio, devicePixelRatio);
-      ctx.clearRect(0, 0, rect.width, rect.height);
-
-      const days = Array.from({ length: 30 }, (_, i) => i + 1);
-      let running = 0;
-      const points = days.map(day => {
-        monthTransactions().forEach(t => {
-          const d = Number(t.date.slice(-2));
-          if (d === day) running += t.type === "income" ? Number(t.amount) : -Number(t.amount);
-        });
-        return running;
+    function atualizarDashboard(dados) {
+      let receitas = 0, despesas = 0;
+      dados.forEach(d => {
+        if (d.tipo === 'receita') receitas += d.valor;
+        else despesas += d.valor;
       });
 
-      const max = Math.max(100, ...points.map(Math.abs));
-      const pad = 36;
-      const w = rect.width - pad * 2;
-      const h = rect.height - pad * 2;
-      const zeroY = pad + h / 2;
+      const saldo = receitas - despesas;
+      const taxa = receitas > 0 ? ((receitas - despesas) / receitas * 100).toFixed(1) : 0;
 
-      ctx.strokeStyle = "#dce4dc";
-      ctx.lineWidth = 1;
-      for (let i = 0; i <= 4; i++) {
-        const y = pad + (h / 4) * i;
-        ctx.beginPath();
-        ctx.moveTo(pad, y);
-        ctx.lineTo(rect.width - pad, y);
-        ctx.stroke();
-      }
-
-      ctx.strokeStyle = "#166534";
-      ctx.lineWidth = 4;
-      ctx.lineJoin = "round";
-      ctx.beginPath();
-      points.forEach((value, index) => {
-        const x = pad + (w / (points.length - 1)) * index;
-        const y = zeroY - (value / max) * (h / 2);
-        index ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
-      });
-      ctx.stroke();
-
-      const gradient = ctx.createLinearGradient(0, pad, 0, rect.height - pad);
-      gradient.addColorStop(0, "rgba(34, 197, 94, 0.20)");
-      gradient.addColorStop(1, "rgba(34, 197, 94, 0)");
-      ctx.lineTo(rect.width - pad, zeroY);
-      ctx.lineTo(pad, zeroY);
-      ctx.closePath();
-      ctx.fillStyle = gradient;
-      ctx.fill();
-
-      ctx.fillStyle = "#66736b";
-      ctx.font = "12px Inter, sans-serif";
-      ctx.fillText("Dia 1", pad, rect.height - 8);
-      ctx.fillText("Dia 30", rect.width - pad - 42, rect.height - 8);
-      ctx.fillText(money(points[points.length - 1] || 0), pad, 18);
+      document.getElementById('totalReceitas').textContent = 'R$ ' + receitas.toFixed(2).replace('.', ',');
+      document.getElementById('totalDespesas').textContent = 'R$ ' + despesas.toFixed(2).replace('.', ',');
+      document.getElementById('saldoDisponivel').textContent = 'R$ ' + saldo.toFixed(2).replace('.', ',');
+      document.getElementById('taxaPoupanca').textContent = taxa + '%';
+      document.getElementById('saldoTotal').textContent = 'R$ ' + saldo.toFixed(2).replace('.', ',');
     }
 
-    function drawDonut(canvasId, dataMap) {
-      const canvas = document.querySelector(canvasId);
-      const ctx = canvas.getContext("2d");
-      const rect = canvas.getBoundingClientRect();
-      if (rect.width < 20 || rect.height < 20) return;
-      canvas.width = rect.width * devicePixelRatio;
-      canvas.height = rect.height * devicePixelRatio;
-      ctx.scale(devicePixelRatio, devicePixelRatio);
-      ctx.clearRect(0, 0, rect.width, rect.height);
+    function atualizarTabelaLancamentos(dados) {
+      const tbody = document.getElementById('tableLancamentos');
+      tbody.innerHTML = '';
 
-      const entries = Object.entries(dataMap).sort((a, b) => b[1] - a[1]).slice(0, 6);
-      const total = entries.reduce((s, [, v]) => s + v, 0);
-      const colors = ["#166534", "#0f766e", "#b7791f", "#245b7f", "#b42318", "#6b7280"];
-      const cx = rect.width / 2;
-      const cy = rect.height / 2 - 10;
-      const radius = Math.min(rect.width, rect.height) * 0.28;
-
-      if (!total) {
-        ctx.fillStyle = "#66736b";
-        ctx.font = "14px Inter, sans-serif";
-        ctx.textAlign = "center";
-        ctx.fillText("Sem despesas no mês", cx, cy);
+      if (dados.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--muted)">Nenhum lançamento ainda</td></tr>';
+        document.getElementById('countLancamentos').textContent = '0 registros';
         return;
       }
 
-      let start = -Math.PI / 2;
-      entries.forEach(([, value], i) => {
-        const angle = (value / total) * Math.PI * 2;
-        ctx.beginPath();
-        ctx.arc(cx, cy, radius, start, start + angle);
-        ctx.lineWidth = 32;
-        ctx.strokeStyle = colors[i];
-        ctx.stroke();
-        start += angle;
-      });
-
-      ctx.fillStyle = "#17211c";
-      ctx.font = "700 22px Inter, sans-serif";
-      ctx.textAlign = "center";
-      ctx.fillText(money(total), cx, cy + 6);
-      ctx.fillStyle = "#66736b";
-      ctx.font = "12px Inter, sans-serif";
-      ctx.fillText("despesas", cx, cy + 28);
-
-      ctx.textAlign = "left";
-      entries.forEach(([name, value], i) => {
-        const x = 18 + (i % 2) * (rect.width / 2);
-        const y = rect.height - 72 + Math.floor(i / 2) * 24;
-        ctx.fillStyle = colors[i];
-        ctx.fillRect(x, y - 10, 10, 10);
-        ctx.fillStyle = "#17211c";
-        ctx.font = "12px Inter, sans-serif";
-        ctx.fillText(`${name} ${Math.round((value / total) * 100)}%`, x + 16, y);
-      });
-    }
-
-    function drawCategoryBars() {
-      const canvas = document.querySelector("#categoryChart");
-      const ctx = canvas.getContext("2d");
-      const rect = canvas.getBoundingClientRect();
-      if (rect.width < 20 || rect.height < 20) return;
-      canvas.width = rect.width * devicePixelRatio;
-      canvas.height = rect.height * devicePixelRatio;
-      ctx.scale(devicePixelRatio, devicePixelRatio);
-      ctx.clearRect(0, 0, rect.width, rect.height);
-
-      const entries = Object.entries(byCategory()).sort((a, b) => b[1] - a[1]).slice(0, 8);
-      const max = Math.max(1, ...entries.map(([, v]) => v));
-      const left = 110;
-      const top = 22;
-      const barH = 22;
-      const gap = 14;
-
-      if (!entries.length) {
-        ctx.fillStyle = "#66736b";
-        ctx.font = "14px Inter, sans-serif";
-        ctx.fillText("Sem despesas cadastradas.", 20, 40);
-        return;
-      }
-
-      entries.forEach(([name, value], i) => {
-        const y = top + i * (barH + gap);
-        ctx.fillStyle = "#66736b";
-        ctx.font = "13px Inter, sans-serif";
-        ctx.fillText(name, 16, y + 16);
-        ctx.fillStyle = "#e8eee8";
-        ctx.fillRect(left, y, rect.width - left - 110, barH);
-        ctx.fillStyle = i < 3 ? "#166534" : "#0f766e";
-        ctx.fillRect(left, y, ((rect.width - left - 110) * value) / max, barH);
-        ctx.fillStyle = "#17211c";
-        ctx.font = "700 13px Inter, sans-serif";
-        ctx.fillText(money(value), rect.width - 96, y + 16);
-      });
-    }
-
-    function renderMetrics() {
-      const t = totals();
-      document.querySelector("#metricBalance").textContent = money(t.balance);
-      document.querySelector("#metricBalance").className = t.balance >= 0 ? "positive" : "negative";
-      document.querySelector("#metricIncome").textContent = money(t.income);
-      document.querySelector("#metricExpense").textContent = money(t.expense);
-      document.querySelector("#metricSavings").textContent = pct(t.savingsRate);
-      document.querySelector("#metricSavings").className = t.savingsRate >= 20 ? "positive" : t.savingsRate >= 5 ? "warning" : "negative";
-      document.querySelector("#metricBalanceHint").textContent = t.balance >= 0 ? "Sobrou dinheiro no mês" : "Gastos acima da renda";
-      document.querySelector("#currentMonthLabel").textContent = today.toLocaleDateString("pt-BR", { month: "long", year: "numeric" });
-
-      const score = Math.max(0, Math.min(100, Math.round(45 + Math.min(t.savingsRate, 35) + (state.goals.length ? 10 : 0) - (t.balance < 0 ? 25 : 0))));
-      document.querySelector("#healthScore").textContent = `${score}%`;
-      document.querySelector("#healthLabel").textContent = score >= 75 ? "Muito bom" : score >= 55 ? "Em evolução" : "Precisa de atenção";
-    }
-
-    function renderTransactions() {
-      const tbody = document.querySelector("#transactionTable");
-      const filter = document.querySelector("#filterType").value;
-      const search = document.querySelector("#searchInput").value.toLowerCase();
-      let rows = [...state.transactions].sort((a, b) => b.date.localeCompare(a.date));
-      if (filter !== "all") rows = rows.filter(t => t.type === filter);
-      if (search) rows = rows.filter(t => `${t.description} ${t.category}`.toLowerCase().includes(search));
-
-      document.querySelector("#transactionCount").textContent = `${rows.length} lançamento${rows.length === 1 ? "" : "s"}`;
-      tbody.innerHTML = rows.map(t => `
-        <tr>
-          <td>${new Date(t.date + "T00:00:00").toLocaleDateString("pt-BR")}</td>
-          <td><strong>${escapeHtml(t.description)}</strong></td>
-          <td class="hide-mobile">${escapeHtml(t.category)}</td>
-          <td><span class="pill ${t.type}">${t.type === "income" ? "Receita" : "Despesa"}</span></td>
-          <td class="amount ${t.type === "income" ? "positive" : "negative"}">${t.type === "income" ? "+" : "-"} ${money(t.amount)}</td>
-          <td><button class="btn danger" data-delete-transaction="${t.id}" title="Excluir">Excluir</button></td>
-        </tr>
-      `).join("") || `<tr><td colspan="6"><div class="empty">Nenhum lançamento encontrado.</div></td></tr>`;
-    }
-
-    function renderBudgets() {
-      const list = document.querySelector("#budgetList");
-      const spent = byCategory();
-      document.querySelector("#budgetSummary").textContent = `${state.budgets.length} categoria${state.budgets.length === 1 ? "" : "s"}`;
-      list.innerHTML = state.budgets.map(b => {
-        const used = spent[b.category] || 0;
-        const ratio = b.limit ? Math.min(100, (used / b.limit) * 100) : 0;
-        const status = used > b.limit ? "negative" : ratio > 80 ? "warning" : "positive";
-        return `
-          <div class="row-item">
-            <div>
-              <strong>${escapeHtml(b.category)}</strong>
-              <span>${money(used)} de ${money(b.limit)} usados</span>
-              <div class="progress"><div style="width:${ratio}%; background:${status === "negative" ? "var(--red)" : status === "warning" ? "var(--amber)" : "linear-gradient(90deg,var(--green),var(--teal))"}"></div></div>
-            </div>
-            <button class="btn danger" data-delete-budget="${b.category}" title="Excluir">Excluir</button>
-          </div>
+      dados.sort((a, b) => new Date(b.data) - new Date(a.data));
+      dados.forEach(d => {
+        const tr = document.createElement('tr');
+        const classe = d.tipo === 'receita' ? 'positive' : 'negative';
+        tr.innerHTML = `
+          <td>${new Date(d.data).toLocaleDateString('pt-BR')}</td>
+          <td>${d.descricao}</td>
+          <td>${d.categoria}</td>
+          <td><span class="pill ${d.tipo}">${d.tipo}</span></td>
+          <td class="amount" style="color: var(--${classe === 'positive' ? 'green' : 'red'})">${d.tipo === 'receita' ? '+' : '-'} R$ ${d.valor.toFixed(2).replace('.', ',')}</td>
         `;
-      }).join("") || `<div class="empty">Nenhum orçamento cadastrado.</div>`;
-    }
-
-    function renderGoals() {
-      const list = document.querySelector("#goalList");
-      document.querySelector("#goalSummary").textContent = `${state.goals.length} meta${state.goals.length === 1 ? "" : "s"}`;
-      list.innerHTML = state.goals.map(g => {
-        const ratio = g.target ? Math.min(100, (g.saved / g.target) * 100) : 0;
-        return `
-          <div class="row-item">
-            <div>
-              <strong>${escapeHtml(g.name)}</strong>
-              <span>${money(g.saved)} de ${money(g.target)} guardados</span>
-              <div class="progress"><div style="width:${ratio}%"></div></div>
-            </div>
-            <button class="btn danger" data-delete-goal="${g.id}" title="Excluir">Excluir</button>
-          </div>
-        `;
-      }).join("") || `<div class="empty">Nenhuma meta cadastrada.</div>`;
-    }
-
-    function renderDebts() {
-      const list = document.querySelector("#debtList");
-      document.querySelector("#debtSummary").textContent = `${state.debts.length} dívida${state.debts.length === 1 ? "" : "s"}`;
-      list.innerHTML = state.debts.map(d => {
-        const ratio = d.total ? Math.min(100, (d.paid / d.total) * 100) : 0;
-        const remaining = Math.max(0, d.total - d.paid);
-        return `
-          <div class="row-item">
-            <div>
-              <strong>${escapeHtml(d.name)}</strong>
-              <span>${money(remaining)} restante de ${money(d.total)}</span>
-              <div class="progress"><div style="width:${ratio}%; background:linear-gradient(90deg,var(--amber),var(--green))"></div></div>
-            </div>
-            <button class="btn danger" data-delete-debt="${d.id}" title="Excluir">Excluir</button>
-          </div>
-        `;
-      }).join("") || `<div class="empty">Nenhuma dívida cadastrada.</div>`;
-    }
-
-    function renderInsights() {
-      const t = totals();
-      const spent = byCategory();
-      const biggest = Object.entries(spent).sort((a, b) => b[1] - a[1])[0];
-      const insights = [];
-
-      if (t.balance < 0) insights.push({ type: "bad", text: `Seu mês está negativo em ${money(Math.abs(t.balance))}. Priorize cortar gastos variáveis.` });
-      else insights.push({ type: "", text: `Seu saldo mensal está positivo em ${money(t.balance)}.` });
-
-      if (t.savingsRate < 10) insights.push({ type: "warn", text: `Sua taxa de poupança está em ${pct(t.savingsRate)}. Uma meta inicial saudável é chegar perto de 10%.` });
-      else insights.push({ type: "", text: `Boa margem de poupança: ${pct(t.savingsRate)} da renda ficou disponível.` });
-
-      if (biggest) insights.push({ type: "warn", text: `Maior categoria de despesa: ${biggest[0]}, com ${money(biggest[1])}.` });
-
-      document.querySelector("#insights").innerHTML = insights.map(i => `<div class="insight ${i.type}">${i.text}</div>`).join("");
-      document.querySelector("#reportInsights").innerHTML = [
-        ...insights,
-        { type: "", text: `Metas cadastradas: ${state.goals.length}. Dívidas acompanhadas: ${state.debts.length}.` }
-      ].map(i => `<div class="insight ${i.type}">${i.text}</div>`).join("");
-    }
-
-    function renderCharts() {
-      if (document.body.classList.contains("auth-lock")) return;
-      drawFlowChart();
-      drawDonut("#donutChart", byCategory());
-      drawCategoryBars();
-    }
-
-    function renderAll() {
-      save();
-      renderMetrics();
-      renderTransactions();
-      renderBudgets();
-      renderGoals();
-      renderDebts();
-      renderInsights();
-      renderAI();
-      renderCharts();
-    }
-
-    function escapeHtml(value) {
-      return String(value).replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[ch]));
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-
-  const loginForm = document.querySelector("#loginForm");
-  const registerForm = document.querySelector("#registerForm");
-
-  if (loginForm) {
-    loginForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      loginAccount(
-        document.querySelector("#loginEmail").value,
-        document.querySelector("#loginPassword").value
-      );
-    });
-  }
-
-  if (registerForm) {
-    registerForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      registerAccount({
-        name: document.querySelector("#registerName").value,
-        email: document.querySelector("#registerEmail").value,
-        password: document.querySelector("#registerPassword").value,
-        confirm: document.querySelector("#registerConfirm").value,
-        accepted: document.querySelector("#registerTerms").checked
+        tbody.appendChild(tr);
       });
-    });
 
+      document.getElementById('countLancamentos').textContent = dados.length + ' registros';
+    }
 
-    document.querySelectorAll("[data-section], [data-section-jump]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const target = btn.dataset.section || btn.dataset.sectionJump;
-        document.querySelectorAll(".section").forEach(s => s.classList.toggle("active", s.id === target));
-        document.querySelectorAll(".nav button").forEach(n => n.classList.toggle("active", n.dataset.section === target));
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        if (target === "transactions" && btn.dataset.sectionJump) {
-          setTimeout(() => document.querySelector("[name=description]")?.focus(), 220);
-        }
-        requestAnimationFrame(renderCharts);
-      });
-    });
+    // ==================== IA ====================
+    function sendPrompt(prompt = null) {
+      const prompt_text = prompt || document.getElementById('aiPrompt').value;
+      if (!prompt_text.trim()) return;
 
-    document.querySelector("#transactionForm").addEventListener("submit", event => {
-      event.preventDefault();
-      const data = Object.fromEntries(new FormData(event.currentTarget));
-      const amount = toNumber(data.amount);
-      const description = cleanText(data.description, "");
-      if (amount <= 0) return alert("Digite um valor maior que zero.");
-      if (!validDate(data.date)) return alert("Escolha uma data válida.");
-      if (!description) return alert("Descreva o lançamento.");
-      state.transactions.push({
-        id: uid(),
-        type: data.type,
-        category: data.category,
-        amount,
-        date: data.date,
-        description
-      });
-      event.currentTarget.reset();
-      document.querySelector("[name=date]").value = todayKey;
-      renderAll();
-    });
+      const msg_div = document.createElement('div');
+      msg_div.className = 'message user';
+      msg_div.textContent = prompt_text;
+      document.getElementById('chatMessages').appendChild(msg_div);
 
-    document.querySelector("#budgetForm").addEventListener("submit", event => {
-      event.preventDefault();
-      const data = Object.fromEntries(new FormData(event.currentTarget));
-      const limit = toNumber(data.limit);
-      if (limit <= 0) return alert("Digite um limite maior que zero.");
-      state.budgets = state.budgets.filter(b => b.category !== data.category);
-      state.budgets.push({ category: data.category, limit });
-      event.currentTarget.reset();
-      renderAll();
-    });
+      document.getElementById('aiPrompt').value = '';
 
-    document.querySelector("#goalForm").addEventListener("submit", event => {
-      event.preventDefault();
-      const data = Object.fromEntries(new FormData(event.currentTarget));
-      const target = toNumber(data.target);
-      const saved = Math.max(0, toNumber(data.saved));
-      const name = cleanText(data.name, "");
-      if (!name) return alert("Digite o nome da meta.");
-      if (target <= 0) return alert("Digite um valor alvo maior que zero.");
-      state.goals.push({ id: uid(), name, target, saved: Math.min(saved, target) });
-      event.currentTarget.reset();
-      renderAll();
-    });
+      setTimeout(() => {
+        const resp_div = document.createElement('div');
+        resp_div.className = 'message ai';
+        resp_div.textContent = 'Analisando seus dados financeiros... Esta é uma demonstração. Dados reais viriam de uma API.';
+        document.getElementById('chatMessages').appendChild(resp_div);
+        document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+      }, 500);
+    }
 
-    document.querySelector("#debtForm").addEventListener("submit", event => {
-      event.preventDefault();
-      const data = Object.fromEntries(new FormData(event.currentTarget));
-      const total = toNumber(data.total);
-      const paid = Math.max(0, toNumber(data.paid));
-      const name = cleanText(data.name, "");
-      if (!name) return alert("Digite o nome da dívida.");
-      if (total <= 0) return alert("Digite o total da dívida.");
-      state.debts.push({ id: uid(), name, total, paid: Math.min(paid, total) });
-      event.currentTarget.reset();
-      renderAll();
-    });
-
-    document.querySelector("#aiForm").addEventListener("submit", event => {
-      event.preventDefault();
-      const input = document.querySelector("#aiQuestion");
-      const question = input.value.trim();
-      if (!question) return;
-      pushAiMessage("user", question);
-      input.value = "";
-      pushAiMessage("ai", aiAnswer(question));
-    });
-
-    document.querySelectorAll(".ai-prompt").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const prompt = btn.dataset.prompt;
-        pushAiMessage("user", prompt);
-        pushAiMessage("ai", aiAnswer(prompt));
-      });
-    });
-
-    document.body.addEventListener("click", event => {
-      const btn = event.target.closest("button");
-      if (!btn) return;
-      if (btn.dataset.deleteTransaction) state.transactions = state.transactions.filter(t => t.id !== btn.dataset.deleteTransaction);
-      if (btn.dataset.deleteBudget) state.budgets = state.budgets.filter(b => b.category !== btn.dataset.deleteBudget);
-      if (btn.dataset.deleteGoal) state.goals = state.goals.filter(g => g.id !== btn.dataset.deleteGoal);
-      if (btn.dataset.deleteDebt) state.debts = state.debts.filter(d => d.id !== btn.dataset.deleteDebt);
-      if (btn.dataset.deleteTransaction || btn.dataset.deleteBudget || btn.dataset.deleteGoal || btn.dataset.deleteDebt) renderAll();
-    });
-
-    document.querySelector("#filterType").addEventListener("change", renderTransactions);
-    document.querySelector("#searchInput").addEventListener("input", renderTransactions);
-
-    document.querySelector("#resetBtn").addEventListener("click", () => {
-      if (!confirm("Deseja limpar todos os dados e voltar ao exemplo inicial?")) return;
-      state = clone(sample);
-      renderAll();
-    });
-
-    document.querySelector("#logoutBtn").addEventListener("click", logoutAccount);
-
-    document.querySelector("#exportBtn").addEventListener("click", exportData);
-
-    document.querySelector("#importBtn").addEventListener("click", () => {
-      document.querySelector("#importFile").click();
-    });
-
-    document.querySelector("#importFile").addEventListener("change", event => {
-      const file = event.currentTarget.files?.[0];
-      if (file) importData(file);
-      event.currentTarget.value = "";
-    });
-
-    document.querySelector("#printReportBtn").addEventListener("click", () => {
-      window.print();
-    });
-
-    document.querySelector("#shareBtn").addEventListener("click", async () => {
-      const shareData = {
-        title: "FinanPro",
-        text: "Organize suas finanças com dashboard, metas, dívidas, orçamento e IA financeira.",
-        url: location.href
-      };
-      if (navigator.share) {
-        try {
-          await navigator.share(shareData);
-          return;
-        } catch {}
-      }
-      try {
-        await navigator.clipboard.writeText(location.href);
-        alert("Link copiado. Agora é só enviar para quem quiser usar o FinanPro.");
-      } catch {
-        prompt("Copie o link do app:", location.href);
+    // ==================== INICIALIZAR ====================
+    window.addEventListener('load', () => {
+      const loginBtn = document.querySelector('[data-auth-mode="login"]');
+      if (loginBtn && document.body.classList.contains('auth-lock')) {
+        loginBtn.click();
       }
     });
-  <script>
-    window.addEventListener("DOMContentLoaded", () => {
-
-  console.log("🔥 SCRIPT CARREGOU");
-
-  // proteção total contra erro quebrar tudo
-  try {
-
-    if ("serviceWorker" in navigator && location.protocol !== "file:") {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./service-worker.js").catch(() => {});
-      });
-    }
-
-    window.addEventListener("resize", () => {
-      if (typeof renderCharts === "function") {
-        requestAnimationFrame(renderCharts);
-      }
-    });
-
-    if (typeof setupSelects === "function") setupSelects();
-    if (typeof setAuthView === "function") setAuthView();
-
-    const loginForm = document.querySelector("#loginForm");
-    const registerForm = document.querySelector("#registerForm");
-
-    loginForm?.addEventListener("submit", (event) => {
-      event.preventDefault();
-
-      loginAccount(
-        document.querySelector("#loginEmail").value,
-        document.querySelector("#loginPassword").value
-      );
-    });
-
-    registerForm?.addEventListener("submit", (event) => {
-      event.preventDefault();
-
-      registerAccount({
-        name: document.querySelector("#registerName").value,
-        email: document.querySelector("#registerEmail").value,
-        password: document.querySelector("#registerPassword").value,
-        confirm: document.querySelector("#registerConfirm").value,
-        accepted: document.querySelector("#registerTerms").checked
-      });
-    });
-
-    document.querySelectorAll("[data-auth-mode]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        switchAuthMode(btn.dataset.authMode);
-      });
-    });
-
-    if (typeof renderAll === "function" && typeof currentUser !== "undefined") {
-      if (currentUser) renderAll();
-    }
-
-  } catch (err) {
-    console.error("💥 ERRO NO SCRIPT:", err);
-  }
-
-});
   </script>
 </body>
 </html>
