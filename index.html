@@ -2498,7 +2498,7 @@
         prompt("Copie o link do app:", location.href);
       }
     });
-<script>
+  <script>
     if ("serviceWorker" in navigator && location.protocol !== "file:") {
       window.addEventListener("load", () => {
         navigator.serviceWorker.register("./service-worker.js").catch(() => {});
