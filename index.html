@@ -968,6 +968,15 @@
           </label>
           <button class="btn primary" type="submit">Entrar no app</button>
           <a href="#" onclick="resetSenha()">Esqueci minha senha</a>
+          <script>
+function resetSenha() {
+  const email = prompt("Digite seu e-mail:");
+
+  if (!email) return;
+
+  alert("Se esse e-mail existir, enviamos um link de recuperação para: " + email);
+}
+</script>
         </form>
 
         <form class="auth-form" id="registerForm">
