@@ -2514,6 +2514,33 @@
 
   setupSelects?.();
   setAuthView?.();
+      const loginForm = document.querySelector("#loginForm");
+const registerForm = document.querySelector("#registerForm");
+
+if (loginForm) {
+  loginForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    loginAccount(
+      document.querySelector("#loginEmail").value,
+      document.querySelector("#loginPassword").value
+    );
+  });
+}
+
+if (registerForm) {
+  registerForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    registerAccount({
+      name: document.querySelector("#registerName").value,
+      email: document.querySelector("#registerEmail").value,
+      password: document.querySelector("#registerPassword").value,
+      confirm: document.querySelector("#registerConfirm").value,
+      accepted: document.querySelector("#registerTerms").checked
+    });
+  });
+}
 
   if (currentUser) renderAll?.();
 });
