@@ -253,6 +253,21 @@
     .filter-bar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
     .filter-bar select, .filter-bar input { min-height: 36px; padding: 0 10px; font-size: 13px; width: auto; }
 
+    /* IA Chat */
+    .ia-msg { display:flex; gap:10px; align-items:flex-start; }
+    .ia-msg.user { flex-direction:row-reverse; }
+    .ia-avatar { width:32px; height:32px; border-radius:50%; display:grid; place-items:center; font-size:14px; flex-shrink:0; }
+    .ia-avatar.bot { background:#e8f3ea; }
+    .ia-avatar.user { background:var(--green); color:white; }
+    .ia-bubble { max-width:80%; padding:12px 14px; border-radius:12px; font-size:14px; line-height:1.55; }
+    .ia-bubble.bot { background:var(--surface-2); border-radius:12px 12px 12px 2px; }
+    .ia-bubble.user { background:var(--green); color:white; border-radius:12px 12px 2px 12px; }
+    .ia-typing { display:flex; gap:4px; align-items:center; padding:14px; }
+    .ia-typing span { width:7px; height:7px; border-radius:50%; background:var(--muted); animation:typing 1s infinite; }
+    .ia-typing span:nth-child(2) { animation-delay:0.2s; }
+    .ia-typing span:nth-child(3) { animation-delay:0.4s; }
+    @keyframes typing { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
+
     @media (max-width: 1100px) {
       .app { grid-template-columns: 1fr; }
       .sidebar { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
@@ -389,6 +404,10 @@
           <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
           Orçamentos
         </button>
+        <button onclick="showPage('ia', this)">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+          IA Financeira
+        </button>
       </nav>
       <div class="side-panel">
         <span class="caption">Saldo Total</span>
@@ -520,6 +539,44 @@
         </div>
         <div id="orcGrid" class="grid" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
           <div class="empty">Nenhum orçamento criado. Clique em "+ Novo Orçamento".</div>
+        </div>
+      </section>
+
+      <!-- IA Financeira -->
+      <section id="ia" class="section">
+        <div class="topbar">
+          <div class="title-block">
+            <h1>IA Financeira</h1>
+            <p>Tire dúvidas, peça análises e receba sugestões personalizadas sobre suas finanças</p>
+          </div>
+          <div class="top-actions">
+            <button class="btn" onclick="clearIAChat()">Limpar conversa</button>
+          </div>
+        </div>
+
+        <div class="card panel" style="margin-bottom:16px;">
+          <p style="margin:0 0 10px; font-size:13px; color:var(--muted); font-weight:700;">Sugestões rápidas:</p>
+          <div style="display:flex; flex-wrap:wrap; gap:8px;">
+            <button class="btn small" onclick="sendQuickIA('Analise meus gastos do mês atual e dê sugestões de economia')">📊 Analisar gastos</button>
+            <button class="btn small" onclick="sendQuickIA('Como estão minhas metas financeiras? Vou conseguir atingi-las?')">🎯 Avaliar metas</button>
+            <button class="btn small" onclick="sendQuickIA('Estou dentro do orçamento este mês? Onde estou gastando mais?')">💰 Verificar orçamento</button>
+            <button class="btn small" onclick="sendQuickIA('Me dê dicas para economizar mais dinheiro baseado no meu perfil financeiro')">💡 Dicas de economia</button>
+            <button class="btn small" onclick="sendQuickIA('Faça um resumo completo da minha situação financeira atual')">📋 Resumo financeiro</button>
+          </div>
+        </div>
+
+        <div class="card panel" style="display:flex; flex-direction:column; gap:0;">
+          <div id="iaChatBox" style="min-height:380px; max-height:480px; overflow-y:auto; display:flex; flex-direction:column; gap:14px; padding-bottom:8px;">
+            <div style="text-align:center; color:var(--muted); padding:40px 20px;">
+              <div style="font-size:32px; margin-bottom:12px;">🤖</div>
+              <p style="margin:0; font-weight:700;">Olá! Sou sua IA financeira.</p>
+              <p style="margin:8px 0 0; font-size:13px;">Pergunte qualquer coisa sobre suas finanças ou use as sugestões acima.</p>
+            </div>
+          </div>
+          <div style="border-top:1px solid var(--line); padding-top:14px; margin-top:8px; display:flex; gap:10px; align-items:flex-end;">
+            <textarea id="iaInput" placeholder="Ex: Onde posso cortar gastos? Como estão minhas metas?" style="flex:1; min-height:52px; max-height:120px; resize:none;" onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault(); sendIAMessage();}"></textarea>
+            <button class="btn primary" onclick="sendIAMessage()" id="iaSendBtn" style="align-self:flex-end; min-height:52px; padding:0 20px;">Enviar</button>
+          </div>
         </div>
       </section>
 
@@ -1200,6 +1257,129 @@
             </tbody></table></div>`;
         }
       }
+    }
+  </script>
+  <!-- IA Financeira -->
+  <script>
+    const GEMINI_KEY = 'AIzaSyCbc0uJ6Bzc3R4j3OMo1A9n4wrni8kBTBs';
+    const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
+    let iaHistory = [];
+
+    function getFinancialContext() {
+      const mes = currentMonth();
+      const lancamentos = loadData('lancamentos');
+      const metas = loadData('metas');
+      const orcamentos = loadData('orcamentos');
+
+      const receitasMes = lancamentos.filter(l => l.tipo==='receita' && l.data && l.data.startsWith(mes));
+      const despesasMes = lancamentos.filter(l => l.tipo==='despesa' && l.data && l.data.startsWith(mes));
+      const totalReceita = receitasMes.reduce((a,l) => a+l.valor, 0);
+      const totalDespesa = despesasMes.reduce((a,l) => a+l.valor, 0);
+
+      const gastosPorCat = {};
+      despesasMes.forEach(l => { gastosPorCat[l.cat] = (gastosPorCat[l.cat]||0) + l.valor; });
+
+      return `
+Contexto financeiro atual do usuário (${mes}):
+- Receitas do mês: R$ ${totalReceita.toFixed(2)}
+- Despesas do mês: R$ ${totalDespesa.toFixed(2)}
+- Saldo do mês: R$ ${(totalReceita-totalDespesa).toFixed(2)}
+- Gastos por categoria: ${JSON.stringify(gastosPorCat)}
+- Metas ativas: ${metas.length} metas. ${metas.map(m=>`"${m.nome}": R$${m.atual}/${m.alvo} (${Math.round(m.atual/m.alvo*100)}%)`).join(', ')}
+- Orçamentos: ${orcamentos.map(o=>`${o.cat}: limite R$${o.limite}`).join(', ')}
+- Histórico recente: ${lancamentos.slice(-10).map(l=>`${l.tipo} ${l.cat} R$${l.valor}`).join(', ')}
+      `.trim();
+    }
+
+    function addIAMessage(text, role) {
+      const box = document.getElementById('iaChatBox');
+      const isBot = role === 'bot';
+      const div = document.createElement('div');
+      div.className = `ia-msg ${role}`;
+      div.innerHTML = `
+        <div class="ia-avatar ${role}">${isBot ? '🤖' : '👤'}</div>
+        <div class="ia-bubble ${role}">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\*(.*?)\*/g,'<em>$1</em>')}</div>
+      `;
+      box.appendChild(div);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function addTyping() {
+      const box = document.getElementById('iaChatBox');
+      const div = document.createElement('div');
+      div.className = 'ia-msg bot';
+      div.id = 'iaTyping';
+      div.innerHTML = `<div class="ia-avatar bot">🤖</div><div class="ia-bubble bot"><div class="ia-typing"><span></span><span></span><span></span></div></div>`;
+      box.appendChild(div);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function removeTyping() {
+      const t = document.getElementById('iaTyping');
+      if (t) t.remove();
+    }
+
+    async function sendIAMessage() {
+      const input = document.getElementById('iaInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      input.value = '';
+      document.getElementById('iaSendBtn').disabled = true;
+
+      // Limpa tela inicial se existir
+      const box = document.getElementById('iaChatBox');
+      if (box.querySelector('p')) box.innerHTML = '';
+
+      addIAMessage(text, 'user');
+      addTyping();
+
+      iaHistory.push({ role: 'user', parts: [{ text }] });
+
+      const systemPrompt = `Você é uma IA financeira pessoal integrada ao app FinanPro. Responda sempre em português brasileiro de forma clara, objetiva e amigável. Use emojis com moderação. Forneça análises práticas e sugestões concretas baseadas nos dados do usuário. ${getFinancialContext()}`;
+
+      try {
+        const res = await fetch(GEMINI_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            system_instruction: { parts: [{ text: systemPrompt }] },
+            contents: iaHistory,
+            generationConfig: { temperature: 0.7, maxOutputTokens: 1024 }
+          })
+        });
+
+        const data = await res.json();
+        removeTyping();
+
+        if (data.candidates && data.candidates[0]) {
+          const reply = data.candidates[0].content.parts[0].text;
+          iaHistory.push({ role: 'model', parts: [{ text: reply }] });
+          addIAMessage(reply, 'bot');
+        } else {
+          addIAMessage('Desculpe, não consegui processar sua pergunta. Tente novamente.', 'bot');
+        }
+      } catch (e) {
+        removeTyping();
+        addIAMessage('Erro de conexão. Verifique sua internet e tente novamente.', 'bot');
+      }
+
+      document.getElementById('iaSendBtn').disabled = false;
+      input.focus();
+    }
+
+    function sendQuickIA(msg) {
+      document.getElementById('iaInput').value = msg;
+      sendIAMessage();
+    }
+
+    function clearIAChat() {
+      iaHistory = [];
+      document.getElementById('iaChatBox').innerHTML = `
+        <div style="text-align:center; color:var(--muted); padding:40px 20px;">
+          <div style="font-size:32px; margin-bottom:12px;">🤖</div>
+          <p style="margin:0; font-weight:700;">Conversa limpa! Como posso ajudar?</p>
+        </div>`;
     }
   </script>
 </body>
