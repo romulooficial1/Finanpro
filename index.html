@@ -228,22 +228,50 @@
       margin-top: 1px;
     }
 
-    .auth-check a {
+    .auth-check a, .forgot-link {
       color: var(--green);
       font-weight: 800;
       text-decoration: none;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      font: inherit;
     }
 
-    .auth-check a:hover { text-decoration: underline; }
+    .auth-check a:hover, .forgot-link:hover { text-decoration: underline; }
 
     .auth-message {
       min-height: 22px;
+      padding: 10px 12px;
+      border-radius: 6px;
       color: var(--red);
       font-size: 13px;
       font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .auth-message.success { color: var(--green); }
+    .auth-message.success { 
+      color: var(--green);
+      background: #f0fdf4;
+      border: 1px solid #dcfce7;
+    }
+
+    .auth-message.error { 
+      color: var(--red);
+      background: #fef2f2;
+      border: 1px solid #fee4e2;
+    }
+
+    .auth-message.info {
+      color: var(--blue);
+      background: #f0f9ff;
+      border: 1px solid #cffafe;
+    }
+
+    .auth-message.hidden { display: none; }
 
     .app {
       min-height: 100vh;
@@ -336,13 +364,18 @@
       font-size: 12px;
     }
 
-    .legal-links a {
+    .legal-links a, .legal-links button {
       color: var(--muted);
       text-decoration: none;
       font-weight: 700;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      font: inherit;
     }
 
-    .legal-links a:hover { color: var(--green); }
+    .legal-links a:hover, .legal-links button:hover { color: var(--green); }
 
     main {
       padding: 26px;
@@ -414,6 +447,12 @@
       min-height: 32px;
       padding: 0 10px;
       font-size: 12px;
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      pointer-events: none;
     }
 
     .grid {
@@ -517,35 +556,6 @@
       display: block;
     }
 
-    .tabs {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin: 16px 0;
-    }
-
-    .tab {
-      min-height: 38px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: white;
-      padding: 0 12px;
-      color: var(--muted);
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 160ms;
-    }
-
-    .tab:hover {
-      border-color: var(--green);
-    }
-
-    .tab.active {
-      color: white;
-      background: var(--ink);
-      border-color: var(--ink);
-    }
-
     .section { display: none; }
     .section.active { display: block; }
 
@@ -569,7 +579,7 @@
       text-transform: uppercase;
     }
 
-    input, select {
+    input, select, textarea {
       width: 100%;
       min-height: 42px;
       border: 1px solid var(--line);
@@ -581,114 +591,22 @@
       transition: all 160ms;
     }
 
-    input:focus, select:focus {
+    textarea {
+      min-height: auto;
+      padding: 12px;
+      resize: vertical;
+    }
+
+    input:focus, select:focus, textarea:focus {
       border-color: var(--green);
       box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.16);
     }
 
+    input:invalid, input.error {
+      border-color: var(--red);
+    }
+
     .full { grid-column: 1 / -1; }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-    }
-
-    th, td {
-      padding: 12px 10px;
-      border-bottom: 1px solid var(--line);
-      text-align: left;
-      vertical-align: middle;
-    }
-
-    th {
-      color: var(--muted);
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0;
-    }
-
-    td.amount {
-      text-align: right;
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      min-height: 26px;
-      padding: 0 9px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 800;
-      background: var(--surface-2);
-      color: var(--muted);
-    }
-
-    .pill.income { background: #dcfce7; color: var(--green); }
-    .pill.expense { background: var(--red-soft); color: var(--red); }
-
-    .list {
-      display: grid;
-      gap: 10px;
-    }
-
-    .row-item {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 12px;
-      align-items: center;
-      padding: 12px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: white;
-    }
-
-    .row-item strong { display: block; }
-    .row-item span { color: var(--muted); font-size: 13px; }
-    .row-item .actions { display: flex; gap: 8px; }
-
-    .progress {
-      width: 100%;
-      height: 9px;
-      background: #e8eee8;
-      border-radius: 999px;
-      overflow: hidden;
-      margin-top: 8px;
-    }
-
-    .progress div {
-      height: 100%;
-      background: linear-gradient(90deg, var(--green), var(--teal));
-      width: 0%;
-      transition: width 400ms ease;
-    }
-
-    .progress.warning div { background: linear-gradient(90deg, var(--amber), #d4a574); }
-    .progress.danger div { background: linear-gradient(90deg, var(--red), #d46565); }
-
-    .split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .insights {
-      display: grid;
-      gap: 10px;
-    }
-
-    .insight {
-      border-left: 4px solid var(--green);
-      background: #f6fbf6;
-      padding: 12px;
-      border-radius: 8px;
-      color: var(--ink);
-    }
-
-    .insight.warn { border-color: var(--amber); background: var(--amber-soft); }
-    .insight.bad { border-color: var(--red); background: var(--red-soft); }
 
     .empty {
       min-height: 160px;
@@ -700,165 +618,6 @@
       border-radius: var(--radius);
       background: #fbfcfb;
       padding: 24px;
-    }
-
-    .ai-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
-      gap: 16px;
-      align-items: start;
-    }
-
-    .ai-hero {
-      border: 1px solid #acd7e4;
-      border-radius: var(--radius);
-      background:
-        linear-gradient(135deg, rgba(36,91,127,0.12), transparent 44%),
-        linear-gradient(315deg, rgba(22,101,52,0.12), transparent 42%),
-        #ffffff;
-      padding: 22px;
-      box-shadow: var(--shadow);
-    }
-
-    .ai-hero h2 {
-      margin: 10px 0 8px;
-      font-size: clamp(26px, 4vw, 42px);
-      line-height: 1.05;
-    }
-
-    .ai-hero p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.55;
-    }
-
-    .ai-score-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 16px;
-    }
-
-    .ai-score {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: rgba(255,255,255,0.82);
-      padding: 14px;
-    }
-
-    .ai-score span {
-      display: block;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
-
-    .ai-score strong {
-      display: block;
-      margin-top: 8px;
-      font-size: 22px;
-    }
-
-    .quick-prompts {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 16px;
-    }
-
-    .quick-prompts button {
-      min-height: 48px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: #fff;
-      color: var(--ink);
-      font-weight: 800;
-      text-align: left;
-      padding: 0 12px;
-      cursor: pointer;
-      transition: all 160ms;
-    }
-
-    .quick-prompts button:hover {
-      border-color: #86c88d;
-      background: #f6fbf6;
-    }
-
-    .chat-shell {
-      display: grid;
-      grid-template-rows: auto minmax(360px, 1fr) auto;
-      min-height: 660px;
-    }
-
-    .chat-status {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--line);
-      margin-bottom: 12px;
-    }
-
-    .chat-status strong { display: block; }
-    .chat-status span { color: var(--muted); font-size: 13px; }
-
-    .chat-messages {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      overflow-y: auto;
-      padding-right: 6px;
-    }
-
-    .message {
-      max-width: 86%;
-      border-radius: 8px;
-      padding: 12px 14px;
-      line-height: 1.5;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      border: 1px solid var(--line);
-    }
-
-    .message.ai {
-      align-self: flex-start;
-      background: #f6fbf6;
-      border-color: #cfe7d2;
-    }
-
-    .message.user {
-      align-self: flex-end;
-      background: var(--ink);
-      border-color: var(--ink);
-      color: white;
-    }
-
-    .ai-input {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 10px;
-      padding-top: 12px;
-      border-top: 1px solid var(--line);
-      margin-top: 12px;
-    }
-
-    .ai-input textarea {
-      width: 100%;
-      min-height: 48px;
-      max-height: 140px;
-      resize: vertical;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 12px;
-      font: inherit;
-      outline: none;
-    }
-
-    .ai-input textarea:focus {
-      border-color: var(--green);
-      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.16);
     }
 
     .app-footer {
@@ -878,42 +637,18 @@
       text-decoration: none;
     }
 
-    .app-footer div {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
+    .loading-spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--muted);
+      border-top-color: var(--green);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
     }
 
-    .hide-mobile { display: table-cell; }
-
-    .loading { opacity: 0.6; pointer-events: none; }
-
-    .budget-item {
-      display: grid;
-      grid-template-columns: 1fr auto auto;
-      gap: 12px;
-      align-items: center;
-      padding: 14px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: white;
-      margin-bottom: 10px;
-    }
-
-    .budget-info h4 {
-      margin: 0;
-      font-size: 15px;
-    }
-
-    .budget-info .budget-amount {
-      color: var(--muted);
-      font-size: 13px;
-      margin-top: 4px;
-    }
-
-    .budget-actions {
-      display: flex;
-      gap: 6px;
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
 
     @media (max-width: 1100px) {
@@ -926,9 +661,8 @@
       }
       .nav { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .side-panel { display: none; }
-      .layout, .split { grid-template-columns: 1fr; }
+      .layout { grid-template-columns: 1fr; }
       .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .ai-layout { grid-template-columns: 1fr; }
       .auth-screen { grid-template-columns: 1fr; }
       .auth-copy { min-height: auto; }
       .auth-panel { min-height: auto; }
@@ -941,29 +675,9 @@
       .top-actions .btn { flex: 1; }
       .metrics, .form-grid, .form-grid.compact { grid-template-columns: 1fr; }
       .nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .hide-mobile { display: none; }
-      th, td { padding: 10px 6px; }
-      .chart-wrap { height: 250px; }
-      .quick-prompts, .ai-score-grid, .ai-input { grid-template-columns: 1fr; }
-      .message { max-width: 96%; }
       .auth-copy, .auth-panel { padding: 22px; }
       .auth-stats { grid-template-columns: 1fr; }
       .auth-copy h1 { font-size: 36px; }
-      .ai-layout { grid-template-columns: 1fr; }
-      .ai-layout { grid-template-columns: 1fr; }
-      .budget-item { grid-template-columns: 1fr; }
-      .row-item { grid-template-columns: 1fr; }
-    }
-
-    @media print {
-      body { background: #fff; }
-      .sidebar, .top-actions, .ai-input, .app-footer { display: none !important; }
-      .app { display: block; }
-      main { padding: 0; }
-      .section { display: none !important; }
-      #reports { display: block !important; }
-      .layout { grid-template-columns: 1fr; }
-      .card { box-shadow: none; break-inside: avoid; }
     }
   </style>
 </head>
@@ -996,60 +710,134 @@
 
     <div class="auth-panel">
       <div class="auth-box">
-        <h2>Acessar conta</h2>
-        <p>Use seu e-mail para manter os dados separados neste navegador.</p>
+        <!-- Sign In Tab -->
+        <div id="signinView">
+          <h2>Acessar conta</h2>
+          <p>Use seu e-mail para manter os dados separados neste navegador.</p>
 
-        <div class="auth-tabs">
-          <button class="active" onclick="showForm('signin')">Entrar</button>
-          <button onclick="showForm('signup')">Cadastro</button>
+          <form class="auth-form active" id="signinForm" onsubmit="handleSignIn(event)">
+            <label>
+              Email
+              <input type="email" placeholder="seu@email.com" id="signinEmail" required />
+            </label>
+
+            <label>
+              Senha
+              <input type="password" placeholder="••••••••" id="signinPassword" required />
+            </label>
+
+            <label class="auth-check">
+              <input type="checkbox" id="rememberMe" />
+              Lembrar de mim
+            </label>
+
+            <button type="submit" class="btn primary" id="signinBtn">
+              Entrar
+            </button>
+
+            <div class="auth-message hidden" id="signinMessage"></div>
+
+            <div style="text-align: center; margin-top: 12px; gap: 8px; display: flex; justify-content: center;">
+              <span style="color: var(--muted); font-size: 13px;">Não tem conta?</span>
+              <button type="button" class="forgot-link" onclick="showSignUp()" style="border: none; background: none; padding: 0;">Cadastre-se</button>
+            </div>
+
+            <div style="text-align: center; margin-top: 8px;">
+              <button type="button" class="forgot-link" onclick="showForgotPassword()" style="border: none; background: none; padding: 0; font-size: 13px;">Esqueceu a senha?</button>
+            </div>
+          </form>
         </div>
 
-        <!-- Sign In Form -->
-        <form class="auth-form active" id="signinForm" onsubmit="handleSignIn(event)">
-          <label>
-            Email
-            <input type="email" placeholder="seu@email.com" id="signinEmail" required />
-          </label>
+        <!-- Sign Up Tab -->
+        <div id="signupView" style="display: none;">
+          <h2>Criar conta</h2>
+          <p>Comece a organizar suas finanças agora</p>
 
-          <label>
-            Senha
-            <input type="password" placeholder="••••••••" id="signinPassword" required />
-          </label>
+          <form class="auth-form" id="signupForm" onsubmit="handleSignUp(event)">
+            <label>
+              Nome Completo
+              <input type="text" placeholder="Seu Nome" id="signupName" required />
+            </label>
 
-          <label class="auth-check">
-            <input type="checkbox" />
-            Lembrar de mim
-          </label>
+            <label>
+              Email
+              <input type="email" placeholder="seu@email.com" id="signupEmail" required />
+            </label>
 
-          <button type="submit" class="btn primary">Entrar</button>
-          <div class="auth-message" id="signinMessage"></div>
-        </form>
+            <label>
+              Senha
+              <input type="password" placeholder="Mínimo 6 caracteres" id="signupPassword" required minlength="6" />
+            </label>
 
-        <!-- Sign Up Form -->
-        <form class="auth-form" id="signupForm" onsubmit="handleSignUp(event)">
-          <label>
-            Nome Completo
-            <input type="text" placeholder="Seu Nome" id="signupName" required />
-          </label>
+            <label>
+              Confirmar Senha
+              <input type="password" placeholder="Repita a senha" id="signupConfirmPassword" required />
+            </label>
 
-          <label>
-            Email
-            <input type="email" placeholder="seu@email.com" id="signupEmail" required />
-          </label>
+            <label class="auth-check">
+              <input type="checkbox" id="agreeTerms" required />
+              Concordo com os <a href="termos.html" target="_blank">termos</a> e <a href="privacidade.html" target="_blank">privacidade</a>
+            </label>
 
-          <label>
-            Senha
-            <input type="password" placeholder="••••••••" id="signupPassword" required />
-          </label>
+            <button type="submit" class="btn primary" id="signupBtn">
+              Criar Conta
+            </button>
 
-          <label class="auth-check">
-            <input type="checkbox" required />
-            Concordo com os <a href="termos.html" target="_blank">termos</a> e <a href="privacidade.html" target="_blank">privacidade</a>
-          </label>
+            <div class="auth-message hidden" id="signupMessage"></div>
 
-          <button type="submit" class="btn primary">Criar Conta</button>
-          <div class="auth-message" id="signupMessage"></div>
-        </form>
+            <div style="text-align: center; margin-top: 12px;">
+              <span style="color: var(--muted); font-size: 13px;">Já tem conta?</span>
+              <button type="button" class="forgot-link" onclick="showSignIn()" style="border: none; background: none; padding: 0;">Entrar</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Forgot Password Tab -->
+        <div id="forgotPasswordView" style="display: none;">
+          <h2>Recuperar senha</h2>
+          <p>Digite seu email para receber instruções de recuperação</p>
+
+          <form class="auth-form" id="forgotPasswordForm" onsubmit="handleForgotPassword(event)">
+            <label>
+              Email
+              <input type="email" placeholder="seu@email.com" id="forgotEmail" required />
+            </label>
+
+            <button type="submit" class="btn primary" id="forgotBtn">
+              Enviar Link de Recuperação
+            </button>
+
+            <div class="auth-message hidden" id="forgotMessage"></div>
+
+            <div style="text-align: center; margin-top: 12px;">
+              <button type="button" class="forgot-link" onclick="showSignIn()" style="border: none; background: none; padding: 0; font-size: 13px;">Voltar para Login</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Reset Password Tab -->
+        <div id="resetPasswordView" style="display: none;">
+          <h2>Definir nova senha</h2>
+          <p>Crie uma nova senha para sua conta</p>
+
+          <form class="auth-form" id="resetPasswordForm" onsubmit="handleResetPassword(event)">
+            <label>
+              Nova Senha
+              <input type="password" placeholder="Mínimo 6 caracteres" id="resetPassword" required minlength="6" />
+            </label>
+
+            <label>
+              Confirmar Senha
+              <input type="password" placeholder="Repita a senha" id="resetConfirmPassword" required />
+            </label>
+
+            <button type="submit" class="btn primary" id="resetBtn">
+              Atualizar Senha
+            </button>
+
+            <div class="auth-message hidden" id="resetMessage"></div>
+          </form>
+        </div>
       </div>
     </div>
   </section>
@@ -1089,18 +877,6 @@
           </svg>
           Orçamentos
         </button>
-        <button onclick="showPage('relatorios')">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-          </svg>
-          Relatórios
-        </button>
-        <button onclick="showPage('ia')">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 012.05 12a6 6 0 0110.659-5.659l.747.747" />
-          </svg>
-          IA Financeira
-        </button>
       </nav>
 
       <div class="side-panel">
@@ -1112,7 +888,7 @@
       <div class="legal-links">
         <a href="termos.html" target="_blank">Termos</a>
         <a href="privacidade.html" target="_blank">Privacidade</a>
-        <button class="btn btn-logout" onclick="handleLogout()" style="background: transparent; border: none; color: var(--muted); padding: 0; font-weight: 700; font-size: 12px;">Sair</button>
+        <button class="btn btn-logout" onclick="handleLogout()" style="background: transparent; border: none; color: var(--muted); padding: 0; font-weight: 700; font-size: 12px; margin-top: 8px;">Sair</button>
       </div>
     </aside>
 
@@ -1123,10 +899,6 @@
           <div class="title-block">
             <h1>Dashboard</h1>
             <p>Visão geral das suas finanças</p>
-          </div>
-          <div class="top-actions">
-            <button class="btn" onclick="exportData()">📥 Exportar</button>
-            <button class="btn" onclick="importData()">📤 Importar</button>
           </div>
         </div>
 
@@ -1153,26 +925,14 @@
           </div>
         </div>
 
-        <div class="layout">
-          <div class="card panel">
-            <div class="panel-head">
-              <h2>Últimos Lançamentos</h2>
-              <span>Ver mais</span>
-            </div>
-            <div class="chart-wrap">
-              <canvas id="recentTransactionsChart"></canvas>
-            </div>
+        <div class="card panel" style="margin-top: 16px;">
+          <div class="panel-head">
+            <h2>Bem-vindo ao FinanPro! 👋</h2>
           </div>
-
-          <div class="card panel">
-            <div class="panel-head">
-              <h2>Categorias</h2>
-              <span>5 categorias</span>
-            </div>
-            <div class="chart-wrap">
-              <canvas id="categoriesChart"></canvas>
-            </div>
-          </div>
+          <p style="color: var(--muted); line-height: 1.6;">
+            Você está logado e pronto para começar a organizar suas finanças. 
+            Use o menu à esquerda para navegar entre as funcionalidades do app.
+          </p>
         </div>
       </section>
 
@@ -1183,52 +943,12 @@
             <h1>Lançamentos</h1>
             <p>Adicionar e gerenciar movimentações financeiras</p>
           </div>
-          <div class="top-actions">
-            <button class="btn primary" onclick="showAddTransaction()">+ Novo Lançamento</button>
-          </div>
         </div>
 
         <div class="card panel">
-          <div class="form-grid">
-            <label>
-              Tipo
-              <select id="filterType">
-                <option value="">Todos</option>
-                <option value="income">Renda</option>
-                <option value="expense">Despesa</option>
-              </select>
-            </label>
-            <label>
-              Categoria
-              <select id="filterCategory">
-                <option value="">Todas</option>
-              </select>
-            </label>
-            <label>
-              Mês
-              <input type="month" id="filterMonth" />
-            </label>
-            <button class="btn" onclick="filterTransactions()">Filtrar</button>
+          <div class="empty">
+            Funcionalidade de lançamentos em desenvolvimento
           </div>
-        </div>
-
-        <div class="card panel">
-          <table id="transactionsTable">
-            <thead>
-              <tr>
-                <th>Data</th>
-                <th>Descrição</th>
-                <th>Categoria</th>
-                <th class="amount">Valor</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td colspan="5" class="empty">Nenhum lançamento encontrado</td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </section>
 
@@ -1239,13 +959,12 @@
             <h1>Metas Financeiras</h1>
             <p>Defina e acompanhe suas metas de economia</p>
           </div>
-          <div class="top-actions">
-            <button class="btn primary" onclick="showAddGoal()">+ Nova Meta</button>
-          </div>
         </div>
 
-        <div class="grid card" id="goalsContainer">
-          <div class="empty">Nenhuma meta criada ainda</div>
+        <div class="card panel">
+          <div class="empty">
+            Funcionalidade de metas em desenvolvimento
+          </div>
         </div>
       </section>
 
@@ -1256,108 +975,11 @@
             <h1>Orçamentos</h1>
             <p>Controle seus gastos por categoria</p>
           </div>
-          <div class="top-actions">
-            <button class="btn primary" onclick="showAddBudget()">+ Novo Orçamento</button>
-          </div>
         </div>
 
-        <div class="card panel" id="budgetsContainer">
-          <div class="empty">Nenhum orçamento definido</div>
-        </div>
-      </section>
-
-      <!-- Relatórios Section -->
-      <section id="relatorios" class="section">
-        <div class="topbar">
-          <div class="title-block">
-            <h1>Relatórios</h1>
-            <p>Análise detalhada das suas finanças</p>
-          </div>
-          <div class="top-actions">
-            <button class="btn" onclick="window.print()">🖨️ Imprimir</button>
-          </div>
-        </div>
-
-        <div class="layout">
-          <div class="card panel">
-            <div class="panel-head">
-              <h2>Evolução Mensal</h2>
-            </div>
-            <div class="chart-wrap">
-              <canvas id="monthlyChart"></canvas>
-            </div>
-          </div>
-
-          <div class="card panel">
-            <div class="panel-head">
-              <h2>Distribuição</h2>
-            </div>
-            <div class="chart-wrap">
-              <canvas id="distributionChart"></canvas>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- IA Section -->
-      <section id="ia" class="section">
-        <div class="topbar">
-          <div class="title-block">
-            <h1>IA Financeira</h1>
-            <p>Análises inteligentes das suas finanças</p>
-          </div>
-        </div>
-
-        <div class="ai-layout">
-          <div class="ai-hero card">
-            <h2>Olá! 👋</h2>
-            <p>Sou seu assistente financeiro. Posso ajudá-lo a entender seus gastos, sugerir economias e responder dúvidas sobre suas metas financeiras.</p>
-
-            <div class="quick-prompts">
-              <button onclick="sendAIPrompt('Como posso economizar mais?')">Como economizar mais?</button>
-              <button onclick="sendAIPrompt('Qual é meu padrão de gastos?')">Padrão de gastos</button>
-              <button onclick="sendAIPrompt('Estou no caminho certo das metas?')">Progresso das metas</button>
-              <button onclick="sendAIPrompt('Dicas para este mês')">Dicas mensais</button>
-            </div>
-          </div>
-
-          <div class="card panel">
-            <div class="panel-head">
-              <h2>Scores Financeiros</h2>
-            </div>
-
-            <div class="ai-score-grid">
-              <div class="ai-score">
-                <span>Economia</span>
-                <strong id="economyScore">0%</strong>
-              </div>
-              <div class="ai-score">
-                <span>Controle</span>
-                <strong id="controlScore">0%</strong>
-              </div>
-              <div class="ai-score">
-                <span>Metas</span>
-                <strong id="goalsScore">0%</strong>
-              </div>
-              <div class="ai-score">
-                <span>Saúde</span>
-                <strong id="healthScore">0%</strong>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="chat-shell card panel" style="margin-top: 16px;">
-          <div class="chat-status">
-            <strong>Assistente Financeiro</strong>
-            <span>Online</span>
-          </div>
-
-          <div class="chat-messages" id="chatMessages"></div>
-
-          <div class="ai-input">
-            <textarea id="aiPrompt" placeholder="Faça uma pergunta sobre suas finanças..." onkeypress="if(event.key==='Enter' && !event.shiftKey){sendAIPrompt(); return false}"></textarea>
-            <button class="btn primary" onclick="sendAIPrompt()">Enviar</button>
+        <div class="card panel">
+          <div class="empty">
+            Funcionalidade de orçamentos em desenvolvimento
           </div>
         </div>
       </section>
@@ -1378,7 +1000,17 @@
   <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+    import { 
+      getAuth, 
+      createUserWithEmailAndPassword, 
+      signInWithEmailAndPassword, 
+      signOut, 
+      onAuthStateChanged,
+      sendPasswordResetEmail,
+      confirmPasswordReset,
+      updatePassword,
+      signInWithCustomToken
+    } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-analytics.js";
 
     // Your web app's Firebase configuration
@@ -1397,91 +1029,257 @@
     const auth = getAuth(app);
     const analytics = getAnalytics(app);
 
+    // Expose functions to window for global access
+    window.auth = auth;
+    window.firebaseApp = app;
+
     // Auth State Listener
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // User is signed in
         document.body.classList.remove('auth-lock');
-        console.log('Usuário logado:', user.email);
+        updateUserUI(user);
+        // Check if user came from password reset
+        const queryParams = new URLSearchParams(window.location.search);
+        if (queryParams.has('oobCode')) {
+          showResetPasswordForm();
+        }
       } else {
-        // User is signed out
         document.body.classList.add('auth-lock');
-        console.log('Usuário desconectado');
       }
     });
+
+    // Update UI with user info
+    function updateUserUI(user) {
+      const emailParts = user.email.split('@');
+      const displayName = emailParts[0].charAt(0).toUpperCase() + emailParts[0].slice(1);
+      document.querySelector('.brand span').innerText = `Olá, ${displayName}`;
+    }
 
     // Sign In Function
     window.handleSignIn = async (event) => {
       event.preventDefault();
-      const email = document.getElementById('signinEmail').value;
+      const email = document.getElementById('signinEmail').value.trim();
       const password = document.getElementById('signinPassword').value;
       const messageEl = document.getElementById('signinMessage');
+      const btn = document.getElementById('signinBtn');
+
+      // Validation
+      if (!email || !password) {
+        showMessage(messageEl, 'Por favor, preencha todos os campos', 'error');
+        return;
+      }
+
+      btn.disabled = true;
+      showMessage(messageEl, 'Entrando...', 'info');
 
       try {
-        messageEl.textContent = 'Entrando...';
-        messageEl.className = '';
         await signInWithEmailAndPassword(auth, email, password);
-        messageEl.textContent = 'Bem-vindo!';
-        messageEl.className = 'success';
+        showMessage(messageEl, 'Bem-vindo! Redirecionando...', 'success');
         setTimeout(() => {
-          messageEl.textContent = '';
+          messageEl.classList.add('hidden');
         }, 2000);
       } catch (error) {
-        messageEl.textContent = 'Erro: ' + error.message;
-        messageEl.className = '';
+        console.error('Sign In Error:', error.code);
+        const errorMsg = getErrorMessage(error.code);
+        showMessage(messageEl, errorMsg, 'error');
+      } finally {
+        btn.disabled = false;
       }
     };
 
     // Sign Up Function
     window.handleSignUp = async (event) => {
       event.preventDefault();
-      const email = document.getElementById('signupEmail').value;
+      const name = document.getElementById('signupName').value.trim();
+      const email = document.getElementById('signupEmail').value.trim();
       const password = document.getElementById('signupPassword').value;
+      const confirmPassword = document.getElementById('signupConfirmPassword').value;
       const messageEl = document.getElementById('signupMessage');
+      const btn = document.getElementById('signupBtn');
+
+      // Validation
+      if (!name || !email || !password || !confirmPassword) {
+        showMessage(messageEl, 'Por favor, preencha todos os campos', 'error');
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showMessage(messageEl, 'As senhas não conferem', 'error');
+        return;
+      }
+
+      if (password.length < 6) {
+        showMessage(messageEl, 'A senha deve ter pelo menos 6 caracteres', 'error');
+        return;
+      }
+
+      btn.disabled = true;
+      showMessage(messageEl, 'Criando conta...', 'info');
 
       try {
-        messageEl.textContent = 'Criando conta...';
-        messageEl.className = '';
-        await createUserWithEmailAndPassword(auth, email, password);
-        messageEl.textContent = 'Conta criada com sucesso!';
-        messageEl.className = 'success';
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        showMessage(messageEl, 'Conta criada com sucesso!', 'success');
+        
         setTimeout(() => {
           document.getElementById('signupForm').reset();
-          messageEl.textContent = '';
-        }, 2000);
+          showSignIn();
+        }, 1500);
       } catch (error) {
-        messageEl.textContent = 'Erro: ' + error.message;
-        messageEl.className = '';
+        console.error('Sign Up Error:', error.code);
+        const errorMsg = getErrorMessage(error.code);
+        showMessage(messageEl, errorMsg, 'error');
+      } finally {
+        btn.disabled = false;
       }
+    };
+
+    // Forgot Password Function
+    window.handleForgotPassword = async (event) => {
+      event.preventDefault();
+      const email = document.getElementById('forgotEmail').value.trim();
+      const messageEl = document.getElementById('forgotMessage');
+      const btn = document.getElementById('forgotBtn');
+
+      if (!email) {
+        showMessage(messageEl, 'Por favor, digite seu email', 'error');
+        return;
+      }
+
+      btn.disabled = true;
+      showMessage(messageEl, 'Enviando link de recuperação...', 'info');
+
+      try {
+        await sendPasswordResetEmail(auth, email);
+        showMessage(messageEl, 'Email enviado! Verifique sua caixa de entrada (e spam) para recuperar sua senha.', 'success');
+        
+        setTimeout(() => {
+          document.getElementById('forgotPasswordForm').reset();
+          showSignIn();
+        }, 3000);
+      } catch (error) {
+        console.error('Forgot Password Error:', error.code);
+        const errorMsg = getErrorMessage(error.code);
+        showMessage(messageEl, errorMsg, 'error');
+      } finally {
+        btn.disabled = false;
+      }
+    };
+
+    // Reset Password Function
+    window.handleResetPassword = async (event) => {
+      event.preventDefault();
+      const password = document.getElementById('resetPassword').value;
+      const confirmPassword = document.getElementById('resetConfirmPassword').value;
+      const messageEl = document.getElementById('resetMessage');
+      const btn = document.getElementById('resetBtn');
+
+      if (!password || !confirmPassword) {
+        showMessage(messageEl, 'Por favor, preencha todos os campos', 'error');
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showMessage(messageEl, 'As senhas não conferem', 'error');
+        return;
+      }
+
+      if (password.length < 6) {
+        showMessage(messageEl, 'A senha deve ter pelo menos 6 caracteres', 'error');
+        return;
+      }
+
+      btn.disabled = true;
+      showMessage(messageEl, 'Atualizando senha...', 'info');
+
+      try {
+        const user = auth.currentUser;
+        if (user) {
+          await updatePassword(user, password);
+          showMessage(messageEl, 'Senha atualizada com sucesso!', 'success');
+          setTimeout(() => {
+            showSignIn();
+          }, 2000);
+        }
+      } catch (error) {
+        console.error('Reset Password Error:', error.code);
+        const errorMsg = getErrorMessage(error.code);
+        showMessage(messageEl, errorMsg, 'error');
+      } finally {
+        btn.disabled = false;
+      }
+    };
+
+    // Show Reset Password Form from Email Link
+    window.showResetPasswordForm = () => {
+      document.getElementById('signinView').style.display = 'none';
+      document.getElementById('signupView').style.display = 'none';
+      document.getElementById('forgotPasswordView').style.display = 'none';
+      document.getElementById('resetPasswordView').style.display = 'block';
     };
 
     // Logout Function
     window.handleLogout = async () => {
       try {
         await signOut(auth);
-        console.log('Usuário desconectado');
+        document.getElementById('signinForm').reset();
+        document.getElementById('signupForm').reset();
+        showSignIn();
       } catch (error) {
-        console.error('Erro ao sair:', error);
+        console.error('Logout Error:', error);
       }
+    };
+
+    // Error message mapping
+    function getErrorMessage(code) {
+      const errors = {
+        'auth/email-already-in-use': 'Este email já está cadastrado',
+        'auth/invalid-email': 'Email inválido',
+        'auth/operation-not-allowed': 'Operação não permitida',
+        'auth/weak-password': 'Senha muito fraca. Use pelo menos 6 caracteres',
+        'auth/user-disabled': 'Esta conta foi desativada',
+        'auth/user-not-found': 'Email ou senha incorretos',
+        'auth/wrong-password': 'Email ou senha incorretos',
+        'auth/too-many-requests': 'Muitas tentativas. Tente novamente mais tarde',
+        'auth/network-request-failed': 'Erro de conexão. Verifique sua internet',
+        'auth/invalid-action-code': 'Link de recuperação inválido ou expirado'
+      };
+      return errors[code] || 'Erro: ' + code;
+    }
+
+    // Show/Hide message
+    function showMessage(element, message, type) {
+      element.textContent = message;
+      element.className = 'auth-message ' + type;
+    }
+
+    // Navigation functions
+    window.showSignIn = () => {
+      document.getElementById('signinView').style.display = 'block';
+      document.getElementById('signupView').style.display = 'none';
+      document.getElementById('forgotPasswordView').style.display = 'none';
+      document.getElementById('resetPasswordView').style.display = 'none';
+      document.getElementById('signinMessage').classList.add('hidden');
+    };
+
+    window.showSignUp = () => {
+      document.getElementById('signinView').style.display = 'none';
+      document.getElementById('signupView').style.display = 'block';
+      document.getElementById('forgotPasswordView').style.display = 'none';
+      document.getElementById('resetPasswordView').style.display = 'none';
+      document.getElementById('signupMessage').classList.add('hidden');
+    };
+
+    window.showForgotPassword = () => {
+      document.getElementById('signinView').style.display = 'none';
+      document.getElementById('signupView').style.display = 'none';
+      document.getElementById('forgotPasswordView').style.display = 'block';
+      document.getElementById('resetPasswordView').style.display = 'none';
+      document.getElementById('forgotMessage').classList.add('hidden');
     };
   </script>
 
   <!-- App Scripts -->
   <script>
-    // Show/Hide Forms
-    function showForm(formType) {
-      document.querySelectorAll('.auth-form').forEach(form => form.classList.remove('active'));
-      document.querySelectorAll('.auth-tabs button').forEach(btn => btn.classList.remove('active'));
-      
-      if (formType === 'signin') {
-        document.getElementById('signinForm').classList.add('active');
-        document.querySelectorAll('.auth-tabs button')[0].classList.add('active');
-      } else {
-        document.getElementById('signupForm').classList.add('active');
-        document.querySelectorAll('.auth-tabs button')[1].classList.add('active');
-      }
-    }
-
     // Show Page
     function showPage(pageId) {
       document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
@@ -1491,14 +1289,10 @@
       event.target.closest('button').classList.add('active');
     }
 
-    // Placeholder Functions
-    function showAddTransaction() { alert('Abrir formulário de novo lançamento'); }
-    function filterTransactions() { alert('Aplicar filtros'); }
-    function showAddGoal() { alert('Abrir formulário de nova meta'); }
-    function showAddBudget() { alert('Abrir formulário de novo orçamento'); }
-    function exportData() { alert('Exportar dados'); }
-    function importData() { alert('Importar dados'); }
-    function sendAIPrompt(prompt) { alert('Enviar pergunta: ' + (prompt || document.getElementById('aiPrompt').value)); }
+    // Initialize charts on dashboard load
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('FinanPro carregado e pronto para usar!');
+    });
   </script>
 </body>
 </html>
