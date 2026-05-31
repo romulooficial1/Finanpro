@@ -1752,5 +1752,30 @@ Experimente as sugestões rápidas acima ou reformule sua pergunta!`;
       </div>`;
   }
 </script>
+    <div style="text-align: center; margin-top: 30px; padding: 20px; border-top: 1px solid #eee;">
+      <a href="#" style="color: #166534; font-size: 12px; text-decoration: none; margin-right: 15px;" 
+         onclick="document.querySelectorAll('section').forEach(s => s.style.display='none'); document.getElementById('privacy').style.display='block'; return false;">
+          Política de Privacidade
+      </a>
+      <a href="#" style="color: #166534; font-size: 12px; text-decoration: none;" 
+         onclick="document.querySelectorAll('section').forEach(s => s.style.display='none'); document.getElementById('terms').style.display='block'; return false;">
+          Termos de Uso
+      </a>
+  </div>
+
+  <section id="privacy" style="display: none; padding: 30px; font-family: sans-serif; max-width: 800px; margin: 0 auto; line-height: 1.6; color: #333;">
+      <h2 style="color: #166534;">Política de Privacidade</h2>
+      <p>O FinanPro respeita a sua privacidade. Este site utiliza o Google AdSense para veicular anúncios, que utiliza cookies para exibir publicidade baseada em suas visitas anteriores.</p>
+      <p>Os dados inseridos no app são processados para seu controle pessoal. Você pode desativar cookies de publicidade nas configurações do seu navegador ou no site do Google.</p>
+      <button onclick="location.reload()" style="background: #166534; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 20px;">Voltar ao App</button>
+  </section>
+
+  <section id="terms" style="display: none; padding: 30px; font-family: sans-serif; max-width: 800px; margin: 0 auto; line-height: 1.6; color: #333;">
+      <h2 style="color: #166534;">Termos de Uso</h2>
+      <p>Ao utilizar o FinanPro, você concorda em usar a ferramenta para fins lícitos de organização financeira pessoal.</p>
+      <p>O serviço é fornecido "como está". Não nos responsabilizamos por decisões financeiras tomadas com base nos cálculos do app. O uso é de total responsabilidade do usuário.</p>
+      <button onclick="location.reload()" style="background: #166534; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 20px;">Voltar ao App</button>
+  </section>
+
 </body>
 </html>
