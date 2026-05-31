@@ -1215,6 +1215,7 @@
       document.getElementById('signupView').style.display = 'none';
       document.getElementById('forgotPasswordView').style.display = 'none';
       document.getElementById('resetPasswordView').style.display = 'block';
+      document.getElementById('resetPasswordForm').classList.add('active');
     };
 
     // Logout Function
@@ -1274,6 +1275,7 @@
       document.getElementById('signinView').style.display = 'none';
       document.getElementById('signupView').style.display = 'none';
       document.getElementById('forgotPasswordView').style.display = 'block';
+      document.getElementById('forgotPasswordForm').classList.add('active');
       document.getElementById('resetPasswordView').style.display = 'none';
       document.getElementById('forgotMessage').classList.add('hidden');
     };
