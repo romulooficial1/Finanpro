@@ -999,43 +999,57 @@
         <h2>Acessar conta</h2>
         <p>Use seu e-mail para manter os dados separados neste navegador.</p>
 
-        <div class="auth-tabs" role="tablist" aria-label="Acesso">
-          <button class="active" type="button" data-auth-mode="login">Entrar</button>
-          <button type="button" data-auth-mode="register">Criar conta</button>
+        <div class="auth-tabs">
+          <button class="active" onclick="showForm('signin')">Entrar</button>
+          <button onclick="showForm('signup')">Cadastro</button>
         </div>
 
-        <form class="auth-form active" id="loginForm">
-          <label>E-mail
-            <input id="loginEmail" type="email" autocomplete="email" placeholder="voce@email.com" required>
+        <!-- Sign In Form -->
+        <form class="auth-form active" id="signinForm" onsubmit="handleSignIn(event)">
+          <label>
+            Email
+            <input type="email" placeholder="seu@email.com" id="signinEmail" required />
           </label>
-          <label>Senha
-            <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Sua senha" required>
-          </label>
-          <button class="btn primary" type="submit">Entrar no app</button>
-          <a href="#" onclick="event.preventDefault(); alert('Enviaremos um link para redefinir sua senha no email')">Esqueci minha senha</a>
-        </form>
 
-        <form class="auth-form" id="registerForm">
-          <label>Nome
-            <input id="registerName" autocomplete="name" placeholder="Seu nome" required>
+          <label>
+            Senha
+            <input type="password" placeholder="••••••••" id="signinPassword" required />
           </label>
-          <label>E-mail
-            <input id="registerEmail" type="email" autocomplete="email" placeholder="voce@email.com" required>
-          </label>
-          <label>Senha
-            <input id="registerPassword" type="password" autocomplete="new-password" minlength="6" placeholder="Mínimo 6 caracteres" required>
-          </label>
-          <label>Confirmar senha
-            <input id="registerConfirm" type="password" autocomplete="new-password" minlength="6" placeholder="Repita a senha" required>
-          </label>
+
           <label class="auth-check">
-            <input id="registerTerms" type="checkbox" required>
-            <span>Li e aceito os <a href="./termos.html" target="_blank" rel="noopener">termos de uso</a> e a <a href="./privacidade.html" target="_blank" rel="noopener">política de privacidade</a>.</span>
+            <input type="checkbox" />
+            Lembrar de mim
           </label>
-          <button class="btn primary" type="submit">Criar e entrar</button>
+
+          <button type="submit" class="btn primary">Entrar</button>
+          <div class="auth-message" id="signinMessage"></div>
         </form>
 
-        <div class="auth-message" id="authMessage" role="status" aria-live="polite"></div>
+        <!-- Sign Up Form -->
+        <form class="auth-form" id="signupForm" onsubmit="handleSignUp(event)">
+          <label>
+            Nome Completo
+            <input type="text" placeholder="Seu Nome" id="signupName" required />
+          </label>
+
+          <label>
+            Email
+            <input type="email" placeholder="seu@email.com" id="signupEmail" required />
+          </label>
+
+          <label>
+            Senha
+            <input type="password" placeholder="••••••••" id="signupPassword" required />
+          </label>
+
+          <label class="auth-check">
+            <input type="checkbox" required />
+            Concordo com os <a href="termos.html" target="_blank">termos</a> e <a href="privacidade.html" target="_blank">privacidade</a>
+          </label>
+
+          <button type="submit" class="btn primary">Criar Conta</button>
+          <div class="auth-message" id="signupMessage"></div>
+        </form>
       </div>
     </div>
   </section>
@@ -1046,885 +1060,445 @@
         <div class="brand-mark">F</div>
         <div>
           <strong>FinanPro</strong>
-          <span>v1.0</span>
+          <span>v2.0</span>
         </div>
       </div>
 
       <nav class="nav">
-        <button class="active" data-section="dashboard">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-3m0 0l7-4 7 4M5 9v7a1 1 0 001 1h12a1 1 0 001-1V9m-9 6l4-2.5M9 19h6m-12-2.5a9 9 0 1018 0M12 5v.01"/></svg>
+        <button class="active" onclick="showPage('dashboard')">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-3m2 3l2-3m6 3l2-3m2 3l2-3M3 20l2-3m2 3l2-3m6 3l2-3m2 3l2-3" />
+          </svg>
           Dashboard
         </button>
-        <button data-section="lancamentos">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m0 0h6M6 12a6 6 0 1112 0 6 6 0 01-12 0z"/></svg>
+        <button onclick="showPage('lancamentos')">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          </svg>
           Lançamentos
         </button>
-        <button data-section="orcamento">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          Orçamento
+        <button onclick="showPage('metas')">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          Metas
         </button>
-        <button data-section="ia">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <button onclick="showPage('orcamentos')">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Orçamentos
+        </button>
+        <button onclick="showPage('relatorios')">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
+          Relatórios
+        </button>
+        <button onclick="showPage('ia')">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 012.05 12a6 6 0 0110.659-5.659l.747.747" />
+          </svg>
           IA Financeira
         </button>
       </nav>
 
       <div class="side-panel">
         <span class="caption">Saldo Total</span>
-        <strong id="saldoTotal">R$ 0,00</strong>
-        <span id="saldoMes">Mês atual</span>
+        <strong id="balanceDisplay">R$ 0,00</strong>
+        <span>Ao longo do mês</span>
       </div>
 
       <div class="legal-links">
-        <a href="./termos.html" target="_blank">Termos</a>
-        <a href="./privacidade.html" target="_blank">Privacidade</a>
-        <a href="#" onclick="logout()">Sair</a>
+        <a href="termos.html" target="_blank">Termos</a>
+        <a href="privacidade.html" target="_blank">Privacidade</a>
+        <button class="btn btn-logout" onclick="handleLogout()" style="background: transparent; border: none; color: var(--muted); padding: 0; font-weight: 700; font-size: 12px;">Sair</button>
       </div>
     </aside>
 
     <main>
-      <div class="topbar">
-        <div class="title-block">
-          <h1 id="pageTitle">Dashboard</h1>
-          <p id="pageDescription">Acompanhe seu desempenho financeiro em tempo real</p>
-        </div>
-        <div class="top-actions">
-          <button class="btn" onclick="print()">📄 Imprimir</button>
-          <button class="btn primary" onclick="openSection('lancamentos')">➕ Novo Lançamento</button>
-        </div>
-      </div>
-
+      <!-- Dashboard Section -->
       <section id="dashboard" class="section active">
-        <div class="grid metrics">
-          <div class="card metric">
-            <span class="label">Total de receitas</span>
-            <strong id="totalReceitas" class="positive">R$ 0,00</strong>
-            <small class="positive">↑ 0% este mês</small>
+        <div class="topbar">
+          <div class="title-block">
+            <h1>Dashboard</h1>
+            <p>Visão geral das suas finanças</p>
           </div>
-          <div class="card metric">
-            <span class="label">Total de despesas</span>
-            <strong id="totalDespesas" class="negative">R$ 0,00</strong>
-            <small class="negative">↓ 0% este mês</small>
+          <div class="top-actions">
+            <button class="btn" onclick="exportData()">📥 Exportar</button>
+            <button class="btn" onclick="importData()">📤 Importar</button>
           </div>
-          <div class="card metric">
-            <span class="label">Saldo disponível</span>
-            <strong id="saldoDisponivel">R$ 0,00</strong>
-            <small>Hoje</small>
+        </div>
+
+        <div class="grid metrics card">
+          <div class="metric">
+            <span class="label">Renda Total</span>
+            <strong class="positive" id="totalIncome">R$ 0,00</strong>
+            <small>Este mês</small>
           </div>
-          <div class="card metric">
-            <span class="label">Taxa de poupança</span>
-            <strong id="taxaPoupanca" class="positive">0%</strong>
-            <small>Do mês</small>
+          <div class="metric">
+            <span class="label">Despesas</span>
+            <strong class="negative" id="totalExpense">R$ 0,00</strong>
+            <small>Este mês</small>
+          </div>
+          <div class="metric">
+            <span class="label">Dívidas</span>
+            <strong class="warning" id="totalDebt">R$ 0,00</strong>
+            <small>Pendente</small>
+          </div>
+          <div class="metric">
+            <span class="label">Saldo</span>
+            <strong id="totalBalance">R$ 0,00</strong>
+            <small>Disponível</small>
           </div>
         </div>
 
         <div class="layout">
-          <div class="card">
-            <div class="panel">
-              <div class="panel-head">
-                <h2>Fluxo de caixa</h2>
-                <span>Últimos 12 meses</span>
-              </div>
-              <div class="chart-wrap">
-                <canvas id="chartFluxo"></canvas>
-              </div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="panel">
-              <div class="panel-head">
-                <h2>Resumo rápido</h2>
-              </div>
-              <div class="insights" id="insightsRapido"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" style="margin-top: 16px;">
-          <div class="panel">
+          <div class="card panel">
             <div class="panel-head">
-              <h2>Gastos por categoria</h2>
+              <h2>Últimos Lançamentos</h2>
+              <span>Ver mais</span>
             </div>
             <div class="chart-wrap">
-              <canvas id="chartCategoria"></canvas>
+              <canvas id="recentTransactionsChart"></canvas>
+            </div>
+          </div>
+
+          <div class="card panel">
+            <div class="panel-head">
+              <h2>Categorias</h2>
+              <span>5 categorias</span>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="categoriesChart"></canvas>
             </div>
           </div>
         </div>
       </section>
 
+      <!-- Lançamentos Section -->
       <section id="lancamentos" class="section">
-        <div class="card">
-          <div class="panel">
-            <div class="panel-head">
-              <h2>Novo Lançamento</h2>
-            </div>
-            <form class="form-grid" id="formLancamento">
-              <label class="full">Descrição
-                <input id="lancDescricao" placeholder="Descrição do lançamento" required>
-              </label>
-              <label>Tipo
-                <select id="lancTipo" required onchange="atualizarCategorias()">
-                  <option value="">Selecione</option>
-                  <option value="receita">Receita</option>
-                  <option value="despesa">Despesa</option>
-                </select>
-              </label>
-              <label>Categoria
-                <select id="lancCategoria" required>
-                  <option value="">Selecione</option>
-                </select>
-              </label>
-              <label>Valor
-                <input id="lancValor" type="number" step="0.01" placeholder="0,00" required>
-              </label>
-              <label>Data
-                <input id="lancData" type="date" required>
-              </label>
-              <button class="btn primary" type="submit" style="grid-column: span 1">Lançar</button>
-            </form>
+        <div class="topbar">
+          <div class="title-block">
+            <h1>Lançamentos</h1>
+            <p>Adicionar e gerenciar movimentações financeiras</p>
+          </div>
+          <div class="top-actions">
+            <button class="btn primary" onclick="showAddTransaction()">+ Novo Lançamento</button>
           </div>
         </div>
 
-        <div class="card" style="margin-top: 20px">
-          <div class="panel">
-            <div class="panel-head">
-              <h2>Histórico de lançamentos</h2>
-              <span id="countLancamentos">0 registros</span>
-            </div>
-            <div style="overflow-x: auto">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Data</th>
-                    <th>Descrição</th>
-                    <th>Categoria</th>
-                    <th>Tipo</th>
-                    <th class="amount">Valor</th>
-                    <th>Ação</th>
-                  </tr>
-                </thead>
-                <tbody id="tableLancamentos">
-                  <tr><td colspan="6" style="text-align: center; color: var(--muted)">Nenhum lançamento ainda</td></tr>
-                </tbody>
-              </table>
-            </div>
+        <div class="card panel">
+          <div class="form-grid">
+            <label>
+              Tipo
+              <select id="filterType">
+                <option value="">Todos</option>
+                <option value="income">Renda</option>
+                <option value="expense">Despesa</option>
+              </select>
+            </label>
+            <label>
+              Categoria
+              <select id="filterCategory">
+                <option value="">Todas</option>
+              </select>
+            </label>
+            <label>
+              Mês
+              <input type="month" id="filterMonth" />
+            </label>
+            <button class="btn" onclick="filterTransactions()">Filtrar</button>
           </div>
+        </div>
+
+        <div class="card panel">
+          <table id="transactionsTable">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Descrição</th>
+                <th>Categoria</th>
+                <th class="amount">Valor</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="5" class="empty">Nenhum lançamento encontrado</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
-      <section id="orcamento" class="section">
-        <div class="card">
-          <div class="panel">
-            <div class="panel-head">
-              <h2>Orçamento mensal</h2>
-            </div>
-            <form class="form-grid compact" id="formOrcamento">
-              <label>Categoria
-                <select id="orcCategoria" required>
-                  <option value="">Selecione</option>
-                  <option value="Alimentação">Alimentação</option>
-                  <option value="Transporte">Transporte</option>
-                  <option value="Saúde">Saúde</option>
-                  <option value="Lazer">Lazer</option>
-                  <option value="Educação">Educação</option>
-                  <option value="Moradia">Moradia</option>
-                  <option value="Utilidades">Utilidades</option>
-                </select>
-              </label>
-              <label>Limite
-                <input id="orcLimite" type="number" step="0.01" placeholder="0,00" required>
-              </label>
-              <button class="btn primary" type="submit">Adicionar</button>
-            </form>
-            <div id="listOrcamentos" style="margin-top: 20px"></div>
+      <!-- Metas Section -->
+      <section id="metas" class="section">
+        <div class="topbar">
+          <div class="title-block">
+            <h1>Metas Financeiras</h1>
+            <p>Defina e acompanhe suas metas de economia</p>
+          </div>
+          <div class="top-actions">
+            <button class="btn primary" onclick="showAddGoal()">+ Nova Meta</button>
           </div>
         </div>
 
-        <div class="card" style="margin-top: 16px;">
-          <div class="panel">
+        <div class="grid card" id="goalsContainer">
+          <div class="empty">Nenhuma meta criada ainda</div>
+        </div>
+      </section>
+
+      <!-- Orçamentos Section -->
+      <section id="orcamentos" class="section">
+        <div class="topbar">
+          <div class="title-block">
+            <h1>Orçamentos</h1>
+            <p>Controle seus gastos por categoria</p>
+          </div>
+          <div class="top-actions">
+            <button class="btn primary" onclick="showAddBudget()">+ Novo Orçamento</button>
+          </div>
+        </div>
+
+        <div class="card panel" id="budgetsContainer">
+          <div class="empty">Nenhum orçamento definido</div>
+        </div>
+      </section>
+
+      <!-- Relatórios Section -->
+      <section id="relatorios" class="section">
+        <div class="topbar">
+          <div class="title-block">
+            <h1>Relatórios</h1>
+            <p>Análise detalhada das suas finanças</p>
+          </div>
+          <div class="top-actions">
+            <button class="btn" onclick="window.print()">🖨️ Imprimir</button>
+          </div>
+        </div>
+
+        <div class="layout">
+          <div class="card panel">
             <div class="panel-head">
-              <h2>Utilização de orçamentos</h2>
+              <h2>Evolução Mensal</h2>
             </div>
             <div class="chart-wrap">
-              <canvas id="chartOrcamento"></canvas>
+              <canvas id="monthlyChart"></canvas>
+            </div>
+          </div>
+
+          <div class="card panel">
+            <div class="panel-head">
+              <h2>Distribuição</h2>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="distributionChart"></canvas>
             </div>
           </div>
         </div>
       </section>
 
+      <!-- IA Section -->
       <section id="ia" class="section">
-        <div class="ai-layout">
-          <div>
-            <div class="card ai-hero">
-              <h2>IA Financeira 🤖</h2>
-              <p>Tenha um assistente inteligente analisando seus gastos em tempo real com recomendações personalizadas.</p>
-              <div class="ai-score-grid">
-                <div class="ai-score">
-                  <span>Saúde Financeira</span>
-                  <strong id="scoreHealth">--</strong>
-                </div>
-                <div class="ai-score">
-                  <span>Risco de Endividamento</span>
-                  <strong id="scoreRisk">--</strong>
-                </div>
-              </div>
-            </div>
+        <div class="topbar">
+          <div class="title-block">
+            <h1>IA Financeira</h1>
+            <p>Análises inteligentes das suas finanças</p>
+          </div>
+        </div>
 
-            <div class="card" style="margin-top: 16px">
-              <div class="panel">
-                <div class="panel-head">
-                  <h2>Perguntas rápidas</h2>
-                </div>
-                <div class="quick-prompts">
-                  <button type="button" onclick="sendPrompt('Qual é meu maior gasto?')">💰 Maior gasto?</button>
-                  <button type="button" onclick="sendPrompt('Como posso economizar?')">💡 Como economizar?</button>
-                  <button type="button" onclick="sendPrompt('Qual é minha saúde financeira?')">📊 Saúde Financeira</button>
-                  <button type="button" onclick="sendPrompt('Quanto tenho poupado?')">🎯 Minha Poupança</button>
-                </div>
-              </div>
+        <div class="ai-layout">
+          <div class="ai-hero card">
+            <h2>Olá! 👋</h2>
+            <p>Sou seu assistente financeiro. Posso ajudá-lo a entender seus gastos, sugerir economias e responder dúvidas sobre suas metas financeiras.</p>
+
+            <div class="quick-prompts">
+              <button onclick="sendAIPrompt('Como posso economizar mais?')">Como economizar mais?</button>
+              <button onclick="sendAIPrompt('Qual é meu padrão de gastos?')">Padrão de gastos</button>
+              <button onclick="sendAIPrompt('Estou no caminho certo das metas?')">Progresso das metas</button>
+              <button onclick="sendAIPrompt('Dicas para este mês')">Dicas mensais</button>
             </div>
           </div>
 
-          <div class="card">
-            <div class="chat-shell">
-              <div class="chat-status">
-                <div>
-                  <strong>Assistente FinanPro</strong>
-                  <span>🟢 Online</span>
-                </div>
+          <div class="card panel">
+            <div class="panel-head">
+              <h2>Scores Financeiros</h2>
+            </div>
+
+            <div class="ai-score-grid">
+              <div class="ai-score">
+                <span>Economia</span>
+                <strong id="economyScore">0%</strong>
               </div>
-              <div class="chat-messages" id="chatMessages"></div>
-              <div class="ai-input">
-                <textarea id="aiPrompt" placeholder="Faça uma pergunta sobre suas finanças..."></textarea>
-                <button class="btn primary" type="button" onclick="enviarPrompt()">Enviar</button>
+              <div class="ai-score">
+                <span>Controle</span>
+                <strong id="controlScore">0%</strong>
+              </div>
+              <div class="ai-score">
+                <span>Metas</span>
+                <strong id="goalsScore">0%</strong>
+              </div>
+              <div class="ai-score">
+                <span>Saúde</span>
+                <strong id="healthScore">0%</strong>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div class="chat-shell card panel" style="margin-top: 16px;">
+          <div class="chat-status">
+            <strong>Assistente Financeiro</strong>
+            <span>Online</span>
+          </div>
+
+          <div class="chat-messages" id="chatMessages"></div>
+
+          <div class="ai-input">
+            <textarea id="aiPrompt" placeholder="Faça uma pergunta sobre suas finanças..." onkeypress="if(event.key==='Enter' && !event.shiftKey){sendAIPrompt(); return false}"></textarea>
+            <button class="btn primary" onclick="sendAIPrompt()">Enviar</button>
           </div>
         </div>
       </section>
 
       <footer class="app-footer">
         <div>
-          <span>© 2024 FinanPro. Todos os direitos reservados.</span>
+          <span>© 2025 FinanPro. Todos os direitos reservados.</span>
         </div>
         <div>
-          <a href="./termos.html" target="_blank">Termos</a>
-          <a href="./privacidade.html" target="_blank">Privacidade</a>
+          <a href="termos.html" target="_blank">Termos</a>
+          <a href="privacidade.html" target="_blank">Privacidade</a>
         </div>
       </footer>
     </main>
   </div>
 
-  <script>
-    // ==================== CONFIGURAÇÃO ====================
-    const DB_NAME = 'FinanProDB';
-    const DB_VERSION = 1;
-    const DB_STORE = 'transactions';
-    const BUDGET_STORE = 'budgets';
-    let db;
-    let chartFluxo, chartCategoria, chartOrcamento;
+  <!-- Firebase SDK -->
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-analytics.js";
 
-    const categoriasReceita = ['Salário', 'Bônus', 'Freelance', 'Investimentos', 'Vendas', 'Outros'];
-    const categoriasDespesa = ['Alimentação', 'Transporte', 'Saúde', 'Lazer', 'Educação', 'Moradia', 'Utilidades', 'Outros'];
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyD6pQO5Ma3tRv_td8fTTdIFYl7HXyUZ0YQ",
+      authDomain: "finanpro-df3cb.firebaseapp.com",
+      projectId: "finanpro-df3cb",
+      storageBucket: "finanpro-df3cb.firebasestorage.app",
+      messagingSenderId: "520012114499",
+      appId: "1:520012114499:web:44ddec6b44db185bfe82f6",
+      measurementId: "G-Y0X1R3XK33"
+    };
 
-    // ==================== INICIALIZAÇÃO ====================
-    function initDB() {
-      return new Promise((resolve, reject) => {
-        const request = indexedDB.open(DB_NAME, DB_VERSION);
-        
-        request.onerror = () => {
-          console.error('Erro ao abrir BD');
-          reject();
-        };
-        
-        request.onsuccess = (e) => {
-          db = e.target.result;
-          carregarDados();
-          atualizarScoresIA();
-          resolve();
-        };
-        
-        request.onupgradeneeded = (e) => {
-          db = e.target.result;
-          if (!db.objectStoreNames.contains(DB_STORE)) {
-            db.createObjectStore(DB_STORE, { keyPath: 'id', autoIncrement: true });
-          }
-          if (!db.objectStoreNames.contains(BUDGET_STORE)) {
-            db.createObjectStore(BUDGET_STORE, { keyPath: 'id', autoIncrement: true });
-          }
-        };
-      });
-    }
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const analytics = getAnalytics(app);
 
-    // ==================== AUTH ====================
-    const authTab = document.querySelectorAll('[data-auth-mode]');
-    authTab.forEach(btn => {
-      btn.addEventListener('click', () => {
-        authTab.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
-        document.getElementById(btn.dataset.authMode + 'Form').classList.add('active');
-      });
-    });
-
-    document.getElementById('loginForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const email = document.getElementById('loginEmail').value;
-      const senha = document.getElementById('loginPassword').value;
-      
-      if (email && senha) {
+    // Auth State Listener
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in
         document.body.classList.remove('auth-lock');
-        initDB();
-        limparFormAuth();
-      }
-    });
-
-    document.getElementById('registerForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const email = document.getElementById('registerEmail').value;
-      const senha = document.getElementById('registerPassword').value;
-      const confirma = document.getElementById('registerConfirm').value;
-      const terms = document.getElementById('registerTerms').checked;
-
-      if (senha !== confirma) {
-        mostrarMensagem('Senhas não correspondem', false);
-        return;
-      }
-      if (!terms) {
-        mostrarMensagem('Você deve aceitar os termos', false);
-        return;
-      }
-      if (email && senha) {
-        document.body.classList.remove('auth-lock');
-        initDB();
-        limparFormAuth();
-      }
-    });
-
-    function limparFormAuth() {
-      document.getElementById('loginForm').reset();
-      document.getElementById('registerForm').reset();
-    }
-
-    function mostrarMensagem(msg, sucesso = true) {
-      const el = document.getElementById('authMessage');
-      el.textContent = msg;
-      el.className = sucesso ? 'auth-message success' : 'auth-message';
-      setTimeout(() => { el.textContent = ''; }, 3000);
-    }
-
-    function logout() {
-      document.body.classList.add('auth-lock');
-      limparFormAuth();
-      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-      document.getElementById('dashboard').classList.add('active');
-    }
-
-    // ==================== NAVEGAÇÃO ====================
-    document.querySelectorAll('.nav button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        openSection(btn.dataset.section);
-      });
-    });
-
-    function openSection(sectionId) {
-      document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
-      document.querySelector(`[data-section="${sectionId}"]`)?.classList.add('active');
-      
-      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-      document.getElementById(sectionId)?.classList.add('active');
-
-      const titles = {
-        dashboard: { title: 'Dashboard', desc: 'Acompanhe seu desempenho financeiro em tempo real' },
-        lancamentos: { title: 'Lançamentos', desc: 'Registre todas as suas transações' },
-        orcamento: { title: 'Orçamento', desc: 'Controle seus gastos com limites por categoria' },
-        ia: { title: 'IA Financeira', desc: 'Tenha um assistente inteligente para suas finanças' }
-      };
-      
-      document.getElementById('pageTitle').textContent = titles[sectionId]?.title || 'Página';
-      document.getElementById('pageDescription').textContent = titles[sectionId]?.desc || '';
-
-      if (sectionId === 'orcamento') {
-        setTimeout(() => {
-          if (chartOrcamento) chartOrcamento.destroy();
-          gerarGraficoOrcamento();
-        }, 100);
-      }
-    }
-
-    function atualizarCategorias() {
-      const tipo = document.getElementById('lancTipo').value;
-      const categoriaSelect = document.getElementById('lancCategoria');
-      const categorias = tipo === 'receita' ? categoriasReceita : categoriasDespesa;
-      
-      categoriaSelect.innerHTML = '<option value="">Selecione</option>';
-      categorias.forEach(cat => {
-        const option = document.createElement('option');
-        option.value = cat;
-        option.textContent = cat;
-        categoriaSelect.appendChild(option);
-      });
-    }
-
-    // ==================== LANÇAMENTOS ====================
-    document.getElementById('formLancamento').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const lancamento = {
-        descricao: document.getElementById('lancDescricao').value,
-        tipo: document.getElementById('lancTipo').value,
-        categoria: document.getElementById('lancCategoria').value,
-        valor: parseFloat(document.getElementById('lancValor').value),
-        data: document.getElementById('lancData').value,
-        timestamp: Date.now()
-      };
-
-      const transaction = db.transaction([DB_STORE], 'readwrite');
-      transaction.objectStore(DB_STORE).add(lancamento);
-      transaction.oncomplete = () => {
-        document.getElementById('formLancamento').reset();
-        carregarDados();
-        atualizarScoresIA();
-        mostrarMensagem('Lançamento registrado com sucesso!', true);
-      };
-      transaction.onerror = () => {
-        mostrarMensagem('Erro ao registrar lançamento', false);
-      };
-    });
-
-    function deletarLancamento(id) {
-      if (confirm('Tem certeza que deseja deletar este lançamento?')) {
-        const transaction = db.transaction([DB_STORE], 'readwrite');
-        transaction.objectStore(DB_STORE).delete(id);
-        transaction.oncomplete = () => {
-          carregarDados();
-          atualizarScoresIA();
-        };
-      }
-    }
-
-    // ==================== ORÇAMENTO ====================
-    document.getElementById('formOrcamento').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const orcamento = {
-        categoria: document.getElementById('orcCategoria').value,
-        limite: parseFloat(document.getElementById('orcLimite').value),
-        timestamp: Date.now()
-      };
-
-      const transaction = db.transaction([BUDGET_STORE], 'readwrite');
-      transaction.objectStore(BUDGET_STORE).add(orcamento);
-      transaction.oncomplete = () => {
-        document.getElementById('formOrcamento').reset();
-        carregarOrcamentos();
-        mostrarMensagem('Orçamento adicionado com sucesso!', true);
-      };
-    });
-
-    function carregarOrcamentos() {
-      const transaction = db.transaction([BUDGET_STORE], 'readonly');
-      const objectStore = transaction.objectStore(BUDGET_STORE);
-      const request = objectStore.getAll();
-
-      request.onsuccess = (e) => {
-        const orcamentos = e.target.result;
-        const container = document.getElementById('listOrcamentos');
-        container.innerHTML = '';
-
-        if (orcamentos.length === 0) {
-          container.innerHTML = '<div class="empty">Nenhum orçamento definido</div>';
-          return;
-        }
-
-        const transactionLanc = db.transaction([DB_STORE], 'readonly');
-        const lancamentos = [];
-        transactionLanc.objectStore(DB_STORE).getAll().onsuccess = (e) => {
-          const todos = e.target.result;
-          
-          orcamentos.forEach(orc => {
-            const gasto = todos
-              .filter(t => t.tipo === 'despesa' && t.categoria === orc.categoria)
-              .reduce((sum, t) => sum + t.valor, 0);
-            
-            const percentual = (gasto / orc.limite) * 100;
-            const classe = percentual >= 100 ? 'danger' : percentual >= 80 ? 'warning' : '';
-
-            const div = document.createElement('div');
-            div.className = 'budget-item';
-            div.innerHTML = `
-              <div class="budget-info">
-                <h4>${orc.categoria}</h4>
-                <div class="budget-amount">R$ ${gasto.toFixed(2).replace('.', ',')} / R$ ${orc.limite.toFixed(2).replace('.', ',')}</div>
-                <div class="progress ${classe}"><div style="width: ${Math.min(percentual, 100)}%"></div></div>
-              </div>
-              <span style="color: ${percentual >= 100 ? 'var(--red)' : percentual >= 80 ? 'var(--amber)' : 'var(--green)'}; font-weight: bold;">${percentual.toFixed(0)}%</span>
-              <button class="btn btn.small danger" onclick="deletarOrcamento(${orc.id})">✕</button>
-            `;
-            container.appendChild(div);
-          });
-        };
-      };
-    }
-
-    function deletarOrcamento(id) {
-      if (confirm('Tem certeza que deseja deletar este orçamento?')) {
-        const transaction = db.transaction([BUDGET_STORE], 'readwrite');
-        transaction.objectStore(BUDGET_STORE).delete(id);
-        transaction.oncomplete = () => {
-          carregarOrcamentos();
-        };
-      }
-    }
-
-    // ==================== DADOS ====================
-    function carregarDados() {
-      const transaction = db.transaction([DB_STORE], 'readonly');
-      const objectStore = transaction.objectStore(DB_STORE);
-      const request = objectStore.getAll();
-
-      request.onsuccess = (e) => {
-        const dados = e.target.result;
-        atualizarDashboard(dados);
-        atualizarTabelaLancamentos(dados);
-        gerarGraficoFluxo(dados);
-        gerarInsights(dados);
-        gerarGraficoCategoria(dados);
-        carregarOrcamentos();
-      };
-    }
-
-    function atualizarDashboard(dados) {
-      let receitas = 0, despesas = 0;
-      dados.forEach(d => {
-        if (d.tipo === 'receita') receitas += d.valor;
-        else despesas += d.valor;
-      });
-
-      const saldo = receitas - despesas;
-      const taxa = receitas > 0 ? ((receitas - despesas) / receitas * 100).toFixed(1) : 0;
-
-      document.getElementById('totalReceitas').textContent = 'R$ ' + receitas.toFixed(2).replace('.', ',');
-      document.getElementById('totalDespesas').textContent = 'R$ ' + despesas.toFixed(2).replace('.', ',');
-      document.getElementById('saldoDisponivel').textContent = 'R$ ' + saldo.toFixed(2).replace('.', ',');
-      document.getElementById('taxaPoupanca').textContent = taxa + '%';
-      document.getElementById('saldoTotal').textContent = 'R$ ' + saldo.toFixed(2).replace('.', ',');
-    }
-
-    function atualizarTabelaLancamentos(dados) {
-      const tbody = document.getElementById('tableLancamentos');
-      tbody.innerHTML = '';
-
-      if (dados.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--muted)">Nenhum lançamento ainda</td></tr>';
-        document.getElementById('countLancamentos').textContent = '0 registros';
-        return;
-      }
-
-      dados.sort((a, b) => new Date(b.data) - new Date(a.data));
-      dados.slice(0, 10).forEach(d => {
-        const tr = document.createElement('tr');
-        const classe = d.tipo === 'receita' ? 'positive' : 'negative';
-        const simbolo = d.tipo === 'receita' ? '+' : '-';
-        tr.innerHTML = `
-          <td>${new Date(d.data).toLocaleDateString('pt-BR')}</td>
-          <td>${d.descricao}</td>
-          <td>${d.categoria}</td>
-          <td><span class="pill ${d.tipo}">${d.tipo}</span></td>
-          <td class="amount" style="color: var(--${classe === 'positive' ? 'green' : 'red'})">${simbolo} R$ ${d.valor.toFixed(2).replace('.', ',')}</td>
-          <td><button class="btn btn.small danger" onclick="deletarLancamento(${d.id})">Deletar</button></td>
-        `;
-        tbody.appendChild(tr);
-      });
-
-      document.getElementById('countLancamentos').textContent = dados.length + ' registros';
-    }
-
-    function gerarGraficoFluxo(dados) {
-      const ctx = document.getElementById('chartFluxo')?.getContext('2d');
-      if (!ctx) return;
-
-      const meses = [];
-      const receitas = [];
-      const despesas = [];
-      
-      for (let i = 11; i >= 0; i--) {
-        const data = new Date();
-        data.setMonth(data.getMonth() - i);
-        const mes = data.toLocaleDateString('pt-BR', { month: 'short' });
-        meses.push(mes);
-
-        const mesStr = data.toISOString().slice(0, 7);
-        const recMes = dados
-          .filter(d => d.data.startsWith(mesStr) && d.tipo === 'receita')
-          .reduce((sum, d) => sum + d.valor, 0);
-        const despMes = dados
-          .filter(d => d.data.startsWith(mesStr) && d.tipo === 'despesa')
-          .reduce((sum, d) => sum + d.valor, 0);
-        
-        receitas.push(recMes);
-        despesas.push(despMes);
-      }
-
-      if (chartFluxo) chartFluxo.destroy();
-      
-      chartFluxo = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: meses,
-          datasets: [
-            {
-              label: 'Receitas',
-              data: receitas,
-              borderColor: '#166534',
-              backgroundColor: 'rgba(22, 101, 52, 0.1)',
-              tension: 0.3,
-              fill: true
-            },
-            {
-              label: 'Despesas',
-              data: despesas,
-              borderColor: '#b42318',
-              backgroundColor: 'rgba(180, 35, 24, 0.1)',
-              tension: 0.3,
-              fill: true
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { display: true } },
-          scales: { y: { beginAtZero: true } }
-        }
-      });
-    }
-
-    function gerarGraficoCategoria(dados) {
-      const ctx = document.getElementById('chartCategoria')?.getContext('2d');
-      if (!ctx) return;
-
-      const categorias = {};
-      dados
-        .filter(d => d.tipo === 'despesa')
-        .forEach(d => {
-          categorias[d.categoria] = (categorias[d.categoria] || 0) + d.valor;
-        });
-
-      const labels = Object.keys(categorias);
-      const values = Object.values(categorias);
-
-      if (chartCategoria) chartCategoria.destroy();
-      
-      chartCategoria = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: labels,
-          datasets: [{
-            data: values,
-            backgroundColor: [
-              '#166534', '#22c55e', '#0f766e', '#b42318', '#b7791f', '#245b7f', '#f59e0b', '#8b5cf6'
-            ]
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { position: 'bottom' } }
-        }
-      });
-    }
-
-    function gerarGraficoOrcamento() {
-      const ctx = document.getElementById('chartOrcamento')?.getContext('2d');
-      if (!ctx) return;
-
-      const transaction = db.transaction([BUDGET_STORE], 'readonly');
-      const objectStore = transaction.objectStore(BUDGET_STORE);
-      const request = objectStore.getAll();
-
-      request.onsuccess = (e) => {
-        const orcamentos = e.target.result;
-        const labels = [];
-        const limites = [];
-        const gastos = [];
-
-        const transactionLanc = db.transaction([DB_STORE], 'readonly');
-        transactionLanc.objectStore(DB_STORE).getAll().onsuccess = (e2) => {
-          const todos = e2.target.result;
-          
-          orcamentos.forEach(orc => {
-            labels.push(orc.categoria);
-            limites.push(orc.limite);
-            const gasto = todos
-              .filter(t => t.tipo === 'despesa' && t.categoria === orc.categoria)
-              .reduce((sum, t) => sum + t.valor, 0);
-            gastos.push(gasto);
-          });
-
-          if (chartOrcamento) chartOrcamento.destroy();
-          
-          chartOrcamento = new Chart(ctx, {
-            type: 'bar',
-            data: {
-              labels: labels,
-              datasets: [
-                {
-                  label: 'Limite',
-                  data: limites,
-                  backgroundColor: '#22c55e'
-                },
-                {
-                  label: 'Gasto',
-                  data: gastos,
-                  backgroundColor: '#b42318'
-                }
-              ]
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              scales: { y: { beginAtZero: true } }
-            }
-          });
-        };
-      };
-    }
-
-    function gerarInsights(dados) {
-      let receitas = 0, despesas = 0;
-      const categorias = {};
-      
-      dados.forEach(d => {
-        if (d.tipo === 'receita') receitas += d.valor;
-        else {
-          despesas += d.valor;
-          categorias[d.categoria] = (categorias[d.categoria] || 0) + d.valor;
-        }
-      });
-
-      const maiorCategoria = Object.keys(categorias).reduce((a, b) => 
-        categorias[a] > categorias[b] ? a : b, 'Nenhuma'
-      );
-
-      const container = document.getElementById('insightsRapido');
-      container.innerHTML = '';
-
-      if (receitas > despesas) {
-        const insights = [
-          `✅ <strong>Excelente!</strong> Você está poupando R$ ${(receitas - despesas).toFixed(2).replace('.', ',')}`,
-          `📊 Sua categoria de maior gasto é <strong>${maiorCategoria}</strong>`,
-          `💰 Você tem ${receitas > 0 ? Math.round((receitas - despesas) / receitas * 100) : 0}% de economia este período`
-        ];
-        
-        insights.forEach(text => {
-          const div = document.createElement('div');
-          div.className = 'insight';
-          div.innerHTML = text;
-          container.appendChild(div);
-        });
-      } else if (receitas === despesas) {
-        const div = document.createElement('div');
-        div.className = 'insight warn';
-        div.innerHTML = '⚠️ Suas receitas e despesas estão equilibradas. Considere aumentar a poupança.';
-        container.appendChild(div);
+        console.log('Usuário logado:', user.email);
       } else {
-        const div = document.createElement('div');
-        div.className = 'insight bad';
-        div.innerHTML = `❌ Você está gastando mais do que ganha. Déficit: R$ ${Math.abs(receitas - despesas).toFixed(2).replace('.', ',')}`;
-        container.appendChild(div);
-      }
-    }
-
-    // ==================== IA FINANCEIRA ====================
-    function atualizarScoresIA() {
-      const transaction = db.transaction([DB_STORE], 'readonly');
-      const objectStore = transaction.objectStore(DB_STORE);
-      const request = objectStore.getAll();
-
-      request.onsuccess = (e) => {
-        const dados = e.target.result;
-        let receitas = 0, despesas = 0;
-        dados.forEach(d => {
-          if (d.tipo === 'receita') receitas += d.valor;
-          else despesas += d.valor;
-        });
-
-        const saldo = receitas - despesas;
-        const taxa = receitas > 0 ? ((receitas - despesas) / receitas * 100) : 0;
-
-        let scoreHealth = 'Baixa';
-        let scoreRisk = 'Crítico';
-
-        if (taxa >= 30) scoreHealth = 'Excelente';
-        else if (taxa >= 10) scoreHealth = 'Boa';
-        else if (taxa > 0) scoreHealth = 'Regular';
-
-        if (taxa >= 30) scoreRisk = 'Baixo';
-        else if (taxa >= 10) scoreRisk = 'Médio';
-        else if (taxa > 0) scoreRisk = 'Alto';
-
-        document.getElementById('scoreHealth').textContent = scoreHealth;
-        document.getElementById('scoreRisk').textContent = scoreRisk;
-      };
-    }
-
-    function enviarPrompt() {
-      const texto = document.getElementById('aiPrompt').value.trim();
-      if (!texto) return;
-
-      adicionarMensagem(texto, 'user');
-      document.getElementById('aiPrompt').value = '';
-
-      setTimeout(() => {
-        const resposta = gerarRespostaIA(texto);
-        adicionarMensagem(resposta, 'ai');
-      }, 500);
-    }
-
-    function sendPrompt(texto) {
-      adicionarMensagem(texto, 'user');
-
-      setTimeout(() => {
-        const resposta = gerarRespostaIA(texto);
-        adicionarMensagem(resposta, 'ai');
-      }, 500);
-    }
-
-    function adicionarMensagem(texto, tipo) {
-      const container = document.getElementById('chatMessages');
-      const div = document.createElement('div');
-      div.className = `message ${tipo}`;
-      div.textContent = texto;
-      container.appendChild(div);
-      container.scrollTop = container.scrollHeight;
-    }
-
-    function gerarRespostaIA(pergunta) {
-      const p = pergunta.toLowerCase();
-
-      const respostas = {
-        'maior gasto': 'Com base nos seus lançamentos, vou analisar a sua maior despesa. Comece adicionando seus gastos para que eu possa fazer análises mais precisas!',
-        'economizar': 'Aqui estão algumas dicas para economizar:\n\n💡 1. Defina metas claras de poupança\n💡 2. Acompanhe todos os seus gastos\n💡 3. Corte gastos desnecessários\n💡 4. Crie um orçamento mensal\n💡 5. Use a regra 50/30/20',
-        'saúde financeira': 'Para ter uma análise completa da sua saúde financeira, você precisa registrar mais transações. Quanto mais dados você fornecer, melhor poderei avaliar!',
-        'poupança': 'Você ainda não registrou nenhuma transação. Adicione sua receita e despesas para que eu possa calcular sua poupança!',
-        'default': 'Obrigado por sua pergunta! Para fazer análises mais precisas, adicione seus lançamentos de receitas e despesas. Quanto mais dados eu tiver, melhor poderei ajudá-lo com recomendações personalizadas sobre sua saúde financeira.'
-      };
-
-      for (let chave of Object.keys(respostas)) {
-        if (p.includes(chave)) {
-          return respostas[chave];
-        }
-      }
-
-      return respostas['default'];
-    }
-    // ==================== INICIALIZAR ====================
-    window.addEventListener('load', () => {
-      const loginBtn = document.querySelector('[data-auth-mode="login"]');
-      if (loginBtn && document.body.classList.contains('auth-lock')) {
-        loginBtn.click();
+        // User is signed out
+        document.body.classList.add('auth-lock');
+        console.log('Usuário desconectado');
       }
     });
+
+    // Sign In Function
+    window.handleSignIn = async (event) => {
+      event.preventDefault();
+      const email = document.getElementById('signinEmail').value;
+      const password = document.getElementById('signinPassword').value;
+      const messageEl = document.getElementById('signinMessage');
+
+      try {
+        messageEl.textContent = 'Entrando...';
+        messageEl.className = '';
+        await signInWithEmailAndPassword(auth, email, password);
+        messageEl.textContent = 'Bem-vindo!';
+        messageEl.className = 'success';
+        setTimeout(() => {
+          messageEl.textContent = '';
+        }, 2000);
+      } catch (error) {
+        messageEl.textContent = 'Erro: ' + error.message;
+        messageEl.className = '';
+      }
+    };
+
+    // Sign Up Function
+    window.handleSignUp = async (event) => {
+      event.preventDefault();
+      const email = document.getElementById('signupEmail').value;
+      const password = document.getElementById('signupPassword').value;
+      const messageEl = document.getElementById('signupMessage');
+
+      try {
+        messageEl.textContent = 'Criando conta...';
+        messageEl.className = '';
+        await createUserWithEmailAndPassword(auth, email, password);
+        messageEl.textContent = 'Conta criada com sucesso!';
+        messageEl.className = 'success';
+        setTimeout(() => {
+          document.getElementById('signupForm').reset();
+          messageEl.textContent = '';
+        }, 2000);
+      } catch (error) {
+        messageEl.textContent = 'Erro: ' + error.message;
+        messageEl.className = '';
+      }
+    };
+
+    // Logout Function
+    window.handleLogout = async () => {
+      try {
+        await signOut(auth);
+        console.log('Usuário desconectado');
+      } catch (error) {
+        console.error('Erro ao sair:', error);
+      }
+    };
+  </script>
+
+  <!-- App Scripts -->
+  <script>
+    // Show/Hide Forms
+    function showForm(formType) {
+      document.querySelectorAll('.auth-form').forEach(form => form.classList.remove('active'));
+      document.querySelectorAll('.auth-tabs button').forEach(btn => btn.classList.remove('active'));
+      
+      if (formType === 'signin') {
+        document.getElementById('signinForm').classList.add('active');
+        document.querySelectorAll('.auth-tabs button')[0].classList.add('active');
+      } else {
+        document.getElementById('signupForm').classList.add('active');
+        document.querySelectorAll('.auth-tabs button')[1].classList.add('active');
+      }
+    }
+
+    // Show Page
+    function showPage(pageId) {
+      document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+      document.querySelectorAll('.nav button').forEach(btn => btn.classList.remove('active'));
+      
+      document.getElementById(pageId).classList.add('active');
+      event.target.closest('button').classList.add('active');
+    }
+
+    // Placeholder Functions
+    function showAddTransaction() { alert('Abrir formulário de novo lançamento'); }
+    function filterTransactions() { alert('Aplicar filtros'); }
+    function showAddGoal() { alert('Abrir formulário de nova meta'); }
+    function showAddBudget() { alert('Abrir formulário de novo orçamento'); }
+    function exportData() { alert('Exportar dados'); }
+    function importData() { alert('Importar dados'); }
+    function sendAIPrompt(prompt) { alert('Enviar pergunta: ' + (prompt || document.getElementById('aiPrompt').value)); }
   </script>
 </body>
 </html>
