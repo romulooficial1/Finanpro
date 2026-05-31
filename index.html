@@ -1262,7 +1262,7 @@
   <!-- IA Financeira -->
   <script>
     const GEMINI_KEY = 'AIzaSyCbc0uJ6Bzc3R4j3OMo1A9n4wrni8kBTBs';
-    const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
+    const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`;
     let iaHistory = [];
 
     function getFinancialContext() {
@@ -1356,6 +1356,8 @@ Contexto financeiro atual do usuário (${mes}):
           const reply = data.candidates[0].content.parts[0].text;
           iaHistory.push({ role: 'model', parts: [{ text: reply }] });
           addIAMessage(reply, 'bot');
+        } else if (data.error) {
+          addIAMessage(`Erro da API: ${data.error.message}`, 'bot');
         } else {
           addIAMessage('Desculpe, não consegui processar sua pergunta. Tente novamente.', 'bot');
         }
