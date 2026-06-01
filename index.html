@@ -489,15 +489,6 @@
     .pdf-preview-area { background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin-bottom: 20px; font-size: 13px; color: var(--muted); }
     .pdf-preview-area strong { color: var(--ink); }
 
-    /* ===== PRINT ===== */
-    @media print {
-      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-      body > *:not(.pdf-print-frame) { display: none !important; }
-      .pdf-print-frame { display: block !important; position: fixed; inset: 0; z-index: 9999; background: white; padding: 0; margin: 0; }
-      @page { margin: 0; size: A4; }
-    }
-    .pdf-print-frame { display: none; }
-
     @media (max-width: 1100px) {
       .app { grid-template-columns: 1fr; }
       .sidebar { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
@@ -1019,7 +1010,7 @@
     </div>
     <div class="pdf-preview-area" id="pdfPreviewInfo">
       <strong>📊 Relatório Completo</strong> — Inclui todos os dados financeiros cadastrados.<br>
-      <span style="font-size:12px;margin-top:4px;display:block;">O arquivo será aberto na janela de impressão do navegador. Salve como PDF.</span>
+      <span style="font-size:12px;margin-top:4px;display:block;">Uma nova aba será aberta com o relatório. Use Ctrl+P para salvar como PDF.</span>
     </div>
     <div class="modal-actions">
       <button class="btn" onclick="closePdfModal()">Cancelar</button>
@@ -1030,9 +1021,6 @@
     </div>
   </div>
 </div>
-
-<!-- PDF Print Frame -->
-<div class="pdf-print-frame" id="pdfPrintFrame"></div>
 
 <!-- Firebase SDK -->
 <script type="module">
@@ -1670,7 +1658,7 @@
   }
 
   // ===================================================
-  // PDF EXPORT — CORRIGIDO
+  // PDF EXPORT — CORRIGIDO (usa window.open em nova aba)
   // ===================================================
   let _pdfTipo = 'completo';
 
@@ -1689,85 +1677,175 @@
     const idMap = { completo:'pdfOptCompleto', lancamentos:'pdfOptLanc', metas:'pdfOptMetas', orcamentos:'pdfOptOrc' };
     document.getElementById(idMap[tipo])?.classList.add('selected');
     const infos = {
-      completo: '<strong>📊 Relatório Completo</strong> — Dashboard, lançamentos, metas e orçamentos.<br><span style="font-size:12px;margin-top:4px;display:block;">Ideal para revisão mensal completa das finanças.</span>',
-      lancamentos: '<strong>💳 Extrato de Lançamentos</strong> — Todas as movimentações com totais por categoria.<br><span style="font-size:12px;margin-top:4px;display:block;">Ideal para acompanhar entradas e saídas do período.</span>',
-      metas: '<strong>🎯 Relatório de Metas</strong> — Progresso detalhado com projeções e aportes.<br><span style="font-size:12px;margin-top:4px;display:block;">Ideal para revisar objetivos financeiros.</span>',
-      orcamentos: '<strong>💰 Análise de Orçamentos</strong> — Comparativo limites vs gastos reais.<br><span style="font-size:12px;margin-top:4px;display:block;">Ideal para controlar se está dentro do planejado.</span>',
+      completo: '<strong>📊 Relatório Completo</strong> — Dashboard, lançamentos, metas e orçamentos.<br><span style="font-size:12px;margin-top:4px;display:block;">Uma nova aba será aberta. Use Ctrl+P → "Salvar como PDF".</span>',
+      lancamentos: '<strong>💳 Extrato de Lançamentos</strong> — Todas as movimentações com totais por categoria.<br><span style="font-size:12px;margin-top:4px;display:block;">Uma nova aba será aberta. Use Ctrl+P → "Salvar como PDF".</span>',
+      metas: '<strong>🎯 Relatório de Metas</strong> — Progresso detalhado com projeções e aportes.<br><span style="font-size:12px;margin-top:4px;display:block;">Uma nova aba será aberta. Use Ctrl+P → "Salvar como PDF".</span>',
+      orcamentos: '<strong>💰 Análise de Orçamentos</strong> — Comparativo limites vs gastos reais.<br><span style="font-size:12px;margin-top:4px;display:block;">Uma nova aba será aberta. Use Ctrl+P → "Salvar como PDF".</span>',
     };
-    document.getElementById('pdfPreviewInfo').innerHTML = infos[tipo] + '<br><span style="font-size:11px;color:#888;margin-top:6px;display:block;">💡 Use Ctrl+P → "Salvar como PDF" para baixar o relatório.</span>';
+    document.getElementById('pdfPreviewInfo').innerHTML = infos[tipo];
   }
 
+  // =====================================================
+  // CORREÇÃO PRINCIPAL: abre nova janela com HTML completo
+  // em vez de usar window.print() na página principal
+  // =====================================================
   function gerarPdf() {
     closePdfModal();
-    const frame = document.getElementById('pdfPrintFrame');
-    frame.innerHTML = buildPdfContent(_pdfTipo);
-    // Aguarda font + render antes de imprimir
-    setTimeout(() => {
-      window.print();
-      setTimeout(() => { frame.innerHTML = ''; }, 1500);
-    }, 700);
+    const htmlContent = buildPdfContent(_pdfTipo);
+
+    // Abre nova janela/aba com o relatório completo
+    const printWin = window.open('', '_blank', 'width=960,height=720,scrollbars=yes');
+    if (!printWin) {
+      alert('Pop-up bloqueado!\n\nPor favor, permita pop-ups para este site nas configurações do navegador e tente novamente.');
+      return;
+    }
+
+    printWin.document.open();
+    printWin.document.write(htmlContent);
+    printWin.document.close();
+
+    // Aciona o diálogo de impressão após carregamento
+    printWin.addEventListener('load', function() {
+      setTimeout(function() {
+        printWin.focus();
+        printWin.print();
+      }, 600);
+    });
+
+    // Fallback: dispara print mesmo se o evento load não ocorrer
+    setTimeout(function() {
+      try {
+        printWin.focus();
+        printWin.print();
+      } catch(e) { /* janela já pode ter sido fechada */ }
+    }, 1800);
   }
 
-  // CSS completo do PDF embutido no frame — esta é a correção principal
+  // ===== ESTILOS EMBUTIDOS NO DOCUMENTO PDF =====
   const PDF_STYLES = `
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background: white; color: #1a1a1a; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-    .pdf-report { font-family: 'Plus Jakarta Sans', sans-serif; color: #1a1a1a; background: white; width: 210mm; min-height: 297mm; padding: 14mm 16mm; box-sizing: border-box; }
-    .pdf-header { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 16px; border-bottom: 3px solid #166534; margin-bottom: 24px; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+      background: white;
+      color: #1a1a1a;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    .pdf-report {
+      font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+      color: #1a1a1a;
+      background: white;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 36px;
+    }
+    .pdf-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 18px;
+      border-bottom: 3px solid #166534;
+      margin-bottom: 28px;
+    }
     .pdf-brand { display: flex; align-items: center; gap: 12px; }
-    .pdf-brand-mark { width: 44px; height: 44px; border-radius: 10px; background: linear-gradient(135deg, #166534, #0f766e); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 20px; }
-    .pdf-brand-text strong { display: block; font-size: 20px; font-weight: 900; color: #166534; }
-    .pdf-brand-text span { font-size: 12px; color: #666; }
+    .pdf-brand-mark {
+      width: 48px; height: 48px; border-radius: 10px;
+      background: linear-gradient(135deg, #166534, #0f766e);
+      color: white; display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 22px;
+    }
+    .pdf-brand-text strong { display: block; font-size: 22px; font-weight: 900; color: #166534; }
+    .pdf-brand-text span { font-size: 12px; color: #666; display: block; margin-top: 2px; }
     .pdf-header-right { text-align: right; }
     .pdf-report-title { font-size: 22px; font-weight: 900; color: #166534; }
     .pdf-report-period { font-size: 12px; color: #666; margin-top: 4px; }
-    .pdf-section-title { font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em; color: #166534; border-left: 3px solid #166534; padding-left: 10px; margin: 20px 0 12px; }
-    .pdf-metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 8px; }
-    .pdf-metric-card { border: 1px solid #e0e8e0; border-radius: 10px; padding: 14px; background: #f4fbf4; position: relative; overflow: hidden; }
+    .pdf-section-title {
+      font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em;
+      color: #166534; border-left: 4px solid #166534; padding-left: 10px; margin: 24px 0 14px;
+    }
+    .pdf-metrics-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 8px;
+    }
+    .pdf-metric-card {
+      border: 1px solid #dde8dd; border-radius: 10px; padding: 16px;
+      background: #f4fbf4; position: relative; overflow: hidden;
+    }
     .pdf-metric-label { font-size: 10px; font-weight: 800; text-transform: uppercase; color: #666; letter-spacing: 0.05em; }
-    .pdf-metric-value { font-size: 20px; font-weight: 900; margin: 6px 0 2px; }
+    .pdf-metric-value { font-size: 22px; font-weight: 900; margin: 8px 0 4px; line-height: 1; }
     .pdf-metric-value.pos { color: #166534; }
     .pdf-metric-value.neg { color: #b42318; }
     .pdf-metric-value.warn { color: #b7791f; }
-    .pdf-metric-sub { font-size: 10px; color: #888; }
-    .pdf-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 8px; }
+    .pdf-metric-sub { font-size: 11px; color: #888; }
+    .pdf-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 8px; }
     .pdf-table thead tr { background: #166534; }
-    .pdf-table thead th { color: white; padding: 8px 10px; text-align: left; font-weight: 800; font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .pdf-table thead th {
+      color: white; padding: 10px 12px; text-align: left;
+      font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em;
+    }
     .pdf-table tbody tr:nth-child(even) { background: #f8faf8; }
     .pdf-table tbody tr:nth-child(odd) { background: white; }
-    .pdf-table tbody td { padding: 7px 10px; border-bottom: 1px solid #e8ede8; color: #333; }
+    .pdf-table tbody td { padding: 8px 12px; border-bottom: 1px solid #e8ede8; color: #333; vertical-align: middle; }
     .td-income { color: #166534 !important; font-weight: 800; }
     .td-expense { color: #b42318 !important; font-weight: 800; }
-    .td-badge { display: inline-block; padding: 2px 8px; border-radius: 99px; font-size: 10px; font-weight: 700; }
+    .td-badge {
+      display: inline-block; padding: 2px 10px; border-radius: 99px;
+      font-size: 11px; font-weight: 700;
+    }
     .td-badge.receita { background: #dcfce7; color: #166534; }
     .td-badge.despesa { background: #fee4e2; color: #b42318; }
     .td-badge.parcelado { background: #ede9fe; color: #6d28d9; }
     .td-badge.recorrente { background: #dff1f7; color: #245b7f; }
+    .pdf-totals-row { background: #f0f7f0 !important; font-weight: 900; }
+    .pdf-totals-row td { padding: 10px 12px !important; }
     .pdf-two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .pdf-meta-card { border: 1px solid #e0e8e0; border-radius: 10px; padding: 14px; background: white; }
-    .pdf-meta-name { font-weight: 800; font-size: 13px; color: #1a1a1a; margin-bottom: 8px; }
-    .pdf-meta-values { display: flex; justify-content: space-between; font-size: 11px; color: #666; margin-bottom: 6px; }
-    .pdf-progress-bar { width: 100%; height: 7px; background: #e8ede8; border-radius: 99px; overflow: hidden; margin-bottom: 4px; }
+    .pdf-meta-card {
+      border: 1px solid #dde8dd; border-radius: 10px; padding: 16px; background: white;
+    }
+    .pdf-meta-name { font-weight: 800; font-size: 14px; color: #1a1a1a; margin-bottom: 10px; }
+    .pdf-meta-values { display: flex; justify-content: space-between; font-size: 12px; color: #666; margin-bottom: 8px; }
+    .pdf-progress-bar { width: 100%; height: 8px; background: #e8ede8; border-radius: 99px; overflow: hidden; margin-bottom: 6px; }
     .pdf-progress-fill { height: 100%; border-radius: 99px; }
-    .pdf-meta-pct { font-size: 12px; font-weight: 800; color: #166534; }
-    .pdf-orc-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #e8ede8; font-size: 12px; }
-    .pdf-orc-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-    .pdf-orc-bar-wrap { flex: 1; height: 6px; background: #e8ede8; border-radius: 99px; overflow: hidden; }
+    .pdf-meta-footer { display: flex; justify-content: space-between; font-size: 11px; color: #666; margin-top: 4px; }
+    .pdf-orc-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 0; border-bottom: 1px solid #e8ede8;
+    }
+    .pdf-orc-row:last-child { border-bottom: none; }
+    .pdf-orc-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+    .pdf-orc-name { min-width: 100px; font-weight: 700; font-size: 13px; }
+    .pdf-orc-period { min-width: 56px; font-size: 12px; color: #888; }
+    .pdf-orc-bar-wrap { flex: 1; height: 8px; background: #e8ede8; border-radius: 99px; overflow: hidden; }
     .pdf-orc-bar { height: 100%; border-radius: 99px; }
-    .pdf-orc-vals { min-width: 90px; text-align: right; font-size: 11px; color: #666; }
+    .pdf-orc-vals { min-width: 130px; text-align: right; font-size: 12px; color: #666; }
     .pdf-orc-vals strong { color: #1a1a1a; }
-    .pdf-cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    .pdf-cat-item { border: 1px solid #e0e8e0; border-radius: 8px; padding: 10px 12px; background: #f8faf8; }
-    .pdf-cat-name { font-size: 11px; font-weight: 800; color: #444; margin-bottom: 4px; }
-    .pdf-cat-val { font-size: 15px; font-weight: 900; color: #b42318; }
-    .pdf-cat-pct { font-size: 10px; color: #888; margin-top: 2px; }
-    .pdf-footer { margin-top: 28px; padding-top: 14px; border-top: 1px solid #e0e8e0; display: flex; justify-content: space-between; align-items: center; font-size: 10px; color: #999; }
-    .pdf-footer-brand { font-weight: 800; color: #166534; }
-    .pdf-footer-note { font-size: 9px; color: #bbb; }
-    .pdf-insight-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid #166534; border-radius: 10px; padding: 14px 16px; font-size: 12px; line-height: 1.6; color: #1a3a1a; margin-top: 12px; }
+    .pdf-cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .pdf-cat-item { border: 1px solid #dde8dd; border-radius: 8px; padding: 12px 14px; background: #f8faf8; }
+    .pdf-cat-name { font-size: 11px; font-weight: 800; color: #555; margin-bottom: 4px; text-transform: uppercase; }
+    .pdf-cat-val { font-size: 18px; font-weight: 900; color: #b42318; }
+    .pdf-cat-pct { font-size: 11px; color: #888; margin-top: 2px; }
+    .pdf-insight-box {
+      background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid #166534;
+      border-radius: 10px; padding: 14px 16px; font-size: 13px; line-height: 1.6;
+      color: #1a3a1a; margin-top: 14px;
+    }
     .pdf-insight-box strong { color: #166534; }
-    .pdf-alert-box { background: #fff8f0; border: 1px solid #fed7aa; border-left: 4px solid #ea580c; border-radius: 10px; padding: 14px 16px; font-size: 12px; line-height: 1.6; color: #3a1a00; margin-top: 8px; }
-    @media print { * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } @page { margin: 0; size: A4; } }
+    .pdf-alert-box {
+      background: #fff8f0; border: 1px solid #fed7aa; border-left: 4px solid #ea580c;
+      border-radius: 10px; padding: 14px 16px; font-size: 13px; line-height: 1.6;
+      color: #3a1a00; margin-top: 10px;
+    }
+    .pdf-footer {
+      margin-top: 36px; padding-top: 14px; border-top: 1px solid #dde8dd;
+      display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #aaa;
+    }
+    .pdf-footer-brand { font-weight: 900; color: #166534; font-size: 12px; }
+    @media print {
+      body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      @page { margin: 12mm; size: A4; }
+      .pdf-report { padding: 0; max-width: 100%; }
+    }
   `;
 
   function buildPdfContent(tipo) {
@@ -1786,7 +1864,12 @@
     const [ano, m] = mesAtual.split('-').map(Number);
     const mesLabel = `${mesesNome[m-1]} ${ano}`;
 
-    const titulosTipo = { completo: 'Relatório Completo', lancamentos: 'Extrato de Lançamentos', metas: 'Relatório de Metas', orcamentos: 'Análise de Orçamentos' };
+    const titulosTipo = {
+      completo: 'Relatório Completo',
+      lancamentos: 'Extrato de Lançamentos',
+      metas: 'Relatório de Metas',
+      orcamentos: 'Análise de Orçamentos'
+    };
 
     const header = `
       <div class="pdf-header">
@@ -1799,18 +1882,19 @@
         </div>
         <div class="pdf-header-right">
           <div class="pdf-report-title">${titulosTipo[tipo]}</div>
-          <div class="pdf-report-period">Período: ${mesLabel} · Gerado em ${dataHora}</div>
+          <div class="pdf-report-period">Período: ${mesLabel} &nbsp;·&nbsp; Gerado em ${dataHora}</div>
         </div>
       </div>`;
 
     const footer = `
       <div class="pdf-footer">
         <div><span class="pdf-footer-brand">FinanPro</span> — Controle Financeiro Pessoal</div>
-        <div class="pdf-footer-note">Gerado em ${dataHora} · Dados pessoais e confidenciais</div>
+        <div>Gerado em ${dataHora} &nbsp;·&nbsp; Dados pessoais e confidenciais</div>
       </div>`;
 
     let body = '';
 
+    // ---- COMPLETO: métricas + categorias + insights ----
     if (tipo === 'completo') {
       body += `
         <div class="pdf-section-title">Resumo do Mês — ${mesLabel}</div>
@@ -1840,11 +1924,16 @@
       const gastosCat = {};
       lancMes.filter(l => l.tipo === 'despesa').forEach(l => { gastosCat[l.cat] = (gastosCat[l.cat] || 0) + l.valor; });
       const catOrdenadas = Object.entries(gastosCat).sort((a, b) => b[1] - a[1]);
+
       if (catOrdenadas.length > 0) {
         body += `<div class="pdf-section-title">Despesas por Categoria</div><div class="pdf-cat-grid">`;
         catOrdenadas.forEach(([cat, val]) => {
           const p = despesas > 0 ? ((val / despesas) * 100).toFixed(0) : 0;
-          body += `<div class="pdf-cat-item"><div class="pdf-cat-name">${cat}</div><div class="pdf-cat-val">${fmtBRL(val)}</div><div class="pdf-cat-pct">${p}% das despesas</div></div>`;
+          body += `<div class="pdf-cat-item">
+            <div class="pdf-cat-name">${cat}</div>
+            <div class="pdf-cat-val">${fmtBRL(val)}</div>
+            <div class="pdf-cat-pct">${p}% das despesas</div>
+          </div>`;
         });
         body += `</div>`;
       }
@@ -1854,6 +1943,7 @@
       if (parseFloat(taxa) < 10 && receitas > 0) alertas.push('Taxa de poupança abaixo de 10% — revise suas despesas.');
       if (topCat && despesas > 0 && (topCat[1] / despesas) > 0.4) alertas.push(`${topCat[0]} representa mais de 40% das despesas (${fmtBRL(topCat[1])}).`);
       if (saldo < 0) alertas.push('Atenção: despesas superiores às receitas neste mês.');
+
       if (saldo >= 0 && parseFloat(taxa) >= 20) {
         body += `<div class="pdf-insight-box">✅ <strong>Mês com saldo positivo!</strong> Taxa de poupança de ${taxa}% — parabéns pela disciplina financeira.</div>`;
       }
@@ -1862,35 +1952,57 @@
       }
     }
 
-    // Tabela de lançamentos
+    // ---- LANÇAMENTOS ----
     if (tipo === 'lancamentos' || tipo === 'completo') {
       const lancExibir = tipo === 'lancamentos' ? lancamentos : lancMes;
-      const lancSorted = [...lancExibir].sort((a, b) => b.data.localeCompare(a.data)).slice(0, 40);
+      const lancSorted = [...lancExibir].sort((a, b) => b.data.localeCompare(a.data)).slice(0, 50);
+
       if (lancSorted.length > 0) {
-        body += `<div class="pdf-section-title">Lançamentos${tipo === 'lancamentos' ? ' — Todos' : ' do Mês'}</div>`;
-        body += `<table class="pdf-table"><thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Tipo</th><th>Valor</th></tr></thead><tbody>`;
+        const totRec = lancSorted.filter(l => l.tipo === 'receita').reduce((s, l) => s + l.valor, 0);
+        const totDesp = lancSorted.filter(l => l.tipo === 'despesa').reduce((s, l) => s + l.valor, 0);
+
+        body += `<div class="pdf-section-title">Lançamentos${tipo === 'lancamentos' ? ' — Todos os registros' : ' do Mês'}</div>`;
+        body += `<table class="pdf-table">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Descrição</th>
+              <th>Categoria</th>
+              <th>Tipo</th>
+              <th style="text-align:right;">Valor</th>
+            </tr>
+          </thead>
+          <tbody>`;
+
         lancSorted.forEach(l => {
           body += `<tr>
             <td>${fmtDate(l.data)}</td>
             <td>${l.desc}</td>
             <td>${l.cat}</td>
             <td><span class="td-badge ${l.tipo}">${l.tipo === 'receita' ? 'Receita' : 'Despesa'}</span></td>
-            <td class="${l.tipo === 'receita' ? 'td-income' : 'td-expense'}">${l.tipo === 'receita' ? '+' : '-'}${fmtBRL(l.valor)}</td>
+            <td style="text-align:right;" class="${l.tipo === 'receita' ? 'td-income' : 'td-expense'}">${l.tipo === 'receita' ? '+' : '-'}${fmtBRL(l.valor)}</td>
           </tr>`;
         });
-        const totRec = lancSorted.filter(l => l.tipo === 'receita').reduce((s, l) => s + l.valor, 0);
-        const totDesp = lancSorted.filter(l => l.tipo === 'despesa').reduce((s, l) => s + l.valor, 0);
-        body += `<tr style="background:#f0f7f0;font-weight:900;">
-          <td colspan="3" style="text-align:right;padding:10px;">TOTAIS</td>
+
+        body += `<tr class="pdf-totals-row">
+          <td colspan="3" style="text-align:right;font-weight:900;font-size:13px;">TOTAIS</td>
           <td></td>
-          <td><span style="color:#166534;">+${fmtBRL(totRec)}</span><br><span style="color:#b42318;">-${fmtBRL(totDesp)}</span></td>
+          <td style="text-align:right;">
+            <span style="color:#166534;display:block;">+${fmtBRL(totRec)}</span>
+            <span style="color:#b42318;display:block;">-${fmtBRL(totDesp)}</span>
+          </td>
         </tr>`;
         body += `</tbody></table>`;
-        if (lancExibir.length > 40) body += `<div style="font-size:11px;color:#888;margin-top:6px;">Exibindo 40 de ${lancExibir.length} lançamentos</div>`;
+
+        if (lancExibir.length > 50) {
+          body += `<div style="font-size:11px;color:#888;margin-top:6px;text-align:right;">Exibindo 50 de ${lancExibir.length} lançamentos</div>`;
+        }
+      } else {
+        body += `<div class="pdf-section-title">Lançamentos</div><p style="color:#888;font-size:13px;padding:12px 0;">Nenhum lançamento encontrado para este período.</p>`;
       }
     }
 
-    // Metas
+    // ---- METAS ----
     if (tipo === 'metas' || tipo === 'completo') {
       if (metas.length > 0) {
         body += `<div class="pdf-section-title">Metas Financeiras</div><div class="pdf-two-cols">`;
@@ -1906,59 +2018,83 @@
               <span>Atual: <strong style="color:${cor};">${fmtBRL(m.atual)}</strong></span>
               <span>Meta: <strong>${fmtBRL(m.alvo)}</strong></span>
             </div>
-            <div class="pdf-progress-bar"><div class="pdf-progress-fill" style="width:${pct}%;background:${cor};"></div></div>
-            <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:#666;">
-              <span class="pdf-meta-pct" style="color:${cor};">${pct}% concluído</span>
+            <div class="pdf-progress-bar">
+              <div class="pdf-progress-fill" style="width:${pct}%;background:${cor};"></div>
+            </div>
+            <div class="pdf-meta-footer">
+              <span style="font-weight:800;color:${cor};">${pct}% concluído</span>
               ${dias !== null ? `<span>${dias > 0 ? dias + ' dias restantes' : 'Prazo encerrado'}</span>` : ''}
             </div>
-            ${aporte ? `<div style="font-size:11px;color:#888;margin-top:4px;">Aporte sugerido: <strong style="color:#166534;">${fmtBRL(aporte)}/mês</strong></div>` : ''}
+            ${aporte ? `<div style="font-size:11px;color:#888;margin-top:6px;">Aporte sugerido: <strong style="color:#166534;">${fmtBRL(aporte)}/mês</strong></div>` : ''}
           </div>`;
         });
         body += `</div>`;
+      } else {
+        body += `<div class="pdf-section-title">Metas Financeiras</div><p style="color:#888;font-size:13px;padding:12px 0;">Nenhuma meta cadastrada.</p>`;
       }
     }
 
-    // Orçamentos
+    // ---- ORÇAMENTOS ----
     if (tipo === 'orcamentos' || tipo === 'completo') {
       if (orcamentos.length > 0) {
         body += `<div class="pdf-section-title">Orçamentos</div>`;
         orcamentos.forEach(o => {
-          const gasto = lancamentos.filter(l => l.tipo === 'despesa' && l.cat === o.cat && l.data?.startsWith(o.mes)).reduce((s, l) => s + l.valor, 0);
+          const gasto = lancamentos
+            .filter(l => l.tipo === 'despesa' && l.cat === o.cat && l.data?.startsWith(o.mes))
+            .reduce((s, l) => s + l.valor, 0);
           const pct = Math.min(100, Math.round((gasto / o.limite) * 100));
-          const cor = pct >= 90 ? '#b42318' : pct >= 70 ? '#b7791f' : '#166534';
+          const corBarra = pct >= 90 ? '#b42318' : pct >= 70 ? '#b7791f' : '#166534';
           const catCor = catColors[o.cat] || '#66736b';
           body += `<div class="pdf-orc-row">
             <div class="pdf-orc-dot" style="background:${catCor};"></div>
-            <div style="min-width:90px;font-weight:700;font-size:12px;">${o.cat}</div>
-            <div style="min-width:50px;font-size:11px;color:#888;">${o.mes}</div>
-            <div class="pdf-orc-bar-wrap"><div class="pdf-orc-bar" style="width:${pct}%;background:${cor};"></div></div>
-            <div class="pdf-orc-vals"><strong style="color:${cor};">${fmtBRL(gasto)}</strong> / ${fmtBRL(o.limite)} <span style="margin-left:6px;font-size:10px;">${pct}%</span></div>
+            <div class="pdf-orc-name">${o.cat}</div>
+            <div class="pdf-orc-period">${o.mes}</div>
+            <div class="pdf-orc-bar-wrap">
+              <div class="pdf-orc-bar" style="width:${pct}%;background:${corBarra};"></div>
+            </div>
+            <div class="pdf-orc-vals">
+              <strong style="color:${corBarra};">${fmtBRL(gasto)}</strong> / ${fmtBRL(o.limite)}
+              <span style="margin-left:6px;font-size:10px;color:#888;">${pct}%</span>
+            </div>
           </div>`;
         });
+
         const estourados = orcamentos.filter(o => {
-          const g = lancamentos.filter(l => l.tipo === 'despesa' && l.cat === o.cat && l.data?.startsWith(o.mes)).reduce((s,l) => s+l.valor, 0);
+          const g = lancamentos
+            .filter(l => l.tipo === 'despesa' && l.cat === o.cat && l.data?.startsWith(o.mes))
+            .reduce((s,l) => s+l.valor, 0);
           return g > o.limite;
         });
         if (estourados.length > 0) {
           body += `<div class="pdf-alert-box">⚠️ <strong>${estourados.length} orçamento(s) estourado(s):</strong> ${estourados.map(o => o.cat).join(', ')}. Revise os gastos nestas categorias.</div>`;
         }
+      } else {
+        body += `<div class="pdf-section-title">Orçamentos</div><p style="color:#888;font-size:13px;padding:12px 0;">Nenhum orçamento cadastrado.</p>`;
       }
     }
 
-    // RETORNO: inclui todos os estilos PDF embutidos no próprio frame
+    // Monta o HTML completo da nova janela com todos os estilos embutidos
     return `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-<style>${PDF_STYLES}</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FinanPro — ${titulosTipo[tipo]}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>${PDF_STYLES}</style>
 </head>
 <body>
-<div class="pdf-report">
-  ${header}
-  ${body}
-  ${footer}
-</div>
+  <div class="pdf-report">
+    ${header}
+    ${body}
+    ${footer}
+  </div>
+  <script>
+    // Auto-abre diálogo de impressão quando a página carregar
+    window.addEventListener('load', function() {
+      setTimeout(function() { window.print(); }, 500);
+    });
+  </sc` + `ript>
 </body>
 </html>`;
   }
