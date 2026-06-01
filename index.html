@@ -14,9 +14,6 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    /* ===================================================
-       LIGHT MODE (default)
-    =================================================== */
     :root {
       --bg: #f5f7f4;
       --surface: #ffffff;
@@ -50,7 +47,6 @@
       --metric-ring: rgba(22,101,52,0.07);
       --input-bg: #fff;
       --auth-panel-bg: rgba(255,255,255,0.94);
-      --dark-toggle-icon: "🌙";
       --side-panel-bg: linear-gradient(180deg, #ffffff, #f5faf5);
       --ia-input-bg: #fafcfa;
       --empty-bg: #fbfcfb;
@@ -59,9 +55,6 @@
       --progress-track: var(--line);
     }
 
-    /* ===================================================
-       DARK MODE — Premium Night Theme
-    =================================================== */
     [data-theme="dark"] {
       --bg: #0d1117;
       --surface: #161b22;
@@ -102,9 +95,6 @@
       --progress-track: #2d333b;
     }
 
-    /* ===================================================
-       BASE
-    =================================================== */
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
@@ -128,60 +118,34 @@
     button, input, select { font: inherit; }
     button { cursor: pointer; }
 
-    /* Transitions globais */
     .card, .sidebar, input, select, textarea, .btn, .modal, .nav button, table, .futuro-item {
       transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
     }
 
-    /* ===== DARK MODE TOGGLE ===== */
     .dark-toggle {
-      position: relative;
-      width: 52px;
-      height: 28px;
-      border: none;
-      background: none;
-      padding: 0;
-      cursor: pointer;
-      outline: none;
-      flex-shrink: 0;
+      position: relative; width: 52px; height: 28px;
+      border: none; background: none; padding: 0; cursor: pointer; outline: none; flex-shrink: 0;
     }
     .dark-toggle-track {
-      position: absolute;
-      inset: 0;
-      border-radius: 99px;
-      background: var(--surface-2);
-      border: 1.5px solid var(--line);
-      transition: all 0.3s ease;
+      position: absolute; inset: 0; border-radius: 99px;
+      background: var(--surface-2); border: 1.5px solid var(--line); transition: all 0.3s ease;
     }
     [data-theme="dark"] .dark-toggle-track {
       background: linear-gradient(135deg, #1a3a2a, #0d2318);
-      border-color: var(--green);
-      box-shadow: 0 0 12px rgba(63,185,80,0.3);
+      border-color: var(--green); box-shadow: 0 0 12px rgba(63,185,80,0.3);
     }
     .dark-toggle-thumb {
-      position: absolute;
-      top: 3px;
-      left: 3px;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      position: absolute; top: 3px; left: 3px; width: 20px; height: 20px;
+      border-radius: 50%; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.2);
       transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      display: grid;
-      place-items: center;
-      font-size: 11px;
+      display: grid; place-items: center; font-size: 11px;
     }
     [data-theme="dark"] .dark-toggle-thumb {
-      transform: translateX(24px);
-      background: var(--green);
-      box-shadow: 0 2px 8px rgba(63,185,80,0.4);
+      transform: translateX(24px); background: var(--green); box-shadow: 0 2px 8px rgba(63,185,80,0.4);
     }
 
-    /* ===== AUTH ===== */
     .auth-screen {
-      min-height: 100vh;
-      display: grid;
+      min-height: 100vh; display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(360px, 0.72fr);
       background: linear-gradient(135deg, rgba(22,101,52,0.96), rgba(15,118,110,0.90)), var(--green);
     }
@@ -194,23 +158,13 @@
     body.auth-lock .app { display: none; }
 
     .auth-copy {
-      min-height: 100vh;
-      padding: clamp(28px, 6vw, 72px);
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 40px;
-      position: relative;
-      overflow: hidden;
+      min-height: 100vh; padding: clamp(28px, 6vw, 72px); color: white;
+      display: flex; flex-direction: column; justify-content: space-between; gap: 40px;
+      position: relative; overflow: hidden;
     }
     .auth-copy:after {
-      content: "";
-      position: absolute;
-      right: -140px; bottom: -180px;
-      width: 460px; height: 460px;
-      border: 62px solid rgba(255,255,255,0.08);
-      border-radius: 50%;
+      content: ""; position: absolute; right: -140px; bottom: -180px;
+      width: 460px; height: 460px; border: 62px solid rgba(255,255,255,0.08); border-radius: 50%;
     }
     .auth-copy > * { position: relative; z-index: 1; }
     .auth-brand { display: flex; align-items: center; gap: 14px; font-weight: 900; }
@@ -242,25 +196,19 @@
     .auth-message.info { color: var(--blue); background: var(--blue-soft); border: 1px solid var(--line); }
     .auth-message.hidden { display: none; }
 
-    /* ===== APP ===== */
     .app { min-height: 100vh; display: grid; grid-template-columns: 280px minmax(0, 1fr); }
 
     .sidebar {
-      position: sticky; top: 0; height: 100vh;
-      padding: 22px 18px;
-      background: var(--sidebar-bg);
-      border-right: 1px solid var(--sidebar-border);
-      backdrop-filter: blur(14px);
-      display: flex; flex-direction: column; gap: 18px;
-      overflow-y: auto;
+      position: sticky; top: 0; height: 100vh; padding: 22px 18px;
+      background: var(--sidebar-bg); border-right: 1px solid var(--sidebar-border);
+      backdrop-filter: blur(14px); display: flex; flex-direction: column; gap: 18px; overflow-y: auto;
     }
 
     .brand { display: flex; align-items: center; gap: 12px; padding: 6px 6px 18px; border-bottom: 1px solid var(--line); }
     .brand-mark {
       width: 42px; height: 42px; border-radius: 8px;
       background: linear-gradient(135deg, var(--green), var(--teal));
-      color: white; display: grid; place-items: center;
-      font-weight: 900; font-size: 18px;
+      color: white; display: grid; place-items: center; font-weight: 900; font-size: 18px;
       box-shadow: 0 12px 22px var(--green-glow);
     }
     .brand strong { display: block; font-size: 18px; color: var(--ink); }
@@ -268,16 +216,13 @@
 
     .nav { display: grid; gap: 6px; }
     .nav button {
-      min-height: 42px; border: 0; border-radius: 8px;
-      background: transparent; color: var(--muted);
-      display: grid; grid-template-columns: 28px 1fr;
-      align-items: center; gap: 8px; padding: 0 12px;
-      text-align: left; font-weight: 700;
+      min-height: 42px; border: 0; border-radius: 8px; background: transparent; color: var(--muted);
+      display: grid; grid-template-columns: 28px 1fr; align-items: center; gap: 8px;
+      padding: 0 12px; text-align: left; font-weight: 700;
     }
     .nav button:hover, .nav button.active { background: var(--surface-3); color: var(--green); }
     [data-theme="dark"] .nav button:hover, [data-theme="dark"] .nav button.active {
-      background: rgba(63,185,80,0.1);
-      box-shadow: inset 2px 0 0 var(--green);
+      background: rgba(63,185,80,0.1); box-shadow: inset 2px 0 0 var(--green);
     }
     .nav svg { width: 18px; height: 18px; stroke-width: 2; }
 
@@ -299,8 +244,7 @@
     .top-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
 
     .btn {
-      min-height: 40px; border: 1px solid var(--line);
-      background: var(--surface); color: var(--ink);
+      min-height: 40px; border: 1px solid var(--line); background: var(--surface); color: var(--ink);
       border-radius: 8px; padding: 0 14px;
       display: inline-flex; align-items: center; justify-content: center; gap: 8px;
       box-shadow: var(--shadow-sm); font-weight: 700;
@@ -314,13 +258,7 @@
     .btn.small { min-height: 32px; padding: 0 10px; font-size: 12px; }
     .btn:disabled { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
 
-    /* PDF Export button */
-    .btn.pdf-btn {
-      background: linear-gradient(135deg, #b42318, #ef4444);
-      color: white;
-      border-color: transparent;
-      gap: 6px;
-    }
+    .btn.pdf-btn { background: linear-gradient(135deg, #b42318, #ef4444); color: white; border-color: transparent; gap: 6px; }
     [data-theme="dark"] .btn.pdf-btn { box-shadow: 0 4px 16px rgba(248,81,73,0.2); }
     .btn.pdf-btn:hover { box-shadow: 0 8px 20px rgba(180,35,24,0.35); }
 
@@ -331,14 +269,12 @@
     [data-theme="dark"] .card { box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
 
     .metric {
-      padding: 18px; min-height: 132px;
-      display: flex; flex-direction: column; justify-content: space-between;
+      padding: 18px; min-height: 132px; display: flex; flex-direction: column; justify-content: space-between;
       position: relative; overflow: hidden;
     }
     .metric:after {
       content: ""; position: absolute; right: -40px; top: -40px;
-      width: 120px; height: 120px;
-      border: 18px solid var(--metric-ring); border-radius: 50%;
+      width: 120px; height: 120px; border: 18px solid var(--metric-ring); border-radius: 50%;
     }
     .metric .label { color: var(--muted); font-size: 13px; font-weight: 700; }
     .metric strong { display: block; margin-top: 12px; font-size: clamp(24px, 3vw, 34px); line-height: 1; }
@@ -361,10 +297,8 @@
     label { display: grid; gap: 6px; color: var(--muted); font-size: 12px; font-weight: 800; text-transform: uppercase; }
 
     input, select, textarea {
-      width: 100%; min-height: 42px;
-      border: 1px solid var(--line);
-      background: var(--input-bg); color: var(--ink);
-      border-radius: 8px; padding: 0 12px; outline: none;
+      width: 100%; min-height: 42px; border: 1px solid var(--line);
+      background: var(--input-bg); color: var(--ink); border-radius: 8px; padding: 0 12px; outline: none;
     }
     textarea { min-height: auto; padding: 12px; resize: vertical; }
     input:focus, select:focus, textarea:focus { border-color: var(--green); box-shadow: 0 0 0 3px var(--green-glow); }
@@ -374,10 +308,8 @@
     .full { grid-column: 1 / -1; }
 
     .empty {
-      min-height: 160px; display: grid; place-items: center;
-      text-align: center; color: var(--muted);
-      border: 1px dashed var(--line); border-radius: var(--radius);
-      background: var(--empty-bg); padding: 24px;
+      min-height: 160px; display: grid; place-items: center; text-align: center; color: var(--muted);
+      border: 1px dashed var(--line); border-radius: var(--radius); background: var(--empty-bg); padding: 24px;
     }
 
     .table-wrap { overflow-x: auto; }
@@ -409,17 +341,14 @@
     .orc-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 
     .modal-overlay {
-      display: none; position: fixed; inset: 0;
-      background: var(--modal-overlay-bg); z-index: 100;
-      place-items: center; backdrop-filter: blur(4px);
+      display: none; position: fixed; inset: 0; background: var(--modal-overlay-bg);
+      z-index: 100; place-items: center; backdrop-filter: blur(4px);
     }
     .modal-overlay.open { display: grid; }
     .modal {
       background: var(--surface); border-radius: 12px; padding: 28px;
-      width: min(100% - 40px, 520px);
-      box-shadow: 0 40px 80px rgba(0,0,0,0.4);
-      max-height: 90vh; overflow-y: auto;
-      border: 1px solid var(--line);
+      width: min(100% - 40px, 520px); box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+      max-height: 90vh; overflow-y: auto; border: 1px solid var(--line);
     }
     .modal h3 { margin: 0 0 18px; font-size: 20px; color: var(--ink); }
     .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; }
@@ -428,54 +357,21 @@
     .filter-bar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
     .filter-bar select, .filter-bar input { min-height: 36px; padding: 0 10px; font-size: 13px; width: auto; }
 
-    /* ===== RECORRÊNCIA ===== */
     .recorrencia-box {
-      display: none;
-      grid-column: 1 / -1;
+      display: none; grid-column: 1 / -1;
       background: linear-gradient(135deg, var(--blue-soft), rgba(36,91,127,0.1));
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 16px;
-      gap: 12px;
+      border: 1px solid var(--line); border-radius: 10px; padding: 16px; gap: 12px;
     }
     .recorrencia-box.show { display: grid; }
-    .recorrencia-box .rec-title {
-      grid-column: 1 / -1;
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--blue);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .recorrencia-box.parcela-mode {
-      background: linear-gradient(135deg, var(--purple-soft), rgba(109,40,217,0.08));
-      border-color: var(--line);
-    }
+    .recorrencia-box .rec-title { grid-column: 1 / -1; font-size: 13px; font-weight: 800; color: var(--blue); display: flex; align-items: center; gap: 6px; }
+    .recorrencia-box.parcela-mode { background: linear-gradient(135deg, var(--purple-soft), rgba(109,40,217,0.08)); border-color: var(--line); }
     .recorrencia-box.parcela-mode .rec-title { color: var(--purple); }
 
-    .tipo-selector {
-      grid-column: 1 / -1;
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
+    .tipo-selector { grid-column: 1 / -1; display: flex; gap: 8px; flex-wrap: wrap; }
     .tipo-btn {
-      flex: 1;
-      min-width: 120px;
-      min-height: 52px;
-      border: 2px solid var(--line);
-      background: var(--surface);
-      border-radius: 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      font-weight: 700;
-      font-size: 13px;
-      cursor: pointer;
-      color: var(--muted);
+      flex: 1; min-width: 120px; min-height: 52px; border: 2px solid var(--line); background: var(--surface);
+      border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 4px; font-weight: 700; font-size: 13px; cursor: pointer; color: var(--muted);
     }
     .tipo-btn .tipo-icon { font-size: 20px; }
     .tipo-btn:hover { border-color: var(--green); color: var(--green); transform: translateY(-1px); }
@@ -484,35 +380,22 @@
     .tipo-btn.active.recorrente { border-color: var(--blue); background: var(--blue-soft); color: var(--blue); }
 
     .preview-parcelas {
-      grid-column: 1 / -1;
-      max-height: 180px;
-      overflow-y: auto;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 10px 14px;
-      font-size: 13px;
+      grid-column: 1 / -1; max-height: 180px; overflow-y: auto;
+      background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; font-size: 13px;
     }
     .preview-parcelas .prev-title { font-weight: 800; color: var(--muted); font-size: 11px; text-transform: uppercase; margin-bottom: 8px; }
     .preview-item { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--line); color: var(--ink); }
     .preview-item:last-child { border-bottom: none; }
     .preview-item .pi-label { color: var(--muted); }
 
-    /* ===== CALENDÁRIO FUTURO ===== */
     .cal-nav { display: flex; align-items: center; gap: 12px; }
     .cal-nav button { min-height: 34px; width: 34px; padding: 0; border-radius: 8px; }
     .cal-month-label { font-weight: 800; font-size: 15px; min-width: 140px; text-align: center; color: var(--ink); }
 
     .futuro-list { display: flex; flex-direction: column; gap: 6px; }
     .futuro-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 14px;
-      border-radius: 8px;
-      border: 1px solid var(--line);
-      background: var(--surface);
-      font-size: 14px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); font-size: 14px;
     }
     .futuro-item:hover { background: var(--surface-2); }
     .futuro-item .fi-left { display: flex; align-items: center; gap: 10px; }
@@ -522,30 +405,16 @@
     .futuro-item .fi-valor { font-weight: 800; }
     .futuro-item.is-income .fi-valor { color: var(--green); }
     .futuro-item.is-expense .fi-valor { color: var(--red); }
-    .futuro-item .fi-tag {
-      display: inline-flex; align-items: center;
-      padding: 2px 8px; border-radius: 99px;
-      font-size: 11px; font-weight: 700;
-    }
+    .futuro-item .fi-tag { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 99px; font-size: 11px; font-weight: 700; }
     .fi-tag.parcela { background: var(--purple-soft); color: var(--purple); }
     .fi-tag.recorrente { background: var(--blue-soft); color: var(--blue); }
     .fi-tag.unico { background: var(--surface-2); color: var(--muted); }
 
-    .futuro-resumo {
-      display: flex;
-      gap: 12px;
-      padding: 12px 14px;
-      background: var(--futuro-resumo-bg);
-      border-radius: 8px;
-      font-size: 13px;
-      margin-bottom: 12px;
-      flex-wrap: wrap;
-    }
+    .futuro-resumo { display: flex; gap: 12px; padding: 12px 14px; background: var(--futuro-resumo-bg); border-radius: 8px; font-size: 13px; margin-bottom: 12px; flex-wrap: wrap; }
     .futuro-resumo span { font-weight: 700; }
     .futuro-resumo .fr-item { display: flex; flex-direction: column; gap: 2px; }
     .futuro-resumo .fr-label { color: var(--muted); font-size: 11px; font-weight: 800; text-transform: uppercase; }
 
-    /* ===== IA CHAT ===== */
     .ia-wrap { display: flex; flex-direction: column; gap: 16px; }
     .ia-suggestions { display: flex; flex-wrap: wrap; gap: 8px; }
     .ia-chat-area { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); overflow: hidden; box-shadow: var(--shadow); }
@@ -582,291 +451,53 @@
     .app-footer { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 24px 4px 4px; color: var(--muted); font-size: 13px; margin-top: 40px; }
     .app-footer a { color: var(--green); font-weight: 800; text-decoration: none; }
 
-    /* ===== DARK MODE — Scrollbar ===== */
     [data-theme="dark"] ::-webkit-scrollbar { width: 6px; height: 6px; }
     [data-theme="dark"] ::-webkit-scrollbar-track { background: var(--surface); }
     [data-theme="dark"] ::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 99px; }
     [data-theme="dark"] ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
 
-    /* ===== DARK MODE — Star field effect ===== */
     [data-theme="dark"] .sidebar::before {
-      content: "";
-      position: absolute;
-      inset: 0;
+      content: ""; position: absolute; inset: 0;
       background-image:
         radial-gradient(1px 1px at 20% 30%, rgba(63,185,80,0.4) 0%, transparent 100%),
         radial-gradient(1px 1px at 70% 60%, rgba(45,212,191,0.3) 0%, transparent 100%),
         radial-gradient(1.5px 1.5px at 50% 80%, rgba(88,166,255,0.3) 0%, transparent 100%);
-      pointer-events: none;
-      z-index: 0;
+      pointer-events: none; z-index: 0;
     }
     [data-theme="dark"] .sidebar > * { position: relative; z-index: 1; }
 
-    /* ===================================================
-       PDF EXPORT MODAL
-    =================================================== */
     .pdf-modal-overlay {
-      display: none;
-      position: fixed; inset: 0;
-      background: var(--modal-overlay-bg);
-      z-index: 200;
-      place-items: center;
-      backdrop-filter: blur(6px);
+      display: none; position: fixed; inset: 0; background: var(--modal-overlay-bg);
+      z-index: 200; place-items: center; backdrop-filter: blur(6px);
     }
     .pdf-modal-overlay.open { display: grid; }
     .pdf-modal {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 32px;
-      width: min(100% - 40px, 600px);
-      box-shadow: 0 40px 80px rgba(0,0,0,0.4);
-      max-height: 90vh;
-      overflow-y: auto;
+      background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 32px;
+      width: min(100% - 40px, 600px); box-shadow: 0 40px 80px rgba(0,0,0,0.4); max-height: 90vh; overflow-y: auto;
     }
     .pdf-modal h3 { margin: 0 0 6px; font-size: 22px; color: var(--ink); }
     .pdf-modal > p { margin: 0 0 24px; color: var(--muted); font-size: 14px; }
 
-    .pdf-options-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-    .pdf-option {
-      border: 2px solid var(--line);
-      border-radius: 12px;
-      padding: 16px;
-      cursor: pointer;
-      background: var(--surface);
-      text-align: left;
-      transition: all 200ms;
-    }
+    .pdf-options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    .pdf-option { border: 2px solid var(--line); border-radius: 12px; padding: 16px; cursor: pointer; background: var(--surface); text-align: left; transition: all 200ms; }
     .pdf-option:hover { border-color: var(--green); background: rgba(63,185,80,0.06); }
     .pdf-option.selected { border-color: var(--green); background: rgba(63,185,80,0.1); }
     .pdf-option .po-icon { font-size: 28px; margin-bottom: 8px; display: block; }
     .pdf-option .po-title { font-weight: 800; font-size: 14px; color: var(--ink); display: block; margin-bottom: 4px; }
     .pdf-option .po-desc { font-size: 12px; color: var(--muted); line-height: 1.4; display: block; }
 
-    .pdf-preview-area {
-      background: var(--surface-2);
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 16px;
-      margin-bottom: 20px;
-      font-size: 13px;
-      color: var(--muted);
-    }
+    .pdf-preview-area { background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin-bottom: 20px; font-size: 13px; color: var(--muted); }
     .pdf-preview-area strong { color: var(--ink); }
 
-    /* ===================================================
-       PRINT STYLES — PDF Profissional
-    =================================================== */
+    /* ===== PRINT ===== */
     @media print {
       * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-
-      body { background: white !important; color: #1a1a1a !important; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; }
-
-      /* Hide everything except print target */
       body > *:not(.pdf-print-frame) { display: none !important; }
-
-      .pdf-print-frame {
-        display: block !important;
-        position: fixed;
-        inset: 0;
-        z-index: 9999;
-        background: white;
-        padding: 0;
-        margin: 0;
-      }
-
-      @page {
-        margin: 0;
-        size: A4;
-      }
+      .pdf-print-frame { display: block !important; position: fixed; inset: 0; z-index: 9999; background: white; padding: 0; margin: 0; }
+      @page { margin: 0; size: A4; }
     }
-
     .pdf-print-frame { display: none; }
 
-    /* ===================================================
-       PDF REPORT TEMPLATE
-    =================================================== */
-    .pdf-report {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      color: #1a1a1a;
-      background: white;
-      width: 210mm;
-      min-height: 297mm;
-      padding: 14mm 16mm;
-      box-sizing: border-box;
-    }
-
-    .pdf-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      padding-bottom: 16px;
-      border-bottom: 3px solid #166534;
-      margin-bottom: 24px;
-    }
-    .pdf-brand { display: flex; align-items: center; gap: 12px; }
-    .pdf-brand-mark {
-      width: 44px; height: 44px; border-radius: 10px;
-      background: linear-gradient(135deg, #166534, #0f766e);
-      color: white; display: flex; align-items: center; justify-content: center;
-      font-weight: 900; font-size: 20px;
-    }
-    .pdf-brand-text strong { display: block; font-size: 20px; font-weight: 900; color: #166534; }
-    .pdf-brand-text span { font-size: 12px; color: #666; }
-    .pdf-header-right { text-align: right; }
-    .pdf-header-right .pdf-report-title { font-size: 22px; font-weight: 900; color: #166534; }
-    .pdf-header-right .pdf-report-period { font-size: 12px; color: #666; margin-top: 4px; }
-
-    .pdf-section-title {
-      font-size: 13px; font-weight: 900; text-transform: uppercase;
-      letter-spacing: 0.08em; color: #166534;
-      border-left: 3px solid #166534;
-      padding-left: 10px;
-      margin: 20px 0 12px;
-    }
-
-    .pdf-metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-    .pdf-metric-card {
-      border: 1px solid #e0e8e0;
-      border-radius: 10px;
-      padding: 14px;
-      background: linear-gradient(180deg, #f8fff8, #f0f7f0);
-      position: relative;
-      overflow: hidden;
-    }
-    .pdf-metric-card::after {
-      content: "";
-      position: absolute;
-      right: -20px; top: -20px;
-      width: 70px; height: 70px;
-      border: 10px solid rgba(22,101,52,0.07);
-      border-radius: 50%;
-    }
-    .pdf-metric-label { font-size: 10px; font-weight: 800; text-transform: uppercase; color: #666; letter-spacing: 0.05em; }
-    .pdf-metric-value { font-size: 20px; font-weight: 900; margin: 6px 0 2px; }
-    .pdf-metric-value.pos { color: #166534; }
-    .pdf-metric-value.neg { color: #b42318; }
-    .pdf-metric-value.warn { color: #b7791f; }
-    .pdf-metric-sub { font-size: 10px; color: #888; }
-
-    .pdf-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 12px;
-      margin-bottom: 8px;
-    }
-    .pdf-table thead tr {
-      background: linear-gradient(90deg, #166534, #0f766e);
-    }
-    .pdf-table thead th {
-      color: white;
-      padding: 8px 10px;
-      text-align: left;
-      font-weight: 800;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .pdf-table tbody tr:nth-child(even) { background: #f8faf8; }
-    .pdf-table tbody tr:nth-child(odd) { background: white; }
-    .pdf-table tbody td { padding: 7px 10px; border-bottom: 1px solid #e8ede8; color: #333; }
-    .pdf-table .td-income { color: #166534; font-weight: 800; }
-    .pdf-table .td-expense { color: #b42318; font-weight: 800; }
-    .pdf-table .td-badge {
-      display: inline-block;
-      padding: 2px 8px;
-      border-radius: 99px;
-      font-size: 10px;
-      font-weight: 700;
-    }
-    .pdf-table .td-badge.income { background: #dcfce7; color: #166534; }
-    .pdf-table .td-badge.expense { background: #fee4e2; color: #b42318; }
-    .pdf-table .td-badge.parcelado { background: #ede9fe; color: #6d28d9; }
-    .pdf-table .td-badge.recorrente { background: #dff1f7; color: #245b7f; }
-
-    .pdf-two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-
-    .pdf-meta-card {
-      border: 1px solid #e0e8e0;
-      border-radius: 10px;
-      padding: 14px;
-      background: white;
-    }
-    .pdf-meta-name { font-weight: 800; font-size: 13px; color: #1a1a1a; margin-bottom: 8px; }
-    .pdf-meta-values { display: flex; justify-content: space-between; font-size: 11px; color: #666; margin-bottom: 6px; }
-    .pdf-progress-bar { width: 100%; height: 7px; background: #e8ede8; border-radius: 99px; overflow: hidden; margin-bottom: 4px; }
-    .pdf-progress-fill { height: 100%; border-radius: 99px; }
-    .pdf-meta-pct { font-size: 12px; font-weight: 800; color: #166534; }
-
-    .pdf-orc-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #e8ede8; font-size: 12px; }
-    .pdf-orc-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-    .pdf-orc-bar-wrap { flex: 1; height: 6px; background: #e8ede8; border-radius: 99px; overflow: hidden; }
-    .pdf-orc-bar { height: 100%; border-radius: 99px; }
-    .pdf-orc-vals { min-width: 90px; text-align: right; font-size: 11px; color: #666; }
-    .pdf-orc-vals strong { color: #1a1a1a; }
-
-    .pdf-cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    .pdf-cat-item {
-      border: 1px solid #e0e8e0;
-      border-radius: 8px;
-      padding: 10px 12px;
-      background: #f8faf8;
-    }
-    .pdf-cat-name { font-size: 11px; font-weight: 800; color: #444; margin-bottom: 4px; }
-    .pdf-cat-val { font-size: 15px; font-weight: 900; color: #b42318; }
-    .pdf-cat-pct { font-size: 10px; color: #888; margin-top: 2px; }
-
-    .pdf-footer {
-      margin-top: 28px;
-      padding-top: 14px;
-      border-top: 1px solid #e0e8e0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 10px;
-      color: #999;
-    }
-    .pdf-footer-brand { font-weight: 800; color: #166534; }
-    .pdf-footer-note { font-size: 9px; color: #bbb; }
-
-    .pdf-insight-box {
-      background: linear-gradient(135deg, #f0fdf4, #dcfce7);
-      border: 1px solid #bbf7d0;
-      border-left: 4px solid #166534;
-      border-radius: 10px;
-      padding: 14px 16px;
-      font-size: 12px;
-      line-height: 1.6;
-      color: #1a3a1a;
-      margin-top: 12px;
-    }
-    .pdf-insight-box strong { color: #166534; }
-
-    .pdf-alert-box {
-      background: linear-gradient(135deg, #fff8f0, #fee4d4);
-      border: 1px solid #fed7aa;
-      border-left: 4px solid #ea580c;
-      border-radius: 10px;
-      padding: 14px 16px;
-      font-size: 12px;
-      line-height: 1.6;
-      color: #3a1a00;
-      margin-top: 8px;
-    }
-
-    /* ===================================================
-       RESPONSIVE
-    =================================================== */
     @media (max-width: 1100px) {
       .app { grid-template-columns: 1fr; }
       .sidebar { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
@@ -892,8 +523,6 @@
       .ia-bubble { max-width: 92%; }
       .tipo-selector { flex-direction: column; }
       .pdf-options-grid { grid-template-columns: 1fr; }
-      .pdf-metrics-grid { grid-template-columns: repeat(2,1fr); }
-      .pdf-two-cols { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -1010,7 +639,6 @@
       <span>Este mês</span>
     </div>
     <div class="legal-links">
-      <!-- Dark Mode Toggle -->
       <div style="display:flex;align-items:center;gap:8px;width:100%;padding:4px 0 8px;">
         <button class="dark-toggle" id="darkToggle" onclick="toggleDarkMode()" title="Alternar modo escuro" aria-label="Modo escuro">
           <div class="dark-toggle-track"></div>
@@ -1104,9 +732,7 @@
         <div class="table-wrap">
           <table>
             <thead>
-              <tr>
-                <th>Data</th><th>Descrição</th><th>Categoria</th><th>Tipo</th><th>Modalidade</th><th>Valor</th><th></th>
-              </tr>
+              <tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Tipo</th><th>Modalidade</th><th>Valor</th><th></th></tr>
             </thead>
             <tbody id="lancTableBody"></tbody>
           </table>
@@ -1115,7 +741,7 @@
       </div>
     </section>
 
-    <!-- Calendário de Lançamentos Futuros -->
+    <!-- Calendário -->
     <section id="calendario" class="section">
       <div class="topbar">
         <div class="title-block">
@@ -1126,7 +752,6 @@
           <button class="btn primary" onclick="openModal('lancModal')">+ Nova Movimentação</button>
         </div>
       </div>
-
       <div class="card panel">
         <div class="panel-head">
           <div class="cal-nav">
@@ -1136,7 +761,6 @@
           </div>
           <span id="calTotalLabel" style="color:var(--muted);font-size:13px;"></span>
         </div>
-
         <div class="futuro-resumo" id="calResumo"></div>
         <div class="futuro-list" id="calList">
           <div class="empty">Nenhum lançamento neste mês.</div>
@@ -1231,13 +855,12 @@
   </main>
 </div>
 
-<!-- ========== MODAL: LANÇAMENTO ========== -->
+<!-- MODAL: LANÇAMENTO -->
 <div class="modal-overlay" id="lancModal">
   <div class="modal">
     <h3 id="lancModalTitle">Nova Movimentação</h3>
     <input type="hidden" id="lancEditId" />
     <input type="hidden" id="lancGrupoId" />
-
     <div class="form-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
       <label class="full">Descrição<input type="text" id="lancDesc" placeholder="Ex: Aluguel, Salário, Tênis Nike..." /></label>
       <label>Valor (R$)<input type="number" id="lancValor" placeholder="0,00" min="0" step="0.01" oninput="atualizarPreview()" /></label>
@@ -1256,25 +879,20 @@
           <option value="Outros">Outros</option>
         </select>
       </label>
-
       <div class="full" style="display:grid;gap:6px;">
         <span style="color:var(--muted);font-size:12px;font-weight:800;text-transform:uppercase;">Modalidade</span>
         <div class="tipo-selector">
           <button type="button" class="tipo-btn active" id="tipoBtnUnico" onclick="setModalidade('unico')">
-            <span class="tipo-icon">📌</span>
-            <span>Único</span>
+            <span class="tipo-icon">📌</span><span>Único</span>
           </button>
           <button type="button" class="tipo-btn" id="tipoBtnParcelado" onclick="setModalidade('parcelado')">
-            <span class="tipo-icon">💳</span>
-            <span>Parcelado</span>
+            <span class="tipo-icon">💳</span><span>Parcelado</span>
           </button>
           <button type="button" class="tipo-btn" id="tipoBtnRecorrente" onclick="setModalidade('recorrente')">
-            <span class="tipo-icon">🔄</span>
-            <span>Recorrente</span>
+            <span class="tipo-icon">🔄</span><span>Recorrente</span>
           </button>
         </div>
       </div>
-
       <div class="recorrencia-box parcela-mode" id="boxParcelado">
         <div class="rec-title">💳 Configurar parcelamento</div>
         <label>Nº de parcelas
@@ -1291,7 +909,6 @@
         </label>
         <div class="full preview-parcelas" id="previewParcelas"></div>
       </div>
-
       <div class="recorrencia-box" id="boxRecorrente">
         <div class="rec-title">🔄 Configurar recorrência mensal</div>
         <label>Repetir por
@@ -1312,7 +929,6 @@
         <div class="full preview-parcelas" id="previewRecorrente"></div>
       </div>
     </div>
-
     <div class="modal-actions">
       <button class="btn" onclick="closeModal('lancModal')">Cancelar</button>
       <button class="btn primary" onclick="saveLancamento()">Salvar</button>
@@ -1374,12 +990,11 @@
   </div>
 </div>
 
-<!-- ========== MODAL: PDF EXPORT ========== -->
+<!-- MODAL: PDF EXPORT -->
 <div class="pdf-modal-overlay" id="pdfModal">
   <div class="pdf-modal">
     <h3>📄 Exportar Relatório PDF</h3>
     <p>Escolha o tipo de relatório que deseja gerar</p>
-
     <div class="pdf-options-grid">
       <button class="pdf-option selected" id="pdfOptCompleto" onclick="selectPdfOption('completo')">
         <span class="po-icon">📊</span>
@@ -1402,12 +1017,10 @@
         <span class="po-desc">Comparativo entre limites e gastos reais por categoria</span>
       </button>
     </div>
-
     <div class="pdf-preview-area" id="pdfPreviewInfo">
       <strong>📊 Relatório Completo</strong> — Inclui todos os dados financeiros cadastrados.<br>
       <span style="font-size:12px;margin-top:4px;display:block;">O arquivo será aberto na janela de impressão do navegador. Salve como PDF.</span>
     </div>
-
     <div class="modal-actions">
       <button class="btn" onclick="closePdfModal()">Cancelar</button>
       <button class="btn pdf-btn" onclick="gerarPdf()" id="pdfGerarBtn">
@@ -1418,7 +1031,7 @@
   </div>
 </div>
 
-<!-- PDF Print Frame (hidden, shown on print) -->
+<!-- PDF Print Frame -->
 <div class="pdf-print-frame" id="pdfPrintFrame"></div>
 
 <!-- Firebase SDK -->
@@ -1554,12 +1167,10 @@
     const saved = localStorage.getItem('finanpro_theme') || 'light';
     applyTheme(saved);
   }
-
   function toggleDarkMode() {
     const current = document.documentElement.getAttribute('data-theme') || 'light';
     applyTheme(current === 'dark' ? 'light' : 'dark');
   }
-
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('finanpro_theme', theme);
@@ -1573,27 +1184,13 @@
       if (label) label.textContent = 'Modo claro';
     }
   }
-
   initDarkMode();
 
   // ===== STORAGE =====
-  function getKey(name) {
-    const uid = window._currentUser?.uid || 'local';
-    return `finanpro_${uid}_${name}`;
-  }
-  function loadData(name) {
-    try { return JSON.parse(localStorage.getItem(getKey(name))) || []; } catch { return []; }
-  }
-  function saveData(name, data) {
-    localStorage.setItem(getKey(name), JSON.stringify(data));
-  }
-  function loadUserData() {
-    renderLancamentos();
-    renderMetas();
-    renderOrcamentos();
-    updateDashboard();
-    renderCalendario();
-  }
+  function getKey(name) { const uid = window._currentUser?.uid || 'local'; return `finanpro_${uid}_${name}`; }
+  function loadData(name) { try { return JSON.parse(localStorage.getItem(getKey(name))) || []; } catch { return []; } }
+  function saveData(name, data) { localStorage.setItem(getKey(name), JSON.stringify(data)); }
+  function loadUserData() { renderLancamentos(); renderMetas(); renderOrcamentos(); updateDashboard(); renderCalendario(); }
 
   // ===== NAV =====
   function showPage(pageId, btn) {
@@ -1612,14 +1209,8 @@
   });
 
   // ===== UTILS =====
-  function fmtBRL(val) {
-    return Number(val).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-  }
-  function fmtDate(str) {
-    if (!str) return '';
-    const [y, m, d] = str.split('-');
-    return `${d}/${m}/${y}`;
-  }
+  function fmtBRL(val) { return Number(val).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
+  function fmtDate(str) { if (!str) return ''; const [y, m, d] = str.split('-'); return `${d}/${m}/${y}`; }
   function fmtMonth(str) {
     if (!str) return '';
     const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
@@ -1660,16 +1251,12 @@
     btn.classList.add('active');
     if (modo === 'parcelado') btn.classList.add('parcela');
     if (modo === 'recorrente') btn.classList.add('recorrente');
-
     document.getElementById('boxParcelado').classList.toggle('show', modo === 'parcelado');
     document.getElementById('boxRecorrente').classList.toggle('show', modo === 'recorrente');
     atualizarPreview();
   }
 
-  function onParcelaInput() {
-    document.getElementById('lancValor').value = '';
-    atualizarPreview();
-  }
+  function onParcelaInput() { document.getElementById('lancValor').value = ''; atualizarPreview(); }
 
   function atualizarPreview() {
     if (_modalidade === 'parcelado') atualizarPreviewParcelas();
@@ -1683,20 +1270,12 @@
     const valorParc = parseFloat(document.getElementById('valorParcela').value);
     const n = parseInt(document.getElementById('numParcelas').value) || 2;
     let vp = valorParc || (valorTotal / n);
-    if (!vp || isNaN(vp) || !dataBase) {
-      box.innerHTML = '<div class="prev-title">Preencha valor e data para ver o preview</div>';
-      return;
-    }
-    if (valorParc && !valorTotal) {
-      document.getElementById('lancValor').value = (valorParc * n).toFixed(2);
-    }
+    if (!vp || isNaN(vp) || !dataBase) { box.innerHTML = '<div class="prev-title">Preencha valor e data para ver o preview</div>'; return; }
+    if (valorParc && !valorTotal) document.getElementById('lancValor').value = (valorParc * n).toFixed(2);
     let html = `<div class="prev-title">${n} parcelas de ${fmtBRL(vp)} — Total: ${fmtBRL(vp * n)}</div>`;
     for (let i = 0; i < n; i++) {
       const data = addMonths(dataBase, i);
-      html += `<div class="preview-item">
-        <span class="pi-label">${i + 1}/${n} — ${fmtDate(data)}</span>
-        <span style="font-weight:700;">${fmtBRL(vp)}</span>
-      </div>`;
+      html += `<div class="preview-item"><span class="pi-label">${i + 1}/${n} — ${fmtDate(data)}</span><span style="font-weight:700;">${fmtBRL(vp)}</span></div>`;
     }
     box.innerHTML = html;
   }
@@ -1707,19 +1286,13 @@
     const valor = parseFloat(document.getElementById('lancValor').value);
     const selMeses = document.getElementById('numMeses').value;
     let n = selMeses === '0' ? 0 : (selMeses === 'custom' ? parseInt(document.getElementById('customMeses').value) : parseInt(selMeses));
-    if (!valor || !dataBase) {
-      box.innerHTML = '<div class="prev-title">Preencha valor e data para ver o preview</div>';
-      return;
-    }
+    if (!valor || !dataBase) { box.innerHTML = '<div class="prev-title">Preencha valor e data para ver o preview</div>'; return; }
     const exibir = n === 0 ? 6 : Math.min(n, 6);
     const sufixo = n === 0 ? ' (+ indefinidamente)' : (n > 6 ? ` ... e mais ${n - 6} meses` : '');
     let html = `<div class="prev-title">${n === 0 ? 'Recorrência sem fim' : `${n} repetições`} de ${fmtBRL(valor)}</div>`;
     for (let i = 0; i < exibir; i++) {
       const data = addMonths(dataBase, i);
-      html += `<div class="preview-item">
-        <span class="pi-label">${fmtDate(data)}</span>
-        <span style="font-weight:700;">${fmtBRL(valor)}</span>
-      </div>`;
+      html += `<div class="preview-item"><span class="pi-label">${fmtDate(data)}</span><span style="font-weight:700;">${fmtBRL(valor)}</span></div>`;
     }
     if (sufixo) html += `<div style="color:var(--muted);font-size:12px;padding:6px 0;">${sufixo}</div>`;
     box.innerHTML = html;
@@ -1732,33 +1305,21 @@
     const tipo = document.getElementById('lancTipo').value;
     const cat = document.getElementById('lancCat').value;
     const editId = document.getElementById('lancEditId').value;
-
     if (!desc || !dataBase) { alert('Preencha descrição e data!'); return; }
-
     const lancamentos = loadData('lancamentos');
-
     if (editId) {
       const valor = parseFloat(document.getElementById('lancValor').value);
       if (!valor) { alert('Preencha o valor!'); return; }
       const idx = lancamentos.findIndex(l => l.id == editId);
-      if (idx >= 0) {
-        const old = lancamentos[idx];
-        lancamentos[idx] = { ...old, desc, valor, data: dataBase, tipo, cat };
-      }
+      if (idx >= 0) { const old = lancamentos[idx]; lancamentos[idx] = { ...old, desc, valor, data: dataBase, tipo, cat }; }
       saveData('lancamentos', lancamentos);
-      closeModal('lancModal');
-      clearLancForm();
-      renderLancamentos();
-      updateDashboard();
-      renderCalendario();
+      closeModal('lancModal'); clearLancForm(); renderLancamentos(); updateDashboard(); renderCalendario();
       return;
     }
-
     if (_modalidade === 'unico') {
       const valor = parseFloat(document.getElementById('lancValor').value);
       if (!valor) { alert('Preencha o valor!'); return; }
       lancamentos.push({ id: Date.now(), desc, valor, data: dataBase, tipo, cat, modalidade: 'unico' });
-
     } else if (_modalidade === 'parcelado') {
       const n = parseInt(document.getElementById('numParcelas').value) || 2;
       const valorTotal = parseFloat(document.getElementById('lancValor').value);
@@ -1767,19 +1328,8 @@
       if (!vp || isNaN(vp)) { alert('Preencha o valor total ou o valor de cada parcela!'); return; }
       const grupoId = Date.now();
       for (let i = 0; i < n; i++) {
-        lancamentos.push({
-          id: grupoId + i + 1,
-          grupoId,
-          desc: `${desc} (${i + 1}/${n})`,
-          valor: parseFloat(vp.toFixed(2)),
-          data: addMonths(dataBase, i),
-          tipo, cat,
-          modalidade: 'parcelado',
-          parcela: i + 1,
-          totalParcelas: n
-        });
+        lancamentos.push({ id: grupoId + i + 1, grupoId, desc: `${desc} (${i + 1}/${n})`, valor: parseFloat(vp.toFixed(2)), data: addMonths(dataBase, i), tipo, cat, modalidade: 'parcelado', parcela: i + 1, totalParcelas: n });
       }
-
     } else if (_modalidade === 'recorrente') {
       const valor = parseFloat(document.getElementById('lancValor').value);
       if (!valor) { alert('Preencha o valor!'); return; }
@@ -1789,27 +1339,11 @@
       const grupoId = Date.now();
       const MAX_REC = n === 0 ? 120 : n;
       for (let i = 0; i < MAX_REC; i++) {
-        lancamentos.push({
-          id: grupoId + i + 1,
-          grupoId,
-          desc: n === 0 ? `${desc} (recorrente)` : `${desc} (${i + 1}/${n})`,
-          valor,
-          data: addMonths(dataBase, i),
-          tipo, cat,
-          modalidade: 'recorrente',
-          semFim: n === 0,
-          parcela: i + 1,
-          totalParcelas: MAX_REC
-        });
+        lancamentos.push({ id: grupoId + i + 1, grupoId, desc: n === 0 ? `${desc} (recorrente)` : `${desc} (${i + 1}/${n})`, valor, data: addMonths(dataBase, i), tipo, cat, modalidade: 'recorrente', semFim: n === 0, parcela: i + 1, totalParcelas: MAX_REC });
       }
     }
-
     saveData('lancamentos', lancamentos);
-    closeModal('lancModal');
-    clearLancForm();
-    renderLancamentos();
-    updateDashboard();
-    renderCalendario();
+    closeModal('lancModal'); clearLancForm(); renderLancamentos(); updateDashboard(); renderCalendario();
   }
 
   function clearLancForm() {
@@ -1847,25 +1381,18 @@
   function deleteLancamento(id) {
     const l = loadData('lancamentos').find(x => x.id == id);
     if (!l) return;
-
     let confirmar;
     if (l.grupoId && (l.modalidade === 'parcelado' || l.modalidade === 'recorrente')) {
       const tipo = l.modalidade === 'parcelado' ? 'parcelamento' : 'recorrência';
       confirmar = confirm(`Este lançamento faz parte de um ${tipo}.\n\nO que deseja excluir?\n\nClique OK para excluir TODOS os lançamentos do grupo.\nClique Cancelar para excluir apenas este.`);
       if (confirmar === null) return;
-      if (confirmar) {
-        saveData('lancamentos', loadData('lancamentos').filter(l2 => l2.grupoId != l.grupoId));
-      } else {
-        saveData('lancamentos', loadData('lancamentos').filter(l2 => l2.id != id));
-      }
+      if (confirmar) { saveData('lancamentos', loadData('lancamentos').filter(l2 => l2.grupoId != l.grupoId)); }
+      else { saveData('lancamentos', loadData('lancamentos').filter(l2 => l2.id != id)); }
     } else {
       if (!confirm('Excluir este lançamento?')) return;
       saveData('lancamentos', loadData('lancamentos').filter(l2 => l2.id != id));
     }
-
-    renderLancamentos();
-    updateDashboard();
-    renderCalendario();
+    renderLancamentos(); updateDashboard(); renderCalendario();
   }
 
   function renderLancamentos() {
@@ -1882,13 +1409,11 @@
     if (!tbody) return;
     if (data.length === 0) { tbody.innerHTML = ''; empty.style.display = ''; return; }
     empty.style.display = 'none';
-
     const modalidadeBadge = (l) => {
       if (l.modalidade === 'parcelado') return `<span class="badge parcelado">💳 ${l.parcela}/${l.totalParcelas}</span>`;
       if (l.modalidade === 'recorrente') return `<span class="badge recorrente">🔄 ${l.semFim ? '∞' : l.parcela+'/'+l.totalParcelas}</span>`;
       return `<span style="color:var(--muted);font-size:12px;">Único</span>`;
     };
-
     tbody.innerHTML = data.map(l => `
       <tr>
         <td>${fmtDate(l.data)}</td>
@@ -1896,9 +1421,7 @@
         <td><span style="color:var(--muted);font-size:13px;">${l.cat}</span></td>
         <td><span class="badge ${l.tipo === 'receita' ? 'income' : 'expense'}">${l.tipo === 'receita' ? 'Receita' : 'Despesa'}</span></td>
         <td>${modalidadeBadge(l)}</td>
-        <td style="font-weight:800;color:${l.tipo === 'receita' ? 'var(--green)' : 'var(--red)'};">
-          ${l.tipo === 'receita' ? '+' : '-'}${fmtBRL(l.valor)}
-        </td>
+        <td style="font-weight:800;color:${l.tipo === 'receita' ? 'var(--green)' : 'var(--red)'};">${l.tipo === 'receita' ? '+' : '-'}${fmtBRL(l.valor)}</td>
         <td>
           <div style="display:flex;gap:6px;justify-content:flex-end;">
             <button class="btn small" onclick="editLancamento(${l.id})">Editar</button>
@@ -1910,54 +1433,38 @@
 
   // ===== CALENDÁRIO =====
   let _calOffset = 0;
-
-  function calNavMes(dir) {
-    _calOffset += dir;
-    renderCalendario();
-  }
-
+  function calNavMes(dir) { _calOffset += dir; renderCalendario(); }
   function getMesCalendario() {
-    const d = new Date();
-    d.setDate(1);
-    d.setMonth(d.getMonth() + _calOffset);
+    const d = new Date(); d.setDate(1); d.setMonth(d.getMonth() + _calOffset);
     return d.toISOString().slice(0, 7);
   }
-
   function renderCalendario() {
     const mes = getMesCalendario();
     const [ano, m] = mes.split('-').map(Number);
     const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
     document.getElementById('calMonthLabel').textContent = `${meses[m-1]} ${ano}`;
-
     const lancamentos = loadData('lancamentos');
     const itens = lancamentos.filter(l => l.data?.startsWith(mes));
     itens.sort((a, b) => a.data.localeCompare(b.data));
-
     const totalReceitas = itens.filter(l => l.tipo === 'receita').reduce((s, l) => s + l.valor, 0);
     const totalDespesas = itens.filter(l => l.tipo === 'despesa').reduce((s, l) => s + l.valor, 0);
     const saldo = totalReceitas - totalDespesas;
-
     document.getElementById('calResumo').innerHTML = `
       <div class="fr-item"><span class="fr-label">Receitas</span><span style="color:var(--green);">${fmtBRL(totalReceitas)}</span></div>
       <div class="fr-item"><span class="fr-label">Despesas</span><span style="color:var(--red);">${fmtBRL(totalDespesas)}</span></div>
       <div class="fr-item"><span class="fr-label">Saldo</span><span style="color:${saldo>=0?'var(--green)':'var(--red)'};">${fmtBRL(saldo)}</span></div>
-      <div class="fr-item"><span class="fr-label">Lançamentos</span><span>${itens.length}</span></div>
-    `;
-
+      <div class="fr-item"><span class="fr-label">Lançamentos</span><span>${itens.length}</span></div>`;
     document.getElementById('calTotalLabel').textContent = `${itens.length} lançamento${itens.length !== 1 ? 's' : ''}`;
-
     const list = document.getElementById('calList');
     if (itens.length === 0) {
       list.innerHTML = '<div class="empty">Nenhum lançamento neste mês. <button class="btn small primary" onclick="openModal(\'lancModal\')" style="margin-left:8px;">+ Adicionar</button></div>';
       return;
     }
-
     const modalidadeTag = (l) => {
       if (l.modalidade === 'parcelado') return `<span class="fi-tag parcela">💳 ${l.parcela}/${l.totalParcelas}</span>`;
       if (l.modalidade === 'recorrente') return `<span class="fi-tag recorrente">🔄 ${l.semFim ? '∞' : l.parcela+'/'+l.totalParcelas}</span>`;
       return `<span class="fi-tag unico">📌 Único</span>`;
     };
-
     list.innerHTML = itens.map(l => `
       <div class="futuro-item ${l.tipo === 'receita' ? 'is-income' : 'is-expense'}">
         <div class="fi-left">
@@ -1987,23 +1494,16 @@
     if (editId) {
       const idx = metas.findIndex(m => m.id == editId);
       if (idx >= 0) metas[idx] = { id: editId, nome, alvo, atual, prazo, cor };
-    } else {
-      metas.push({ id: Date.now(), nome, alvo, atual, prazo, cor });
-    }
+    } else { metas.push({ id: Date.now(), nome, alvo, atual, prazo, cor }); }
     saveData('metas', metas);
-    closeModal('metaModal');
-    clearMetaForm();
-    renderMetas();
-    updateDashboard();
+    closeModal('metaModal'); clearMetaForm(); renderMetas(); updateDashboard();
   }
-
   function clearMetaForm() {
     document.getElementById('metaNome').value = '';
     document.getElementById('metaAlvo').value = '';
     document.getElementById('metaAtual').value = '';
     document.getElementById('metaEditId').value = '';
   }
-
   function editMeta(id) {
     const m = loadData('metas').find(x => x.id == id);
     if (!m) return;
@@ -2015,25 +1515,19 @@
     document.getElementById('metaEditId').value = m.id;
     openModal('metaModal');
   }
-
   function deleteMeta(id) {
     if (!confirm('Excluir esta meta?')) return;
     saveData('metas', loadData('metas').filter(m => m.id != id));
-    renderMetas();
-    updateDashboard();
+    renderMetas(); updateDashboard();
   }
-
   function addAporteMeta(id) {
     const val = parseFloat(prompt('Quanto deseja aportar? (R$)'));
     if (!val || val <= 0) return;
     const metas = loadData('metas');
     const idx = metas.findIndex(m => m.id == id);
     if (idx >= 0) metas[idx].atual = Math.min(metas[idx].atual + val, metas[idx].alvo);
-    saveData('metas', metas);
-    renderMetas();
-    updateDashboard();
+    saveData('metas', metas); renderMetas(); updateDashboard();
   }
-
   function renderMetas() {
     const metas = loadData('metas');
     const grid = document.getElementById('metasGrid');
@@ -2073,7 +1567,6 @@
     'Alimentação': '#166534', 'Transporte': '#0f766e', 'Moradia': '#245b7f',
     'Saúde': '#b42318', 'Educação': '#b7791f', 'Lazer': '#7c3aed', 'Outros': '#66736b'
   };
-
   function saveOrcamento() {
     const cat = document.getElementById('orcCat').value;
     const limite = parseFloat(document.getElementById('orcLimite').value);
@@ -2084,21 +1577,15 @@
     if (editId) {
       const idx = orcamentos.findIndex(o => o.id == editId);
       if (idx >= 0) orcamentos[idx] = { id: editId, cat, limite, mes };
-    } else {
-      orcamentos.push({ id: Date.now(), cat, limite, mes });
-    }
+    } else { orcamentos.push({ id: Date.now(), cat, limite, mes }); }
     saveData('orcamentos', orcamentos);
-    closeModal('orcModal');
-    clearOrcForm();
-    renderOrcamentos();
+    closeModal('orcModal'); clearOrcForm(); renderOrcamentos();
   }
-
   function clearOrcForm() {
     document.getElementById('orcLimite').value = '';
     document.getElementById('orcEditId').value = '';
     document.getElementById('orcMes').value = currentMonth();
   }
-
   function editOrcamento(id) {
     const o = loadData('orcamentos').find(x => x.id == id);
     if (!o) return;
@@ -2108,13 +1595,11 @@
     document.getElementById('orcEditId').value = o.id;
     openModal('orcModal');
   }
-
   function deleteOrcamento(id) {
     if (!confirm('Excluir este orçamento?')) return;
     saveData('orcamentos', loadData('orcamentos').filter(o => o.id != id));
     renderOrcamentos();
   }
-
   function renderOrcamentos() {
     const orcamentos = loadData('orcamentos');
     const lancamentos = loadData('lancamentos');
@@ -2122,9 +1607,7 @@
     if (!grid) return;
     if (orcamentos.length === 0) { grid.innerHTML = '<div class="empty">Nenhum orçamento criado. Clique em "+ Novo Orçamento".</div>'; return; }
     grid.innerHTML = orcamentos.map(o => {
-      const gasto = lancamentos
-        .filter(l => l.tipo === 'despesa' && l.cat === o.cat && l.data?.startsWith(o.mes))
-        .reduce((a, l) => a + l.valor, 0);
+      const gasto = lancamentos.filter(l => l.tipo === 'despesa' && l.cat === o.cat && l.data?.startsWith(o.mes)).reduce((a, l) => a + l.valor, 0);
       const pct = Math.min(100, Math.round((gasto / o.limite) * 100));
       const cor = catColors[o.cat] || '#66736b';
       const statusColor = pct >= 90 ? 'var(--red)' : pct >= 70 ? 'var(--amber)' : 'var(--green)';
@@ -2187,7 +1670,7 @@
   }
 
   // ===================================================
-  // PDF EXPORT
+  // PDF EXPORT — CORRIGIDO
   // ===================================================
   let _pdfTipo = 'completo';
 
@@ -2196,10 +1679,7 @@
     else selectPdfOption('completo');
     document.getElementById('pdfModal').classList.add('open');
   }
-
-  function closePdfModal() {
-    document.getElementById('pdfModal').classList.remove('open');
-  }
+  function closePdfModal() { document.getElementById('pdfModal').classList.remove('open'); }
 
   function selectPdfOption(tipo) {
     _pdfTipo = tipo;
@@ -2208,7 +1688,6 @@
     });
     const idMap = { completo:'pdfOptCompleto', lancamentos:'pdfOptLanc', metas:'pdfOptMetas', orcamentos:'pdfOptOrc' };
     document.getElementById(idMap[tipo])?.classList.add('selected');
-
     const infos = {
       completo: '<strong>📊 Relatório Completo</strong> — Dashboard, lançamentos, metas e orçamentos.<br><span style="font-size:12px;margin-top:4px;display:block;">Ideal para revisão mensal completa das finanças.</span>',
       lancamentos: '<strong>💳 Extrato de Lançamentos</strong> — Todas as movimentações com totais por categoria.<br><span style="font-size:12px;margin-top:4px;display:block;">Ideal para acompanhar entradas e saídas do período.</span>',
@@ -2222,11 +1701,74 @@
     closePdfModal();
     const frame = document.getElementById('pdfPrintFrame');
     frame.innerHTML = buildPdfContent(_pdfTipo);
+    // Aguarda font + render antes de imprimir
     setTimeout(() => {
       window.print();
-      setTimeout(() => { frame.innerHTML = ''; }, 1000);
-    }, 200);
+      setTimeout(() => { frame.innerHTML = ''; }, 1500);
+    }, 700);
   }
+
+  // CSS completo do PDF embutido no frame — esta é a correção principal
+  const PDF_STYLES = `
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: white; color: #1a1a1a; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .pdf-report { font-family: 'Plus Jakarta Sans', sans-serif; color: #1a1a1a; background: white; width: 210mm; min-height: 297mm; padding: 14mm 16mm; box-sizing: border-box; }
+    .pdf-header { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 16px; border-bottom: 3px solid #166534; margin-bottom: 24px; }
+    .pdf-brand { display: flex; align-items: center; gap: 12px; }
+    .pdf-brand-mark { width: 44px; height: 44px; border-radius: 10px; background: linear-gradient(135deg, #166534, #0f766e); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 20px; }
+    .pdf-brand-text strong { display: block; font-size: 20px; font-weight: 900; color: #166534; }
+    .pdf-brand-text span { font-size: 12px; color: #666; }
+    .pdf-header-right { text-align: right; }
+    .pdf-report-title { font-size: 22px; font-weight: 900; color: #166534; }
+    .pdf-report-period { font-size: 12px; color: #666; margin-top: 4px; }
+    .pdf-section-title { font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em; color: #166534; border-left: 3px solid #166534; padding-left: 10px; margin: 20px 0 12px; }
+    .pdf-metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 8px; }
+    .pdf-metric-card { border: 1px solid #e0e8e0; border-radius: 10px; padding: 14px; background: #f4fbf4; position: relative; overflow: hidden; }
+    .pdf-metric-label { font-size: 10px; font-weight: 800; text-transform: uppercase; color: #666; letter-spacing: 0.05em; }
+    .pdf-metric-value { font-size: 20px; font-weight: 900; margin: 6px 0 2px; }
+    .pdf-metric-value.pos { color: #166534; }
+    .pdf-metric-value.neg { color: #b42318; }
+    .pdf-metric-value.warn { color: #b7791f; }
+    .pdf-metric-sub { font-size: 10px; color: #888; }
+    .pdf-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 8px; }
+    .pdf-table thead tr { background: #166534; }
+    .pdf-table thead th { color: white; padding: 8px 10px; text-align: left; font-weight: 800; font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .pdf-table tbody tr:nth-child(even) { background: #f8faf8; }
+    .pdf-table tbody tr:nth-child(odd) { background: white; }
+    .pdf-table tbody td { padding: 7px 10px; border-bottom: 1px solid #e8ede8; color: #333; }
+    .td-income { color: #166534 !important; font-weight: 800; }
+    .td-expense { color: #b42318 !important; font-weight: 800; }
+    .td-badge { display: inline-block; padding: 2px 8px; border-radius: 99px; font-size: 10px; font-weight: 700; }
+    .td-badge.receita { background: #dcfce7; color: #166534; }
+    .td-badge.despesa { background: #fee4e2; color: #b42318; }
+    .td-badge.parcelado { background: #ede9fe; color: #6d28d9; }
+    .td-badge.recorrente { background: #dff1f7; color: #245b7f; }
+    .pdf-two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .pdf-meta-card { border: 1px solid #e0e8e0; border-radius: 10px; padding: 14px; background: white; }
+    .pdf-meta-name { font-weight: 800; font-size: 13px; color: #1a1a1a; margin-bottom: 8px; }
+    .pdf-meta-values { display: flex; justify-content: space-between; font-size: 11px; color: #666; margin-bottom: 6px; }
+    .pdf-progress-bar { width: 100%; height: 7px; background: #e8ede8; border-radius: 99px; overflow: hidden; margin-bottom: 4px; }
+    .pdf-progress-fill { height: 100%; border-radius: 99px; }
+    .pdf-meta-pct { font-size: 12px; font-weight: 800; color: #166534; }
+    .pdf-orc-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #e8ede8; font-size: 12px; }
+    .pdf-orc-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .pdf-orc-bar-wrap { flex: 1; height: 6px; background: #e8ede8; border-radius: 99px; overflow: hidden; }
+    .pdf-orc-bar { height: 100%; border-radius: 99px; }
+    .pdf-orc-vals { min-width: 90px; text-align: right; font-size: 11px; color: #666; }
+    .pdf-orc-vals strong { color: #1a1a1a; }
+    .pdf-cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .pdf-cat-item { border: 1px solid #e0e8e0; border-radius: 8px; padding: 10px 12px; background: #f8faf8; }
+    .pdf-cat-name { font-size: 11px; font-weight: 800; color: #444; margin-bottom: 4px; }
+    .pdf-cat-val { font-size: 15px; font-weight: 900; color: #b42318; }
+    .pdf-cat-pct { font-size: 10px; color: #888; margin-top: 2px; }
+    .pdf-footer { margin-top: 28px; padding-top: 14px; border-top: 1px solid #e0e8e0; display: flex; justify-content: space-between; align-items: center; font-size: 10px; color: #999; }
+    .pdf-footer-brand { font-weight: 800; color: #166534; }
+    .pdf-footer-note { font-size: 9px; color: #bbb; }
+    .pdf-insight-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid #166534; border-radius: 10px; padding: 14px 16px; font-size: 12px; line-height: 1.6; color: #1a3a1a; margin-top: 12px; }
+    .pdf-insight-box strong { color: #166534; }
+    .pdf-alert-box { background: #fff8f0; border: 1px solid #fed7aa; border-left: 4px solid #ea580c; border-radius: 10px; padding: 14px 16px; font-size: 12px; line-height: 1.6; color: #3a1a00; margin-top: 8px; }
+    @media print { * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } @page { margin: 0; size: A4; } }
+  `;
 
   function buildPdfContent(tipo) {
     const now = new Date();
@@ -2244,6 +1786,8 @@
     const [ano, m] = mesAtual.split('-').map(Number);
     const mesLabel = `${mesesNome[m-1]} ${ano}`;
 
+    const titulosTipo = { completo: 'Relatório Completo', lancamentos: 'Extrato de Lançamentos', metas: 'Relatório de Metas', orcamentos: 'Análise de Orçamentos' };
+
     const header = `
       <div class="pdf-header">
         <div class="pdf-brand">
@@ -2254,12 +1798,7 @@
           </div>
         </div>
         <div class="pdf-header-right">
-          <div class="pdf-report-title">${{
-            completo: 'Relatório Completo',
-            lancamentos: 'Extrato de Lançamentos',
-            metas: 'Relatório de Metas',
-            orcamentos: 'Análise de Orçamentos'
-          }[tipo]}</div>
+          <div class="pdf-report-title">${titulosTipo[tipo]}</div>
           <div class="pdf-report-period">Período: ${mesLabel} · Gerado em ${dataHora}</div>
         </div>
       </div>`;
@@ -2272,64 +1811,54 @@
 
     let body = '';
 
-    if (tipo === 'completo' || tipo === 'lancamentos') {
-      // Métricas
-      if (tipo === 'completo') {
-        body += `
-          <div class="pdf-section-title">Resumo do Mês — ${mesLabel}</div>
-          <div class="pdf-metrics-grid">
-            <div class="pdf-metric-card">
-              <div class="pdf-metric-label">Receitas</div>
-              <div class="pdf-metric-value pos">${fmtBRL(receitas)}</div>
-              <div class="pdf-metric-sub">Entradas do mês</div>
-            </div>
-            <div class="pdf-metric-card">
-              <div class="pdf-metric-label">Despesas</div>
-              <div class="pdf-metric-value neg">${fmtBRL(despesas)}</div>
-              <div class="pdf-metric-sub">Saídas do mês</div>
-            </div>
-            <div class="pdf-metric-card">
-              <div class="pdf-metric-label">Saldo</div>
-              <div class="pdf-metric-value ${saldo >= 0 ? 'pos' : 'neg'}">${fmtBRL(saldo)}</div>
-              <div class="pdf-metric-sub">${saldo >= 0 ? 'Positivo' : 'Negativo'}</div>
-            </div>
-            <div class="pdf-metric-card">
-              <div class="pdf-metric-label">Taxa Poupança</div>
-              <div class="pdf-metric-value ${parseFloat(taxa) >= 20 ? 'pos' : parseFloat(taxa) >= 10 ? 'warn' : 'neg'}">${taxa}%</div>
-              <div class="pdf-metric-sub">${parseFloat(taxa) >= 20 ? 'Excelente' : parseFloat(taxa) >= 10 ? 'Razoável' : 'Atenção'}</div>
-            </div>
-          </div>`;
+    if (tipo === 'completo') {
+      body += `
+        <div class="pdf-section-title">Resumo do Mês — ${mesLabel}</div>
+        <div class="pdf-metrics-grid">
+          <div class="pdf-metric-card">
+            <div class="pdf-metric-label">Receitas</div>
+            <div class="pdf-metric-value pos">${fmtBRL(receitas)}</div>
+            <div class="pdf-metric-sub">Entradas do mês</div>
+          </div>
+          <div class="pdf-metric-card">
+            <div class="pdf-metric-label">Despesas</div>
+            <div class="pdf-metric-value neg">${fmtBRL(despesas)}</div>
+            <div class="pdf-metric-sub">Saídas do mês</div>
+          </div>
+          <div class="pdf-metric-card">
+            <div class="pdf-metric-label">Saldo</div>
+            <div class="pdf-metric-value ${saldo >= 0 ? 'pos' : 'neg'}">${fmtBRL(saldo)}</div>
+            <div class="pdf-metric-sub">${saldo >= 0 ? 'Positivo' : 'Negativo'}</div>
+          </div>
+          <div class="pdf-metric-card">
+            <div class="pdf-metric-label">Taxa Poupança</div>
+            <div class="pdf-metric-value ${parseFloat(taxa) >= 20 ? 'pos' : parseFloat(taxa) >= 10 ? 'warn' : 'neg'}">${taxa}%</div>
+            <div class="pdf-metric-sub">${parseFloat(taxa) >= 20 ? 'Excelente' : parseFloat(taxa) >= 10 ? 'Razoável' : 'Atenção'}</div>
+          </div>
+        </div>`;
 
-        // Gastos por categoria
-        const gastosCat = {};
-        lancMes.filter(l => l.tipo === 'despesa').forEach(l => { gastosCat[l.cat] = (gastosCat[l.cat] || 0) + l.valor; });
-        const catOrdenadas = Object.entries(gastosCat).sort((a, b) => b[1] - a[1]);
-        if (catOrdenadas.length > 0) {
-          body += `<div class="pdf-section-title">Despesas por Categoria</div><div class="pdf-cat-grid">`;
-          catOrdenadas.forEach(([cat, val]) => {
-            const p = despesas > 0 ? ((val / despesas) * 100).toFixed(0) : 0;
-            body += `<div class="pdf-cat-item">
-              <div class="pdf-cat-name">${cat}</div>
-              <div class="pdf-cat-val">${fmtBRL(val)}</div>
-              <div class="pdf-cat-pct">${p}% das despesas</div>
-            </div>`;
-          });
-          body += `</div>`;
-        }
+      const gastosCat = {};
+      lancMes.filter(l => l.tipo === 'despesa').forEach(l => { gastosCat[l.cat] = (gastosCat[l.cat] || 0) + l.valor; });
+      const catOrdenadas = Object.entries(gastosCat).sort((a, b) => b[1] - a[1]);
+      if (catOrdenadas.length > 0) {
+        body += `<div class="pdf-section-title">Despesas por Categoria</div><div class="pdf-cat-grid">`;
+        catOrdenadas.forEach(([cat, val]) => {
+          const p = despesas > 0 ? ((val / despesas) * 100).toFixed(0) : 0;
+          body += `<div class="pdf-cat-item"><div class="pdf-cat-name">${cat}</div><div class="pdf-cat-val">${fmtBRL(val)}</div><div class="pdf-cat-pct">${p}% das despesas</div></div>`;
+        });
+        body += `</div>`;
+      }
 
-        // Insight automático
-        const topCat = catOrdenadas[0];
-        const alertas = [];
-        if (parseFloat(taxa) < 10 && receitas > 0) alertas.push('Taxa de poupança abaixo de 10% — revise suas despesas.');
-        if (topCat && despesas > 0 && (topCat[1] / despesas) > 0.4) alertas.push(`${topCat[0]} representa mais de 40% das despesas (${fmtBRL(topCat[1])}).`);
-        if (saldo < 0) alertas.push('Atenção: despesas superiores às receitas neste mês.');
-
-        if (saldo >= 0 && parseFloat(taxa) >= 20) {
-          body += `<div class="pdf-insight-box">✅ <strong>Mês com saldo positivo!</strong> Taxa de poupança de ${taxa}% — parabéns pela disciplina financeira. Continue mantendo suas despesas sob controle.</div>`;
-        }
-        if (alertas.length > 0) {
-          body += `<div class="pdf-alert-box">⚠️ <strong>Pontos de atenção:</strong><br>${alertas.map(a => '• ' + a).join('<br>')}</div>`;
-        }
+      const topCat = catOrdenadas[0];
+      const alertas = [];
+      if (parseFloat(taxa) < 10 && receitas > 0) alertas.push('Taxa de poupança abaixo de 10% — revise suas despesas.');
+      if (topCat && despesas > 0 && (topCat[1] / despesas) > 0.4) alertas.push(`${topCat[0]} representa mais de 40% das despesas (${fmtBRL(topCat[1])}).`);
+      if (saldo < 0) alertas.push('Atenção: despesas superiores às receitas neste mês.');
+      if (saldo >= 0 && parseFloat(taxa) >= 20) {
+        body += `<div class="pdf-insight-box">✅ <strong>Mês com saldo positivo!</strong> Taxa de poupança de ${taxa}% — parabéns pela disciplina financeira.</div>`;
+      }
+      if (alertas.length > 0) {
+        body += `<div class="pdf-alert-box">⚠️ <strong>Pontos de atenção:</strong><br>${alertas.map(a => '• ' + a).join('<br>')}</div>`;
       }
     }
 
@@ -2339,9 +1868,7 @@
       const lancSorted = [...lancExibir].sort((a, b) => b.data.localeCompare(a.data)).slice(0, 40);
       if (lancSorted.length > 0) {
         body += `<div class="pdf-section-title">Lançamentos${tipo === 'lancamentos' ? ' — Todos' : ' do Mês'}</div>`;
-        body += `<table class="pdf-table"><thead><tr>
-          <th>Data</th><th>Descrição</th><th>Categoria</th><th>Tipo</th><th>Valor</th>
-        </tr></thead><tbody>`;
+        body += `<table class="pdf-table"><thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Tipo</th><th>Valor</th></tr></thead><tbody>`;
         lancSorted.forEach(l => {
           body += `<tr>
             <td>${fmtDate(l.data)}</td>
@@ -2354,14 +1881,12 @@
         const totRec = lancSorted.filter(l => l.tipo === 'receita').reduce((s, l) => s + l.valor, 0);
         const totDesp = lancSorted.filter(l => l.tipo === 'despesa').reduce((s, l) => s + l.valor, 0);
         body += `<tr style="background:#f0f7f0;font-weight:900;">
-          <td colspan="3" style="text-align:right;padding:10px 10px;">TOTAIS</td>
+          <td colspan="3" style="text-align:right;padding:10px;">TOTAIS</td>
           <td></td>
-          <td style="color:#166534;">+${fmtBRL(totRec)}<br><span style="color:#b42318;">-${fmtBRL(totDesp)}</span></td>
+          <td><span style="color:#166534;">+${fmtBRL(totRec)}</span><br><span style="color:#b42318;">-${fmtBRL(totDesp)}</span></td>
         </tr>`;
         body += `</tbody></table>`;
-        if (lancExibir.length > 40) {
-          body += `<div style="font-size:11px;color:#888;margin-top:6px;">Exibindo 40 de ${lancExibir.length} lançamentos</div>`;
-        }
+        if (lancExibir.length > 40) body += `<div style="font-size:11px;color:#888;margin-top:6px;">Exibindo 40 de ${lancExibir.length} lançamentos</div>`;
       }
     }
 
@@ -2398,9 +1923,7 @@
       if (orcamentos.length > 0) {
         body += `<div class="pdf-section-title">Orçamentos</div>`;
         orcamentos.forEach(o => {
-          const gasto = lancamentos
-            .filter(l => l.tipo === 'despesa' && l.cat === o.cat && l.data?.startsWith(o.mes))
-            .reduce((s, l) => s + l.valor, 0);
+          const gasto = lancamentos.filter(l => l.tipo === 'despesa' && l.cat === o.cat && l.data?.startsWith(o.mes)).reduce((s, l) => s + l.valor, 0);
           const pct = Math.min(100, Math.round((gasto / o.limite) * 100));
           const cor = pct >= 90 ? '#b42318' : pct >= 70 ? '#b7791f' : '#166534';
           const catCor = catColors[o.cat] || '#66736b';
@@ -2409,10 +1932,7 @@
             <div style="min-width:90px;font-weight:700;font-size:12px;">${o.cat}</div>
             <div style="min-width:50px;font-size:11px;color:#888;">${o.mes}</div>
             <div class="pdf-orc-bar-wrap"><div class="pdf-orc-bar" style="width:${pct}%;background:${cor};"></div></div>
-            <div class="pdf-orc-vals">
-              <strong style="color:${cor};">${fmtBRL(gasto)}</strong> / ${fmtBRL(o.limite)}
-              <span style="margin-left:6px;font-size:10px;">${pct}%</span>
-            </div>
+            <div class="pdf-orc-vals"><strong style="color:${cor};">${fmtBRL(gasto)}</strong> / ${fmtBRL(o.limite)} <span style="margin-left:6px;font-size:10px;">${pct}%</span></div>
           </div>`;
         });
         const estourados = orcamentos.filter(o => {
@@ -2425,17 +1945,22 @@
       }
     }
 
-    return `
-      <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-      <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      </style>
-      <div class="pdf-report">
-        ${header}
-        ${body}
-        ${footer}
-      </div>`;
+    // RETORNO: inclui todos os estilos PDF embutidos no próprio frame
+    return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>${PDF_STYLES}</style>
+</head>
+<body>
+<div class="pdf-report">
+  ${header}
+  ${body}
+  ${footer}
+</div>
+</body>
+</html>`;
   }
 </script>
 
