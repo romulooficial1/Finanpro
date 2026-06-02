@@ -1,4 +1,4 @@
-<!doctype html>  
+ <!doctype html>  
 <html lang="pt-BR">  
 <head>  
   <meta charset="utf-8">  
@@ -354,6 +354,34 @@
     .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }  
     .panel-head h2 { margin: 0; font-size: 18px; color: var(--ink); }  
     .panel-head span { color: var(--muted); font-size: 13px; }  
+  
+    .dashboard-charts { grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr); margin-top: 16px; align-items: stretch; }  
+    .chart-card { padding: 18px; min-height: 320px; overflow: hidden; }  
+    .chart-card.wide { min-height: 360px; }  
+    .chart-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px; }  
+    .chart-head h2 { margin: 0; font-size: 18px; color: var(--ink); }  
+    .chart-head span { display: block; margin-top: 4px; color: var(--muted); font-size: 13px; }  
+    .chart-kpi { text-align: right; color: var(--muted); font-size: 12px; font-weight: 800; text-transform: uppercase; }  
+    .chart-kpi strong { display: block; margin-top: 4px; color: var(--ink); font-size: 20px; text-transform: none; }  
+    .chart-stage { width: 100%; min-height: 230px; }  
+    .chart-stage svg { display: block; width: 100%; height: auto; overflow: visible; }  
+    .chart-empty { min-height: 230px; display: grid; place-items: center; text-align: center; color: var(--muted); border: 1px dashed var(--line); border-radius: var(--radius); background: var(--empty-bg); padding: 20px; font-weight: 700; }  
+    .chart-grid-line { stroke: var(--line); stroke-width: 1; }  
+    .chart-axis-label { fill: var(--muted); font-size: 11px; font-weight: 800; }  
+    .chart-value-label { fill: var(--ink); font-size: 12px; font-weight: 900; }  
+    .chart-legend { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 12px; color: var(--muted); font-size: 12px; font-weight: 800; }  
+    .chart-legend span { display: inline-flex; align-items: center; gap: 6px; }  
+    .chart-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }  
+    .chart-bars { display: grid; gap: 12px; margin-top: 8px; }  
+    .chart-bar-row { display: grid; grid-template-columns: minmax(92px, 0.8fr) minmax(0, 1.6fr) auto; align-items: center; gap: 10px; color: var(--muted); font-size: 13px; font-weight: 800; }  
+    .chart-bar-track { height: 12px; border-radius: 99px; background: var(--surface-2); overflow: hidden; border: 1px solid var(--line); }  
+    .chart-bar-fill { height: 100%; border-radius: inherit; min-width: 4px; transition: width 0.45s ease; }  
+    .chart-bar-value { min-width: 86px; text-align: right; color: var(--ink); }  
+    .dashboard-insights { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }  
+    .insight-card { padding: 16px; min-height: 118px; display: flex; flex-direction: column; justify-content: space-between; gap: 12px; }  
+    .insight-card span { color: var(--muted); font-size: 12px; font-weight: 800; text-transform: uppercase; }  
+    .insight-card strong { color: var(--ink); font-size: 22px; line-height: 1.05; }  
+    .insight-card small { color: var(--muted); font-weight: 700; line-height: 1.4; }  
   
     .section { display: none; }  
     .section.active { display: block; }  
@@ -874,6 +902,8 @@
       .side-panel { display: none; }  
       .layout { grid-template-columns: 1fr; }  
       .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }  
+      .dashboard-charts { grid-template-columns: 1fr; }  
+      .dashboard-insights { grid-template-columns: repeat(3, minmax(0, 1fr)); }  
       .auth-screen { grid-template-columns: 1fr; }  
       .auth-copy { min-height: auto; }  
       .auth-panel { min-height: auto; }  
@@ -884,6 +914,10 @@
       .top-actions { justify-content: stretch; width: 100%; }  
       .top-actions .btn { flex: 1; }  
       .metrics { grid-template-columns: 1fr; }  
+      .dashboard-insights { grid-template-columns: 1fr; }  
+      .chart-card, .chart-card.wide { min-height: auto; }  
+      .chart-bar-row { grid-template-columns: 1fr; gap: 6px; }  
+      .chart-bar-value { min-width: 0; text-align: left; }  
       .nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }  
       .auth-copy, .auth-panel { padding: 22px; }  
       .auth-stats { grid-template-columns: 1fr; }  
@@ -1057,6 +1091,61 @@
           <span class="label">Saldo</span>  
           <strong id="totalBalance">R$ 0,00</strong>  
           <small>Disponível</small>  
+        </div>  
+      </div>  
+      <div class="grid dashboard-charts">  
+        <div class="card chart-card wide">  
+          <div class="chart-head">  
+            <div>  
+              <h2>Fluxo mensal</h2>  
+              <span>Receitas, despesas e saldo dos últimos 6 meses</span>  
+            </div>  
+            <div class="chart-kpi">Poupança<strong id="dashSavingsRate">0%</strong></div>  
+          </div>  
+          <div class="chart-stage" id="cashflowChart"></div>  
+          <div class="chart-legend">  
+            <span><i class="chart-dot" style="background:var(--green);"></i>Receitas</span>  
+            <span><i class="chart-dot" style="background:var(--red);"></i>Despesas</span>  
+            <span><i class="chart-dot" style="background:var(--blue);"></i>Saldo</span>  
+          </div>  
+        </div>  
+        <div class="card chart-card">  
+          <div class="chart-head">  
+            <div>  
+              <h2>Gastos por categoria</h2>  
+              <span>Distribuição das despesas deste mês</span>  
+            </div>  
+          </div>  
+          <div class="chart-stage" id="categoryChart"></div>  
+          <div class="chart-legend" id="categoryLegend"></div>  
+        </div>  
+      </div>  
+      <div class="grid dashboard-charts">  
+        <div class="card chart-card">  
+          <div class="chart-head">  
+            <div>  
+              <h2>Comparativo do mês</h2>  
+              <span>Entradas versus saídas no período atual</span>  
+            </div>  
+          </div>  
+          <div id="monthlyBars" class="chart-bars"></div>  
+        </div>  
+        <div class="dashboard-insights">  
+          <div class="card insight-card">  
+            <span>Maior gasto</span>  
+            <strong id="dashTopCategory">-</strong>  
+            <small id="dashTopCategoryValue">Sem despesas no mês.</small>  
+          </div>  
+          <div class="card insight-card">  
+            <span>Meta média</span>  
+            <strong id="dashGoalProgress">0%</strong>  
+            <small id="dashGoalText">Cadastre metas para acompanhar o progresso.</small>  
+          </div>  
+          <div class="card insight-card">  
+            <span>Saúde financeira</span>  
+            <strong id="dashHealthScore">0</strong>  
+            <small id="dashHealthText">Adicione receitas e despesas para calcular.</small>  
+          </div>  
         </div>  
       </div>  
       <div class="card panel" style="margin-top:16px;">  
@@ -2151,6 +2240,166 @@
   }  
   
   // ===== DASHBOARD =====  
+  function getCssVar(name) {  
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();  
+  }  
+  
+  function chartEmpty(message) {  
+    return `<div class="chart-empty">${message}</div>`;  
+  }  
+  
+  function getLastMonths(count) {  
+    const [year, month] = currentMonth().split('-').map(Number);  
+    return Array.from({ length: count }, (_, i) => {  
+      const date = new Date(year, month - count + i, 1);  
+      const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;  
+      return { key, label: fmtMonth(key).split('/')[0] };  
+    });  
+  }  
+  
+  function renderCashflowChart(lancamentos) {  
+    const el = document.getElementById('cashflowChart');  
+    if (!el) return;  
+  
+    const months = getLastMonths(6);  
+    const data = months.map(month => {  
+      const itens = lancamentos.filter(l => l.data?.startsWith(month.key));  
+      const receita = itens.filter(l => l.tipo === 'receita').reduce((sum, l) => sum + Number(l.valor || 0), 0);  
+      const despesa = itens.filter(l => l.tipo === 'despesa').reduce((sum, l) => sum + Number(l.valor || 0), 0);  
+      return { ...month, receita, despesa, saldo: receita - despesa };  
+    });  
+  
+    if (!data.some(d => d.receita || d.despesa)) {  
+      el.innerHTML = chartEmpty('Adicione lançamentos para ver o fluxo mensal.');  
+      return;  
+    }  
+  
+    const green = getCssVar('--green');  
+    const red = getCssVar('--red');  
+    const blue = getCssVar('--blue');  
+    const w = 760, h = 260, left = 48, right = 18, top = 18, bottom = 40;  
+    const plotW = w - left - right;  
+    const plotH = h - top - bottom;  
+    const maxY = Math.max(1, ...data.flatMap(d => [d.receita, d.despesa, d.saldo]));  
+    const minY = Math.min(0, ...data.map(d => d.saldo));  
+    const span = maxY - minY || 1;  
+    const y = value => top + ((maxY - value) / span) * plotH;  
+    const x = index => left + (plotW / Math.max(1, data.length - 1)) * index;  
+    const zeroY = y(0);  
+    const barW = Math.min(26, plotW / data.length / 4);  
+    const line = data.map((d, i) => `${i ? 'L' : 'M'} ${x(i)} ${y(d.saldo)}`).join(' ');  
+    const area = `${line} L ${x(data.length - 1)} ${zeroY} L ${x(0)} ${zeroY} Z`;  
+    const grid = [0, 0.5, 1].map(p => {  
+      const yy = top + plotH * p;  
+      const label = fmtBRL(maxY - span * p).replace(',00', '');  
+      return `<line class="chart-grid-line" x1="${left}" y1="${yy}" x2="${w - right}" y2="${yy}"></line><text class="chart-axis-label" x="0" y="${yy + 4}">${label}</text>`;  
+    }).join('');  
+    const bars = data.map((d, i) => {  
+      const xi = x(i);  
+      const receitaH = Math.abs(zeroY - y(d.receita));  
+      const despesaH = Math.abs(zeroY - y(d.despesa));  
+      return `  
+        <rect x="${xi - barW - 3}" y="${y(d.receita)}" width="${barW}" height="${receitaH}" rx="5" fill="${green}" opacity="0.88"></rect>  
+        <rect x="${xi + 3}" y="${y(d.despesa)}" width="${barW}" height="${despesaH}" rx="5" fill="${red}" opacity="0.82"></rect>  
+        <text class="chart-axis-label" x="${xi}" y="${h - 12}" text-anchor="middle">${d.label}</text>`;  
+    }).join('');  
+    const points = data.map((d, i) => `<circle cx="${x(i)}" cy="${y(d.saldo)}" r="5" fill="${blue}" stroke="white" stroke-width="2"></circle>`).join('');  
+  
+    el.innerHTML = `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Fluxo mensal de receitas, despesas e saldo">  
+      ${grid}  
+      <line class="chart-grid-line" x1="${left}" y1="${zeroY}" x2="${w - right}" y2="${zeroY}"></line>  
+      ${bars}  
+      <path d="${area}" fill="${blue}" opacity="0.10"></path>  
+      <path d="${line}" fill="none" stroke="${blue}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>  
+      ${points}  
+    </svg>`;  
+  }  
+  
+  function renderCategoryChart(despesas) {  
+    const el = document.getElementById('categoryChart');  
+    const legend = document.getElementById('categoryLegend');  
+    if (!el || !legend) return;  
+  
+    const totals = {};  
+    despesas.forEach(l => { totals[l.cat || 'Outros'] = (totals[l.cat || 'Outros'] || 0) + Number(l.valor || 0); });  
+    const items = Object.entries(totals).sort((a, b) => b[1] - a[1]).slice(0, 6);  
+    const total = items.reduce((sum, [, value]) => sum + value, 0);  
+    if (!total) {  
+      el.innerHTML = chartEmpty('Sem despesas neste mês.');  
+      legend.innerHTML = '';  
+      return;  
+    }  
+  
+    const colors = [getCssVar('--red'), getCssVar('--amber'), getCssVar('--blue'), getCssVar('--purple'), getCssVar('--teal'), getCssVar('--green')];  
+    const r = 78, c = 2 * Math.PI * r;  
+    let offset = 0;  
+    const circles = items.map(([cat, value], i) => {  
+      const len = (value / total) * c;  
+      const circle = `<circle cx="120" cy="120" r="${r}" fill="none" stroke="${colors[i]}" stroke-width="24" stroke-linecap="round" stroke-dasharray="${len} ${c - len}" stroke-dashoffset="${-offset}" transform="rotate(-90 120 120)"></circle>`;  
+      offset += len;  
+      return circle;  
+    }).join('');  
+  
+    el.innerHTML = `<svg viewBox="0 0 240 240" role="img" aria-label="Distribuição de gastos por categoria">  
+      <circle cx="120" cy="120" r="${r}" fill="none" stroke="var(--surface-2)" stroke-width="24"></circle>  
+      ${circles}  
+      <text class="chart-axis-label" x="120" y="110" text-anchor="middle">Total</text>  
+      <text class="chart-value-label" x="120" y="132" text-anchor="middle">${fmtBRL(total).replace(',00', '')}</text>  
+    </svg>`;  
+    legend.innerHTML = items.map(([cat, value], i) => {  
+      const pct = Math.round((value / total) * 100);  
+      return `<span><i class="chart-dot" style="background:${colors[i]};"></i>${cat} · ${pct}%</span>`;  
+    }).join('');  
+  }  
+  
+  function renderMonthlyBars(totalReceita, totalDespesa, saldo) {  
+    const el = document.getElementById('monthlyBars');  
+    if (!el) return;  
+    const max = Math.max(totalReceita, totalDespesa, Math.abs(saldo), 1);  
+    const rows = [  
+      { label: 'Receitas', value: totalReceita, color: 'var(--green)' },  
+      { label: 'Despesas', value: totalDespesa, color: 'var(--red)' },  
+      { label: 'Saldo', value: Math.abs(saldo), shown: saldo, color: saldo >= 0 ? 'var(--blue)' : 'var(--amber)' },  
+    ];  
+    el.innerHTML = rows.map(row => {  
+      const width = Math.max(4, (row.value / max) * 100);  
+      const shown = row.shown ?? row.value;  
+      return `<div class="chart-bar-row">  
+        <span>${row.label}</span>  
+        <div class="chart-bar-track"><div class="chart-bar-fill" style="width:${width}%;background:${row.color};"></div></div>  
+        <strong class="chart-bar-value">${fmtBRL(shown)}</strong>  
+      </div>`;  
+    }).join('');  
+  }  
+  
+  function renderDashboardInsights(metas, despesas, totalReceita, totalDespesa, saldo) {  
+    const byCat = {};  
+    despesas.forEach(l => { byCat[l.cat || 'Outros'] = (byCat[l.cat || 'Outros'] || 0) + Number(l.valor || 0); });  
+    const top = Object.entries(byCat).sort((a, b) => b[1] - a[1])[0];  
+    document.getElementById('dashTopCategory').textContent = top ? top[0] : '-';  
+    document.getElementById('dashTopCategoryValue').textContent = top ? `${fmtBRL(top[1])} neste mês` : 'Sem despesas no mês.';  
+  
+    const goalAvg = metas.length ? metas.reduce((sum, m) => sum + Math.min(100, ((Number(m.atual || 0) / Number(m.alvo || 1)) * 100)), 0) / metas.length : 0;  
+    document.getElementById('dashGoalProgress').textContent = `${goalAvg.toFixed(0)}%`;  
+    document.getElementById('dashGoalText').textContent = metas.length ? `${metas.length} meta${metas.length > 1 ? 's' : ''} em acompanhamento.` : 'Cadastre metas para acompanhar o progresso.';  
+  
+    const savingsRate = totalReceita > 0 ? (saldo / totalReceita) * 100 : 0;  
+    const expensePressure = totalReceita > 0 ? Math.max(0, 100 - (totalDespesa / totalReceita) * 100) : 0;  
+    const health = Math.max(0, Math.min(100, Math.round((expensePressure * 0.7) + (Math.max(0, savingsRate) * 0.3))));  
+    document.getElementById('dashHealthScore').textContent = health;  
+    document.getElementById('dashHealthText').textContent = totalReceita > 0  
+      ? (health >= 70 ? 'Ótimo controle entre entradas e saídas.' : health >= 40 ? 'Atenção: despesas ainda pesam no mês.' : 'Risco alto: revise os maiores gastos.')  
+      : 'Adicione receitas e despesas para calcular.';  
+    document.getElementById('dashSavingsRate').textContent = `${savingsRate.toFixed(1)}%`;  
+  }  
+  
+  function renderDashboardCharts(lancamentos, metas, receitas, despesas, totalReceita, totalDespesa, saldo) {  
+    renderCashflowChart(lancamentos);  
+    renderCategoryChart(despesas);  
+    renderMonthlyBars(totalReceita, totalDespesa, saldo);  
+    renderDashboardInsights(metas, despesas, totalReceita, totalDespesa, saldo);  
+  }  
+  
   function updateDashboard() {  
     const mes = currentMonth();  
     const lancamentos = loadData('lancamentos');  
@@ -2166,6 +2415,7 @@
     document.getElementById('totalBalance').textContent = fmtBRL(saldo);  
     document.getElementById('totalBalance').className = saldo >= 0 ? 'positive' : 'negative';  
     document.getElementById('balanceDisplay').textContent = fmtBRL(saldo);  
+    renderDashboardCharts(lancamentos, metas, receitas, despesas, totalReceita, totalDespesa, saldo);  
     const recent = [...lancamentos].sort((a, b) => b.data.localeCompare(a.data)).slice(0, 5);  
     const dashList = document.getElementById('dashRecentList');  
     if (dashList) {  
