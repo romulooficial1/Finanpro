@@ -1,4 +1,4 @@
- <!doctype html>  
+<!doctype html>  
 <html lang="pt-BR">  
 <head>  
   <meta charset="utf-8">  
@@ -1514,6 +1514,7 @@
 <script type="module">  
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";  
   import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";  
+  import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";  
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-analytics.js";  
   
   const firebaseConfig = {  
@@ -1528,16 +1529,76 @@
   
   const app = initializeApp(firebaseConfig);  
   const auth = getAuth(app);  
+  const db = getFirestore(app);  
   try { getAnalytics(app); } catch(e) {}  
   window.auth = auth;  
+  window.db = db;  
   
-  onAuthStateChanged(auth, (user) => {  
+  const CLOUD_KEYS = ['lancamentos', 'metas', 'orcamentos'];  
+  
+  function localKey(uid, name) {  
+    return `finanpro_${uid || 'local'}_${name}`;  
+  }  
+  
+  function readLocal(uid, name) {  
+    try { return JSON.parse(localStorage.getItem(localKey(uid, name))) || []; } catch { return []; }  
+  }  
+  
+  function writeLocal(uid, name, data) {  
+    localStorage.setItem(localKey(uid, name), JSON.stringify(Array.isArray(data) ? data : []));  
+  }  
+  
+  async function uploadUserData(uid) {  
+    if (!uid) return;  
+    const payload = {};  
+    CLOUD_KEYS.forEach(name => { payload[name] = readLocal(uid, name); });  
+    await setDoc(doc(db, 'users', uid), { ...payload, updatedAt: serverTimestamp() }, { merge: true });  
+  }  
+  
+  window.syncCloudData = async (user) => {  
+    if (!user?.uid) return;  
+    try {  
+      const ref = doc(db, 'users', user.uid);  
+      const snap = await getDoc(ref);  
+      if (snap.exists()) {  
+        const cloud = snap.data() || {};  
+        CLOUD_KEYS.forEach(name => {  
+          const value = Array.isArray(cloud[name]) ? cloud[name] : readLocal(user.uid, name);  
+          writeLocal(user.uid, name, value);  
+        });  
+      } else {  
+        await uploadUserData(user.uid);  
+      }  
+      window._cloudReady = true;  
+    } catch (err) {  
+      console.warn('Sincronizacao em nuvem indisponivel. Usando dados locais.', err);  
+      window._cloudReady = false;  
+    }  
+  };  
+  
+  window.saveCloudData = () => {  
+    const uid = window._currentUser?.uid;  
+    if (!uid) return;  
+    clearTimeout(window._cloudSaveTimer);  
+    window._cloudSaveTimer = setTimeout(async () => {  
+      try {  
+        await uploadUserData(uid);  
+        window._cloudReady = true;  
+      } catch (err) {  
+        console.warn('Nao foi possivel salvar na nuvem agora. Os dados locais foram mantidos.', err);  
+        window._cloudReady = false;  
+      }  
+    }, 300);  
+  };  
+  
+  onAuthStateChanged(auth, async (user) => {  
     if (user) {  
       document.body.classList.remove('auth-lock');  
       window._currentUser = user;  
       const parts = user.email.split('@');  
       const name = parts[0].charAt(0).toUpperCase() + parts[0].slice(1);  
       document.getElementById('userGreeting').textContent = `Olá, ${name}`;  
+      await window.syncCloudData(user);  
       loadUserData(user.uid);  
     } else {  
       document.body.classList.add('auth-lock');  
@@ -1675,6 +1736,7 @@
   }  
   function saveData(name, data) {  
     localStorage.setItem(getKey(name), JSON.stringify(data));  
+    window.saveCloudData?.();  
   }  
   function loadUserData() {  
     renderLancamentos();  
