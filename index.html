@@ -594,6 +594,15 @@
     .ia-bubble .ia-tag { display: inline-block; background: rgba(63,185,80,0.15); color: var(--green); border-radius: 99px; padding: 2px 10px; font-size: 12px; font-weight: 700; margin: 2px 2px 0 0; }  
     .ia-bubble .ia-tag.warn { background: var(--amber-soft); color: var(--amber); }  
     .ia-bubble .ia-tag.danger { background: var(--red-soft); color: var(--red); }  
+    .ia-bubble .ia-note { display: block; margin-top: 10px; color: var(--muted); font-size: 12px; line-height: 1.5; }  
+    .ia-bubble .ia-score { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: center; margin: 10px 0; }  
+    .ia-bubble .ia-score strong { font-size: 28px; line-height: 1; color: var(--green); }  
+    .ia-bubble .ia-meter { height: 9px; border-radius: 99px; background: var(--progress-track); overflow: hidden; border: 1px solid var(--line); }  
+    .ia-bubble .ia-meter span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--red), var(--amber), var(--green)); }  
+    .ia-bubble .ia-kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 10px 0; }  
+    .ia-bubble .ia-kpi { border: 1px solid var(--line); border-radius: 8px; padding: 8px; background: var(--surface); }  
+    .ia-bubble .ia-kpi span { display: block; color: var(--muted); font-size: 11px; font-weight: 800; text-transform: uppercase; }  
+    .ia-bubble .ia-kpi strong { display: block; margin-top: 3px; font-size: 14px; }  
     .ia-typing { display: flex; gap: 5px; align-items: center; padding: 4px 0; }  
     .ia-typing span { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); animation: typing 1.1s infinite; }  
     .ia-typing span:nth-child(2) { animation-delay: 0.18s; }  
@@ -1288,14 +1297,14 @@
         <div class="card panel" style="padding:14px 18px;">  
           <p style="margin:0 0 10px;font-size:13px;color:var(--muted);font-weight:800;">💡 Perguntas rápidas:</p>  
           <div class="ia-suggestions">  
-            <button class="btn small" onclick="sendQuickIA('Analise meus gastos do mês atual e dê sugestões de economia')">📊 Analisar gastos</button>  
-            <button class="btn small" onclick="sendQuickIA('Como estão minhas metas? Vou conseguir atingi-las?')">🎯 Avaliar metas</button>  
-            <button class="btn small" onclick="sendQuickIA('Estou dentro do orçamento? Onde estou gastando mais?')">💰 Verificar orçamento</button>  
-            <button class="btn small" onclick="sendQuickIA('Me dê dicas para economizar mais dinheiro')">💡 Dicas de economia</button>  
-            <button class="btn small" onclick="sendQuickIA('Faça um resumo completo da minha situação financeira')">📋 Resumo financeiro</button>  
-            <button class="btn small" onclick="sendQuickIA('Quanto preciso guardar por mês para atingir minhas metas?')">🧮 Calcular aportes</button>  
-            <button class="btn small" onclick="sendQuickIA('Quais são as minhas maiores despesas?')">🔍 Maiores despesas</button>  
-            <button class="btn small" onclick="sendQuickIA('Minha taxa de poupança está boa?')">📈 Taxa de poupança</button>  
+            <button class="btn small" onclick="sendQuickIA('Faça um diagnóstico completo da minha saúde financeira e priorize o que devo fazer primeiro')">🧠 Diagnóstico</button>  
+            <button class="btn small" onclick="sendQuickIA('Monte um plano prático para eu fechar este mês melhor')">🗓 Plano do mês</button>  
+            <button class="btn small" onclick="sendQuickIA('Analise meus gastos por categoria e encontre cortes inteligentes')">📊 Cortes inteligentes</button>  
+            <button class="btn small" onclick="sendQuickIA('Minhas metas estão viáveis? Calcule os aportes e riscos')">🎯 Metas e aportes</button>  
+            <button class="btn small" onclick="sendQuickIA('Estou dentro dos orçamentos? Mostre riscos e folgas')">💰 Orçamentos</button>  
+            <button class="btn small" onclick="sendQuickIA('Projete meu fechamento do mês se eu continuar neste ritmo')">🔮 Previsão</button>  
+            <button class="btn small" onclick="sendQuickIA('E se eu economizar R$ 300 este mês?')">🧮 Simular economia</button>  
+            <button class="btn small" onclick="sendQuickIA('Tenho risco com dívidas, juros ou cartão?')">💳 Dívidas</button>  
           </div>  
         </div>  
         <div class="ia-chat-area">  
@@ -3146,6 +3155,676 @@
     iaMessages = 0;  
     document.getElementById('iaChatBox').innerHTML = `<div class="ia-welcome" id="iaWelcome"><div class="ia-bot-icon">🤖</div><h3>Conversa reiniciada!</h3><p>Use as sugestões acima ou escreva sua pergunta.</p></div>`;  
   }  
+</script>  
+
+<!-- IA FINANCEIRA LOCAL AVANCADA -->
+<script>
+(function () {
+  'use strict';
+
+  const DAY_MS = 86400000;
+  const ESSENTIAL_RX = /(aluguel|moradia|condominio|energia|agua|mercado|aliment|transporte|combustivel|saude|farmacia|educacao|escola|faculdade|internet|telefone|seguro|imposto|condominio)/;
+  const FLEX_RX = /(lazer|restaurante|delivery|ifood|bar|assinatura|stream|netflix|spotify|roupa|shopping|beleza|presente|viagem|uber|taxi|academia|hobby|cafe)/;
+  const DEBT_RX = /(divida|cartao|credito|emprestimo|financiamento|juros|boleto|parcela|parcelamento|fatura|renegociacao)/;
+  const INTENTS = {
+    diagnostico: ['diagnostico', 'saude financeira', 'prioridade', 'priorize', 'resumo', 'situacao', 'geral', 'como estou', 'relatorio', 'completo'],
+    plano: ['plano', 'fechar o mes', 'organizar', 'o que fazer', 'passo', 'rotina', 'melhorar este mes'],
+    gastos: ['gasto', 'despesa', 'categoria', 'corte', 'cortar', 'reduzir', 'maior', 'top', 'onde estou gastando'],
+    metas: ['meta', 'objetivo', 'sonho', 'aporte', 'guardar', 'prazo', 'viavel', 'vou conseguir'],
+    orcamento: ['orcamento', 'limite', 'estourou', 'folga', 'budget'],
+    previsao: ['previsao', 'projecao', 'projetar', 'fechamento', 'continuar neste ritmo', 'fim do mes'],
+    cenario: ['e se', 'simule', 'simular', 'economizar', 'gastar', 'comprar', 'poupar', 'guardar', 'cortar'],
+    dividas: ['divida', 'juros', 'cartao', 'emprestimo', 'financiamento', 'fatura', 'parcela'],
+    investimentos: ['investir', 'investimento', 'renda fixa', 'tesouro', 'cdb', 'reserva', 'aplicacao']
+  };
+
+  function brl(value) {
+    const n = Number.isFinite(Number(value)) ? Number(value) : 0;
+    return typeof fmtBRL === 'function'
+      ? fmtBRL(n)
+      : new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(n);
+  }
+
+  function num(value) {
+    const n = typeof value === 'string' ? Number(value.replace(/\./g, '').replace(',', '.')) : Number(value);
+    return Number.isFinite(n) ? n : 0;
+  }
+
+  function normalize(text) {
+    return String(text || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
+  function esc(value) {
+    return String(value ?? '').replace(/[&<>"']/g, ch => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[ch]));
+  }
+
+  function pct(value, digits = 1) {
+    const n = Number.isFinite(Number(value)) ? Number(value) : 0;
+    return `${n.toFixed(digits)}%`;
+  }
+
+  function clamp(value, min, max) {
+    return Math.min(max, Math.max(min, value));
+  }
+
+  function sum(items, picker) {
+    return items.reduce((total, item) => total + num(picker ? picker(item) : item.valor), 0);
+  }
+
+  function monthKey(date = new Date()) {
+    const d = date instanceof Date ? date : new Date(date);
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+  }
+
+  function shiftMonth(key, delta) {
+    const [year, month] = key.split('-').map(Number);
+    return monthKey(new Date(year, month - 1 + delta, 1));
+  }
+
+  function monthLabel(key) {
+    if (!/^\d{4}-\d{2}$/.test(key || '')) return esc(key || '');
+    const [year, month] = key.split('-').map(Number);
+    return new Date(year, month - 1, 1).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+  }
+
+  function daysInMonth(key) {
+    const [year, month] = key.split('-').map(Number);
+    return new Date(year, month, 0).getDate();
+  }
+
+  function asDate(value) {
+    if (!value) return null;
+    const d = new Date(`${String(value).slice(0, 10)}T12:00:00`);
+    return Number.isNaN(d.getTime()) ? null : d;
+  }
+
+  function readList(name) {
+    try {
+      return typeof loadData === 'function' ? (loadData(name) || []) : [];
+    } catch (err) {
+      console.warn(`Nao foi possivel ler ${name}`, err);
+      return [];
+    }
+  }
+
+  function detectQuestionMonth(question, fallback) {
+    const q = normalize(question);
+    const explicit = q.match(/(0?[1-9]|1[0-2])\/(20\d{2})/);
+    if (explicit) return `${explicit[2]}-${String(Number(explicit[1])).padStart(2, '0')}`;
+    if (/mes passado|mes anterior|ultimo mes/.test(q)) return shiftMonth(fallback, -1);
+    if (/proximo mes|mes que vem|seguinte/.test(q)) return shiftMonth(fallback, 1);
+    return fallback;
+  }
+
+  function classifyCategory(category, items = []) {
+    const text = normalize(`${category} ${items.slice(0, 4).map(i => i.desc).join(' ')}`);
+    if (DEBT_RX.test(text)) return 'divida';
+    if (ESSENTIAL_RX.test(text)) return 'essencial';
+    if (FLEX_RX.test(text)) return 'flexivel';
+    return 'neutra';
+  }
+
+  function extractMoney(question) {
+    const q = normalize(question);
+    const matches = [...q.matchAll(/(?:r\$\s*)?(\d{1,3}(?:\.\d{3})*|\d+)(?:,(\d{1,2}))?/g)];
+    const values = matches
+      .map(m => Number(`${m[1].replace(/\./g, '')}.${m[2] || '0'}`))
+      .filter(v => Number.isFinite(v) && v > 0 && v < 100000000);
+    return values[0] || null;
+  }
+
+  function extractPercent(question) {
+    const match = normalize(question).match(/(\d+(?:[,.]\d+)?)\s*%/);
+    return match ? Number(match[1].replace(',', '.')) : null;
+  }
+
+  function aggregateMonth(items, key) {
+    const lancMes = items.filter(l => l.data.startsWith(key));
+    const receitas = lancMes.filter(l => l.tipo === 'receita');
+    const despesas = lancMes.filter(l => l.tipo === 'despesa');
+    const totalReceita = sum(receitas);
+    const totalDespesa = sum(despesas);
+    const saldo = totalReceita - totalDespesa;
+    return {
+      key,
+      lancamentos: lancMes,
+      receitas,
+      despesas,
+      totalReceita,
+      totalDespesa,
+      saldo,
+      taxaPoupanca: totalReceita > 0 ? (saldo / totalReceita) * 100 : 0
+    };
+  }
+
+  function buildFinancialData(question = '') {
+    const hoje = new Date();
+    const mesAtual = typeof currentMonth === 'function' ? currentMonth() : monthKey(hoje);
+    const requestedMonth = detectQuestionMonth(question, mesAtual);
+    const lancamentos = readList('lancamentos')
+      .map(l => ({
+        ...l,
+        id: l.id,
+        desc: String(l.desc || 'Lancamento'),
+        cat: String(l.cat || 'Sem categoria'),
+        tipo: l.tipo === 'receita' ? 'receita' : 'despesa',
+        valor: Math.abs(num(l.valor)),
+        data: String(l.data || '').slice(0, 10),
+        modalidade: l.modalidade || 'unico'
+      }))
+      .filter(l => l.valor > 0 && /^\d{4}-\d{2}-\d{2}$/.test(l.data));
+
+    const mesesComDados = [...new Set(lancamentos.map(l => l.data.slice(0, 7)))].sort();
+    const fallbackMonth = mesesComDados[mesesComDados.length - 1] || requestedMonth;
+    const requestedHasData = lancamentos.some(l => l.data.startsWith(requestedMonth));
+    const mes = requestedHasData || requestedMonth !== mesAtual ? requestedMonth : fallbackMonth;
+    const usouFallback = mes !== requestedMonth;
+    const atual = aggregateMonth(lancamentos, mes);
+    const anterior = aggregateMonth(lancamentos, shiftMonth(mes, -1));
+    const serie6 = Array.from({ length: 6 }, (_, i) => aggregateMonth(lancamentos, shiftMonth(mes, i - 5)));
+
+    const porCategoria = {};
+    atual.despesas.forEach(l => {
+      porCategoria[l.cat] = porCategoria[l.cat] || { cat: l.cat, valor: 0, itens: [] };
+      porCategoria[l.cat].valor += l.valor;
+      porCategoria[l.cat].itens.push(l);
+    });
+
+    const catOrdenadas = Object.values(porCategoria)
+      .map(c => ({
+        ...c,
+        pct: atual.totalDespesa > 0 ? (c.valor / atual.totalDespesa) * 100 : 0,
+        perfil: classifyCategory(c.cat, c.itens)
+      }))
+      .sort((a, b) => b.valor - a.valor);
+
+    const orcamentos = readList('orcamentos')
+      .map(o => ({ ...o, cat: String(o.cat || 'Sem categoria'), mes: o.mes || mes, limite: num(o.limite) }))
+      .filter(o => o.limite > 0);
+
+    const orcStatus = orcamentos
+      .filter(o => o.mes === mes)
+      .map(o => {
+        const cat = catOrdenadas.find(c => normalize(c.cat) === normalize(o.cat));
+        const gasto = cat ? cat.valor : 0;
+        const pctUso = o.limite > 0 ? (gasto / o.limite) * 100 : 0;
+        return { ...o, gasto, pct: Math.round(pctUso), folga: o.limite - gasto };
+      })
+      .sort((a, b) => b.pct - a.pct);
+
+    const metas = readList('metas').map(m => {
+      const alvo = Math.max(0, num(m.alvo));
+      const atualMeta = Math.max(0, num(m.atual));
+      const falta = Math.max(0, alvo - atualMeta);
+      const prazoDate = asDate(m.prazo);
+      const dias = prazoDate ? Math.ceil((prazoDate - hoje) / DAY_MS) : null;
+      const meses = dias !== null ? Math.max(1, Math.ceil(dias / 30)) : null;
+      const aporteMensal = meses ? falta / meses : null;
+      const pctMeta = alvo > 0 ? clamp((atualMeta / alvo) * 100, 0, 999) : 0;
+      return {
+        ...m,
+        nome: String(m.nome || 'Meta'),
+        alvo,
+        atual: atualMeta,
+        falta,
+        dias,
+        meses,
+        aporteMensal,
+        pct: Math.round(pctMeta),
+        concluida: pctMeta >= 100,
+        emRisco: falta > 0 && (dias !== null && dias <= 0 || aporteMensal !== null && aporteMensal > Math.max(0, atual.saldo))
+      };
+    });
+
+    const hojeNoMes = monthKey(hoje) === mes;
+    const diaAtual = hojeNoMes ? hoje.getDate() : daysInMonth(mes);
+    const totalDias = daysInMonth(mes);
+    const diasRestantes = hojeNoMes ? Math.max(0, totalDias - diaAtual) : 0;
+    const ateHoje = l => {
+      const d = asDate(l.data);
+      return !hojeNoMes || (d && d <= hoje);
+    };
+    const futuras = l => {
+      const d = asDate(l.data);
+      return hojeNoMes && d && d > hoje;
+    };
+    const despAteHoje = sum(atual.despesas.filter(ateHoje));
+    const recAteHoje = sum(atual.receitas.filter(ateHoje));
+    const despFutura = sum(atual.despesas.filter(futuras));
+    const recFutura = sum(atual.receitas.filter(futuras));
+    const despesaProjetada = hojeNoMes && diaAtual > 0
+      ? Math.max(atual.totalDespesa, (despAteHoje / diaAtual) * totalDias + despFutura)
+      : atual.totalDespesa;
+    const receitaProjetada = atual.totalReceita;
+    const saldoProjetado = receitaProjetada - despesaProjetada;
+    const taxaProjetada = receitaProjetada > 0 ? (saldoProjetado / receitaProjetada) * 100 : 0;
+
+    const variacaoDespesa = anterior.totalDespesa > 0
+      ? ((atual.totalDespesa - anterior.totalDespesa) / anterior.totalDespesa) * 100
+      : null;
+    const mediaDespesa3 = (() => {
+      const ultimos = serie6.slice(-3).filter(m => m.totalDespesa > 0);
+      return ultimos.length ? sum(ultimos, m => m.totalDespesa) / ultimos.length : 0;
+    })();
+
+    const d = {
+      mes,
+      mesAtual,
+      requestedMonth,
+      usouFallback,
+      lancamentos,
+      mesesComDados,
+      serie6,
+      anterior,
+      totalLanc: lancamentos.length,
+      temDados: lancamentos.length > 0,
+      temDadosMes: atual.lancamentos.length > 0,
+      ...atual,
+      gastosCat: porCategoria,
+      catOrdenadas,
+      maiorGasto: catOrdenadas[0] || null,
+      orcStatus,
+      orcEstourados: orcStatus.filter(o => o.pct >= 100),
+      orcAlertas: orcStatus.filter(o => o.pct >= 75 && o.pct < 100),
+      metas,
+      metasEmRisco: metas.filter(m => m.emRisco && !m.concluida),
+      variacaoDespesa,
+      mediaDespesa3,
+      projecao: {
+        hojeNoMes,
+        diaAtual,
+        totalDias,
+        diasRestantes,
+        despAteHoje,
+        recAteHoje,
+        despFutura,
+        recFutura,
+        despesaProjetada,
+        receitaProjetada,
+        saldoProjetado,
+        taxaProjetada
+      }
+    };
+    d.score = calculateScore(d);
+    d.alertas = buildAlerts(d);
+    d.oportunidades = buildOpportunities(d);
+    d.prioridades = buildPriorities(d);
+    return d;
+  }
+
+  function calculateScore(d) {
+    if (!d.temDados) return 0;
+    let score = 52;
+    score += d.saldo >= 0 ? 14 : -22;
+    score += d.taxaPoupanca >= 30 ? 22 : d.taxaPoupanca >= 20 ? 17 : d.taxaPoupanca >= 10 ? 8 : d.taxaPoupanca > 0 ? 2 : -16;
+    score += d.orcStatus.length ? (d.orcEstourados.length ? -10 * d.orcEstourados.length : 8) : 0;
+    score -= d.orcAlertas.length * 4;
+    if (d.maiorGasto?.pct > 45) score -= 8;
+    if (d.variacaoDespesa !== null && d.variacaoDespesa > 20) score -= 6;
+    if (d.metas.length) score += d.metasEmRisco.length ? -7 * d.metasEmRisco.length : 7;
+    if (d.totalReceita === 0 && d.totalDespesa > 0) score -= 18;
+    return Math.round(clamp(score, 0, 100));
+  }
+
+  function buildAlerts(d) {
+    const alerts = [];
+    if (d.saldo < 0) alerts.push({ level: 'danger', title: 'Saldo negativo', detail: `faltam ${brl(Math.abs(d.saldo))} para zerar o mês.` });
+    if (d.totalReceita === 0 && d.totalDespesa > 0) alerts.push({ level: 'danger', title: 'Sem receita no mês', detail: 'há despesas cadastradas, mas nenhuma entrada registrada.' });
+    if (d.taxaPoupanca < 10 && d.totalReceita > 0) alerts.push({ level: d.taxaPoupanca < 0 ? 'danger' : 'warn', title: 'Poupança baixa', detail: `taxa atual de ${pct(d.taxaPoupanca)}.` });
+    d.orcEstourados.forEach(o => alerts.push({ level: 'danger', title: `Orçamento estourado em ${o.cat}`, detail: `${brl(o.gasto)} usados de ${brl(o.limite)}.` }));
+    d.orcAlertas.forEach(o => alerts.push({ level: 'warn', title: `Orçamento perto do limite em ${o.cat}`, detail: `${o.pct}% usado; folga de ${brl(Math.max(0, o.folga))}.` }));
+    if (d.maiorGasto?.pct > 40) alerts.push({ level: 'warn', title: 'Concentração de gastos', detail: `${d.maiorGasto.cat} concentra ${pct(d.maiorGasto.pct, 0)} das despesas.` });
+    if (d.variacaoDespesa !== null && d.variacaoDespesa > 20) alerts.push({ level: 'warn', title: 'Despesas aceleraram', detail: `alta de ${pct(d.variacaoDespesa)} contra o mês anterior.` });
+    d.metasEmRisco.forEach(m => alerts.push({ level: 'warn', title: `Meta em risco: ${m.nome}`, detail: m.dias !== null && m.dias <= 0 ? 'prazo encerrado.' : `aporte necessário de ${brl(m.aporteMensal)}/mês.` }));
+    return alerts;
+  }
+
+  function buildOpportunities(d) {
+    const opportunities = [];
+    d.catOrdenadas.forEach(cat => {
+      const fator = cat.perfil === 'flexivel' ? 0.15 : cat.perfil === 'neutra' ? 0.10 : 0.05;
+      const economia = cat.valor * fator;
+      if (economia >= 20) {
+        opportunities.push({
+          cat: cat.cat,
+          economia,
+          perfil: cat.perfil,
+          text: `reduzir ${cat.perfil === 'essencial' ? '5%' : cat.perfil === 'flexivel' ? '15%' : '10%'} em ${esc(cat.cat)} libera ${brl(economia)}.`
+        });
+      }
+    });
+    return opportunities.sort((a, b) => b.economia - a.economia).slice(0, 5);
+  }
+
+  function buildPriorities(d) {
+    const priorities = [];
+    if (d.saldo < 0) priorities.push(`Cobrir o saldo negativo de <strong>${brl(Math.abs(d.saldo))}</strong> antes de criar novos gastos.`);
+    if (d.orcEstourados.length) priorities.push(`Revisar ${d.orcEstourados.length} orçamento(s) estourado(s): <strong>${esc(d.orcEstourados.map(o => o.cat).join(', '))}</strong>.`);
+    if (d.taxaPoupanca < 20 && d.totalReceita > 0) {
+      const alvo = d.totalReceita * 0.20;
+      const ajuste = Math.max(0, alvo - d.saldo);
+      priorities.push(`Buscar taxa de poupança de 20%; hoje faltam <strong>${brl(ajuste)}</strong> de folga no mês.`);
+    }
+    if (d.oportunidades?.length) priorities.push(`Primeiro corte inteligente: ${d.oportunidades[0].text}`);
+    if (d.metasEmRisco.length) priorities.push(`Recalibrar aportes ou prazos de <strong>${esc(d.metasEmRisco.map(m => m.nome).join(', '))}</strong>.`);
+    if (!d.orcStatus.length && d.catOrdenadas.length) priorities.push(`Criar limites para as 3 maiores categorias: <strong>${esc(d.catOrdenadas.slice(0, 3).map(c => c.cat).join(', '))}</strong>.`);
+    if (!priorities.length) priorities.push('Manter o ritmo atual e direcionar a sobra para metas ou reserva.');
+    return [...new Set(priorities)].slice(0, 5);
+  }
+
+  function scoreLabel(score) {
+    if (score >= 82) return { text: 'muito forte', cls: '' };
+    if (score >= 65) return { text: 'boa, com ajustes', cls: '' };
+    if (score >= 45) return { text: 'atenção necessária', cls: 'warn' };
+    return { text: 'risco alto', cls: 'danger' };
+  }
+
+  function tag(text, cls = '') {
+    return `<span class="ia-tag ${cls}">${esc(text)}</span>`;
+  }
+
+  function ul(items) {
+    return `<ul>${items.filter(Boolean).map(item => `<li>${item}</li>`).join('')}</ul>`;
+  }
+
+  function section(title, content) {
+    return `<span class="ia-section">${title}</span>${content}`;
+  }
+
+  function kpis(items) {
+    return `<div class="ia-kpis">${items.map(item => `<div class="ia-kpi"><span>${esc(item.label)}</span><strong>${item.value}</strong></div>`).join('')}</div>`;
+  }
+
+  function scoreBlock(d) {
+    const status = scoreLabel(d.score);
+    return `<div class="ia-score"><strong>${d.score}</strong><div><div class="ia-meter"><span style="width:${d.score}%"></span></div>${tag(status.text, status.cls)}</div></div>`;
+  }
+
+  function periodNote(d) {
+    return d.usouFallback
+      ? `<span class="ia-note">Não encontrei lançamentos em ${monthLabel(d.requestedMonth)}; usei o último mês com dados: ${monthLabel(d.mes)}.</span>`
+      : '';
+  }
+
+  function gerarRespostaSemDadosAvancada() {
+    return `<strong>Vamos deixar a IA realmente útil.</strong>${section('Primeiros dados para eu analisar', ul([
+      'Cadastre pelo menos uma <strong>receita</strong> e algumas <strong>despesas</strong> em Lançamentos.',
+      'Crie orçamentos para suas categorias principais.',
+      'Adicione metas com valor alvo e prazo para eu calcular aportes.'
+    ]))}<span class="ia-note">Assim que houver dados, eu calculo score, previsão do mês, cortes inteligentes, metas em risco e cenários.</span>`;
+  }
+
+  function gerarDiagnostico(d) {
+    const leitura = [];
+    leitura.push(d.saldo >= 0
+      ? `Você está fechando ${monthLabel(d.mes)} com saldo positivo de <strong>${brl(d.saldo)}</strong>.`
+      : `O mês está negativo em <strong>${brl(Math.abs(d.saldo))}</strong>, então a prioridade é reduzir sangria antes de aportar.`);
+    if (d.totalReceita > 0) leitura.push(`Sua taxa de poupança está em <strong>${pct(d.taxaPoupanca)}</strong>; o alvo saudável mínimo é perto de 20%.`);
+    if (d.maiorGasto) leitura.push(`O maior peso é <strong>${esc(d.maiorGasto.cat)}</strong>, com ${pct(d.maiorGasto.pct, 0)} das despesas.`);
+    if (d.variacaoDespesa !== null) leitura.push(`As despesas ${d.variacaoDespesa >= 0 ? 'subiram' : 'caíram'} <strong>${pct(Math.abs(d.variacaoDespesa))}</strong> contra o mês anterior.`);
+    const alertTags = d.alertas.length ? d.alertas.slice(0, 4).map(a => tag(a.title, a.level)).join(' ') : tag('sem alerta crítico');
+    return `<strong>🧠 Diagnóstico financeiro - ${monthLabel(d.mes)}</strong>${periodNote(d)}${scoreBlock(d)}${kpis([
+      { label: 'Receitas', value: brl(d.totalReceita) },
+      { label: 'Despesas', value: brl(d.totalDespesa) },
+      { label: 'Saldo', value: brl(d.saldo) }
+    ])}${section('Minha leitura', ul(leitura))}${section('Alertas detectados', alertTags)}${section('Prioridades agora', ul(d.prioridades))}${section('Melhor oportunidade', d.oportunidades.length ? ul(d.oportunidades.slice(0, 3).map(o => o.text)) : ul(['Não há corte óbvio; mantenha o controle e refine seus orçamentos.']))}`;
+  }
+
+  function gerarPlanoMes(d) {
+    const p = d.projecao;
+    const alvoSaldo20 = d.totalReceita * 0.20;
+    const economiaPara20 = Math.max(0, alvoSaldo20 - d.saldo);
+    const limiteDespesaTotal = Math.max(0, d.totalReceita * 0.80);
+    const limiteRestante = Math.max(0, limiteDespesaTotal - d.totalDespesa);
+    const gastoDiarioSeguro = p.diasRestantes > 0 ? limiteRestante / p.diasRestantes : 0;
+    const passos = [];
+    if (economiaPara20 > 0 && d.totalReceita > 0) passos.push(`Criar folga de <strong>${brl(economiaPara20)}</strong> para chegar perto de 20% de poupança.`);
+    if (d.oportunidades.length) passos.push(`Aplicar o corte mais eficiente: ${d.oportunidades[0].text}`);
+    if (d.orcAlertas.length || d.orcEstourados.length) passos.push('Congelar novas compras nas categorias com alerta de orçamento.');
+    if (d.metas.length && d.saldo > 0) passos.push(`Separar uma parte do saldo positivo para metas antes de gastar o restante.`);
+    if (!passos.length) passos.push('Manter gastos essenciais, revisar variáveis semanalmente e aportar a sobra.');
+    return `<strong>🗓 Plano prático para ${monthLabel(d.mes)}</strong>${periodNote(d)}${kpis([
+      { label: 'Dias restantes', value: String(p.diasRestantes) },
+      { label: 'Teto diário seguro', value: p.diasRestantes ? brl(gastoDiarioSeguro) : brl(0) },
+      { label: 'Folga atual', value: brl(d.saldo) }
+    ])}${section('Plano de ação', ul(passos))}${section('Regra simples', ul([
+      d.totalReceita > 0 ? `Até o fim do mês, tente manter as despesas totais abaixo de <strong>${brl(limiteDespesaTotal)}</strong>.` : 'Cadastre receitas para eu calcular um teto mensal confiável.',
+      p.diasRestantes > 0 ? `Se gastar acima de <strong>${brl(gastoDiarioSeguro)}</strong> por dia, a chance de perder a meta de poupança aumenta.` : 'Mês fechado: use a análise como revisão e ajuste os limites do próximo mês.'
+    ]))}`;
+  }
+
+  function findCategoryInQuestion(question, d) {
+    const q = normalize(question);
+    return d.catOrdenadas.find(c => q.includes(normalize(c.cat)));
+  }
+
+  function gerarGastos(d, question) {
+    if (!d.catOrdenadas.length) return `Não encontrei despesas em ${monthLabel(d.mes)}. Cadastre gastos ou pergunte sobre outro mês.`;
+    const foco = findCategoryInQuestion(question, d);
+    if (foco) {
+      const mediaItem = foco.itens.length ? foco.valor / foco.itens.length : 0;
+      const exemplos = foco.itens
+        .slice()
+        .sort((a, b) => b.valor - a.valor)
+        .slice(0, 5)
+        .map(l => `<strong>${esc(l.desc)}</strong>: ${brl(l.valor)} em ${esc(l.data.split('-').reverse().join('/'))}`);
+      return `<strong>🔎 Análise de ${esc(foco.cat)} - ${monthLabel(d.mes)}</strong>${kpis([
+        { label: 'Total', value: brl(foco.valor) },
+        { label: 'Peso no mês', value: pct(foco.pct, 0) },
+        { label: 'Média por lançamento', value: brl(mediaItem) }
+      ])}${section('Lançamentos mais relevantes', ul(exemplos))}${section('Leitura da IA', ul([
+        foco.perfil === 'flexivel' ? 'Categoria flexível: há boa chance de reduzir sem mexer no básico.' : foco.perfil === 'essencial' ? 'Categoria essencial: procure ajuste fino, renegociação ou comparação de preço.' : 'Categoria neutra: vale olhar item por item para separar necessidade de impulso.',
+        `Um corte realista aqui liberaria cerca de <strong>${brl(foco.valor * (foco.perfil === 'flexivel' ? 0.15 : foco.perfil === 'essencial' ? 0.05 : 0.10))}</strong>.`
+      ]))}`;
+    }
+    const linhas = d.catOrdenadas.slice(0, 7).map((c, i) => {
+      const cls = c.pct > 35 ? 'warn' : '';
+      return `${i + 1}. <strong>${esc(c.cat)}</strong>: ${brl(c.valor)} ${tag(pct(c.pct, 0), cls)} ${tag(c.perfil)}`;
+    });
+    return `<strong>📊 Gastos por categoria - ${monthLabel(d.mes)}</strong>${periodNote(d)}${kpis([
+      { label: 'Total de despesas', value: brl(d.totalDespesa) },
+      { label: 'Categorias', value: String(d.catOrdenadas.length) },
+      { label: 'Maior categoria', value: esc(d.maiorGasto.cat) }
+    ])}${section('Ranking inteligente', ul(linhas))}${section('Cortes com melhor retorno', d.oportunidades.length ? ul(d.oportunidades.slice(0, 4).map(o => o.text)) : ul(['Não identifiquei cortes relevantes neste mês.']))}`;
+  }
+
+  function gerarMetas(d) {
+    if (!d.metas.length) return `Você ainda não tem metas cadastradas. Crie uma meta com valor alvo e prazo para eu calcular aporte mensal, risco e prioridade.`;
+    const linhas = d.metas.map(m => {
+      const cls = m.concluida ? '' : m.emRisco ? 'warn' : '';
+      const aporte = m.aporteMensal !== null && !m.concluida ? `, aporte de <strong>${brl(m.aporteMensal)}/mês</strong>` : '';
+      const prazo = m.dias !== null ? `, ${m.dias > 0 ? `${m.dias} dias restantes` : 'prazo encerrado'}` : ', sem prazo';
+      return `${tag(`${m.pct}%`, cls)} <strong>${esc(m.nome)}</strong>: falta ${brl(m.falta)}${aporte}${prazo}.`;
+    });
+    const totalAporte = sum(d.metas.filter(m => !m.concluida && m.aporteMensal), m => m.aporteMensal);
+    return `<strong>🎯 Metas e aportes</strong>${kpis([
+      { label: 'Metas', value: String(d.metas.length) },
+      { label: 'Em risco', value: String(d.metasEmRisco.length) },
+      { label: 'Aporte total', value: brl(totalAporte) }
+    ])}${section('Status das metas', ul(linhas))}${section('Minha recomendação', ul([
+      totalAporte > Math.max(0, d.saldo) ? `Os aportes exigem mais que a folga atual. Ajuste prazos ou reduza despesas em pelo menos <strong>${brl(totalAporte - Math.max(0, d.saldo))}</strong>.` : `Os aportes cabem na folga do mês se você reservar esse valor logo após receber.`,
+      d.metasEmRisco.length ? 'Priorize metas com prazo curto e renegocie as que já passaram do limite.' : 'Nenhuma meta aparece como crítica pelos dados atuais.'
+    ]))}`;
+  }
+
+  function gerarOrcamentos(d) {
+    if (!d.orcStatus.length) {
+      const sugestoes = d.catOrdenadas.slice(0, 4).map(c => `<strong>${esc(c.cat)}</strong>: limite inicial perto de ${brl(c.valor * 0.95)} a ${brl(c.valor)}`);
+      return `<strong>💰 Orçamentos</strong>${section('Ainda falta configurar limites para este mês', ul(sugestoes.length ? sugestoes : ['Cadastre despesas primeiro; depois eu sugiro limites por categoria.']))}`;
+    }
+    const linhas = d.orcStatus.map(o => {
+      const cls = o.pct >= 100 ? 'danger' : o.pct >= 75 ? 'warn' : '';
+      return `<strong>${esc(o.cat)}</strong>: ${brl(o.gasto)} de ${brl(o.limite)} ${tag(`${o.pct}%`, cls)} ${o.folga >= 0 ? `folga ${brl(o.folga)}` : `excesso ${brl(Math.abs(o.folga))}`}`;
+    });
+    return `<strong>💰 Orçamentos - ${monthLabel(d.mes)}</strong>${section('Uso dos limites', ul(linhas))}${section('Ação recomendada', ul(d.prioridades.filter(p => /orçamento|limite|categorias/i.test(p)).length ? d.prioridades.filter(p => /orçamento|limite|categorias/i.test(p)) : ['Nenhum orçamento crítico no momento.']))}`;
+  }
+
+  function gerarPrevisao(d) {
+    const p = d.projecao;
+    const status = p.saldoProjetado >= 0 ? tag('fechamento positivo') : tag('risco de déficit', 'danger');
+    return `<strong>🔮 Previsão de fechamento - ${monthLabel(d.mes)}</strong>${periodNote(d)}${kpis([
+      { label: 'Receita projetada', value: brl(p.receitaProjetada) },
+      { label: 'Despesa projetada', value: brl(p.despesaProjetada) },
+      { label: 'Saldo projetado', value: brl(p.saldoProjetado) }
+    ])}${section('Leitura', ul([
+      `${status} se o ritmo atual continuar.`,
+      `Taxa de poupança projetada: <strong>${pct(p.taxaProjetada)}</strong>.`,
+      p.diasRestantes > 0 ? `Ainda restam ${p.diasRestantes} dias no mês; pequenos desvios podem mudar bastante o fechamento.` : 'Mês já encerrado ou fora do mês atual; use como revisão histórica.'
+    ]))}${section('Como melhorar a projeção', ul(d.oportunidades.slice(0, 3).map(o => o.text)))}`;
+  }
+
+  function gerarCenario(d, question) {
+    const q = normalize(question);
+    const valorPergunta = extractMoney(question);
+    const perc = extractPercent(question);
+    const cat = findCategoryInQuestion(question, d);
+    const base = cat ? cat.valor : d.totalDespesa;
+    const valorPercentual = perc !== null ? base * (perc / 100) : null;
+    const valor = valorPercentual || valorPergunta || d.oportunidades[0]?.economia || Math.max(50, d.totalDespesa * 0.05);
+    const ehGasto = /(gastar|comprar|assinar|parcelar|contratar)/.test(q);
+    const ehAporte = /(aportar|investir|guardar|poupar)/.test(q) && !/(economizar|cortar|reduzir)/.test(q);
+    const sinal = ehGasto ? -1 : 1;
+    const novoSaldo = d.saldo + (sinal * valor);
+    const novaDespesa = ehGasto ? d.totalDespesa + valor : Math.max(0, d.totalDespesa - valor);
+    const novaTaxa = d.totalReceita > 0 ? (novoSaldo / d.totalReceita) * 100 : 0;
+    const contexto = cat ? `em ${esc(cat.cat)}` : 'no mês';
+    const acao = ehGasto ? 'gastar' : ehAporte ? 'separar/aportar' : 'economizar';
+    return `<strong>🧮 Simulação: ${acao} ${brl(valor)} ${contexto}</strong>${kpis([
+      { label: 'Saldo atual', value: brl(d.saldo) },
+      { label: 'Novo saldo', value: brl(novoSaldo) },
+      { label: 'Nova poupança', value: pct(novaTaxa) }
+    ])}${section('Impacto', ul([
+      ehGasto ? `A despesa mensal iria para <strong>${brl(novaDespesa)}</strong>.` : `A despesa ajustada ficaria perto de <strong>${brl(novaDespesa)}</strong>.`,
+      novoSaldo < 0 ? `O cenário deixaria o mês negativo em <strong>${brl(Math.abs(novoSaldo))}</strong>.` : `Ainda sobrariam <strong>${brl(novoSaldo)}</strong>.`,
+      d.totalReceita > 0 && novaTaxa >= 20 ? 'Esse cenário preserva uma taxa de poupança saudável.' : d.totalReceita > 0 ? 'Esse cenário ainda fica abaixo da zona confortável de 20% de poupança.' : 'Cadastre receitas para eu avaliar o peso real no orçamento.'
+    ]))}${section('Decisão sugerida', ul([
+      ehGasto && novoSaldo < d.totalReceita * 0.10 ? 'Eu adiaria ou reduziria esse gasto até existir mais folga.' : 'O cenário é possível, desde que você preserve os limites das categorias principais.',
+      d.oportunidades.length ? `Para compensar: ${d.oportunidades[0].text}` : 'Sem cortes claros cadastrados; revise manualmente despesas variáveis.'
+    ]))}`;
+  }
+
+  function gerarDividas(d) {
+    const itens = d.despesas.filter(l => DEBT_RX.test(normalize(`${l.cat} ${l.desc}`)));
+    const total = sum(itens);
+    if (!itens.length) {
+      return `<strong>💳 Dívidas, juros e cartão</strong>${section('O que encontrei', ul([
+        'Não identifiquei despesas com nomes típicos de dívida/cartão/juros neste mês.',
+        'Se você tiver dívidas, cadastre-as com categorias como Cartão, Empréstimo ou Financiamento para eu priorizar corretamente.'
+      ]))}${section('Estratégia segura', ul([
+        'Quite primeiro o que tiver juros mais altos.',
+        'Evite transformar despesa recorrente em parcelamento sem folga mensal.',
+        d.saldo > 0 ? `Sua folga atual de <strong>${brl(d.saldo)}</strong> pode amortizar dívida cara.` : 'Como não há folga, foque em renegociar e cortar despesas variáveis antes de assumir novas parcelas.'
+      ]))}`;
+    }
+    const linhas = itens.sort((a, b) => b.valor - a.valor).slice(0, 6).map(l => `<strong>${esc(l.desc)}</strong> (${esc(l.cat)}): ${brl(l.valor)}`);
+    return `<strong>💳 Risco com dívidas/cartão</strong>${kpis([
+      { label: 'Total no mês', value: brl(total) },
+      { label: 'Peso nas despesas', value: pct(d.totalDespesa ? (total / d.totalDespesa) * 100 : 0, 0) },
+      { label: 'Lançamentos', value: String(itens.length) }
+    ])}${section('Itens encontrados', ul(linhas))}${section('Prioridade', ul([
+      'Se houver juros, use o método avalanche: maior taxa primeiro.',
+      total > d.saldo && d.saldo > 0 ? `A folga atual cobre parte: amortize até <strong>${brl(d.saldo)}</strong> e evite nova parcela.` : d.saldo > 0 ? `A folga atual parece suficiente para cobrir esses itens, se eles forem dívidas abertas.` : 'Sem saldo livre: renegociação e cortes variáveis vêm antes de aportes.'
+    ]))}`;
+  }
+
+  function gerarInvestimentos(d) {
+    const reservaMin = d.totalDespesa * 3;
+    const reservaConforto = d.totalDespesa * 6;
+    const podeInvestir = d.saldo > 0 && d.taxaPoupanca >= 10;
+    return `<strong>📈 Investimentos e reserva</strong>${kpis([
+      { label: 'Sobra do mês', value: brl(d.saldo) },
+      { label: 'Reserva 3 meses', value: brl(reservaMin) },
+      { label: 'Reserva 6 meses', value: brl(reservaConforto) }
+    ])}${section('Ordem inteligente', ul([
+      d.saldo <= 0 ? 'Primeiro volte ao saldo positivo; investir com déficit costuma virar dívida.' : 'Separe a reserva antes de buscar risco maior.',
+      podeInvestir ? `Você pode direcionar parte da sobra para reserva/metas. Um ponto de partida conservador seria <strong>${brl(d.saldo * 0.5)}</strong>.` : 'Aumente a taxa de poupança antes de assumir investimentos mais longos.',
+      'Para reserva de emergência, priorize liquidez e baixo risco; para longo prazo, diversifique e evite concentrar tudo em um único produto.'
+    ]))}<span class="ia-note">Isto é orientação educacional, não recomendação individual de investimento.</span>`;
+  }
+
+  function gerarRespostaLivre(d, question) {
+    const q = normalize(question);
+    if (/quanto.*posso.*gastar|limite.*gastar|teto/.test(q)) return gerarPlanoMes(d);
+    if (/posso.*comprar|vale.*comprar|devo.*comprar/.test(q)) return gerarCenario(d, question);
+    const resposta = d.prioridades[0] || 'manter consistência e revisar seus dados semanalmente.';
+    return `<strong>Resposta personalizada</strong>${section('Minha leitura para sua pergunta', ul([
+      `Pelos dados de ${monthLabel(d.mes)}, a resposta mais importante é: ${resposta}`,
+      `Score atual: <strong>${d.score}/100</strong>; saldo: <strong>${brl(d.saldo)}</strong>; poupança: <strong>${pct(d.taxaPoupanca)}</strong>.`,
+      d.maiorGasto ? `A categoria que mais explica o mês é <strong>${esc(d.maiorGasto.cat)}</strong>.` : 'Ainda há poucas despesas categorizadas para achar um padrão forte.'
+    ]))}${section('Próxima pergunta útil', ul([
+      'Você pode perguntar “e se eu economizar R$ 300?”, “quanto posso gastar por dia?” ou “analise a categoria alimentação”.'
+    ]))}`;
+  }
+
+  function detectIntent(question) {
+    const q = normalize(question);
+    const scores = Object.entries(INTENTS).map(([intent, words]) => {
+      const score = words.reduce((total, word) => total + (q.includes(normalize(word)) ? (word.includes(' ') ? 3 : 1) : 0), 0);
+      return { intent, score };
+    }).sort((a, b) => b.score - a.score);
+    if (extractMoney(question) && /(e se|simul|economiz|gastar|comprar|guardar|cortar|reduzir|poupar)/.test(q)) return 'cenario';
+    return scores[0]?.score > 0 ? scores[0].intent : 'livre';
+  }
+
+  window.getFinancialData = function getFinancialDataAvancado() {
+    return buildFinancialData('');
+  };
+
+  window.processarPergunta = function processarPerguntaAvancada(pergunta) {
+    try {
+      const d = buildFinancialData(pergunta);
+      if (!d.temDados) return gerarRespostaSemDadosAvancada();
+      const intent = detectIntent(pergunta);
+      window._finanproIaMemory = window._finanproIaMemory || [];
+      window._finanproIaMemory.push({ pergunta, intent, at: new Date().toISOString() });
+      window._finanproIaMemory = window._finanproIaMemory.slice(-12);
+      if (!d.temDadosMes && !['metas', 'investimentos'].includes(intent)) {
+        return `<strong>Não encontrei lançamentos em ${monthLabel(d.mes)}.</strong>${periodNote(d)}${gerarDiagnostico(d)}`;
+      }
+      switch (intent) {
+        case 'diagnostico': return gerarDiagnostico(d);
+        case 'plano': return gerarPlanoMes(d);
+        case 'gastos': return gerarGastos(d, pergunta);
+        case 'metas': return gerarMetas(d);
+        case 'orcamento': return gerarOrcamentos(d);
+        case 'previsao': return gerarPrevisao(d);
+        case 'cenario': return gerarCenario(d, pergunta);
+        case 'dividas': return gerarDividas(d);
+        case 'investimentos': return gerarInvestimentos(d);
+        default: return gerarRespostaLivre(d, pergunta);
+      }
+    } catch (err) {
+      console.error('Erro na IA financeira', err);
+      return `<strong>Não consegui concluir essa análise.</strong>${section('Como resolver', ul([
+        'Recarregue a página e tente novamente.',
+        'Confira se lançamentos, metas e orçamentos têm valores numéricos válidos.',
+        'Se o problema persistir, limpe o chat e faça uma pergunta mais específica.'
+      ]))}`;
+    }
+  };
+
+  window.clearIAChat = function clearIAChatAvancado() {
+    try { if (typeof iaMessages !== 'undefined') iaMessages = 0; } catch (err) {}
+    const box = document.getElementById('iaChatBox');
+    if (!box) return;
+    box.innerHTML = `<div class="ia-welcome" id="iaWelcome"><div class="ia-bot-icon">🤖</div><h3>IA Financeira pronta</h3><p>Faça uma pergunta livre ou use um atalho. Eu analiso seus lançamentos, metas e orçamentos em tempo real.</p></div>`;
+  };
+
+  window.sendQuickIA = function sendQuickIAAvancado(msg) {
+    if (typeof showPage === 'function') showPage('ia', document.querySelector('.nav button:nth-child(6)'));
+    const input = document.getElementById('iaInput');
+    if (!input) return;
+    input.value = msg;
+    if (typeof sendIAMessage === 'function') sendIAMessage();
+  };
+
+  const welcome = document.getElementById('iaWelcome');
+  if (welcome) {
+    welcome.innerHTML = `<div class="ia-bot-icon">🤖</div><h3>IA Financeira pronta</h3><p>Faça uma pergunta livre ou use um atalho. Eu analiso seus lançamentos, metas e orçamentos em tempo real.</p>`;
+  }
+})();
 </script>  
   
 <div style="text-align: center; margin-top: 30px; padding: 20px; border-top: 1px solid var(--line);">  
