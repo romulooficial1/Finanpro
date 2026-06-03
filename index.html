@@ -1065,7 +1065,7 @@
           <p>Visão geral das suas finanças</p>  
         </div>  
         <div class="top-actions">  
-          <button class="btn pdf-btn" onclick="openPdfModal()">  
+          <button type="button" class="btn pdf-btn" onclick="openPdfModal()">
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>  
             Exportar PDF  
           </button>  
@@ -1162,7 +1162,7 @@
           <p>Adicione e gerencie suas movimentações financeiras</p>  
         </div>  
         <div class="top-actions">  
-          <button class="btn pdf-btn" onclick="openPdfModal('lancamentos')">  
+          <button type="button" class="btn pdf-btn" onclick="openPdfModal('lancamentos')">
             <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>  
             PDF  
           </button>  
@@ -1241,7 +1241,7 @@
           <p>Defina e acompanhe seus objetivos de economia</p>  
         </div>  
         <div class="top-actions">  
-          <button class="btn pdf-btn" onclick="openPdfModal('metas')">  
+          <button type="button" class="btn pdf-btn" onclick="openPdfModal('metas')">
             <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>  
             PDF  
           </button>  
@@ -1261,7 +1261,7 @@
           <p>Defina limites de gastos por categoria</p>  
         </div>  
         <div class="top-actions">  
-          <button class="btn pdf-btn" onclick="openPdfModal('orcamentos')">  
+          <button type="button" class="btn pdf-btn" onclick="openPdfModal('orcamentos')">
             <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>  
             PDF  
           </button>  
@@ -1470,22 +1470,22 @@
     <p>Escolha o tipo de relatório que deseja gerar</p>  
   
     <div class="pdf-options-grid">  
-      <button class="pdf-option selected" id="pdfOptCompleto" onclick="selectPdfOption('completo')">  
+      <button type="button" class="pdf-option selected" id="pdfOptCompleto" onclick="selectPdfOption('completo')">
         <span class="po-icon">📊</span>  
         <span class="po-title">Relatório Completo</span>  
         <span class="po-desc">Dashboard, lançamentos, metas e orçamentos em um único relatório profissional</span>  
       </button>  
-      <button class="pdf-option" id="pdfOptLanc" onclick="selectPdfOption('lancamentos')">  
+      <button type="button" class="pdf-option" id="pdfOptLanc" onclick="selectPdfOption('lancamentos')">
         <span class="po-icon">💳</span>  
         <span class="po-title">Extrato de Lançamentos</span>  
         <span class="po-desc">Todas as movimentações do período selecionado com totais por categoria</span>  
       </button>  
-      <button class="pdf-option" id="pdfOptMetas" onclick="selectPdfOption('metas')">  
+      <button type="button" class="pdf-option" id="pdfOptMetas" onclick="selectPdfOption('metas')">
         <span class="po-icon">🎯</span>  
         <span class="po-title">Relatório de Metas</span>  
         <span class="po-desc">Progresso detalhado de cada meta com projeções e aportes necessários</span>  
       </button>  
-      <button class="pdf-option" id="pdfOptOrc" onclick="selectPdfOption('orcamentos')">  
+      <button type="button" class="pdf-option" id="pdfOptOrc" onclick="selectPdfOption('orcamentos')">
         <span class="po-icon">💰</span>  
         <span class="po-title">Análise de Orçamentos</span>  
         <span class="po-desc">Comparativo entre limites e gastos reais por categoria</span>  
@@ -1498,8 +1498,8 @@
     </div>  
   
     <div class="modal-actions">  
-      <button class="btn" onclick="closePdfModal()">Cancelar</button>  
-      <button class="btn pdf-btn" onclick="gerarPdf()" id="pdfGerarBtn">  
+      <button type="button" class="btn" onclick="closePdfModal()">Cancelar</button>
+      <button type="button" class="btn pdf-btn" onclick="gerarPdf()" id="pdfGerarBtn">
         <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>  
         Gerar PDF  
       </button>  
@@ -1541,18 +1541,60 @@
   }  
   
   function readLocal(uid, name) {  
-    try { return JSON.parse(localStorage.getItem(localKey(uid, name))) || []; } catch { return []; }  
+    try { return normalizeList(JSON.parse(localStorage.getItem(localKey(uid, name)))); } catch { return []; }  
   }  
   
   function writeLocal(uid, name, data) {  
-    localStorage.setItem(localKey(uid, name), JSON.stringify(Array.isArray(data) ? data : []));  
+    localStorage.setItem(localKey(uid, name), JSON.stringify(normalizeList(data)));  
   }  
   
-  async function uploadUserData(uid) {  
+  function normalizeList(data) {  
+    return Array.isArray(data) ? data : [];  
+  }  
+  
+  function readLocalBundle(uid) {  
+    const bundle = {};  
+    CLOUD_KEYS.forEach(name => { bundle[name] = readLocal(uid, name); });  
+    return bundle;  
+  }  
+  
+  function readBestLocalBundle(uid) {  
+    const scoped = readLocalBundle(uid);  
+    const legacy = readLocalBundle('local');  
+    const bundle = {};  
+    CLOUD_KEYS.forEach(name => {  
+      bundle[name] = scoped[name].length ? scoped[name] : legacy[name];  
+    });  
+    return bundle;  
+  }  
+  
+  function hasBundleData(bundle) {  
+    return CLOUD_KEYS.some(name => normalizeList(bundle?.[name]).length > 0);  
+  }  
+  
+  function applyBundle(uid, bundle) {  
+    CLOUD_KEYS.forEach(name => writeLocal(uid, name, normalizeList(bundle?.[name])));  
+  }  
+  
+  function clearLegacyLocalData() {  
+    CLOUD_KEYS.forEach(name => localStorage.removeItem(localKey('local', name)));  
+  }  
+  
+  function cloudBundleFromDoc(data) {  
+    const bundle = {};  
+    CLOUD_KEYS.forEach(name => { bundle[name] = normalizeList(data?.[name]); });  
+    return bundle;  
+  }  
+  
+  async function uploadUserData(uid, source) {  
     if (!uid) return;  
-    const payload = {};  
-    CLOUD_KEYS.forEach(name => { payload[name] = readLocal(uid, name); });  
+    const payload = source || readBestLocalBundle(uid);  
     await setDoc(doc(db, 'users', uid), { ...payload, updatedAt: serverTimestamp() }, { merge: true });  
+  }  
+  
+  async function uploadUserKey(uid, name, data) {  
+    if (!uid || !CLOUD_KEYS.includes(name)) return;  
+    await setDoc(doc(db, 'users', uid), { [name]: normalizeList(data), updatedAt: serverTimestamp() }, { merge: true });  
   }  
   
   window.syncCloudData = async (user) => {  
@@ -1560,15 +1602,20 @@
     try {  
       const ref = doc(db, 'users', user.uid);  
       const snap = await getDoc(ref);  
+      const localBundle = readBestLocalBundle(user.uid);  
       if (snap.exists()) {  
-        const cloud = snap.data() || {};  
-        CLOUD_KEYS.forEach(name => {  
-          const value = Array.isArray(cloud[name]) ? cloud[name] : readLocal(user.uid, name);  
-          writeLocal(user.uid, name, value);  
-        });  
+        const cloudBundle = cloudBundleFromDoc(snap.data() || {});  
+        if (hasBundleData(cloudBundle) || !hasBundleData(localBundle)) {  
+          applyBundle(user.uid, cloudBundle);  
+        } else {  
+          applyBundle(user.uid, localBundle);  
+          await uploadUserData(user.uid, localBundle);  
+        }  
       } else {  
-        await uploadUserData(user.uid);  
+        applyBundle(user.uid, localBundle);  
+        await uploadUserData(user.uid, localBundle);  
       }  
+      clearLegacyLocalData();  
       window._cloudReady = true;  
     } catch (err) {  
       console.warn('Sincronizacao em nuvem indisponivel. Usando dados locais.', err);  
@@ -1576,19 +1623,17 @@
     }  
   };  
   
-  window.saveCloudData = () => {  
+  window.saveCloudData = async (name, data) => {  
     const uid = window._currentUser?.uid;  
     if (!uid) return;  
-    clearTimeout(window._cloudSaveTimer);  
-    window._cloudSaveTimer = setTimeout(async () => {  
-      try {  
-        await uploadUserData(uid);  
-        window._cloudReady = true;  
-      } catch (err) {  
-        console.warn('Nao foi possivel salvar na nuvem agora. Os dados locais foram mantidos.', err);  
-        window._cloudReady = false;  
-      }  
-    }, 300);  
+    try {  
+      if (name) await uploadUserKey(uid, name, data);  
+      else await uploadUserData(uid);  
+      window._cloudReady = true;  
+    } catch (err) {  
+      console.warn('Nao foi possivel salvar na nuvem agora. Os dados locais foram mantidos.', err);  
+      window._cloudReady = false;  
+    }  
   };  
   
   onAuthStateChanged(auth, async (user) => {  
@@ -1736,7 +1781,7 @@
   }  
   function saveData(name, data) {  
     localStorage.setItem(getKey(name), JSON.stringify(data));  
-    window.saveCloudData?.();  
+    window.saveCloudData?.(name, data);  
   }  
   function loadUserData() {  
     renderLancamentos();  
@@ -2530,14 +2575,62 @@
     document.getElementById('pdfPreviewInfo').innerHTML = infos[tipo] + '<br><span style="font-size:11px;color:#888;margin-top:6px;display:block;">💡 Use Ctrl+P → "Salvar como PDF" para baixar o relatório.</span>';  
   }  
   
-  function gerarPdf() {  
-    closePdfModal();  
+  function getPdfDocumentStyles() {  
+    return Array.from(document.querySelectorAll('style')).map(style => style.textContent).join('\n');  
+  }  
+  
+  function printPdfInCurrentPage(content) {  
     const frame = document.getElementById('pdfPrintFrame');  
-    frame.innerHTML = buildPdfContent(_pdfTipo);  
+    frame.innerHTML = content;  
     setTimeout(() => {  
       window.print();  
       setTimeout(() => { frame.innerHTML = ''; }, 1000);  
-    }, 200);  
+    }, 250);  
+  }  
+  
+  function printPdfInNewWindow(content) {  
+    const printWindow = window.open('', '_blank', 'width=960,height=720');  
+    if (!printWindow) return false;  
+  
+    const styles = getPdfDocumentStyles();  
+    const autoPrint = `  
+      <script>  
+        window.addEventListener('load', function () {  
+          var openPrint = function () {  
+            setTimeout(function () { window.focus(); window.print(); }, 250);  
+          };  
+          if (document.fonts && document.fonts.ready) document.fonts.ready.then(openPrint).catch(openPrint);  
+          else openPrint();  
+        });  
+      <\/script>`;  
+  
+    printWindow.document.open();  
+    printWindow.document.write(`<!doctype html>  
+      <html lang="pt-BR">  
+      <head>  
+        <meta charset="utf-8">  
+        <meta name="viewport" content="width=device-width, initial-scale=1">  
+        <title>Relatorio FinanPro</title>  
+        <style>${styles}</style>  
+        <style>  
+          html, body { background: #fff !important; margin: 0 !important; }  
+          .pdf-print-frame { display: block !important; position: static !important; inset: auto !important; background: #fff !important; }  
+          @media screen { .pdf-report { margin: 0 auto; box-shadow: none; } }  
+        </style>  
+      </head>  
+      <body>  
+        <div class="pdf-print-frame">${content}</div>  
+        ${autoPrint}  
+      </body>  
+      </html>`);  
+    printWindow.document.close();  
+    return true;  
+  }  
+  
+  function gerarPdf() {  
+    closePdfModal();  
+    const content = buildPdfContent(_pdfTipo);  
+    if (!printPdfInNewWindow(content)) printPdfInCurrentPage(content);  
   }  
   
   function buildPdfContent(tipo) {  
