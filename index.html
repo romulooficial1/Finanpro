@@ -1157,6 +1157,45 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
 .auth-box h2 {
   color: #17211c !important;
 }   
+
+/* ===================================================
+   FINANPRO — RODAPÉ LEGAL NO FIM DA LANDING + MODAIS
+=================================================== */
+.fp-legal-footer{
+  position:relative;
+  z-index:3;
+  width:min(1180px, calc(100% - 36px));
+  margin:54px auto 0;
+  padding:30px 18px 38px;
+  border-top:1px solid rgba(255,255,255,.12);
+  text-align:center;
+  color:rgba(255,255,255,.62);
+}
+.fp-legal-footer .fp-footer-brand{color:#fff;font-weight:900;font-size:18px;margin-bottom:10px;}
+.fp-legal-footer .fp-footer-links{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:12px 22px;margin:16px 0 8px;}
+.fp-legal-footer button{border:0;background:transparent;color:#4ade80;font-weight:900;font-size:14px;cursor:pointer;padding:6px 0;}
+.fp-legal-footer button:hover{text-decoration:underline;}
+.fp-legal-footer small{display:block;color:rgba(255,255,255,.52);margin-top:12px;line-height:1.5;}
+.fp-legal-modal{position:fixed;inset:0;z-index:99999;display:none;place-items:center;padding:20px;background:rgba(0,0,0,.72);backdrop-filter:blur(8px);}
+.fp-legal-modal.open{display:grid;}
+.fp-legal-box{width:min(760px,100%);max-height:min(82vh,760px);overflow:auto;background:#f8fbf8;color:#17211c;border-radius:24px;border:1px solid rgba(22,101,52,.16);box-shadow:0 40px 100px rgba(0,0,0,.45);padding:28px;}
+.fp-legal-box header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding-bottom:16px;border-bottom:1px solid #dce4dc;margin-bottom:18px;}
+.fp-legal-box h2{margin:0;font-size:clamp(24px,4vw,34px);color:#166534;letter-spacing:-.03em;}
+.fp-legal-close{width:40px;height:40px;border-radius:999px;border:1px solid #dce4dc;background:#fff;color:#17211c;font-size:22px;font-weight:900;cursor:pointer;flex-shrink:0;}
+.fp-legal-content{color:#2d3d35;line-height:1.72;font-size:15px;}
+.fp-legal-content p{margin:0 0 12px;}
+.fp-legal-content ul{margin:10px 0 16px;padding-left:20px;}
+.fp-legal-content li{margin:6px 0;}
+.fp-legal-content strong{color:#166534;}
+.fp-legal-content a{color:#166534;font-weight:900;text-decoration:none;}
+.fp-legal-content a:hover{text-decoration:underline;}
+@media(max-width:720px){
+  .fp-legal-footer{width:min(100% - 28px, 1180px);margin-top:38px;padding:24px 10px 34px;}
+  .fp-legal-footer .fp-footer-links{gap:8px 16px;}
+  .fp-legal-footer button{font-size:13px;}
+  .fp-legal-box{padding:22px;border-radius:20px;}
+}
+
 </style>  
 </head>  
 <body class="auth-lock">  
@@ -1328,6 +1367,30 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
         </div>
       </div>
     </section>
+
+<footer class="fp-legal-footer" id="legalFooter">
+  <div class="fp-footer-brand">FinanPro</div>
+  <div class="fp-footer-links">
+    <button type="button" onclick="openLegalModal('privacidade')">Política de Privacidade</button>
+    <button type="button" onclick="openLegalModal('termos')">Termos de Uso</button>
+    <button type="button" onclick="openLegalModal('sobre')">Sobre Nós</button>
+    <button type="button" onclick="openLegalModal('faq')">FAQ</button>
+    <button type="button" onclick="openLegalModal('seguranca')">Segurança dos Dados</button>
+    <button type="button" onclick="openLegalModal('contato')">Contato</button>
+  </div>
+  <small>© 2026 FinanPro. Todos os direitos reservados.</small>
+</footer>
+
+<div class="fp-legal-modal" id="legalModal" onclick="closeLegalModal(event)">
+  <div class="fp-legal-box" role="dialog" aria-modal="true" aria-labelledby="legalModalTitle">
+    <header>
+      <h2 id="legalModalTitle">FinanPro</h2>
+      <button class="fp-legal-close" type="button" onclick="closeLegalModal()">×</button>
+    </header>
+    <div class="fp-legal-content" id="legalModalContent"></div>
+  </div>
+</div>
+
   </div>
 </section>
 
@@ -1363,6 +1426,14 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
       <button onclick="showPage('ia', this)">  
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>  
         IA Financeira  
+      </button>  
+      <button onclick="showPage('diferenciais', this)">  
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3l2 5 5 2-5 2-2 5-2-5-5-2 5-2 2-5zm14 4l1.2 3 2.8 1.2-2.8 1.2L19 16l-1.2-3.6L15 11.2l2.8-1.2L19 7z"/></svg>  
+        Diferenciais  
+      </button>  
+      <button onclick="showPage('paginas', this)">  
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6M7 4h7l3 3v13H7V4z"/></svg>  
+        Páginas  
       </button>  
     </nav>  
     <div class="side-panel">  
@@ -1475,6 +1546,24 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
           </div>  
         </div>  
       </div>  
+      <div class="feature-grid">
+        <div class="card feature-card">
+          <span class="feature-kicker">🏆 Conquistas</span>
+          <h3 id="dashAchievementTitle">Primeiros passos</h3>
+          <p id="dashAchievementText">Use o FinanPro e desbloqueie conquistas conforme registra gastos, metas e relatórios.</p>
+        </div>
+        <div class="card feature-card">
+          <span class="feature-kicker">📈 Ranking pessoal</span>
+          <h3 id="dashRankingTitle">Seu desempenho</h3>
+          <p id="dashRankingText">O FinanPro compara seus meses e mostra quando você bate recordes financeiros.</p>
+        </div>
+        <div class="card feature-card">
+          <span class="feature-kicker">🎯 Desafio atual</span>
+          <h3>30 dias de controle</h3>
+          <div class="challenge-progress"><span id="dashChallengeProgress"></span></div>
+          <small id="dashChallengeText">Registre movimentações para avançar no desafio.</small>
+        </div>
+      </div>
       <div class="card panel" style="margin-top:16px;">  
         <div class="panel-head"><h2>Últimas movimentações</h2></div>  
         <div id="dashRecentList"><div class="empty">Nenhuma movimentação ainda. Adicione em Lançamentos.</div></div>  
@@ -1641,8 +1730,137 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
       </div>  
     </section>  
   
+
+    <!-- Diferenciais -->
+    <section id="diferenciais" class="section">
+      <div class="topbar">
+        <div class="title-block">
+          <h1>Diferenciais</h1>
+          <p>Gamificação financeira para transformar controle de gastos em evolução real.</p>
+        </div>
+      </div>
+
+      <div class="feature-grid">
+        <div class="card feature-card">
+          <span class="feature-kicker">🏆 Conquistas</span>
+          <h3>Desbloqueie marcos financeiros</h3>
+          <p>O FinanPro reconhece seus avanços: primeiro lançamento, primeira meta, mês positivo e constância no controle.</p>
+          <div class="achievement-list" id="achievementsList">
+            <div class="achievement-item"><strong>Primeiro lançamento</strong><span>Aguardando</span></div>
+            <div class="achievement-item"><strong>Primeira meta</strong><span>Aguardando</span></div>
+            <div class="achievement-item"><strong>Mês positivo</strong><span>Aguardando</span></div>
+            <div class="achievement-item"><strong>Disciplina financeira</strong><span>Aguardando</span></div>
+          </div>
+        </div>
+
+        <div class="card feature-card">
+          <span class="feature-kicker">📈 Ranking pessoal</span>
+          <h3>Compare seus melhores meses</h3>
+          <p>Veja seus meses com melhor saldo e acompanhe se sua vida financeira está evoluindo.</p>
+          <div id="rankingList">
+            <div class="rank-row"><strong>🥇 Melhor mês</strong><span>Sem dados</span></div>
+            <div class="rank-row"><strong>🥈 Segundo melhor</strong><span>Sem dados</span></div>
+            <div class="rank-row"><strong>🥉 Terceiro melhor</strong><span>Sem dados</span></div>
+          </div>
+        </div>
+
+        <div class="card feature-card">
+          <span class="feature-kicker">🎯 Desafios</span>
+          <h3>30 dias registrando gastos</h3>
+          <p>Registre movimentações em dias diferentes e avance no desafio de disciplina financeira.</p>
+          <div class="challenge-progress"><span id="challengeProgress"></span></div>
+          <small id="challengeText">Dia 0 de 30. Comece registrando sua primeira movimentação.</small>
+        </div>
+      </div>
+    </section>
+
+    <!-- Páginas obrigatórias -->
+    <section id="paginas" class="section">
+      <div class="topbar">
+        <div class="title-block">
+          <h1>Páginas do FinanPro</h1>
+          <p>Informações importantes sobre privacidade, segurança, contato e regras de uso.</p>
+        </div>
+      </div>
+
+      <div class="legal-hub">
+        <div class="legal-tabs">
+          <a class="btn small" href="#politica">Política de Privacidade</a>
+          <a class="btn small" href="#termos-app">Termos de Uso</a>
+          <a class="btn small" href="#sobre-nos">Sobre Nós</a>
+          <a class="btn small" href="#faq">FAQ</a>
+          <a class="btn small" href="#seguranca">Segurança dos Dados</a>
+          <a class="btn small" href="#contato">Contato</a>
+        </div>
+
+        <div class="legal-page-grid">
+          <article class="card legal-page" id="politica">
+            <h2>Política de Privacidade</h2>
+            <p>O FinanPro respeita a privacidade dos usuários e utiliza os dados informados apenas para oferecer recursos de controle financeiro, sincronização na nuvem e melhoria da experiência.</p>
+            <ul>
+              <li>Dados financeiros cadastrados são usados para exibir dashboard, metas, orçamentos e relatórios.</li>
+              <li>O login pode ser feito por e-mail/senha ou conta Google.</li>
+              <li>O site pode utilizar cookies e tecnologias semelhantes para funcionamento, segurança e análise.</li>
+              <li>O FinanPro não vende dados pessoais dos usuários.</li>
+            </ul>
+          </article>
+
+          <article class="card legal-page" id="termos-app">
+            <h2>Termos de Uso e Isenção</h2>
+            <p>Ao utilizar o FinanPro, o usuário concorda em usar a plataforma de forma responsável e informar dados verdadeiros.</p>
+            <ul>
+              <li>As informações exibidas têm caráter organizacional e informativo.</li>
+              <li>O FinanPro não substitui consultoria financeira, contábil, jurídica ou profissional.</li>
+              <li>O usuário é responsável pelas decisões tomadas com base nos dados cadastrados.</li>
+              <li>Funcionalidades podem ser atualizadas para melhorar segurança e desempenho.</li>
+            </ul>
+          </article>
+
+          <article class="card legal-page" id="sobre-nos">
+            <h2>Sobre Nós</h2>
+            <p>O FinanPro nasceu com o objetivo de ajudar pessoas a organizarem receitas, despesas, metas e orçamentos de forma simples, moderna e acessível.</p>
+            <p>O projeto foi criado por Rômulo para reunir em um único lugar controle financeiro, relatórios PDF, sincronização na nuvem e análises inteligentes.</p>
+          </article>
+
+          <article class="card legal-page" id="faq">
+            <h2>FAQ</h2>
+            <ul>
+              <li><strong>O FinanPro é gratuito?</strong> Sim, atualmente o acesso é gratuito.</li>
+              <li><strong>Meus dados ficam salvos?</strong> Sim, ao entrar na conta, os dados podem ser sincronizados na nuvem.</li>
+              <li><strong>Posso acessar de outro celular?</strong> Sim, basta usar a mesma conta.</li>
+              <li><strong>Posso gerar PDF?</strong> Sim, o FinanPro gera relatórios financeiros em PDF.</li>
+            </ul>
+          </article>
+
+          <article class="card legal-page" id="seguranca">
+            <h2>Segurança dos Dados</h2>
+            <p>A segurança das informações dos usuários é prioridade. O FinanPro utiliza autenticação e armazenamento em nuvem para manter os dados vinculados à conta do usuário.</p>
+            <ul>
+              <li>O acesso é protegido por autenticação.</li>
+              <li>Os dados são separados por usuário.</li>
+              <li>O usuário deve manter sua senha e conta Google protegidas.</li>
+              <li>Informações não são vendidas para terceiros.</li>
+            </ul>
+          </article>
+
+          <article class="card legal-page contact-card" id="contato">
+            <h2>Contato</h2>
+            <p>Para suporte, sugestões, parcerias ou dúvidas sobre privacidade, entre em contato pelo e-mail oficial:</p>
+            <a class="contact-email" href="mailto:finanproficial@gmail.com">finanproficial@gmail.com</a>
+            <p>Tempo médio de resposta: até 48 horas úteis.</p>
+          </article>
+        </div>
+      </div>
+    </section>
     <footer class="app-footer">  
-      <span>© 2025 FinanPro. Todos os direitos reservados.</span>  
+      <span>© 2026 FinanPro. Todos os direitos reservados.</span>
+      <span class="footer-links">
+        <button type="button" onclick="showPage('paginas')">Política</button>
+        <button type="button" onclick="showPage('paginas')">Termos</button>
+        <button type="button" onclick="showPage('paginas')">Sobre</button>
+        <button type="button" onclick="showPage('paginas')">FAQ</button>
+        <a href="mailto:finanproficial@gmail.com">Contato</a>
+      </span>
     </footer>  
   </main>  
 </div>  
@@ -2835,6 +3053,81 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
     document.getElementById('dashSavingsRate').textContent = `${savingsRate.toFixed(1)}%`;  
   }  
   
+  function renderFinanProDiferenciais(lancamentos, metas, totalReceita, totalDespesa, saldo) {
+    const monthNames = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+    const byMonth = {};
+    lancamentos.forEach(l => {
+      const key = (l.data || '').slice(0, 7);
+      if (!key) return;
+      if (!byMonth[key]) byMonth[key] = { receita: 0, despesa: 0, saldo: 0 };
+      if (l.tipo === 'receita') byMonth[key].receita += Number(l.valor || 0);
+      if (l.tipo === 'despesa') byMonth[key].despesa += Number(l.valor || 0);
+      byMonth[key].saldo = byMonth[key].receita - byMonth[key].despesa;
+    });
+
+    const ranking = Object.entries(byMonth)
+      .map(([key, v]) => ({ key, ...v }))
+      .sort((a, b) => b.saldo - a.saldo);
+
+    const fmtRankMonth = (key) => {
+      const [y, m] = key.split('-');
+      return `${monthNames[Number(m) - 1] || m}/${y}`;
+    };
+
+    const rankingList = document.getElementById('rankingList');
+    if (rankingList) {
+      const medals = ['🥇 Melhor mês', '🥈 Segundo melhor', '🥉 Terceiro melhor'];
+      rankingList.innerHTML = medals.map((label, i) => {
+        const item = ranking[i];
+        return `<div class="rank-row"><strong>${label}</strong><span>${item ? `${fmtRankMonth(item.key)} • ${fmtBRL(item.saldo)}` : 'Sem dados'}</span></div>`;
+      }).join('');
+    }
+
+    const uniqueDays = new Set(lancamentos.map(l => l.data).filter(Boolean)).size;
+    const challengePct = Math.min(100, Math.round((uniqueDays / 30) * 100));
+    const challengeProgress = document.getElementById('challengeProgress');
+    const dashChallengeProgress = document.getElementById('dashChallengeProgress');
+    if (challengeProgress) challengeProgress.style.width = `${challengePct}%`;
+    if (dashChallengeProgress) dashChallengeProgress.style.width = `${challengePct}%`;
+    const challengeText = `Dia ${Math.min(uniqueDays, 30)} de 30. ${uniqueDays >= 30 ? 'Desafio concluído: disciplina financeira desbloqueada!' : 'Registre movimentações em dias diferentes para avançar.'}`;
+    const challengeEl = document.getElementById('challengeText');
+    const dashChallengeEl = document.getElementById('dashChallengeText');
+    if (challengeEl) challengeEl.textContent = challengeText;
+    if (dashChallengeEl) dashChallengeEl.textContent = challengeText;
+
+    const achievements = [
+      { name: 'Primeiro lançamento', unlocked: lancamentos.length >= 1 },
+      { name: 'Primeira meta', unlocked: metas.length >= 1 },
+      { name: 'Mês positivo', unlocked: saldo > 0 && totalReceita > 0 },
+      { name: 'Disciplina financeira', unlocked: uniqueDays >= 30 }
+    ];
+
+    const list = document.getElementById('achievementsList');
+    if (list) {
+      list.innerHTML = achievements.map(a => `
+        <div class="achievement-item ${a.unlocked ? 'unlocked' : ''}">
+          <strong>${a.unlocked ? '✅' : '🔒'} ${a.name}</strong>
+          <span>${a.unlocked ? 'Desbloqueada' : 'Aguardando'}</span>
+        </div>
+      `).join('');
+    }
+
+    const unlockedCount = achievements.filter(a => a.unlocked).length;
+    const dashAchievementTitle = document.getElementById('dashAchievementTitle');
+    const dashAchievementText = document.getElementById('dashAchievementText');
+    if (dashAchievementTitle) dashAchievementTitle.textContent = `${unlockedCount}/4 conquistas`;
+    if (dashAchievementText) dashAchievementText.textContent = unlockedCount
+      ? `Você já desbloqueou ${unlockedCount} conquista${unlockedCount > 1 ? 's' : ''}. Continue evoluindo.`
+      : 'Registre sua primeira movimentação para desbloquear conquistas.';
+
+    const dashRankingTitle = document.getElementById('dashRankingTitle');
+    const dashRankingText = document.getElementById('dashRankingText');
+    if (dashRankingTitle) dashRankingTitle.textContent = ranking[0] ? `Melhor mês: ${fmtRankMonth(ranking[0].key)}` : 'Ranking em construção';
+    if (dashRankingText) dashRankingText.textContent = ranking[0]
+      ? `Seu melhor saldo registrado foi ${fmtBRL(ranking[0].saldo)}.`
+      : 'Adicione movimentações para criar seu ranking pessoal.';
+  }
+
   function renderDashboardCharts(lancamentos, metas, receitas, despesas, totalReceita, totalDespesa, saldo) {  
     renderCashflowChart(lancamentos);  
     renderCategoryChart(despesas);  
@@ -2858,6 +3151,7 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
     document.getElementById('totalBalance').className = saldo >= 0 ? 'positive' : 'negative';  
     document.getElementById('balanceDisplay').textContent = fmtBRL(saldo);  
     renderDashboardCharts(lancamentos, metas, receitas, despesas, totalReceita, totalDespesa, saldo);  
+    renderFinanProDiferenciais(lancamentos, metas, totalReceita, totalDespesa, saldo);  
     const recent = [...lancamentos].sort((a, b) => b.data.localeCompare(a.data)).slice(0, 5);  
     const dashList = document.getElementById('dashRecentList');  
     if (dashList) {  
@@ -4153,30 +4447,55 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
 })();
 </script>  
   
-<div style="text-align: center; margin-top: 30px; padding: 20px; border-top: 1px solid var(--line);">  
-  <a href="#" style="color: var(--green); font-size: 12px; text-decoration: none; margin-right: 15px;"  
-     onclick="document.querySelectorAll('section').forEach(s => s.style.display='none'); document.getElementById('privacy').style.display='block'; return false;">  
-    Política de Privacidade  
-  </a>  
-  <a href="#" style="color: var(--green); font-size: 12px; text-decoration: none;"  
-     onclick="document.querySelectorAll('section').forEach(s => s.style.display='none'); document.getElementById('terms').style.display='block'; return false;">  
-    Termos de Uso  
-  </a>  
-</div>  
-  
-<section id="privacy" style="display: none; padding: 30px; font-family: sans-serif; max-width: 800px; margin: 0 auto; line-height: 1.6; color: var(--ink);">  
-  <h2 style="color: var(--green);">Política de Privacidade</h2>  
-  <p>O FinanPro respeita a sua privacidade. Este site utiliza o Google AdSense para veicular anúncios, que utiliza cookies para exibir publicidade baseada em suas visitas anteriores.</p>  
-  <p>Os dados inseridos no app são processados para seu controle pessoal. Você pode desativar cookies de publicidade nas configurações do seu navegador ou no site do Google.</p>  
-  <button onclick="location.reload()" style="background: var(--green); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 20px;">Voltar ao App</button>  
-</section>  
-  
-<section id="terms" style="display: none; padding: 30px; font-family: sans-serif; max-width: 800px; margin: 0 auto; line-height: 1.6; color: var(--ink);">  
-  <h2 style="color: var(--green);">Termos de Uso</h2>  
-  <p>Ao utilizar o FinanPro, você concorda em usar a ferramenta para fins lícitos de organização financeira pessoal.</p>  
-  <p>O serviço é fornecido "como está". Não nos responsabilizamos por decisões financeiras tomadas com base nos cálculos do app. O uso é de total responsabilidade do usuário.</p>  
-  <button onclick="location.reload()" style="background: var(--green); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 20px;">Voltar ao App</button>  
-</section>  
-  
-</body>  
+
+<script>
+window.FINANPRO_LEGAL_CONTENT = {
+  privacidade: {
+    title: "Política de Privacidade",
+    html: `<p>O <strong>FinanPro</strong> respeita a privacidade dos usuários e utiliza os dados informados apenas para oferecer recursos de controle financeiro, sincronização na nuvem e melhoria da experiência.</p><ul><li>Os dados financeiros cadastrados são usados para exibir dashboard, metas, orçamentos, análises e relatórios.</li><li>O login pode ser feito por e-mail/senha ou conta Google.</li><li>O site pode utilizar cookies e tecnologias semelhantes para funcionamento, segurança, análise e publicidade.</li><li>O FinanPro não vende dados pessoais dos usuários.</li></ul><p>Ao utilizar o FinanPro, você concorda com esta Política de Privacidade.</p>`
+  },
+  termos: {
+    title: "Termos de Uso",
+    html: `<p>Ao utilizar o <strong>FinanPro</strong>, o usuário concorda em usar a plataforma de forma responsável, legal e para fins de organização financeira pessoal.</p><ul><li>As informações apresentadas têm caráter informativo e não substituem orientação financeira profissional.</li><li>O usuário é responsável pela veracidade dos dados cadastrados.</li><li>O FinanPro pode receber melhorias, atualizações e mudanças de funcionalidades ao longo do tempo.</li><li>O uso da plataforma depende da aceitação destes termos.</li></ul>`
+  },
+  sobre: {
+    title: "Sobre Nós",
+    html: `<p>O <strong>FinanPro</strong> nasceu com o objetivo de ajudar pessoas a organizarem receitas, despesas, metas, dívidas e orçamentos de forma simples, moderna e acessível.</p><p>O projeto foi criado por <strong>Rômulo</strong> para reunir em um único lugar controle financeiro, relatórios PDF, sincronização na nuvem e análises inteligentes.</p><p>A missão do FinanPro é transformar o controle financeiro em uma experiência mais clara, prática e bonita para qualquer pessoa.</p>`
+  },
+  faq: {
+    title: "FAQ",
+    html: `<p><strong>O FinanPro é gratuito?</strong><br>Sim, atualmente o acesso é gratuito.</p><p><strong>Meus dados ficam salvos?</strong><br>Sim. Ao entrar com uma conta, seus dados podem ser sincronizados na nuvem.</p><p><strong>Posso acessar de outro celular?</strong><br>Sim. Basta usar a mesma conta cadastrada.</p><p><strong>Posso gerar PDF?</strong><br>Sim. O FinanPro permite gerar relatórios financeiros em PDF.</p><p><strong>O app tem IA financeira?</strong><br>Sim. A IA ajuda a interpretar lançamentos, metas e orçamentos.</p>`
+  },
+  seguranca: {
+    title: "Segurança dos Dados",
+    html: `<p>A segurança das informações dos usuários é prioridade no <strong>FinanPro</strong>.</p><ul><li>O acesso é protegido por autenticação.</li><li>Os dados são vinculados à conta do usuário.</li><li>As informações são separadas por usuário para preservar privacidade.</li><li>O usuário deve manter sua senha e conta Google protegidas.</li><li>O FinanPro não vende informações pessoais para terceiros.</li></ul>`
+  },
+  contato: {
+    title: "Contato",
+    html: `<p>Para suporte, sugestões, parcerias ou dúvidas sobre privacidade, entre em contato pelo e-mail oficial:</p><p><a href="mailto:finanproficial@gmail.com">finanproficial@gmail.com</a></p><p>Tempo médio de resposta: até 48 horas úteis.</p>`
+  }
+};
+window.openLegalModal = function(type) {
+  const modal = document.getElementById('legalModal');
+  const title = document.getElementById('legalModalTitle');
+  const content = document.getElementById('legalModalContent');
+  const data = window.FINANPRO_LEGAL_CONTENT[type];
+  if (!modal || !title || !content || !data) return;
+  title.textContent = data.title;
+  content.innerHTML = data.html;
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+};
+window.closeLegalModal = function(event) {
+  if (event && event.target && event.target.id !== 'legalModal') return;
+  const modal = document.getElementById('legalModal');
+  if (modal) modal.classList.remove('open');
+  document.body.style.overflow = '';
+};
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Escape') window.closeLegalModal();
+});
+</script>
+
+</body>
 </html>  
