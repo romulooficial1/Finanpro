@@ -968,6 +968,13 @@
           <label>Email<input type="email" placeholder="seu@email.com" id="signinEmail" required /></label>  
           <label>Senha<input type="password" placeholder="••••••••" id="signinPassword" required /></label>  
           <button type="submit" class="btn primary" id="signinBtn">Entrar</button>  
+          <button type="button"
+        class="btn"
+        id="googleBtn"
+        onclick="handleGoogleSignIn()"
+        style="margin-top:10px;width:100%;">
+  Entrar com Google
+</button>
           <div class="auth-message hidden" id="signinMessage"></div>  
           <div style="text-align:center;margin-top:12px;display:flex;justify-content:center;gap:8px;">  
             <span style="color:var(--muted);font-size:13px;">Não tem conta?</span>  
@@ -1522,7 +1529,7 @@
 <!-- Firebase SDK -->  
 <script type="module">  
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";  
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";  
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";  
   import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";  
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-analytics.js";  
   
@@ -1538,6 +1545,7 @@
   
   const app = initializeApp(firebaseConfig);  
   const auth = getAuth(app);  
+  const googleProvider = new GoogleAuthProvider();
   const db = getFirestore(app);  
   try { getAnalytics(app); } catch(e) {}  
   window.auth = auth;  
@@ -1749,6 +1757,13 @@
     document.getElementById('forgotPasswordView').style.display = 'block';  
     document.getElementById('forgotPasswordForm').classList.add('active');  
   };  
+  window.handleGoogleSignIn = async function handleGoogleSignIn() {
+  try {
+    await signInWithPopup(auth, googleProvider);
+  } catch (e) {
+    alert('Erro ao entrar com Google: ' + (e.message || e.code));
+  }
+};
 </script>  
   
 <!-- APP SCRIPTS -->  
