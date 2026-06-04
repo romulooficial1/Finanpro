@@ -1,4 +1,4 @@
-<!doctype html>  
+<<!doctype html>  
 <html lang="pt-BR">  
 <head>  
   <meta charset="utf-8">  
@@ -1196,6 +1196,371 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
   .fp-legal-box{padding:22px;border-radius:20px;}
 }
 
+
+/* ===================================================
+   DASHBOARD — CARDS DE CONQUISTAS, RANKING E DESAFIO
+   Correção visual para mobile e desktop
+=================================================== */
+.feature-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+  margin:18px 0 0;
+  align-items:stretch;
+}
+.feature-card{
+  position:relative;
+  overflow:hidden;
+  padding:18px;
+  min-height:156px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:12px;
+  border-radius:14px;
+}
+.feature-card::after{
+  content:"";
+  position:absolute;
+  right:-36px;
+  top:-36px;
+  width:110px;
+  height:110px;
+  border-radius:50%;
+  border:18px solid var(--metric-ring);
+  pointer-events:none;
+}
+.feature-kicker{
+  position:relative;
+  z-index:1;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  width:max-content;
+  max-width:100%;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+.feature-card h3{
+  position:relative;
+  z-index:1;
+  margin:0;
+  color:var(--ink);
+  font-size:clamp(20px,2.1vw,26px);
+  line-height:1.12;
+  letter-spacing:-.025em;
+}
+.feature-card p,
+.feature-card small{
+  position:relative;
+  z-index:1;
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.5;
+  font-weight:700;
+}
+.challenge-progress{
+  position:relative;
+  z-index:1;
+  width:100%;
+  height:10px;
+  border-radius:999px;
+  overflow:hidden;
+  background:var(--progress-track);
+  border:1px solid var(--line);
+}
+.challenge-progress span{
+  display:block;
+  height:100%;
+  min-width:8px;
+  width:0%;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--green),var(--teal));
+  transition:width .4s ease;
+}
+@media(max-width:1100px){
+  .feature-grid{
+    grid-template-columns:1fr;
+  }
+}
+@media(max-width:720px){
+  .feature-grid{
+    gap:12px;
+    margin-top:14px;
+  }
+  .feature-card{
+    min-height:132px;
+    padding:16px;
+    border-radius:12px;
+  }
+  .feature-kicker{
+    font-size:11px;
+  }
+  .feature-card h3{
+    font-size:22px;
+  }
+  .feature-card p,
+  .feature-card small{
+    font-size:13px;
+  }
+}
+
+
+/* ===================================================
+   FINANPRO — POLIMENTO FINAL: DIFERENCIAIS, PÁGINAS E RODAPÉ
+=================================================== */
+#diferenciais .topbar,
+#paginas .topbar{
+  margin-bottom:18px;
+}
+
+#diferenciais .title-block h1,
+#paginas .title-block h1{
+  font-size:clamp(30px,4vw,44px);
+  letter-spacing:-.04em;
+}
+
+#diferenciais .title-block p,
+#paginas .title-block p{
+  font-size:15px;
+  line-height:1.55;
+  max-width:720px;
+}
+
+#diferenciais .feature-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+  margin-top:18px;
+}
+
+#diferenciais .feature-card{
+  padding:20px;
+  min-height:210px;
+  border-radius:16px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  gap:12px;
+}
+
+#diferenciais .feature-kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  width:max-content;
+  max-width:100%;
+  padding:7px 10px;
+  border-radius:999px;
+  background:rgba(63,185,80,.12);
+  color:var(--green);
+  font-size:12px;
+  font-weight:900;
+  text-transform:none;
+  letter-spacing:0;
+}
+
+#diferenciais .feature-card h3{
+  margin:2px 0 0;
+  font-size:clamp(20px,2.2vw,28px);
+  line-height:1.15;
+  color:var(--ink);
+  letter-spacing:-.035em;
+}
+
+#diferenciais .feature-card p{
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.55;
+  font-weight:650;
+}
+
+#diferenciais .achievement-list,
+#diferenciais .rank-list,
+#diferenciais .challenge-box{
+  margin-top:auto;
+  display:grid;
+  gap:8px;
+}
+
+#diferenciais .achievement-row,
+#diferenciais .rank-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:10px 12px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--surface-2);
+  color:var(--ink);
+  font-size:13px;
+  font-weight:800;
+}
+
+#diferenciais .achievement-row span,
+#diferenciais .rank-row span{
+  color:var(--muted);
+  font-weight:800;
+  text-align:right;
+}
+
+#diferenciais .challenge-box{
+  padding:12px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--surface-2);
+}
+
+#diferenciais .challenge-box small{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.45;
+  font-weight:750;
+}
+
+#paginas .legal-hub{
+  display:grid;
+  gap:18px;
+}
+
+#paginas .legal-tabs{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  padding:14px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--card-bg);
+  box-shadow:var(--shadow-sm);
+}
+
+#paginas .legal-tabs .btn{
+  min-height:38px;
+  border-radius:999px;
+  padding:0 14px;
+  box-shadow:none;
+  background:var(--surface-2);
+}
+
+#paginas .legal-page-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+}
+
+#paginas .legal-page{
+  padding:20px;
+  border-radius:16px;
+}
+
+#paginas .legal-page h2{
+  margin:0 0 10px;
+  color:var(--ink);
+  font-size:22px;
+  letter-spacing:-.025em;
+}
+
+#paginas .legal-page p,
+#paginas .legal-page li{
+  color:var(--muted);
+  line-height:1.62;
+  font-size:14px;
+}
+
+#paginas .legal-page ul{
+  margin:10px 0 0;
+  padding-left:20px;
+}
+
+#paginas .contact-email{
+  display:inline-flex;
+  margin:8px 0;
+  color:var(--green);
+  font-weight:900;
+  text-decoration:none;
+  word-break:break-word;
+}
+
+/* Rodapé da landing: sem botões brancos feios */
+.fp-legal-footer{
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:22px;
+  box-shadow:0 24px 70px rgba(0,0,0,.18);
+}
+.fp-legal-footer .fp-footer-links{
+  gap:10px;
+}
+.fp-legal-footer button{
+  min-height:36px;
+  padding:0 12px;
+  border-radius:999px;
+  border:1px solid rgba(74,222,128,.22);
+  background:rgba(74,222,128,.08);
+  color:#86efac;
+  font-size:13px;
+}
+.fp-legal-footer button:hover{
+  background:rgba(74,222,128,.14);
+  text-decoration:none;
+}
+
+@media(max-width:1100px){
+  #diferenciais .feature-grid,
+  #paginas .legal-page-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:720px){
+  #diferenciais .feature-grid{
+    gap:12px;
+  }
+  #diferenciais .feature-card,
+  #paginas .legal-page{
+    padding:16px;
+    border-radius:14px;
+  }
+  #diferenciais .feature-card{
+    min-height:auto;
+  }
+  #diferenciais .achievement-row,
+  #diferenciais .rank-row{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:4px;
+  }
+  #diferenciais .achievement-row span,
+  #diferenciais .rank-row span{
+    text-align:left;
+  }
+  #paginas .legal-tabs{
+    padding:12px;
+    gap:8px;
+  }
+  #paginas .legal-tabs .btn{
+    flex:1 1 calc(50% - 8px);
+    font-size:12px;
+  }
+  .fp-legal-footer{
+    border-radius:18px;
+  }
+  .fp-legal-footer .fp-footer-links{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+  .fp-legal-footer button{
+    width:100%;
+    font-size:12px;
+  }
+}
+
 </style>  
 </head>  
 <body class="auth-lock">  
@@ -1550,20 +1915,23 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
         <div class="card feature-card">
           <span class="feature-kicker">🏆 Conquistas</span>
           <h3 id="dashAchievementTitle">Primeiros passos</h3>
-          <p id="dashAchievementText">Use o FinanPro e desbloqueie conquistas conforme registra gastos, metas e relatórios.</p>
+          <p id="dashAchievementText">Desbloqueie conquistas conforme registra receitas, despesas, metas e relatórios.</p>
         </div>
+
         <div class="card feature-card">
           <span class="feature-kicker">📈 Ranking pessoal</span>
           <h3 id="dashRankingTitle">Seu desempenho</h3>
-          <p id="dashRankingText">O FinanPro compara seus meses e mostra quando você bate recordes financeiros.</p>
+          <p id="dashRankingText">Compare seus meses e acompanhe quando bater novos recordes financeiros.</p>
         </div>
+
         <div class="card feature-card">
           <span class="feature-kicker">🎯 Desafio atual</span>
           <h3>30 dias de controle</h3>
           <div class="challenge-progress"><span id="dashChallengeProgress"></span></div>
-          <small id="dashChallengeText">Registre movimentações para avançar no desafio.</small>
+          <small id="dashChallengeText">Registre movimentações em dias diferentes para avançar.</small>
         </div>
       </div>
+
       <div class="card panel" style="margin-top:16px;">  
         <div class="panel-head"><h2>Últimas movimentações</h2></div>  
         <div id="dashRecentList"><div class="empty">Nenhuma movimentação ainda. Adicione em Lançamentos.</div></div>  
@@ -1744,20 +2112,22 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
         <div class="card feature-card">
           <span class="feature-kicker">🏆 Conquistas</span>
           <h3>Desbloqueie marcos financeiros</h3>
-          <p>O FinanPro reconhece seus avanços: primeiro lançamento, primeira meta, mês positivo e constância no controle.</p>
-          <div class="achievement-list" id="achievementsList">
-            <div class="achievement-item"><strong>Primeiro lançamento</strong><span>Aguardando</span></div>
-            <div class="achievement-item"><strong>Primeira meta</strong><span>Aguardando</span></div>
-            <div class="achievement-item"><strong>Mês positivo</strong><span>Aguardando</span></div>
-            <div class="achievement-item"><strong>Disciplina financeira</strong><span>Aguardando</span></div>
+          <p>O FinanPro reconhece seus avanços conforme você registra lançamentos, cria metas, mantém saldo positivo e evolui no controle.</p>
+
+          <div class="achievement-list">
+            <div class="achievement-row"><strong>✅ Primeiro lançamento</strong><span>Desbloqueada</span></div>
+            <div class="achievement-row"><strong>🔒 Primeira meta</strong><span>Aguardando</span></div>
+            <div class="achievement-row"><strong>✅ Mês positivo</strong><span>Desbloqueada</span></div>
+            <div class="achievement-row"><strong>🔒 Disciplina financeira</strong><span>Aguardando</span></div>
           </div>
         </div>
 
         <div class="card feature-card">
           <span class="feature-kicker">📈 Ranking pessoal</span>
           <h3>Compare seus melhores meses</h3>
-          <p>Veja seus meses com melhor saldo e acompanhe se sua vida financeira está evoluindo.</p>
-          <div id="rankingList">
+          <p>Veja seus meses com melhor saldo e acompanhe se sua vida financeira está evoluindo mês após mês.</p>
+
+          <div class="rank-list" id="rankingList">
             <div class="rank-row"><strong>🥇 Melhor mês</strong><span>Sem dados</span></div>
             <div class="rank-row"><strong>🥈 Segundo melhor</strong><span>Sem dados</span></div>
             <div class="rank-row"><strong>🥉 Terceiro melhor</strong><span>Sem dados</span></div>
@@ -1768,8 +2138,11 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
           <span class="feature-kicker">🎯 Desafios</span>
           <h3>30 dias registrando gastos</h3>
           <p>Registre movimentações em dias diferentes e avance no desafio de disciplina financeira.</p>
-          <div class="challenge-progress"><span id="challengeProgress"></span></div>
-          <small id="challengeText">Dia 0 de 30. Comece registrando sua primeira movimentação.</small>
+
+          <div class="challenge-box">
+            <div class="challenge-progress"><span id="challengeProgress"></span></div>
+            <small id="challengeText">Dia 0 de 30. Comece registrando sua primeira movimentação.</small>
+          </div>
         </div>
       </div>
     </section>
