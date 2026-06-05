@@ -1581,7 +1581,28 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
   color: #86efac !important;
   text-decoration: underline !important;
 }
+
+
+/* ===================================================
+   FINANPRO — Botões PT/EN e instalar app
+   Tudo dentro do index.html
+=================================================== */
+.fp-floating-tools{position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
+.fp-lang-switch,.fp-install-app{border:1px solid rgba(255,255,255,.18);background:rgba(7,17,13,.88);color:#fff;backdrop-filter:blur(12px);border-radius:999px;box-shadow:0 14px 35px rgba(0,0,0,.28);}
+.fp-lang-switch{display:flex;padding:4px;gap:3px;}
+.fp-lang-switch button{border:0;background:transparent;color:rgba(255,255,255,.72);border-radius:999px;padding:7px 10px;font-size:12px;font-weight:900;}
+.fp-lang-switch button.active{background:#22c55e;color:#052e16;}
+.fp-install-app{display:none;min-height:38px;padding:0 13px;font-size:12px;font-weight:900;}
+.fp-install-app.show{display:inline-flex;align-items:center;gap:7px;}
+@media(max-width:720px){.fp-floating-tools{right:10px;bottom:10px}.fp-install-app{font-size:11px}}
+
 </style>  
+
+  <!-- FINANPRO: PWA + i18n no próprio index -->
+  <meta name="application-name" content="FinanPro">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="FinanPro">
 </head>  
 <body class="auth-lock">  
   
@@ -4890,5 +4911,71 @@ document.addEventListener('keydown', function(event) {
 });
 </script>
 
+
+<script>
+/* ===================================================
+   FINANPRO — Inglês/PT + PWA leve, tudo no index.html
+=================================================== */
+(function(){
+  const STORAGE_KEY = 'finanpro_lang';
+  const dictionary = {
+    en: {
+      'Recursos':'Features','Funcionalidades':'Capabilities','Segurança':'Security','Entrar':'Sign in','Criar conta grátis':'Create free account','Criar conta grátis →':'Create free account →','Continuar com Google':'Continue with Google','Seu dinheiro. Seu futuro. Nossa inteligência.':'Your money. Your future. Our intelligence.','Controle suas':'Control your','finanças sem planilhas.':'finances without spreadsheets.','Organize gastos, metas, dívidas e orçamentos com sincronização na nuvem e relatórios profissionais.':'Organize expenses, goals, debts and budgets with cloud sync and professional reports.','100% Seguro':'100% Secure','Sincronização na nuvem':'Cloud sync','IA Financeira':'Financial AI','Lançamentos':'Transactions','Metas':'Goals','Orçamentos':'Budgets','Relatórios':'Reports','Configurações':'Settings','Renda Total':'Total income','Despesas':'Expenses','Saldo':'Balance','Este mês':'This month','Fluxo mensal':'Monthly flow','Saúde Financeira':'Financial Health','de 100':'out of 100','Ótimo controle entre entradas e saídas.':'Great control between income and expenses.','Tudo que você precisa para ter':'Everything you need for','controle financeiro':'real financial control','de verdade':'','Dashboard Inteligente':'Smart Dashboard','Acompanhe receitas, despesas, saldo e evolução financeira em gráficos claros e intuitivos.':'Track income, expenses, balance and financial progress with clear, intuitive charts.','Saiba mais →':'Learn more →','Receba análises automáticas sobre seus hábitos, sugestões personalizadas e alertas inteligentes para economizar.':'Get automatic analysis of your habits, personalized suggestions and smart alerts to save money.','Relatórios PDF Profissionais':'Professional PDF Reports','Gere relatórios completos e bonitos com um clique e compartilhe quando precisar.':'Generate complete, beautiful reports with one click and share them whenever needed.','Sincronização na Nuvem':'Cloud Sync','Acesse seus dados de qualquer lugar, em qualquer dispositivo, com total segurança.':'Access your data anywhere, on any device, securely.','Mobilidade total':'Total mobility','Seus dados com você, sempre.':'Your data with you, always.','O FinanPro funciona perfeitamente no celular, tablet ou computador. Sua vida financeira, na palma da mão.':'FinanPro works smoothly on mobile, tablet or computer. Your financial life in the palm of your hand.','Interface moderna e fácil de usar':'Modern and easy-to-use interface','Atualizações em tempo real':'Real-time updates','Segurança e privacidade garantidas':'Security and privacy guaranteed','Seus dados estão protegidos':'Your data is protected','Utilizamos tecnologia de ponta para garantir a segurança das suas informações.':'We use modern technology to keep your information secure.','Projeto em evolução':'Project in progress','Dados sincronizados':'Synced data','Gratuito':'Free','Visual profissional':'Professional look','Pronto para transformar sua vida financeira?':'Ready to transform your financial life?','Comece grátis e tenha controle total das suas finanças.':'Start for free and take full control of your finances.','Acessar conta':'Access account','Entre com e-mail e senha ou use sua conta Google para sincronizar seus dados.':'Sign in with email and password or use your Google account to sync your data.','Senha':'Password','Não tem conta?':'No account?','Cadastre-se':'Sign up','Esqueceu a senha?':'Forgot password?','Criar conta':'Create account','Comece a organizar suas finanças agora':'Start organizing your finances now','Nome Completo':'Full name','Confirmar Senha':'Confirm password','Concordo com os termos e privacidade':'I agree to the terms and privacy policy','Criar Conta':'Create Account','Já tem conta?':'Already have an account?','Recuperar senha':'Recover password','Digite seu email para receber instruções de recuperação':'Enter your email to receive recovery instructions','Enviar Link de Recuperação':'Send Recovery Link','Voltar para Login':'Back to Login','Instalar app':'Install app'
+    }
+  };
+  const originalText = new WeakMap();
+  function norm(v){ return String(v || '').replace(/\s+/g,' ').trim(); }
+  function translateNode(node, lang){
+    const original = originalText.get(node) || node.nodeValue;
+    if(!originalText.has(node)) originalText.set(node, original);
+    const key = norm(original);
+    if(lang === 'pt'){ node.nodeValue = original; return; }
+    const value = dictionary[lang] && dictionary[lang][key];
+    if(value) node.nodeValue = original.replace(key, value);
+  }
+  function applyLanguage(lang){
+    document.documentElement.lang = lang === 'en' ? 'en' : 'pt-BR';
+    localStorage.setItem(STORAGE_KEY, lang);
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode(node){
+        const parent = node.parentElement;
+        if(!parent) return NodeFilter.FILTER_REJECT;
+        if(['SCRIPT','STYLE','NOSCRIPT','TEXTAREA'].includes(parent.tagName)) return NodeFilter.FILTER_REJECT;
+        if(!norm(node.nodeValue)) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    const nodes=[]; while(walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(node => translateNode(node, lang));
+    document.querySelectorAll('[data-fp-lang]').forEach(btn => btn.classList.toggle('active', btn.dataset.fpLang === lang));
+  }
+  function createTools(){
+    if(document.querySelector('.fp-floating-tools')) return;
+    const tools = document.createElement('div');
+    tools.className = 'fp-floating-tools';
+    tools.innerHTML = '<div class="fp-lang-switch" aria-label="Selecionar idioma"><button type="button" data-fp-lang="pt">PT</button><button type="button" data-fp-lang="en">EN</button></div><button type="button" class="fp-install-app" id="fpInstallAppBtn">📲 Instalar app</button>';
+    document.body.appendChild(tools);
+    tools.querySelectorAll('[data-fp-lang]').forEach(btn => btn.addEventListener('click', () => applyLanguage(btn.dataset.fpLang)));
+  }
+  function setupManifest(){
+    if(document.querySelector('link[rel="manifest"]')) return;
+    const svgIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="#166534"/><text x="50%" y="57%" text-anchor="middle" font-size="260" font-family="Arial,sans-serif" font-weight="900" fill="white">F</text></svg>';
+    const iconUrl = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgIcon);
+    const manifest = {name:'FinanPro',short_name:'FinanPro',description:'Controle financeiro pessoal com IA',start_url:'.',scope:'.',display:'standalone',background_color:'#07110d',theme_color:'#166534',icons:[{src:iconUrl,sizes:'192x192',type:'image/svg+xml',purpose:'any maskable'},{src:iconUrl,sizes:'512x512',type:'image/svg+xml',purpose:'any maskable'}]};
+    const blob = new Blob([JSON.stringify(manifest)], {type:'application/manifest+json'});
+    const link = document.createElement('link'); link.rel='manifest'; link.href=URL.createObjectURL(blob); document.head.appendChild(link);
+  }
+  let deferredPrompt = null;
+  function setupInstallPrompt(){
+    const installBtn = document.getElementById('fpInstallAppBtn'); if(!installBtn) return;
+    window.addEventListener('beforeinstallprompt', event => { event.preventDefault(); deferredPrompt = event; installBtn.classList.add('show'); });
+    installBtn.addEventListener('click', async () => {
+      if(deferredPrompt){ deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; installBtn.classList.remove('show'); }
+      else alert('Para instalar: no celular, toque em Compartilhar e depois em “Adicionar à Tela de Início”.');
+    });
+  }
+  document.addEventListener('DOMContentLoaded', () => { createTools(); setupManifest(); setupInstallPrompt(); applyLanguage(localStorage.getItem(STORAGE_KEY) || 'pt'); });
+})();
+</script>
 </body>
 </html>  
