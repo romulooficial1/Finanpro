@@ -14,6 +14,41 @@ function getFirebaseAdmin() {
   return admin;
 }
 
+async function enviarEmailPremium({ email, name }) {
+  try {
+    const apiKey = process.env.RESENDAPIKEY;
+
+    if (!apiKey || !email) return;
+
+    await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        from: "FinanPro <onboarding@resend.dev>",
+        to: email,
+        subject: "Seu FinanPro Premium foi ativado 🚀",
+        html: `
+          <div style="font-family:Arial,sans-serif;max-width:620px;margin:auto;padding:24px;color:#17211c">
+            <h1 style="color:#166534">Premium ativado com sucesso 🚀</h1>
+            <p>Olá, <strong>${name || "usuário"}</strong>!</p>
+            <p>Seu pagamento foi aprovado e o seu acesso ao <strong>FinanPro Premium</strong> já está liberado.</p>
+            <p>Agora você pode aproveitar todos os recursos premium para organizar melhor sua vida financeira.</p>
+            <a href="https://finanpro-five.vercel.app/" style="display:inline-block;background:#166534;color:white;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:bold">
+              Acessar FinanPro
+            </a>
+            <p style="margin-top:24px;color:#66736b;font-size:13px">Obrigado por apoiar o FinanPro 💚</p>
+          </div>
+        `
+      })
+    });
+  } catch (error) {
+    console.warn("Erro ao enviar e-mail premium:", error.message);
+  }
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Método não permitido" });
@@ -68,6 +103,8 @@ export default async function handler(req, res) {
     const firebase = getFirebaseAdmin();
     const db = firebase.firestore();
 
+    const userName = email ? email.split("@")[0] : "usuário";
+
     await db.collection("users").doc(uid).set(
       {
         premium: true,
@@ -87,9 +124,15 @@ export default async function handler(req, res) {
       { merge: true }
     );
 
+    await enviarEmailPremium({
+      email,
+      name: userName
+    });
+
     return res.status(200).json({
       ok: true,
       premiumLiberado: true,
+      emailEnviado: Boolean(email),
       uid
     });
 
