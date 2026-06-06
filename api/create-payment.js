@@ -12,7 +12,20 @@ export default async function handler(req, res) {
       });
     }
 
-    const preference = {
+    const { uid, email } = req.body || {};
+
+if (!uid) {
+  return res.status(400).json({
+    error: "UID do usuário não enviado"
+  });
+}
+
+const preference = {
+  external_reference: uid,
+  metadata: {
+    uid,
+    email: email || ""
+  },
       items: [
         {
           title: "FinanPro Premium",
