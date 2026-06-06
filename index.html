@@ -3398,7 +3398,25 @@ window.startPremiumCheckout = assinarPremium;
       window.applySubscriptionFromCloud?.(null, null);
     }  
   });  
-  
+  async function sendWelcomeEmail(name, email) {
+  try {
+    const response = await fetch('/api/send-welcome-email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name,
+        email
+      })
+    });
+
+    return response.ok;
+  } catch (error) {
+    console.warn('Erro ao enviar e-mail:', error);
+    return false;
+  }
+}
   window.handleSignIn = async (e) => {  
     e.preventDefault();  
     const email = document.getElementById('signinEmail').value.trim();  
