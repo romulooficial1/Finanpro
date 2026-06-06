@@ -1,4 +1,4 @@
-<<!doctype html>  
+<!doctype html>  
 <html lang="pt-BR">  
 <head>  
   <meta charset="utf-8">  
@@ -7,7 +7,19 @@
   <meta name="theme-color" content="#166534">  
   <meta property="og:title" content="FinanPro | Controle financeiro pessoal">  
   <meta name="google-adsense-account" content="ca-pub-6540675678844098">  
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6540675678844098" crossorigin="anonymous"></script>  
+  <script>
+    window.FINANPRO_ADSENSE_CLIENT = 'ca-pub-6540675678844098';
+    window.loadFinanProAds = function loadFinanProAds() {
+      if (document.body && document.body.classList.contains('is-premium')) return;
+      if (document.getElementById('fpAdsenseLoader')) return;
+      const script = document.createElement('script');
+      script.id = 'fpAdsenseLoader';
+      script.async = true;
+      script.crossOrigin = 'anonymous';
+      script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + window.FINANPRO_ADSENSE_CLIENT;
+      document.head.appendChild(script);
+    };
+  </script>  
   <meta property="og:description" content="Organize gastos, metas, dívidas e orçamento mensal gratuitamente em uma central financeira profissional.">  
   <meta property="og:type" content="website">  
   <title>FinanPro | Controle financeiro pessoal</title>  
@@ -1596,6 +1608,211 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
 .fp-install-app.show{display:inline-flex;align-items:center;gap:7px;}
 @media(max-width:720px){.fp-floating-tools{right:10px;bottom:10px}.fp-install-app{font-size:11px}}
 
+/* ===================================================
+   FINANPRO - Planos, assinatura e bloqueios premium
+=================================================== */
+.premium-badge,
+.premium-mini-badge,
+.nav-badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:max-content;
+  max-width:100%;
+  border:1px solid rgba(183,121,31,.28);
+  background:linear-gradient(135deg,#fff7d6,#facc15);
+  color:#713f12;
+  border-radius:999px;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  padding:4px 8px;
+}
+.premium-mini-badge{font-size:9px;padding:3px 7px;}
+.brand-copy{display:grid;gap:4px;min-width:0;}
+.brand-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.nav-label{display:flex;align-items:center;gap:8px;min-width:0;}
+.nav-badge{font-size:8px;padding:2px 6px;}
+.btn.premium-cta{
+  background:linear-gradient(135deg,#0f766e,#166534);
+  border-color:transparent;
+  color:#fff;
+}
+.btn.premium-cta:hover{box-shadow:0 12px 26px rgba(15,118,110,.24);}
+.subscription-panel{margin-top:0;display:grid;gap:10px;}
+.subscription-panel strong{font-size:22px;margin-top:2px;}
+.subscription-panel .btn{width:100%;box-shadow:none;}
+.premium-status-line{display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--muted);font-size:12px;font-weight:800;}
+.premium-status-line span:last-child{text-align:right;color:var(--ink);}
+.free-only{}
+.premium-only{display:none!important;}
+body.is-premium .free-only,
+body.is-premium .ad-slot{display:none!important;}
+body.is-premium .premium-only{display:initial!important;}
+body.is-premium .premium-only.card,
+body.is-premium .premium-only.grid,
+body.is-premium .premium-only.subscription-unlocked{display:grid!important;}
+body.is-premium .premium-only.btn{display:inline-flex!important;}
+body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b);color:#572f00;border-color:#fbbf24;}
+.ad-slot{
+  margin:16px 0;
+  border:1px dashed rgba(183,121,31,.42);
+  border-radius:12px;
+  background:linear-gradient(135deg,rgba(255,247,214,.86),rgba(223,241,247,.7));
+  color:#6b4b15;
+  min-height:72px;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  padding:14px;
+  font-size:12px;
+  font-weight:850;
+}
+[data-theme="dark"] .ad-slot{background:rgba(227,179,65,.08);color:var(--amber);}
+.subscription-hero,
+.fp-pricing{
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:linear-gradient(135deg,rgba(22,101,52,.08),rgba(15,118,110,.06)),var(--card-bg);
+  box-shadow:var(--shadow);
+}
+.subscription-hero{padding:22px;margin-bottom:16px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center;}
+.subscription-hero h2{margin:0;color:var(--ink);font-size:clamp(24px,3vw,34px);line-height:1.05;}
+.subscription-hero p{margin:8px 0 0;color:var(--muted);line-height:1.55;}
+.subscription-hero .plan-price{justify-self:end;}
+.plan-price{display:grid;gap:2px;color:var(--muted);font-size:12px;font-weight:800;text-align:right;}
+.plan-price strong{display:block;color:var(--green);font-size:32px;line-height:1;}
+.pricing-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+  margin:16px 0;
+}
+.plan-card{
+  position:relative;
+  overflow:hidden;
+  padding:20px;
+  display:grid;
+  gap:16px;
+  border-radius:14px;
+}
+.plan-card.featured{
+  border-color:rgba(183,121,31,.38);
+  background:linear-gradient(135deg,rgba(255,247,214,.72),rgba(255,255,255,.92));
+}
+[data-theme="dark"] .plan-card.featured{background:linear-gradient(135deg,rgba(227,179,65,.12),rgba(22,27,34,.96));}
+.plan-card h3{margin:0;font-size:22px;color:var(--ink);}
+.plan-card p{margin:0;color:var(--muted);line-height:1.5;}
+.plan-list{display:grid;gap:10px;margin:0;padding:0;list-style:none;}
+.plan-list li{display:flex;gap:8px;align-items:flex-start;color:var(--ink);font-weight:750;font-size:14px;line-height:1.35;}
+.plan-list li::before{content:"✓";color:var(--green);font-weight:900;}
+.comparison-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface);}
+.comparison-table{width:100%;border-collapse:collapse;min-width:640px;}
+.comparison-table th,
+.comparison-table td{padding:14px 16px;border-bottom:1px solid var(--line);text-align:left;color:var(--ink);font-size:14px;}
+.comparison-table th{background:var(--surface-2);font-size:12px;text-transform:uppercase;color:var(--muted);letter-spacing:.04em;}
+.comparison-table tr:last-child td{border-bottom:0;}
+.comparison-table .yes{color:var(--green);font-weight:900;}
+.comparison-table .no{color:var(--muted);font-weight:800;}
+.premium-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px;}
+.premium-step{border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:14px;display:grid;gap:8px;}
+.premium-step span{width:30px;height:30px;border-radius:999px;background:var(--green);color:white;display:grid;place-items:center;font-weight:900;}
+.premium-step strong{color:var(--ink);line-height:1.2;}
+.premium-step small{color:var(--muted);line-height:1.45;font-weight:700;}
+.premium-resource-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
+.premium-resource{
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:16px;
+  background:var(--surface);
+  display:grid;
+  gap:8px;
+  min-height:130px;
+}
+.premium-resource.locked{background:linear-gradient(135deg,rgba(255,247,214,.42),var(--surface));}
+.premium-resource strong{color:var(--ink);}
+.premium-resource p{margin:0;color:var(--muted);font-size:13px;line-height:1.45;}
+.premium-lock-note{display:flex;align-items:center;gap:8px;color:var(--amber);font-size:12px;font-weight:900;}
+.pdf-option.locked{opacity:.72;position:relative;}
+.pdf-option.locked::after{
+  content:"PREMIUM";
+  position:absolute;
+  top:10px;
+  right:10px;
+  border-radius:999px;
+  background:#facc15;
+  color:#713f12;
+  padding:3px 7px;
+  font-size:9px;
+  font-weight:900;
+}
+.pdf-option.limit-reached::after{content:"USADO";}
+.premium-modal{max-width:560px;}
+.premium-modal h3{display:flex;align-items:center;gap:10px;}
+.premium-modal .modal-actions{justify-content:space-between;}
+.gateway-status{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--surface-2);
+  padding:12px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
+  font-weight:700;
+}
+.gateway-status strong{color:var(--ink);}
+.field-stack{display:grid;gap:8px;}
+.field-stack .btn{justify-self:start;box-shadow:none;}
+.smart-category-result{min-height:18px;color:var(--muted);font-size:12px;font-weight:800;}
+.usage-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:7px 10px;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:900;
+  background:var(--surface);
+}
+.subscription-unlocked{border:1px solid rgba(22,101,52,.24);border-radius:14px;background:rgba(34,197,94,.08);padding:14px;gap:8px;color:var(--ink);}
+.subscription-unlocked p{margin:0;color:var(--muted);line-height:1.45;font-size:13px;}
+.auth-screen #planos.fp-pricing{
+  background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(34,197,94,.045)) !important;
+  border-color:rgba(255,255,255,.12) !important;
+  box-shadow:0 24px 70px rgba(0,0,0,.24) !important;
+}
+.auth-screen #planos .subscription-hero{
+  background:linear-gradient(135deg,rgba(34,197,94,.11),rgba(15,118,110,.07)) !important;
+  border-color:rgba(74,222,128,.18) !important;
+}
+.auth-screen #planos .plan-card{
+  background:rgba(255,255,255,.045) !important;
+  border-color:rgba(255,255,255,.12) !important;
+  box-shadow:none !important;
+}
+.auth-screen #planos .plan-card.featured{
+  background:linear-gradient(145deg,rgba(14,45,35,.96),rgba(22,101,52,.26)) !important;
+  border-color:rgba(250,204,21,.28) !important;
+}
+.auth-screen #planos .plan-card h3,
+.auth-screen #planos .plan-card p,
+.auth-screen #planos .plan-list li,
+.auth-screen #planos .plan-price span{color:#fff !important;}
+.auth-screen #planos .plan-card p,
+.auth-screen #planos .plan-price span{color:rgba(255,255,255,.72) !important;}
+@media(max-width:1100px){
+  .premium-resource-grid,.premium-flow{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:720px){
+  .subscription-hero{grid-template-columns:1fr;}
+  .subscription-hero .plan-price{text-align:left;justify-self:start;}
+  .pricing-grid,.premium-resource-grid,.premium-flow{grid-template-columns:1fr;}
+  .comparison-table{min-width:560px;}
+}
+
 </style>  
 
   <!-- FINANPRO: PWA + i18n no próprio index -->
@@ -1618,6 +1835,7 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
       <nav class="fp-nav-links" aria-label="Navegação da landing">
         <a href="#recursos">Recursos</a>
         <a href="#funcionalidades">Funcionalidades</a>
+        <a href="#planos">Planos</a>
         <a href="#seguranca">Segurança</a>
         <a href="#entrar">Entrar</a>
       </nav>
@@ -1686,6 +1904,51 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
       <article class="fp-feature"><div class="fp-feature-icon" style="background:linear-gradient(135deg,#fb923c,#f59e0b)">☁</div><h3>Sincronização na Nuvem</h3><p>Acesse seus dados de qualquer lugar, em qualquer dispositivo, com total segurança.</p><a href="#entrar">Saiba mais →</a></article>
     </section>
 
+    <section class="fp-pricing" id="planos" style="padding:26px;margin:20px 18px 34px;">
+      <div class="subscription-hero" style="margin:0 0 18px;background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12);box-shadow:none;">
+        <div>
+          <span class="premium-badge">Premium</span>
+          <h2 style="color:#fff;margin-top:12px;">Planos para cada fase da sua vida financeira</h2>
+          <p style="color:rgba(255,255,255,.72);">Comece gratuitamente e desbloqueie automações, IA ilimitada e relatórios avançados quando quiser acelerar.</p>
+        </div>
+        <div class="plan-price"><span>Premium mensal</span><strong style="color:#facc15;">R$ 9,90</strong><span>/mês</span></div>
+      </div>
+
+      <div class="pricing-grid">
+        <article class="plan-card card" style="background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.12);box-shadow:none;">
+          <div>
+            <h3 style="color:#fff;">Gratuito</h3>
+            <p style="color:rgba(255,255,255,.66);">Essencial para organizar receitas, despesas e objetivos.</p>
+          </div>
+          <ul class="plan-list">
+            <li style="color:#fff;">Controle financeiro</li>
+            <li style="color:#fff;">Metas</li>
+            <li style="color:#fff;">IA Limitada: 5 perguntas/mês</li>
+            <li style="color:#fff;">1 relatório PDF básico/mês</li>
+          </ul>
+          <button type="button" class="fp-btn ghost" onclick="document.getElementById('entrar').scrollIntoView({behavior:'smooth'}); showSignUp();">Criar conta grátis</button>
+        </article>
+
+        <article class="plan-card card featured" style="box-shadow:none;">
+          <div>
+            <span class="premium-badge">Mais completo</span>
+            <h3>Premium</h3>
+            <p>Plano profissional para quem quer análise, automação e exportação avançada.</p>
+          </div>
+          <div class="plan-price" style="text-align:left;"><strong>R$ 9,90</strong><span>por mês</span></div>
+          <ul class="plan-list">
+            <li>IA financeira ilimitada</li>
+            <li>Exportação PDF avançada</li>
+            <li>Backup automático</li>
+            <li>Categorias inteligentes</li>
+            <li>Relatórios avançados</li>
+            <li>Sem anúncios</li>
+          </ul>
+          <button type="button" class="fp-btn primary" onclick="assinarPremium()">Assinar Premium</button>
+        </article>
+      </div>
+    </section>
+
     <section class="fp-mobile-section">
       <div class="fp-phone">
         <div class="fp-phone-top">☰ Dashboard</div>
@@ -1709,7 +1972,7 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
     <section class="fp-stats">
       <div class="fp-stat"><svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-4-4h-1M9 20H4v-2a4 4 0 014-4h1m4-4a4 4 0 100-8 4 4 0 000 8z"/></svg><strong>Beta</strong><span>Projeto em evolução</span></div>
       <div class="fp-stat"><svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h10a4 4 0 10-.7-7.9A6 6 0 105 14.5"/></svg><strong>Nuvem</strong><span>Dados sincronizados</span></div>
-      <div class="fp-stat"><svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><strong>100%</strong><span>Gratuito</span></div>
+      <div class="fp-stat"><svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><strong>Planos</strong><span>Grátis + Premium</span></div>
       <div class="fp-stat"><svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.96a1 1 0 00.95.69h4.164c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.96c.3.921-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.175 0l-3.37 2.448c-.784.57-1.838-.197-1.539-1.118l1.286-3.96a1 1 0 00-.363-1.118L4.047 9.387c-.783-.57-.38-1.81.588-1.81h4.164a1 1 0 00.95-.69l1.3-3.96z"/></svg><strong>Premium</strong><span>Visual profissional</span></div>
     </section>
 
@@ -1806,7 +2069,10 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
   <aside class="sidebar">  
     <div class="brand">  
       <div class="brand-mark">F</div>  
-      <div><strong>FinanPro</strong><span id="userGreeting">v2.0</span></div>  
+      <div class="brand-copy">
+        <div class="brand-line"><strong>FinanPro</strong><span class="premium-badge" id="sidebarPremiumBadge">GRATUITO</span></div>
+        <span id="userGreeting">v2.0</span>
+      </div>  
     </div>  
     <nav class="nav">  
       <button class="active" onclick="showPage('dashboard', this)">  
@@ -1837,6 +2103,10 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3l2 5 5 2-5 2-2 5-2-5-5-2 5-2 2-5zm14 4l1.2 3 2.8 1.2-2.8 1.2L19 16l-1.2-3.6L15 11.2l2.8-1.2L19 7z"/></svg>  
         Diferenciais  
       </button>  
+      <button onclick="showPage('assinatura', this)">  
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l2.2 4.8 5.2.6-3.9 3.5 1.1 5.1L12 14.4 7.4 17l1.1-5.1-3.9-3.5 5.2-.6L12 3z"/></svg>  
+        <span class="nav-label">Assinatura <span class="nav-badge">Premium</span></span>
+      </button>  
       <button onclick="showPage('paginas', this)">  
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6M7 4h7l3 3v13H7V4z"/></svg>  
         Páginas  
@@ -1847,6 +2117,13 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
       <strong id="balanceDisplay">R$ 0,00</strong>  
       <span>Este mês</span>  
     </div>  
+    <div class="side-panel subscription-panel">
+      <span class="caption">Plano atual</span>
+      <strong id="sidebarPlanName">Gratuito</strong>
+      <div class="premium-status-line"><span>Status</span><span id="sidebarPlanStatus">Verificando</span></div>
+      <button type="button" class="btn premium-cta free-only" onclick="assinarPremium()">Assinar Premium</button>
+      <button type="button" class="btn small premium-only" onclick="showPage('assinatura')">Ver assinatura</button>
+    </div>
     <div class="legal-links">  
       <!-- Dark Mode Toggle -->  
       <div style="display:flex;align-items:center;gap:8px;width:100%;padding:4px 0 8px;">  
@@ -1873,8 +2150,11 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>  
             Exportar PDF  
           </button>  
+          <button type="button" class="btn premium-cta free-only" onclick="assinarPremium()">Assinar Premium</button>
+          <span class="usage-pill premium-only">PREMIUM ativo</span>
         </div>  
       </div>  
+      <div class="ad-slot free-only" data-ad-slot>Publicidade removida no Premium</div>
       <div class="grid metrics card">  
         <div class="metric">  
           <span class="label">Renda Total</span>  
@@ -2103,9 +2383,10 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
       <div class="topbar">  
         <div class="title-block">  
           <h1>IA Financeira</h1>  
-          <p>Análise inteligente dos seus dados financeiros — em tempo real</p>  
+          <p>Análise consultiva dos seus dados financeiros — com diagnóstico, previsão, risco e próximos passos</p>  
         </div>  
         <div class="top-actions">  
+          <span class="usage-pill" id="iaUsageBadge">IA: 0/5 no mês</span>
           <button class="btn" onclick="clearIAChat()">🗑 Limpar</button>  
         </div>  
       </div>  
@@ -2121,6 +2402,8 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
             <button class="btn small" onclick="sendQuickIA('Projete meu fechamento do mês se eu continuar neste ritmo')">🔮 Previsão</button>  
             <button class="btn small" onclick="sendQuickIA('E se eu economizar R$ 300 este mês?')">🧮 Simular economia</button>  
             <button class="btn small" onclick="sendQuickIA('Tenho risco com dívidas, juros ou cartão?')">💳 Dívidas</button>  
+            <button class="btn small" onclick="sendQuickIA('Aja como meu consultor financeiro e monte um plano de 7 dias')">⚡ Plano 7 dias</button>
+            <button class="btn small" onclick="sendQuickIA('Quais padrões inteligentes você detectou nos meus gastos?')">🔎 Padrões</button>
           </div>  
         </div>  
         <div class="ia-chat-area">  
@@ -2188,6 +2471,113 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
       </div>
     </section>
 
+    <!-- Assinatura -->
+    <section id="assinatura" class="section">
+      <div class="topbar">
+        <div class="title-block">
+          <h1>Assinatura</h1>
+          <p>Gerencie seu plano, veja recursos premium e acompanhe a verificação da sua conta.</p>
+        </div>
+        <div class="top-actions">
+          <button type="button" class="btn" onclick="verifySubscription()">Verificar assinatura</button>
+          <button type="button" class="btn premium-cta free-only" onclick="assinarPremium()">Assinar Premium</button>
+        </div>
+      </div>
+
+      <div class="subscription-hero">
+        <div>
+          <span class="premium-badge" id="subscriptionHeroBadge">GRATUITO</span>
+          <h2 id="subscriptionHeroTitle">Você está no plano Gratuito</h2>
+          <p id="subscriptionHeroText">Controle financeiro, metas, IA limitada e 1 relatório PDF básico por mês continuam liberados. Assine Premium para desbloquear IA ilimitada, PDF avançado, backup automático e mais.</p>
+        </div>
+        <div class="plan-price"><span>Premium</span><strong>R$ 9,90</strong><span>/mês</span></div>
+      </div>
+
+      <div class="pricing-grid">
+        <article class="card plan-card">
+          <div>
+            <h3>Plano Gratuito</h3>
+            <p>Para organizar a vida financeira com os recursos essenciais.</p>
+          </div>
+          <ul class="plan-list">
+            <li>Controle financeiro</li>
+            <li>Metas</li>
+            <li>IA Limitada: 5 perguntas/mês</li>
+            <li>1 relatório PDF básico/mês</li>
+          </ul>
+          <span class="usage-pill" id="freeUsageSummary">IA: 0/5 perguntas | PDF: 0/1 no mês</span>
+        </article>
+
+        <article class="card plan-card featured">
+          <div>
+            <span class="premium-badge">PREMIUM</span>
+            <h3>Plano Premium</h3>
+            <p>Para usar o FinanPro como uma central financeira profissional.</p>
+          </div>
+          <div class="plan-price" style="text-align:left;"><strong>R$ 9,90</strong><span>cobrança mensal</span></div>
+          <ul class="plan-list">
+            <li>IA financeira ilimitada</li>
+            <li>Exportação PDF avançada</li>
+            <li>Backup automático</li>
+            <li>Categorias inteligentes</li>
+            <li>Relatórios avançados</li>
+            <li>Sem anúncios</li>
+          </ul>
+          <button type="button" class="btn premium-cta free-only" onclick="assinarPremium()">Assinar Premium</button>
+          <div class="subscription-unlocked premium-only">
+            <strong>Premium ativo</strong>
+            <p>Os recursos premium já estão liberados para esta conta.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head">
+          <h2>Gratuito vs Premium</h2>
+          <span id="subscriptionVerifiedAt">Aguardando verificação</span>
+        </div>
+        <div class="comparison-wrap">
+          <table class="comparison-table">
+            <thead><tr><th>Recurso</th><th>Gratuito</th><th>Premium</th></tr></thead>
+            <tbody>
+              <tr><td>Controle financeiro</td><td class="yes">Liberado</td><td class="yes">Liberado</td></tr>
+              <tr><td>Metas</td><td class="yes">Liberado</td><td class="yes">Liberado</td></tr>
+              <tr><td>Relatórios</td><td class="yes">1 PDF básico/mês</td><td class="yes">Avançados + PDF completo</td></tr>
+              <tr><td>IA financeira</td><td class="yes">IA Limitada: 5 perguntas/mês</td><td class="yes">Ilimitada</td></tr>
+              <tr><td>Backup automático</td><td class="no">Manual/local</td><td class="yes">Automático em nuvem</td></tr>
+              <tr><td>Categorias inteligentes</td><td class="no">Bloqueado</td><td class="yes">Liberado</td></tr>
+              <tr><td>Anúncios</td><td class="no">Pode exibir</td><td class="yes">Sem anúncios</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card panel" style="margin-top:16px;">
+        <div class="panel-head"><h2>Recursos premium</h2><span id="premiumResourceStatus">Bloqueados no plano gratuito</span></div>
+        <div class="premium-resource-grid">
+          <div class="premium-resource locked" data-premium-card="ia_unlimited"><strong>IA financeira ilimitada</strong><p>Perguntas livres e análises em tempo real sem limite mensal.</p><span class="premium-lock-note">PREMIUM</span></div>
+          <div class="premium-resource locked" data-premium-card="pdf_advanced"><strong>PDF avançado</strong><p>Relatórios completos, metas, orçamentos e diagnósticos em PDF.</p><span class="premium-lock-note">PREMIUM</span></div>
+          <div class="premium-resource locked" data-premium-card="backup_auto"><strong>Backup automático</strong><p>Salvamento automático em nuvem sempre que seus dados mudam.</p><span class="premium-lock-note">PREMIUM</span></div>
+          <div class="premium-resource locked" data-premium-card="smart_categories"><strong>Categorias inteligentes</strong><p>Sugestão automática de categoria baseada na descrição do lançamento.</p><span class="premium-lock-note">PREMIUM</span></div>
+          <div class="premium-resource locked" data-premium-card="advanced_reports"><strong>Relatórios avançados</strong><p>Visões completas para revisão mensal e tomada de decisão.</p><span class="premium-lock-note">PREMIUM</span></div>
+          <div class="premium-resource locked" data-premium-card="no_ads"><strong>Sem anúncios</strong><p>Interface limpa, sem banners ou carregamento de anúncios.</p><span class="premium-lock-note">PREMIUM</span></div>
+        </div>
+      </div>
+
+      <div class="card panel" style="margin-top:16px;">
+        <div class="panel-head"><h2>Fluxo de pagamento</h2><span>Pix ou cartão via gateway</span></div>
+        <div class="premium-flow">
+          <div class="premium-step"><span>1</span><strong>Usuário clica Assinar Premium</strong><small>O app abre o checkout configurado.</small></div>
+          <div class="premium-step"><span>2</span><strong>Paga Pix/cartão</strong><small>O Mercado Pago processa o pagamento.</small></div>
+          <div class="premium-step"><span>3</span><strong>Pagamento aprovado</strong><small>O webhook confirma a cobrança no backend.</small></div>
+          <div class="premium-step"><span>4</span><strong>Conta vira Premium</strong><small>O Firestore recebe status ativo e o app desbloqueia tudo.</small></div>
+        </div>
+        <div class="gateway-status" id="premiumGatewayStatus" style="margin-top:14px;">
+          <strong>Gateway Mercado Pago:</strong> checkout conectado em <code>/api/create-payment</code>. Após a aprovação, o webhook deve ativar o Premium no Firestore.
+        </div>
+      </div>
+    </section>
+
     <!-- Páginas obrigatórias -->
     <section id="paginas" class="section">
       <div class="topbar">
@@ -2214,6 +2604,7 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
             <ul>
               <li>Dados financeiros cadastrados são usados para exibir dashboard, metas, orçamentos e relatórios.</li>
               <li>O login pode ser feito por e-mail/senha ou conta Google.</li>
+              <li>Dados de assinatura são usados para liberar recursos Premium; dados de cartão e Pix devem ser processados pelo gateway de pagamento.</li>
               <li>O site pode utilizar cookies e tecnologias semelhantes para funcionamento, segurança e análise.</li>
               <li>O FinanPro não vende dados pessoais dos usuários.</li>
             </ul>
@@ -2226,6 +2617,7 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
               <li>As informações exibidas têm caráter organizacional e informativo.</li>
               <li>O FinanPro não substitui consultoria financeira, contábil, jurídica ou profissional.</li>
               <li>O usuário é responsável pelas decisões tomadas com base nos dados cadastrados.</li>
+              <li>Recursos Premium dependem de assinatura ativa confirmada pelo gateway e verificada na conta do usuário.</li>
               <li>Funcionalidades podem ser atualizadas para melhorar segurança e desempenho.</li>
             </ul>
           </article>
@@ -2239,10 +2631,10 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
           <article class="card legal-page" id="faq">
             <h2>FAQ</h2>
             <ul>
-              <li><strong>O FinanPro é gratuito?</strong> Sim, atualmente o acesso é gratuito.</li>
+              <li><strong>O FinanPro é gratuito?</strong> Sim. Há plano Gratuito e plano Premium por R$ 9,90/mês.</li>
               <li><strong>Meus dados ficam salvos?</strong> Sim, ao entrar na conta, os dados podem ser sincronizados na nuvem.</li>
               <li><strong>Posso acessar de outro celular?</strong> Sim, basta usar a mesma conta.</li>
-              <li><strong>Posso gerar PDF?</strong> Sim, o FinanPro gera relatórios financeiros em PDF.</li>
+              <li><strong>Posso gerar PDF?</strong> Sim. No Gratuito você gera 1 PDF básico por mês; no Premium, relatórios avançados ficam liberados.</li>
             </ul>
           </article>
 
@@ -2304,6 +2696,10 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
           <option value="Outros">Outros</option>  
         </select>  
       </label>  
+      <div class="field-stack">
+        <button type="button" class="btn small" onclick="suggestSmartCategory()">Categorias inteligentes <span class="premium-mini-badge">Premium</span></button>
+        <div class="smart-category-result" id="smartCategoryResult"></div>
+      </div>
   
       <div class="full" style="display:grid;gap:6px;">  
         <span style="color:var(--muted);font-size:12px;font-weight:800;text-transform:uppercase;">Modalidade</span>  
@@ -2429,7 +2825,7 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
     <p>Escolha o tipo de relatório que deseja gerar</p>  
   
     <div class="pdf-options-grid">  
-      <button type="button" class="pdf-option selected" id="pdfOptCompleto" onclick="selectPdfOption('completo')">
+      <button type="button" class="pdf-option selected locked" id="pdfOptCompleto" onclick="selectPdfOption('completo')">
         <span class="po-icon">📊</span>  
         <span class="po-title">Relatório Completo</span>  
         <span class="po-desc">Dashboard, lançamentos, metas e orçamentos em um único relatório profissional</span>  
@@ -2437,14 +2833,14 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
       <button type="button" class="pdf-option" id="pdfOptLanc" onclick="selectPdfOption('lancamentos')">
         <span class="po-icon">💳</span>  
         <span class="po-title">Extrato de Lançamentos</span>  
-        <span class="po-desc">Todas as movimentações do período selecionado com totais por categoria</span>  
+        <span class="po-desc">Plano Gratuito: 1 PDF básico por mês para testar a exportação</span>  
       </button>  
-      <button type="button" class="pdf-option" id="pdfOptMetas" onclick="selectPdfOption('metas')">
+      <button type="button" class="pdf-option locked" id="pdfOptMetas" onclick="selectPdfOption('metas')">
         <span class="po-icon">🎯</span>  
         <span class="po-title">Relatório de Metas</span>  
         <span class="po-desc">Progresso detalhado de cada meta com projeções e aportes necessários</span>  
       </button>  
-      <button type="button" class="pdf-option" id="pdfOptOrc" onclick="selectPdfOption('orcamentos')">
+      <button type="button" class="pdf-option locked" id="pdfOptOrc" onclick="selectPdfOption('orcamentos')">
         <span class="po-icon">💰</span>  
         <span class="po-title">Análise de Orçamentos</span>  
         <span class="po-desc">Comparativo entre limites e gastos reais por categoria</span>  
@@ -2466,8 +2862,347 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
   </div>  
 </div>  
   
+<!-- ========== MODAL: PREMIUM / PAYWALL ========== -->
+<div class="modal-overlay" id="premiumModal">
+  <div class="modal premium-modal">
+    <h3><span class="premium-badge">PREMIUM</span> <span id="premiumModalTitle">Recurso Premium</span></h3>
+    <p id="premiumModalText" style="margin:8px 0 14px;color:var(--muted);line-height:1.55;">Assine o plano Premium para desbloquear este recurso.</p>
+    <div class="gateway-status" id="premiumModalStatus">
+      Premium custa <strong>R$ 9,90/mês</strong>. O pagamento via Pix/cartão abre pelo checkout Mercado Pago configurado na Vercel.
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="btn" onclick="closeModal('premiumModal')">Agora não</button>
+      <button type="button" class="btn premium-cta" onclick="assinarPremium()">Assinar Premium</button>
+    </div>
+  </div>
+</div>
+
 <!-- PDF Print Frame (hidden, shown on print) -->  
 <div class="pdf-print-frame" id="pdfPrintFrame"></div>  
+
+<!-- Premium state, locks and Mercado Pago checkout hooks -->
+<script>
+window.FINANPRO_PREMIUM_CONFIG = {
+  planId: 'premium_monthly',
+  provider: 'mercadopago',
+  priceCents: 990,
+  currency: 'BRL',
+  checkoutUrl: '',
+  preferenceEndpoint: '/api/create-payment'
+};
+
+async function assinarPremium() {
+  try {
+    const resposta = await fetch("/api/create-payment", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" }
+    });
+
+    const dados = await resposta.json();
+
+    if (dados.init_point) {
+      window.location.href = dados.init_point;
+      return;
+    }
+
+    if (dados.sandbox_init_point) {
+      window.location.href = dados.sandbox_init_point;
+      return;
+    }
+
+    console.error("Erro Mercado Pago:", dados);
+    alert("Não foi possível abrir o checkout.");
+  } catch (erro) {
+    console.error("Erro ao abrir checkout:", erro);
+    alert("Erro ao conectar com o checkout.");
+  }
+}
+
+window.assinarPremium = assinarPremium;
+window.startPremiumCheckout = assinarPremium;
+
+(function () {
+  const FREE_IA_MONTHLY_LIMIT = 5;
+  const FREE_PDF_MONTHLY_LIMIT = 1;
+  const PREMIUM_STATUSES = new Set(['active', 'trialing', 'authorized', 'approved']);
+  const TRUSTED_SOURCES = new Set(['cloud', 'webhook', 'admin']);
+  const PREMIUM_PDF_TYPES = new Set(['completo', 'metas', 'orcamentos']);
+  const FEATURE_COPY = {
+    ia_unlimited: {
+      title: 'IA financeira ilimitada',
+      text: 'No plano gratuito você pode usar 5 perguntas por mês. Assine Premium para análises ilimitadas.'
+    },
+    pdf_advanced: {
+      title: 'PDF avançado',
+      text: 'Relatórios completos, metas e orçamentos em PDF são recursos Premium. O plano Gratuito libera 1 extrato básico por mês.'
+    },
+    pdf_free_limit: {
+      title: 'Limite gratuito de PDF usado',
+      text: 'Você já gerou o PDF básico gratuito deste mês. Assine Premium para liberar PDFs avançados e exportações sem limite.'
+    },
+    backup_auto: {
+      title: 'Backup automático',
+      text: 'O backup automático em nuvem é liberado para assinantes Premium.'
+    },
+    smart_categories: {
+      title: 'Categorias inteligentes',
+      text: 'Assine Premium para sugerir categorias automaticamente a partir da descrição do lançamento.'
+    },
+    advanced_reports: {
+      title: 'Relatórios avançados',
+      text: 'Assine Premium para desbloquear análises avançadas e relatórios completos.'
+    },
+    no_ads: {
+      title: 'Sem anúncios',
+      text: 'O plano Premium remove anúncios e mantém a interface limpa.'
+    },
+    checkout_config: {
+      title: 'Gateway Mercado Pago pendente',
+      text: 'Para Pix/cartão reais, configure uma URL de checkout ou um endpoint seguro que cria a preferência no Mercado Pago.'
+    }
+  };
+
+  let subscriptionState = normalizeSubscription(null, 'local');
+  let backupTimer = null;
+
+  function monthKey(date = new Date()) {
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+  }
+
+  function getUid() {
+    return window._currentUser?.uid || 'local';
+  }
+
+  function usageKey(feature) {
+    return `finanpro_${getUid()}_${feature}_${monthKey()}`;
+  }
+
+  function parseDate(value) {
+    if (!value) return null;
+    if (typeof value.toDate === 'function') return value.toDate();
+    if (typeof value.seconds === 'number') return new Date(value.seconds * 1000);
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+
+  function normalizeSubscription(raw, source) {
+    const data = raw && typeof raw === 'object' ? raw : {};
+    const status = String(data.status || data.subscriptionStatus || 'free').toLowerCase();
+    const plan = String(data.plan || data.planId || data.tier || (PREMIUM_STATUSES.has(status) ? 'premium' : 'free')).toLowerCase();
+    return {
+      plan,
+      status,
+      provider: data.provider || data.gateway || null,
+      currentPeriodEnd: parseDate(data.currentPeriodEnd || data.expiresAt || data.validUntil),
+      verifiedAt: parseDate(data.verifiedAt || data.updatedAt || data.approvedAt) || (source === 'cloud' ? new Date() : null),
+      verificationSource: source || data.verificationSource || 'local',
+      paymentId: data.paymentId || data.mercadoPagoPaymentId || null,
+      raw: data
+    };
+  }
+
+  function isPremiumSubscription(sub = subscriptionState) {
+    if (!sub || sub.plan !== 'premium') return false;
+    if (!PREMIUM_STATUSES.has(sub.status)) return false;
+    if (!TRUSTED_SOURCES.has(sub.verificationSource)) return false;
+    if (sub.currentPeriodEnd && sub.currentPeriodEnd.getTime() < Date.now()) return false;
+    return true;
+  }
+
+  function applySubscription(raw, options = {}) {
+    subscriptionState = normalizeSubscription(raw, options.source || 'local');
+    renderSubscriptionUI();
+    return subscriptionState;
+  }
+
+  function getIAUsageCount() {
+    return Number(localStorage.getItem(usageKey('ia_usage')) || 0);
+  }
+
+  function getPdfUsageCount() {
+    return Number(localStorage.getItem(usageKey('pdf_usage')) || 0);
+  }
+
+  function setText(id, text) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  }
+
+  function setHtml(id, html) {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = html;
+  }
+
+  function formatDate(date) {
+    return date ? date.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) : 'Aguardando verificação';
+  }
+
+  function updateUsageUI() {
+    const premium = isPremiumSubscription();
+    const used = getIAUsageCount();
+    const pdfUsed = getPdfUsageCount();
+    const label = premium ? 'IA ilimitada liberada' : `IA: ${used}/${FREE_IA_MONTHLY_LIMIT} no mês`;
+    setText('iaUsageBadge', label);
+    setText('freeUsageSummary', premium ? 'IA e PDF ilimitados no Premium' : `IA: ${used}/${FREE_IA_MONTHLY_LIMIT} perguntas | PDF: ${pdfUsed}/${FREE_PDF_MONTHLY_LIMIT} no mês`);
+  }
+
+  function renderSubscriptionUI() {
+    const premium = isPremiumSubscription();
+    document.body?.classList.toggle('is-premium', premium);
+    document.body?.classList.toggle('is-free', !premium);
+
+    setText('sidebarPremiumBadge', premium ? 'PREMIUM' : 'GRATUITO');
+    setText('sidebarPlanName', premium ? 'Premium' : 'Gratuito');
+    setText('sidebarPlanStatus', premium ? 'Ativo' : (subscriptionState.verificationSource === 'cloud' ? 'Gratuito' : 'Verificando'));
+    setText('subscriptionHeroBadge', premium ? 'PREMIUM' : 'GRATUITO');
+    setText('subscriptionHeroTitle', premium ? 'Seu Premium está ativo' : 'Você está no plano Gratuito');
+    setText('subscriptionHeroText', premium
+      ? 'IA ilimitada, PDF avançado, backup automático, categorias inteligentes, relatórios avançados e remoção de anúncios estão liberados.'
+      : 'Controle financeiro, metas, IA limitada e 1 relatório PDF básico por mês continuam liberados. Assine Premium para desbloquear IA ilimitada, PDF avançado, backup automático e mais.');
+    setText('subscriptionVerifiedAt', premium ? `Verificado em ${formatDate(subscriptionState.verifiedAt)}` : 'Plano gratuito verificado');
+    setText('premiumResourceStatus', premium ? 'Todos liberados' : 'Bloqueados no plano gratuito');
+
+    document.querySelectorAll('[data-premium-card]').forEach(card => {
+      card.classList.toggle('locked', !premium);
+      const note = card.querySelector('.premium-lock-note');
+      if (note) note.textContent = premium ? 'LIBERADO' : 'PREMIUM';
+    });
+
+    document.querySelectorAll('.pdf-option').forEach(option => {
+      const id = option.id || '';
+      const isPremiumPdf = id === 'pdfOptCompleto' || id === 'pdfOptMetas' || id === 'pdfOptOrc';
+      const isFreePdfLimitReached = id === 'pdfOptLanc' && !premium && getPdfUsageCount() >= FREE_PDF_MONTHLY_LIMIT;
+      option.classList.toggle('locked', isPremiumPdf && !premium);
+      option.classList.toggle('limit-reached', isFreePdfLimitReached);
+    });
+
+    const gateway = document.getElementById('premiumGatewayStatus');
+    if (gateway) {
+      const cfg = window.FINANPRO_PREMIUM_CONFIG || {};
+      if (premium) gateway.innerHTML = '<strong>Assinatura ativa:</strong> recursos premium liberados para esta conta.';
+      else if (cfg.preferenceEndpoint || cfg.checkoutUrl) gateway.innerHTML = '<strong>Gateway Mercado Pago:</strong> checkout configurado. Após aprovação, o webhook deve gravar <code>subscription.status = active</code> no Firestore.';
+      else gateway.innerHTML = '<strong>Gateway Mercado Pago:</strong> pendente de configuração. Defina uma URL de checkout ou endpoint seguro para criar preferência de pagamento.';
+    }
+
+    updateUsageUI();
+    if (premium) {
+      document.getElementById('fpAdsenseLoader')?.remove();
+      queuePremiumBackup();
+    }
+    else if (!document.body?.classList.contains('auth-lock')) window.loadFinanProAds?.();
+  }
+
+  function openPremiumModal(feature) {
+    const copy = FEATURE_COPY[feature] || FEATURE_COPY.advanced_reports;
+    setText('premiumModalTitle', copy.title);
+    setText('premiumModalText', copy.text);
+    openModal('premiumModal');
+  }
+
+  function requirePremium(feature) {
+    if (isPremiumSubscription()) return true;
+    openPremiumModal(feature);
+    return false;
+  }
+
+  function canUseIA() {
+    return isPremiumSubscription() || getIAUsageCount() < FREE_IA_MONTHLY_LIMIT;
+  }
+
+  function registerIAUsage() {
+    if (isPremiumSubscription()) return;
+    localStorage.setItem(usageKey('ia_usage'), String(getIAUsageCount() + 1));
+    updateUsageUI();
+  }
+
+  function isPremiumPdfType(tipo) {
+    return PREMIUM_PDF_TYPES.has(tipo);
+  }
+
+  function canUsePdfType(tipo) {
+    if (isPremiumSubscription()) return true;
+    if (isPremiumPdfType(tipo)) return false;
+    return getPdfUsageCount() < FREE_PDF_MONTHLY_LIMIT;
+  }
+
+  function registerPdfUsage(tipo) {
+    if (isPremiumSubscription() || isPremiumPdfType(tipo)) return;
+    localStorage.setItem(usageKey('pdf_usage'), String(getPdfUsageCount() + 1));
+    updateUsageUI();
+    renderSubscriptionUI();
+  }
+
+  function queuePremiumBackup() {
+    if (!isPremiumSubscription()) return;
+    clearTimeout(backupTimer);
+    backupTimer = setTimeout(() => window.runPremiumBackup?.(), 1000);
+  }
+
+  function suggestCategory(desc) {
+    const txt = String(desc || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const rules = [
+      ['Salário', /(salario|pagamento|pro labore|aposentadoria)/],
+      ['Freelance', /(freela|freelance|servico|job|cliente)/],
+      ['Alimentação', /(mercado|supermercado|padaria|restaurante|ifood|delivery|lanche|comida|aliment)/],
+      ['Transporte', /(uber|99|taxi|onibus|metro|combustivel|gasolina|posto|transporte)/],
+      ['Moradia', /(aluguel|condominio|energia|agua|luz|internet|moradia)/],
+      ['Saúde', /(farmacia|consulta|medico|dentista|saude|remedio|hospital)/],
+      ['Educação', /(curso|faculdade|escola|livro|educacao|aula)/],
+      ['Lazer', /(cinema|bar|show|viagem|streaming|netflix|spotify|lazer|jogo)/]
+    ];
+    return rules.find(([, rx]) => rx.test(txt))?.[0] || 'Outros';
+  }
+
+  window.applySubscription = applySubscription;
+  window.renderSubscriptionUI = renderSubscriptionUI;
+  window.applySubscriptionFromCloud = function applySubscriptionFromCloud(uid, userDoc) {
+    const raw = userDoc?.subscription || userDoc?.assinatura || null;
+    if (raw) applySubscription(raw, { source: 'cloud', uid });
+    else applySubscription({ plan: 'free', status: 'free' }, { source: 'cloud', uid });
+  };
+  window.hasPremiumAccess = isPremiumSubscription;
+  window.requirePremiumFeature = requirePremium;
+  window.openPremiumModal = openPremiumModal;
+  window.canUseIA = canUseIA;
+  window.registerIAUsage = registerIAUsage;
+  window.getPdfUsageCount = getPdfUsageCount;
+  window.canUsePdfType = canUsePdfType;
+  window.registerPdfUsage = registerPdfUsage;
+  window.isPremiumPdfType = isPremiumPdfType;
+  window.queuePremiumBackup = queuePremiumBackup;
+  window.onPremiumBackupComplete = function onPremiumBackupComplete(date) {
+    setText('premiumResourceStatus', `Backup automático atualizado em ${formatDate(date)}`);
+  };
+
+  window.verifySubscription = async function verifySubscription() {
+    setText('subscriptionVerifiedAt', 'Verificando assinatura...');
+    if (window.verifySubscriptionFromCloud && window._currentUser) {
+      await window.verifySubscriptionFromCloud(window._currentUser);
+    } else {
+      renderSubscriptionUI();
+    }
+  };
+
+  window.startPremiumCheckout = function startPremiumCheckout() {
+    return window.assinarPremium();
+  };
+
+  window.suggestSmartCategory = function suggestSmartCategory() {
+    if (!requirePremium('smart_categories')) return;
+    const desc = document.getElementById('lancDesc')?.value || '';
+    const select = document.getElementById('lancCat');
+    const result = document.getElementById('smartCategoryResult');
+    const cat = suggestCategory(desc);
+    if (select) select.value = cat;
+    if (result) result.textContent = `Categoria sugerida: ${cat}`;
+  };
+
+  window.addEventListener('focus', () => {
+    if (window._currentUser) window.verifySubscription?.();
+  });
+  document.addEventListener('DOMContentLoaded', renderSubscriptionUI);
+})();
+</script>
   
 <!-- Firebase SDK -->  
 <script type="module">  
@@ -2564,7 +3299,9 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
       const snap = await getDoc(ref);  
       const localBundle = readBestLocalBundle(user.uid);  
       if (snap.exists()) {  
-        const cloudBundle = cloudBundleFromDoc(snap.data() || {});  
+        const userDoc = snap.data() || {};
+        window.applySubscriptionFromCloud?.(user.uid, userDoc);
+        const cloudBundle = cloudBundleFromDoc(userDoc);  
         if (hasBundleData(cloudBundle) || !hasBundleData(localBundle)) {  
           applyBundle(user.uid, cloudBundle);  
         } else {  
@@ -2572,6 +3309,7 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
           await uploadUserData(user.uid, localBundle);  
         }  
       } else {  
+        window.applySubscriptionFromCloud?.(user.uid, null);
         applyBundle(user.uid, localBundle);  
         await uploadUserData(user.uid, localBundle);  
       }  
@@ -2590,11 +3328,46 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
       if (name) await uploadUserKey(uid, name, data);  
       else await uploadUserData(uid);  
       window._cloudReady = true;  
+      window.queuePremiumBackup?.();
     } catch (err) {  
       console.warn('Nao foi possivel salvar na nuvem agora. Os dados locais foram mantidos.', err);  
       window._cloudReady = false;  
     }  
   };  
+
+  window.verifySubscriptionFromCloud = async (user = window._currentUser) => {
+    if (!user?.uid) {
+      window.applySubscriptionFromCloud?.(null, null);
+      return;
+    }
+    try {
+      const snap = await getDoc(doc(db, 'users', user.uid));
+      window.applySubscriptionFromCloud?.(user.uid, snap.exists() ? (snap.data() || {}) : null);
+    } catch (err) {
+      console.warn('Nao foi possivel verificar assinatura agora.', err);
+    }
+  };
+
+  window.runPremiumBackup = async () => {
+    const uid = window._currentUser?.uid;
+    if (!uid || !window.hasPremiumAccess?.()) return;
+    const bundle = readBestLocalBundle(uid);
+    const payload = {
+      ...bundle,
+      provider: 'finanpro-premium',
+      createdAt: serverTimestamp()
+    };
+    try {
+      await setDoc(doc(db, 'users', uid, 'backups', 'latest'), payload, { merge: true });
+      await setDoc(doc(db, 'users', uid), {
+        premiumBackup: { status: 'ok', lastBackupAt: serverTimestamp() },
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+      window.onPremiumBackupComplete?.(new Date());
+    } catch (err) {
+      console.warn('Backup automatico premium indisponivel.', err);
+    }
+  };
   
   onAuthStateChanged(auth, async (user) => {  
     if (user) {  
@@ -2605,9 +3378,12 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
       document.getElementById('userGreeting').textContent = `Olá, ${name}`;  
       await window.syncCloudData(user);  
       loadUserData(user.uid);  
+      await window.verifySubscription?.();
+      window.queuePremiumBackup?.();
     } else {  
       document.body.classList.add('auth-lock');  
       window._currentUser = null;  
+      window.applySubscriptionFromCloud?.(null, null);
     }  
   });  
   
@@ -2626,9 +3402,27 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
       showMsg(msg, getErrMsg(err.code), 'error');  
     } finally { btn.disabled = false; }  
   };  
+
+  async function sendWelcomeEmail(name, email) {
+    try {
+      const response = await fetch('/api/send-welcome-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email })
+      });
+
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error || 'Falha ao enviar e-mail de boas-vindas');
+      return true;
+    } catch (error) {
+      console.error('Erro ao enviar e-mail de boas-vindas:', error);
+      return false;
+    }
+  }
   
   window.handleSignUp = async (e) => {  
     e.preventDefault();  
+    const name = document.getElementById('signupName').value.trim();
     const email = document.getElementById('signupEmail').value.trim();  
     const password = document.getElementById('signupPassword').value;  
     const confirm = document.getElementById('signupConfirmPassword').value;  
@@ -2639,7 +3433,8 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
     showMsg(msg, 'Criando conta...', 'info');  
     try {  
       await createUserWithEmailAndPassword(auth, email, password);  
-      showMsg(msg, 'Conta criada! Entrando...', 'success');  
+      const welcomeSent = await sendWelcomeEmail(name, email);
+      showMsg(msg, welcomeSent ? 'Conta criada! Enviamos um e-mail de boas-vindas.' : 'Conta criada! Entrando...', 'success');  
       setTimeout(() => showSignIn(), 1500);  
     } catch(err) {  
       showMsg(msg, getErrMsg(err.code), 'error');  
@@ -2749,6 +3544,7 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
   function saveData(name, data) {  
     localStorage.setItem(getKey(name), JSON.stringify(data));  
     window.saveCloudData?.(name, data);  
+    window.queuePremiumBackup?.();
   }  
   function loadUserData() {  
     renderLancamentos();  
@@ -2763,7 +3559,8 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));  
     document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));  
     document.getElementById(pageId).classList.add('active');  
-    if (btn) btn.classList.add('active');  
+    const navBtn = btn || Array.from(document.querySelectorAll('.nav button')).find(b => (b.getAttribute('onclick') || '').includes(`'${pageId}'`));  
+    if (navBtn) navBtn.classList.add('active');  
     if (pageId === 'calendario') renderCalendario();  
   }  
   
@@ -3592,8 +4389,13 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
   let _pdfTipo = 'completo';  
   
   function openPdfModal(tipo) {  
-    if (tipo) selectPdfOption(tipo);  
-    else selectPdfOption('completo');  
+    let requested = tipo || (window.hasPremiumAccess?.() ? 'completo' : 'lancamentos');
+    if (!window.hasPremiumAccess?.() && window.isPremiumPdfType?.(requested)) requested = 'lancamentos';
+    if (!window.canUsePdfType?.(requested)) {
+      window.openPremiumModal?.('pdf_free_limit');
+      return;
+    }
+    selectPdfOption(requested);  
     document.getElementById('pdfModal').classList.add('open');  
   }  
   
@@ -3602,20 +4404,29 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
   }  
   
   function selectPdfOption(tipo) {  
+    if (window.isPremiumPdfType?.(tipo) && !window.hasPremiumAccess?.()) {
+      window.openPremiumModal?.('pdf_advanced');
+      tipo = 'lancamentos';
+    }
+    if (!window.canUsePdfType?.(tipo)) {
+      window.openPremiumModal?.('pdf_free_limit');
+      tipo = 'lancamentos';
+    }
     _pdfTipo = tipo;  
-    ['completo','lancamentos','metas','orcamentos'].forEach(t => {  
-      document.getElementById('pdfOpt' + t.charAt(0).toUpperCase() + t.slice(1))?.classList.remove('selected');  
-    });  
     const idMap = { completo:'pdfOptCompleto', lancamentos:'pdfOptLanc', metas:'pdfOptMetas', orcamentos:'pdfOptOrc' };  
+    Object.values(idMap).forEach(id => document.getElementById(id)?.classList.remove('selected'));
     document.getElementById(idMap[tipo])?.classList.add('selected');  
   
     const infos = {  
       completo: '<strong>📊 Relatório Completo</strong> — Dashboard, lançamentos, metas e orçamentos.<br><span style="font-size:12px;margin-top:4px;display:block;">Ideal para revisão mensal completa das finanças.</span>',  
-      lancamentos: '<strong>💳 Extrato de Lançamentos</strong> — Todas as movimentações com totais por categoria.<br><span style="font-size:12px;margin-top:4px;display:block;">Ideal para acompanhar entradas e saídas do período.</span>',  
+      lancamentos: '<strong>💳 Extrato de Lançamentos</strong> — Todas as movimentações com totais por categoria.<br><span style="font-size:12px;margin-top:4px;display:block;">Gratuito libera 1 PDF básico por mês. Premium libera exportações avançadas.</span>',  
       metas: '<strong>🎯 Relatório de Metas</strong> — Progresso detalhado com projeções e aportes.<br><span style="font-size:12px;margin-top:4px;display:block;">Ideal para revisar objetivos financeiros.</span>',  
       orcamentos: '<strong>💰 Análise de Orçamentos</strong> — Comparativo limites vs gastos reais.<br><span style="font-size:12px;margin-top:4px;display:block;">Ideal para controlar se está dentro do planejado.</span>',  
     };  
-    document.getElementById('pdfPreviewInfo').innerHTML = infos[tipo] + '<br><span style="font-size:11px;color:#888;margin-top:6px;display:block;">💡 Use Ctrl+P → "Salvar como PDF" para baixar o relatório.</span>';  
+    const pdfStatus = window.hasPremiumAccess?.()
+      ? 'Premium: PDFs avançados e exportações liberadas.'
+      : `Uso gratuito: ${window.getPdfUsageCount?.() || 0}/1 PDF básico neste mês.`;
+    document.getElementById('pdfPreviewInfo').innerHTML = infos[tipo] + `<br><span style="font-size:11px;color:#888;margin-top:6px;display:block;">${pdfStatus}</span><span style="font-size:11px;color:#888;margin-top:6px;display:block;">💡 Use Ctrl+P → "Salvar como PDF" para baixar o relatório.</span>`;  
   }  
   
   function getPdfDocumentStyles() {  
@@ -3671,9 +4482,20 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
   }  
   
   function gerarPdf() {  
+    if (window.isPremiumPdfType?.(_pdfTipo) && !window.hasPremiumAccess?.()) {
+      closePdfModal();
+      window.openPremiumModal?.('pdf_advanced');
+      return;
+    }
+    if (!window.canUsePdfType?.(_pdfTipo)) {
+      closePdfModal();
+      window.openPremiumModal?.('pdf_free_limit');
+      return;
+    }
     closePdfModal();  
     const content = buildPdfContent(_pdfTipo);  
     if (!printPdfInNewWindow(content)) printPdfInCurrentPage(content);  
+    window.registerPdfUsage?.(_pdfTipo);
   }  
   
   function buildPdfContent(tipo) {  
@@ -4165,8 +4987,13 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
     const input = document.getElementById('iaInput');  
     const text = input.value.trim();  
     if (!text) return;  
+    if (!window.canUseIA?.()) {
+      window.openPremiumModal?.('ia_unlimited');
+      return;
+    }
     input.value = '';  
     document.getElementById('iaSendBtn').disabled = true;  
+    window.registerIAUsage?.();
     addIAMessage(escapeHtml(text), 'user');  
     addTyping();  
     setTimeout(() => {  
@@ -4201,9 +5028,9 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
   const FLEX_RX = /(lazer|restaurante|delivery|ifood|bar|assinatura|stream|netflix|spotify|roupa|shopping|beleza|presente|viagem|uber|taxi|academia|hobby|cafe)/;
   const DEBT_RX = /(divida|cartao|credito|emprestimo|financiamento|juros|boleto|parcela|parcelamento|fatura|renegociacao)/;
   const INTENTS = {
-    diagnostico: ['diagnostico', 'saude financeira', 'prioridade', 'priorize', 'resumo', 'situacao', 'geral', 'como estou', 'relatorio', 'completo'],
-    plano: ['plano', 'fechar o mes', 'organizar', 'o que fazer', 'passo', 'rotina', 'melhorar este mes'],
-    gastos: ['gasto', 'despesa', 'categoria', 'corte', 'cortar', 'reduzir', 'maior', 'top', 'onde estou gastando'],
+    diagnostico: ['diagnostico', 'saude financeira', 'prioridade', 'priorize', 'resumo', 'situacao', 'geral', 'como estou', 'relatorio', 'completo', 'padrao', 'padroes', 'sinais', 'consultor', 'coach'],
+    plano: ['plano', 'fechar o mes', 'organizar', 'o que fazer', 'passo', 'rotina', 'melhorar este mes', '7 dias', 'sete dias', 'consultor financeiro'],
+    gastos: ['gasto', 'despesa', 'categoria', 'corte', 'cortar', 'reduzir', 'maior', 'top', 'onde estou gastando', 'assinatura', 'impulso', 'anomalia'],
     metas: ['meta', 'objetivo', 'sonho', 'aporte', 'guardar', 'prazo', 'viavel', 'vou conseguir'],
     orcamento: ['orcamento', 'limite', 'estourou', 'folga', 'budget'],
     previsao: ['previsao', 'projecao', 'projetar', 'fechamento', 'continuar neste ritmo', 'fim do mes'],
@@ -4484,6 +5311,7 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
     d.score = calculateScore(d);
     d.alertas = buildAlerts(d);
     d.oportunidades = buildOpportunities(d);
+    d.advanced = buildAdvancedInsights(d);
     d.prioridades = buildPriorities(d);
     return d;
   }
@@ -4548,6 +5376,70 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
     return [...new Set(priorities)].slice(0, 5);
   }
 
+  function buildAdvancedInsights(d) {
+    const previousByCategory = {};
+    d.anterior.despesas.forEach(l => {
+      const key = normalize(l.cat);
+      previousByCategory[key] = (previousByCategory[key] || 0) + l.valor;
+    });
+
+    const categoryTrend = d.catOrdenadas
+      .map(c => {
+        const prev = previousByCategory[normalize(c.cat)] || 0;
+        const delta = c.valor - prev;
+        return {
+          cat: c.cat,
+          atual: c.valor,
+          anterior: prev,
+          delta,
+          deltaPct: prev > 0 ? (delta / prev) * 100 : null
+        };
+      })
+      .sort((a, b) => b.delta - a.delta);
+
+    const mediaDespesa = d.despesas.length ? d.totalDespesa / d.despesas.length : 0;
+    const variancia = d.despesas.length
+      ? d.despesas.reduce((acc, item) => acc + Math.pow(item.valor - mediaDespesa, 2), 0) / d.despesas.length
+      : 0;
+    const desvio = Math.sqrt(variancia);
+    const anomalias = d.despesas
+      .filter(item => item.valor >= Math.max(mediaDespesa + desvio * 1.6, mediaDespesa * 1.8, 80))
+      .sort((a, b) => b.valor - a.valor)
+      .slice(0, 5);
+
+    const assinaturas = d.despesas
+      .filter(item => /(assinatura|mensalidade|netflix|spotify|prime|amazon|stream|plano|academia|internet|software|app)/.test(normalize(`${item.cat} ${item.desc}`)))
+      .sort((a, b) => b.valor - a.valor);
+
+    const essenciais = d.catOrdenadas.filter(c => c.perfil === 'essencial').reduce((total, c) => total + c.valor, 0);
+    const flexiveis = d.catOrdenadas.filter(c => c.perfil === 'flexivel').reduce((total, c) => total + c.valor, 0);
+    const dividas = d.despesas.filter(l => DEBT_RX.test(normalize(`${l.cat} ${l.desc}`))).reduce((total, l) => total + l.valor, 0);
+    const categoriaEmAlta = categoryTrend.find(c => c.delta > 0 && c.atual >= 50) || null;
+    const risco = d.score < 45 || d.saldo < 0 ? 'alto' : d.score < 65 || d.taxaPoupanca < 10 ? 'moderado' : 'controlado';
+
+    const plano7Dias = [
+      d.oportunidades[0] ? `Dia 1: revise ${esc(d.oportunidades[0].cat)} e tente ${d.oportunidades[0].text}` : 'Dia 1: revise os 10 maiores lançamentos do mês e marque o que foi necessidade real.',
+      d.orcEstourados.length ? `Dia 2: trave novos gastos em ${esc(d.orcEstourados.map(o => o.cat).join(', '))}.` : 'Dia 2: crie limite para a maior categoria de despesa.',
+      assinaturas.length ? `Dia 3: confira assinaturas/mensalidades; há ${brl(assinaturas.reduce((total, item) => total + item.valor, 0))} mapeados.` : 'Dia 3: procure despesas recorrentes pequenas que passam despercebidas.',
+      d.saldo < 0 ? `Dia 4: busque ${brl(Math.abs(d.saldo))} em cortes/renegociação para zerar o mês.` : `Dia 4: separe pelo menos ${brl(Math.max(0, d.saldo) * 0.3)} da sobra para meta ou reserva.`,
+      d.metasEmRisco.length ? `Dia 5: ajuste prazo/aporte de ${esc(d.metasEmRisco[0].nome)}.` : 'Dia 5: defina uma meta pequena de reserva para manter motivação.',
+      'Dia 6: compare o gasto diário real com o teto seguro do mês.',
+      'Dia 7: gere um relatório e revise o que mudou antes de planejar a semana seguinte.'
+    ];
+
+    return {
+      risco,
+      categoryTrend,
+      categoriaEmAlta,
+      anomalias,
+      assinaturas,
+      essenciais,
+      flexiveis,
+      dividas,
+      plano7Dias
+    };
+  }
+
   function scoreLabel(score) {
     if (score >= 82) return { text: 'muito forte', cls: '' };
     if (score >= 65) return { text: 'boa, com ajustes', cls: '' };
@@ -4599,11 +5491,18 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
     if (d.maiorGasto) leitura.push(`O maior peso é <strong>${esc(d.maiorGasto.cat)}</strong>, com ${pct(d.maiorGasto.pct, 0)} das despesas.`);
     if (d.variacaoDespesa !== null) leitura.push(`As despesas ${d.variacaoDespesa >= 0 ? 'subiram' : 'caíram'} <strong>${pct(Math.abs(d.variacaoDespesa))}</strong> contra o mês anterior.`);
     const alertTags = d.alertas.length ? d.alertas.slice(0, 4).map(a => tag(a.title, a.level)).join(' ') : tag('sem alerta crítico');
+    const sinais = [
+      `Perfil de risco: <strong>${esc(d.advanced.risco)}</strong>.`,
+      d.advanced.categoriaEmAlta ? `Categoria em alta: <strong>${esc(d.advanced.categoriaEmAlta.cat)}</strong> subiu ${brl(Math.max(0, d.advanced.categoriaEmAlta.delta))} contra o mês anterior.` : null,
+      d.advanced.anomalias.length ? `Detectei ${d.advanced.anomalias.length} lançamento(s) fora do padrão, começando por <strong>${esc(d.advanced.anomalias[0].desc)}</strong> (${brl(d.advanced.anomalias[0].valor)}).` : null,
+      d.advanced.assinaturas.length ? `Assinaturas/mensalidades mapeadas somam <strong>${brl(d.advanced.assinaturas.reduce((total, item) => total + item.valor, 0))}</strong>.` : null,
+      d.advanced.flexiveis > 0 ? `Gastos flexíveis somam <strong>${brl(d.advanced.flexiveis)}</strong>; é onde os cortes costumam doer menos.` : null
+    ];
     return `<strong>🧠 Diagnóstico financeiro - ${monthLabel(d.mes)}</strong>${periodNote(d)}${scoreBlock(d)}${kpis([
       { label: 'Receitas', value: brl(d.totalReceita) },
       { label: 'Despesas', value: brl(d.totalDespesa) },
       { label: 'Saldo', value: brl(d.saldo) }
-    ])}${section('Minha leitura', ul(leitura))}${section('Alertas detectados', alertTags)}${section('Prioridades agora', ul(d.prioridades))}${section('Melhor oportunidade', d.oportunidades.length ? ul(d.oportunidades.slice(0, 3).map(o => o.text)) : ul(['Não há corte óbvio; mantenha o controle e refine seus orçamentos.']))}`;
+    ])}${section('Minha leitura', ul(leitura))}${section('Sinais inteligentes', ul(sinais))}${section('Alertas detectados', alertTags)}${section('Prioridades agora', ul(d.prioridades))}${section('Melhor oportunidade', d.oportunidades.length ? ul(d.oportunidades.slice(0, 3).map(o => o.text)) : ul(['Não há corte óbvio; mantenha o controle e refine seus orçamentos.']))}`;
   }
 
   function gerarPlanoMes(d) {
@@ -4626,7 +5525,7 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
     ])}${section('Plano de ação', ul(passos))}${section('Regra simples', ul([
       d.totalReceita > 0 ? `Até o fim do mês, tente manter as despesas totais abaixo de <strong>${brl(limiteDespesaTotal)}</strong>.` : 'Cadastre receitas para eu calcular um teto mensal confiável.',
       p.diasRestantes > 0 ? `Se gastar acima de <strong>${brl(gastoDiarioSeguro)}</strong> por dia, a chance de perder a meta de poupança aumenta.` : 'Mês fechado: use a análise como revisão e ajuste os limites do próximo mês.'
-    ]))}`;
+    ]))}${section('Plano de 7 dias', ul(d.advanced.plano7Dias))}`;
   }
 
   function findCategoryInQuestion(question, d) {
@@ -4661,7 +5560,11 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
       { label: 'Total de despesas', value: brl(d.totalDespesa) },
       { label: 'Categorias', value: String(d.catOrdenadas.length) },
       { label: 'Maior categoria', value: esc(d.maiorGasto.cat) }
-    ])}${section('Ranking inteligente', ul(linhas))}${section('Cortes com melhor retorno', d.oportunidades.length ? ul(d.oportunidades.slice(0, 4).map(o => o.text)) : ul(['Não identifiquei cortes relevantes neste mês.']))}`;
+    ])}${section('Ranking inteligente', ul(linhas))}${section('Padrões detectados', ul([
+      d.advanced.categoriaEmAlta ? `<strong>${esc(d.advanced.categoriaEmAlta.cat)}</strong> foi a categoria que mais acelerou contra o mês anterior.` : 'Sem aceleração forte contra o mês anterior.',
+      d.advanced.anomalias.length ? `Lançamento fora do padrão: <strong>${esc(d.advanced.anomalias[0].desc)}</strong> (${brl(d.advanced.anomalias[0].valor)}).` : 'Nenhum gasto muito fora do padrão foi detectado.',
+      d.advanced.assinaturas.length ? `Assinaturas/mensalidades encontradas: ${d.advanced.assinaturas.slice(0, 3).map(item => `<strong>${esc(item.desc)}</strong> ${brl(item.valor)}`).join(', ')}.` : null
+    ]))}${section('Cortes com melhor retorno', d.oportunidades.length ? ul(d.oportunidades.slice(0, 4).map(o => o.text)) : ul(['Não identifiquei cortes relevantes neste mês.']))}`;
   }
 
   function gerarMetas(d) {
@@ -4783,13 +5686,21 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
     if (/quanto.*posso.*gastar|limite.*gastar|teto/.test(q)) return gerarPlanoMes(d);
     if (/posso.*comprar|vale.*comprar|devo.*comprar/.test(q)) return gerarCenario(d, question);
     const resposta = d.prioridades[0] || 'manter consistência e revisar seus dados semanalmente.';
-    return `<strong>Resposta personalizada</strong>${section('Minha leitura para sua pergunta', ul([
-      `Pelos dados de ${monthLabel(d.mes)}, a resposta mais importante é: ${resposta}`,
-      `Score atual: <strong>${d.score}/100</strong>; saldo: <strong>${brl(d.saldo)}</strong>; poupança: <strong>${pct(d.taxaPoupanca)}</strong>.`,
-      d.maiorGasto ? `A categoria que mais explica o mês é <strong>${esc(d.maiorGasto.cat)}</strong>.` : 'Ainda há poucas despesas categorizadas para achar um padrão forte.'
-    ]))}${section('Próxima pergunta útil', ul([
-      'Você pode perguntar “e se eu economizar R$ 300?”, “quanto posso gastar por dia?” ou “analise a categoria alimentação”.'
-    ]))}`;
+    const decisao = d.advanced.risco === 'alto'
+      ? 'eu seria conservador agora: reduzir despesas e proteger caixa vem antes de novos compromissos.'
+      : d.advanced.risco === 'moderado'
+        ? 'dá para melhorar rápido se você atacar a maior categoria e respeitar um teto diário.'
+        : 'sua base está controlada; o próximo ganho vem de automatizar aportes e evitar novas despesas fixas.';
+    const memoria = (window._finanproIaMemory || []).slice(-4, -1).map(item => item.intent).filter(Boolean);
+    return `<strong>Consultor financeiro FinanPro</strong>${section('Resposta direta', ul([
+      `Pelos dados de ${monthLabel(d.mes)}, minha recomendação principal é: ${resposta}`,
+      `Em linguagem simples: ${decisao}`,
+      `Score atual: <strong>${d.score}/100</strong>; saldo: <strong>${brl(d.saldo)}</strong>; poupança: <strong>${pct(d.taxaPoupanca)}</strong>.`
+    ]))}${section('O que eu percebi', ul([
+      d.maiorGasto ? `A categoria que mais explica o mês é <strong>${esc(d.maiorGasto.cat)}</strong>.` : 'Ainda há poucas despesas categorizadas para achar um padrão forte.',
+      d.advanced.categoriaEmAlta ? `<strong>${esc(d.advanced.categoriaEmAlta.cat)}</strong> está acelerando e merece revisão antes de virar hábito.` : 'Não vi uma categoria claramente disparando contra o mês anterior.',
+      d.advanced.anomalias.length ? `Existe gasto fora do padrão: <strong>${esc(d.advanced.anomalias[0].desc)}</strong> (${brl(d.advanced.anomalias[0].valor)}).` : 'Não encontrei um lançamento isolado muito fora do padrão.'
+    ]))}${section('Próximas ações', ul(d.advanced.plano7Dias.slice(0, 4)))}${memoria.length ? `<span class="ia-note">Contexto recente considerado: ${esc(memoria.join(', '))}.</span>` : ''}<span class="ia-note">A IA do FinanPro usa seus dados locais para análise financeira. Para ficar igual a um modelo GPT/Gemini real, seria necessário conectar uma API de IA no backend.</span>`;
   }
 
   function detectIntent(question) {
@@ -4866,11 +5777,11 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
 window.FINANPRO_LEGAL_CONTENT = {
   privacidade: {
     title: "Política de Privacidade",
-    html: `<p>O <strong>FinanPro</strong> respeita a privacidade dos usuários e utiliza os dados informados apenas para oferecer recursos de controle financeiro, sincronização na nuvem e melhoria da experiência.</p><ul><li>Os dados financeiros cadastrados são usados para exibir dashboard, metas, orçamentos, análises e relatórios.</li><li>O login pode ser feito por e-mail/senha ou conta Google.</li><li>O site pode utilizar cookies e tecnologias semelhantes para funcionamento, segurança, análise e publicidade.</li><li>O FinanPro não vende dados pessoais dos usuários.</li></ul><p>Ao utilizar o FinanPro, você concorda com esta Política de Privacidade.</p>`
+    html: `<p>O <strong>FinanPro</strong> respeita a privacidade dos usuários e utiliza os dados informados apenas para oferecer recursos de controle financeiro, sincronização na nuvem e melhoria da experiência.</p><ul><li>Os dados financeiros cadastrados são usados para exibir dashboard, metas, orçamentos, análises e relatórios.</li><li>O login pode ser feito por e-mail/senha ou conta Google.</li><li>Dados de assinatura são usados para liberar recursos Premium; dados de cartão e Pix devem ser processados pelo gateway de pagamento.</li><li>O site pode utilizar cookies e tecnologias semelhantes para funcionamento, segurança, análise e publicidade.</li><li>O FinanPro não vende dados pessoais dos usuários.</li></ul><p>Ao utilizar o FinanPro, você concorda com esta Política de Privacidade.</p>`
   },
   termos: {
     title: "Termos de Uso",
-    html: `<p>Ao utilizar o <strong>FinanPro</strong>, o usuário concorda em usar a plataforma de forma responsável, legal e para fins de organização financeira pessoal.</p><ul><li>As informações apresentadas têm caráter informativo e não substituem orientação financeira profissional.</li><li>O usuário é responsável pela veracidade dos dados cadastrados.</li><li>O FinanPro pode receber melhorias, atualizações e mudanças de funcionalidades ao longo do tempo.</li><li>O uso da plataforma depende da aceitação destes termos.</li></ul>`
+    html: `<p>Ao utilizar o <strong>FinanPro</strong>, o usuário concorda em usar a plataforma de forma responsável, legal e para fins de organização financeira pessoal.</p><ul><li>As informações apresentadas têm caráter informativo e não substituem orientação financeira profissional.</li><li>O usuário é responsável pela veracidade dos dados cadastrados.</li><li>Recursos Premium dependem de assinatura ativa confirmada pelo gateway e verificada na conta do usuário.</li><li>O FinanPro pode receber melhorias, atualizações e mudanças de funcionalidades ao longo do tempo.</li><li>O uso da plataforma depende da aceitação destes termos.</li></ul>`
   },
   sobre: {
     title: "Sobre Nós",
@@ -4878,7 +5789,7 @@ window.FINANPRO_LEGAL_CONTENT = {
   },
   faq: {
     title: "FAQ",
-    html: `<p><strong>O FinanPro é gratuito?</strong><br>Sim, atualmente o acesso é gratuito.</p><p><strong>Meus dados ficam salvos?</strong><br>Sim. Ao entrar com uma conta, seus dados podem ser sincronizados na nuvem.</p><p><strong>Posso acessar de outro celular?</strong><br>Sim. Basta usar a mesma conta cadastrada.</p><p><strong>Posso gerar PDF?</strong><br>Sim. O FinanPro permite gerar relatórios financeiros em PDF.</p><p><strong>O app tem IA financeira?</strong><br>Sim. A IA ajuda a interpretar lançamentos, metas e orçamentos.</p>`
+    html: `<p><strong>O FinanPro é gratuito?</strong><br>Sim. Existe o plano Gratuito e o plano Premium por R$ 9,90/mês.</p><p><strong>Meus dados ficam salvos?</strong><br>Sim. Ao entrar com uma conta, seus dados podem ser sincronizados na nuvem.</p><p><strong>Posso acessar de outro celular?</strong><br>Sim. Basta usar a mesma conta cadastrada.</p><p><strong>Posso gerar PDF?</strong><br>Sim. O plano Gratuito libera 1 PDF básico por mês, e o Premium libera exportação avançada.</p><p><strong>O app tem IA financeira?</strong><br>Sim. O Gratuito tem limite mensal e o Premium libera IA financeira ilimitada.</p>`
   },
   seguranca: {
     title: "Segurança dos Dados",
