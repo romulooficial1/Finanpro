@@ -4994,26 +4994,60 @@ window.startPremiumCheckout = assinarPremium;
   
   function removeTyping() { const t = document.getElementById('iaTyping'); if (t) t.remove(); }  
   
-  function sendIAMessage() {  
-    const input = document.getElementById('iaInput');  
-    const text = input.value.trim();  
-    if (!text) return;  
-    if (!window.canUseIA?.()) {
-      window.openPremiumModal?.('ia_unlimited');
-      return;
+  async function sendIAMessage() {  
+  const input = document.getElementById('iaInput');  
+  const btn = document.getElementById('iaSendBtn');
+  const text = input.value.trim();  
+
+  if (!text) return;  
+
+  if (!window.canUseIA?.()) {
+    window.openPremiumModal?.('ia_unlimited');
+    return;
+  }
+
+  input.value = '';  
+  btn.disabled = true;  
+  window.registerIAUsage?.();
+
+  addIAMessage(escapeHtml(text), 'user');  
+  addTyping();  
+
+  try {
+    const res = await fetch('/api/ai', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: text,
+        financialData: {
+          transactions: window.transactions || [],
+          expenses: window.expenses || [],
+          incomes: window.incomes || [],
+          budgets: window.budgets || [],
+          goals: window.goals || []
+        }
+      })
+    });
+
+    const data = await res.json();
+    removeTyping();
+
+    if (!res.ok) {
+      addIAMessage('Não consegui conectar com a IA agora. Tente novamente.', 'bot');
+      console.error(data);
+    } else {
+      addIAMessage(escapeHtml(data.reply || 'Não consegui responder agora.'), 'bot');
     }
-    input.value = '';  
-    document.getElementById('iaSendBtn').disabled = true;  
-    window.registerIAUsage?.();
-    addIAMessage(escapeHtml(text), 'user');  
-    addTyping();  
-    setTimeout(() => {  
-      removeTyping();  
-      addIAMessage(processarPergunta(text), 'bot');  
-      document.getElementById('iaSendBtn').disabled = false;  
-      input.focus();  
-    }, 600 + Math.random() * 400);  
-  }  
+
+  } catch (error) {
+    removeTyping();
+    addIAMessage('Erro ao conectar com a IA. Tente novamente.', 'bot');
+    console.error(error);
+  }
+
+  btn.disabled = false;  
+  input.focus();  
+}
   
   function escapeHtml(text) { return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }  
   
