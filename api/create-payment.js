@@ -7,7 +7,9 @@ export default async function handler(req, res) {
     const accessToken = process.env.MPACCESSTOKEN;
 
     if (!accessToken) {
-      return res.status(500).json({ error: "Token do Mercado Pago não configurado" });
+      return res.status(500).json({
+        error: "Token do Mercado Pago não configurado"
+      });
     }
 
     const preference = {
@@ -30,7 +32,7 @@ export default async function handler(req, res) {
     const response = await fetch("https://api.mercadopago.com/checkout/preferences", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify(preference)
@@ -44,7 +46,6 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       init_point: data.init_point,
-      sandbox_init_point: data.sandbox_init_point,
       id: data.id
     });
 
