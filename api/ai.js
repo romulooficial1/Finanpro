@@ -32,11 +32,7 @@ ${message}
 
   const data = await r.json();
 
-  if (!r.ok) {
-    return res.status(500).json({ error: data.error?.message || "Erro na OpenAI" });
-  }
-
-  res.status(200).json({
-    reply: data.output_text || "Não consegui responder agora."
-  });
+  if (!res.ok) {
+  addIAMessage('ERRO: ' + JSON.stringify(data), 'bot');
+  console.error(data);
 }
