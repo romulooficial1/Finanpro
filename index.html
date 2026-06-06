@@ -2893,9 +2893,22 @@ window.FINANPRO_PREMIUM_CONFIG = {
 
 async function assinarPremium() {
   try {
+    const user = auth.currentUser;
+
+    if (!user) {
+      alert("Entre na sua conta antes de assinar o Premium.");
+      return;
+    }
+
     const resposta = await fetch("/api/create-payment", {
       method: "POST",
-      headers: { "Content-Type": "application/json" }
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        uid: user.uid,
+        email: user.email || ""
+      })
     });
 
     const dados = await resposta.json();
@@ -2917,7 +2930,6 @@ async function assinarPremium() {
     alert("Erro ao conectar com o checkout.");
   }
 }
-
 window.assinarPremium = assinarPremium;
 window.startPremiumCheckout = assinarPremium;
 
