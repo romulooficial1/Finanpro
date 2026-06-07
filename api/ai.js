@@ -79,10 +79,17 @@ if (!r.ok) {
   });
 }
 
-const reply =
+let reply =
   data.output?.[0]?.content?.[0]?.text ||
   data.output_text ||
   "Não consegui responder agora.";
+
+reply = reply
+  .replace(/^#{1,6}\s*/gm, '')
+  .replace(/\*\*/g, '')
+  .replace(/---+/g, '')
+  .replace(/^\s*[-*]\s+/gm, '• ')
+  .trim();
 
 res.status(200).json({
   reply
