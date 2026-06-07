@@ -40,6 +40,6 @@ if (!r.ok) {
 }
 
 res.status(200).json({
-  reply: data.output_text || "Não consegui responder agora."
+  reply: JSON.stringify(data)
 });
 }
