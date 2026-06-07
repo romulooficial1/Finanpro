@@ -32,9 +32,14 @@ ${message}
 
   const data = await r.json();
 
-  if (!r.ok) {
+if (!r.ok) {
   return res.status(r.status).json({
     error: data.error?.message || "Erro na OpenAI",
     details: data
   });
+}
+
+res.status(200).json({
+  reply: data.output_text || "Não consegui responder agora."
+});
 }
