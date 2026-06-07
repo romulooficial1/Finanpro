@@ -76,6 +76,12 @@ ${JSON.stringify(financialData || {})}
 IDIOMA DA RESPOSTA:
 Use EXATAMENTE o mesmo idioma da mensagem abaixo.
 
+IDIOMA OBRIGATÓRIO:
+Se a pergunta estiver em inglês, responda 100% em inglês.
+Se a pergunta estiver em português, responda 100% em português.
+Se a pergunta estiver em espanhol, responda 100% em espanhol.
+Não misture idiomas.
+
 Pergunta:
 ${message}
       `
