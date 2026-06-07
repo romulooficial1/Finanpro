@@ -5867,63 +5867,114 @@ document.addEventListener('keydown', function(event) {
 <script>
 /* ===================================================
    FINANPRO — Tradução PT/EN reforçada + PWA
-   Tradução para textos estáticos, dinâmicos, placeholders,
-   botões, selects, modais e conteúdo gerado via JavaScript.
+   Traduz textos estáticos, dinâmicos, botões, modais,
+   placeholders, selects, valores de botões e conteúdo criado por JS.
 =================================================== */
 (function(){
   'use strict';
+
   const STORAGE_KEY = 'finanpro_lang';
   const SKIP_TAGS = new Set(['SCRIPT','STYLE','NOSCRIPT','TEXTAREA','CODE','PRE','CANVAS','SVG']);
+  const ATTRS = ['placeholder','title','aria-label','alt','value'];
 
   const EN = {
-    'Recursos':'Features','Funcionalidades':'Features','Segurança':'Security','Preço':'Pricing','Entrar':'Sign in','Sair':'Log out','Acessar conta':'Access account','Criar conta grátis':'Create free account','Criar conta grátis →':'Create free account →','Continuar com Google':'Continue with Google','Começar grátis':'Start for free','Comece grátis':'Start for free','Começar agora':'Get started','Cadastre-se':'Sign up','Criar conta':'Create account','Criar Conta':'Create Account','Já tem conta?':'Already have an account?','Não tem conta?':'No account?','Esqueceu a senha?':'Forgot password?','Recuperar senha':'Recover password','Enviar Link de Recuperação':'Send recovery link','Voltar para Login':'Back to login','Voltar':'Back','Email':'Email','E-mail':'Email','Senha':'Password','Nome':'Name','Nome Completo':'Full name','Confirmar Senha':'Confirm password','Mínimo 6 caracteres':'Minimum 6 characters','Repita a senha':'Repeat password','Seu Nome':'Your name','seu@email.com':'your@email.com','Concordo com os termos e privacidade':'I agree to the terms and privacy policy','Entre com e-mail e senha ou use sua conta Google para sincronizar seus dados.':'Sign in with email and password or use your Google account to sync your data.','Digite seu email para receber instruções de recuperação':'Enter your email to receive recovery instructions','Comece a organizar suas finanças agora':'Start organizing your finances now',
-    'Seu dinheiro. Seu futuro. Nossa inteligência.':'Your money. Your future. Our intelligence.','Controle suas':'Control your','finanças sem planilhas.':'finances without spreadsheets.','Controle suas finanças sem planilhas.':'Control your finances without spreadsheets.','Organize gastos, metas, dívidas e orçamento mensal gratuitamente em uma central financeira profissional.':'Organize expenses, goals, debts and your monthly budget for free in a professional financial hub.','Organize gastos, metas, dívidas e orçamentos com sincronização na nuvem e relatórios profissionais.':'Organize expenses, goals, debts and budgets with cloud sync and professional reports.','FinanPro é um app gratuito de controle financeiro com dashboard, lançamentos, metas, dívidas, orçamentos, relatórios e IA financeira.':'FinanPro is a free personal finance app with dashboard, transactions, goals, debts, budgets, reports and financial AI.','Pronto para transformar sua vida financeira?':'Ready to transform your financial life?','Comece grátis e tenha controle total das suas finanças.':'Start for free and take full control of your finances.','Interface moderna e fácil de usar':'Modern and easy-to-use interface','Atualizações em tempo real':'Real-time updates','Segurança e privacidade garantidas':'Security and privacy guaranteed','Seus dados estão protegidos':'Your data is protected','Utilizamos tecnologia de ponta para garantir a segurança das suas informações.':'We use modern technology to keep your information secure.','Projeto em evolução':'Project in progress','Dados sincronizados':'Synced data','Gratuito':'Free','Visual profissional':'Professional look','Instalar app':'Install app','Instalar':'Install','Adicionar à Tela de Início':'Add to Home Screen',
-    'Dashboard':'Dashboard','Painel':'Dashboard','Início':'Home','Lançamentos':'Transactions','Transações':'Transactions','Metas':'Goals','Dívidas':'Debts','Orçamentos':'Budgets','Calendário':'Calendar','Relatórios':'Reports','IA Financeira':'Financial AI','Configurações':'Settings','Perfil':'Profile','Conta':'Account','Privacidade':'Privacy','Termos':'Terms','Política de Privacidade':'Privacy Policy','Termos de Uso':'Terms of Use','Suporte':'Support','Ajuda':'Help',
-    'Receitas':'Income','Receita':'Income','Despesas':'Expenses','Despesa':'Expense','Saldo':'Balance','Saldo atual':'Current balance','Saldo projetado':'Projected balance','Entrada':'Income','Saída':'Expense','Gastos':'Expenses','Gasto':'Expense','Poupança':'Savings','Taxa de poupança':'Savings rate','Resumo':'Summary','Resumo do mês':'Monthly summary','Mês atual':'Current month','Este mês':'This month','Mês anterior':'Previous month','Total':'Total','Total de receitas':'Total income','Total de despesas':'Total expenses','Maior gasto':'Top expense','Meta média':'Average goal','Saúde financeira':'Financial health','Primeiros passos':'First steps','Seu desempenho':'Your performance','Ranking pessoal':'Personal ranking','Desafio atual':'Current challenge','30 dias de controle':'30 days of control','Últimas movimentações':'Latest transactions','Nenhuma movimentação ainda. Adicione em Lançamentos.':'No transactions yet. Add one in Transactions.','Sem despesas no mês.':'No expenses this month.','Cadastre metas para acompanhar o progresso.':'Add goals to track progress.','Adicione receitas e despesas para calcular.':'Add income and expenses to calculate.','Use o FinanPro e desbloqueie conquistas conforme registra gastos, metas e relatórios.':'Use FinanPro and unlock achievements as you record expenses, goals and reports.','O FinanPro compara seus meses e mostra quando você bate recordes financeiros.':'FinanPro compares your months and shows when you break financial records.','Registre movimentações para avançar no desafio.':'Record transactions to progress in the challenge.',
-    'Adicionar':'Add','Adicionar lançamento':'Add transaction','Novo lançamento':'New transaction','Nova meta':'New goal','Nova dívida':'New debt','Novo orçamento':'New budget','Descrição':'Description','Categoria':'Category','Valor':'Amount','Data':'Date','Tipo':'Type','Ações':'Actions','Cancelar':'Cancel','Salvar':'Save','Excluir':'Delete','Editar':'Edit','Atualizar':'Update','Buscar':'Search','Filtrar':'Filter','Todos':'All','Todas':'All','Limpar':'Clear','Enviar':'Send','Fechar':'Close','Confirmar':'Confirm','Remover':'Remove','Duplicar':'Duplicate','Exportar':'Export','Importar':'Import','Gerar':'Generate','Gerar PDF':'Generate PDF','Exportar PDF':'Export PDF','Baixar':'Download','Visualizar':'View','Abrir':'Open','Concluir':'Finish','Concluído':'Done','Concluída':'Completed','Pendente':'Pending','Pago':'Paid','Paga':'Paid','Vencido':'Overdue','Vence hoje':'Due today','Sem categoria':'Uncategorized','Outros':'Other','Alimentação':'Food','Moradia':'Housing','Transporte':'Transportation','Saúde':'Health','Educação':'Education','Lazer':'Leisure','Mercado':'Groceries','Salário':'Salary','Trabalho':'Work','Investimentos':'Investments','Cartão':'Card','Cartão de crédito':'Credit card','Dinheiro':'Cash','Pix':'Pix','Boleto':'Bank slip','Unico':'One-time','Único':'One-time','Parcelado':'Installment','Recorrente':'Recurring','Parcela':'Installment','Parcelas':'Installments','Parcela atual':'Current installment','Repetir':'Repeat','Frequência':'Frequency','Mensal':'Monthly','Semanal':'Weekly','Diário':'Daily','Anual':'Yearly',
-    'Nome da meta':'Goal name','Valor alvo':'Target amount','Valor atual':'Current amount','Prazo':'Deadline','Progresso':'Progress','Falta':'Remaining','Aporte':'Contribution','Aporte mensal':'Monthly contribution','Meta':'Goal','Objetivo':'Goal','Limite':'Limit','Limite mensal':'Monthly limit','Orçamento':'Budget','Orçamento mensal':'Monthly budget','Gasto atual':'Current spending','Disponível':'Available','Estourado':'Exceeded','Folga':'Leftover','Dívida':'Debt','Credor':'Creditor','Juros':'Interest','Vencimento':'Due date','Valor pago':'Paid amount','Valor restante':'Remaining amount',
-    'Análise consultiva dos seus dados financeiros — com diagnóstico, previsão, risco e próximos passos':'Consultative analysis of your financial data — with diagnosis, forecast, risk and next steps','Perguntas rápidas:':'Quick questions:','Diagnóstico':'Diagnosis','Plano do mês':'Monthly plan','Cortes inteligentes':'Smart cuts','Metas e aportes':'Goals and contributions','Previsão':'Forecast','Simular economia':'Simulate savings','Plano 7 dias':'7-day plan','Padrões':'Patterns','Olá! Sou a IA Financeira do FinanPro':'Hi! I am FinanPro Financial AI','Analiso seus dados financeiros em tempo real e respondo perguntas sobre gastos, metas, orçamentos e como melhorar sua saúde financeira.':'I analyze your financial data in real time and answer questions about expenses, goals, budgets and how to improve your financial health.','Pergunte qualquer coisa sobre suas finanças... (Enter para enviar)':'Ask anything about your finances... (Enter to send)','Conversa reiniciada!':'Conversation restarted!','Use as sugestões acima ou escreva sua pergunta.':'Use the suggestions above or type your question.','IA:':'AI:','no mês':'this month','Não consegui responder agora.':'I could not answer right now.','Erro ao conectar com a IA. Tente novamente.':'Error connecting to AI. Please try again.','Não consegui conectar com a IA agora. Tente novamente.':'I could not connect to AI right now. Please try again.',
+    // Base / landing
+    'FinanPro | Controle financeiro pessoal':'FinanPro | Personal finance control',
+    'Controle Financeiro Pessoal':'Personal Finance Control',
+    'Controle financeiro pessoal':'Personal finance control',
+    'Controle financeiro':'Financial control',
+    'Controle financeiro pessoal com IA':'Personal finance control with AI',
+    'Recursos':'Features','Funcionalidades':'Features','Diferenciais':'Highlights','Planos':'Plans','Segurança':'Security','Preço':'Pricing','Páginas':'Pages',
+    'Entrar':'Sign in','Sair':'Log out','Sair da conta':'Log out','Acessar conta':'Access account','Criar conta grátis':'Create free account','Criar conta grátis →':'Create free account →','Continuar com Google':'Continue with Google','Começar grátis':'Start free','Comece grátis':'Start free','Começar agora':'Get started',
+    'Seu dinheiro. Seu futuro. Nossa inteligência.':'Your money. Your future. Our intelligence.','✦ Seu dinheiro. Seu futuro. Nossa inteligência.':'✦ Your money. Your future. Our intelligence.',
+    'Controle suas':'Control your','finanças sem planilhas.':'finances without spreadsheets.','Controle suas finanças sem planilhas.':'Control your finances without spreadsheets.',
+    'Organize gastos, metas, dívidas e orçamentos com sincronização na nuvem e relatórios profissionais.':'Organize expenses, goals, debts and budgets with cloud sync and professional reports.',
+    'Organize gastos, metas, dívidas e orçamento mensal gratuitamente em uma central financeira profissional.':'Organize expenses, goals, debts and your monthly budget for free in a professional finance hub.',
+    'Tudo que você precisa para ter':'Everything you need for','controle financeiro':'financial control','de verdade':'for real','Tudo que você precisa para ter controle financeiro de verdade':'Everything you need for real financial control',
+    'Dashboard Inteligente':'Smart Dashboard','Acompanhe receitas, despesas, saldo e evolução financeira em gráficos claros e intuitivos.':'Track income, expenses, balance and financial progress with clear, intuitive charts.','Saiba mais →':'Learn more →',
+    'Receba análises automáticas sobre seus hábitos, sugestões personalizadas e alertas inteligentes para economizar.':'Get automatic analysis of your habits, personalized suggestions and smart alerts to save money.',
+    'Relatórios PDF Profissionais':'Professional PDF Reports','Gere relatórios completos e bonitos com um clique e compartilhe quando precisar.':'Generate complete, beautiful reports with one click and share them whenever needed.',
+    'Sincronização na Nuvem':'Cloud Sync','Sincronização na nuvem':'Cloud sync','Acesse seus dados de qualquer lugar, em qualquer dispositivo, com total segurança.':'Access your data anywhere, on any device, securely.',
+    'Mobilidade total':'Total mobility','Seus dados com você, sempre.':'Your data with you, always.','O FinanPro funciona perfeitamente no celular, tablet ou computador. Sua vida financeira, na palma da mão.':'FinanPro works smoothly on mobile, tablet or desktop. Your financial life in the palm of your hand.',
+    'Interface moderna e fácil de usar':'Modern, easy-to-use interface','Atualizações em tempo real':'Real-time updates','Segurança e privacidade garantidas':'Guaranteed security and privacy','Seus dados estão protegidos':'Your data is protected','Utilizamos tecnologia de ponta para garantir a segurança das suas informações.':'We use modern technology to protect your information.',
+    'Projeto em evolução':'Project in progress','Dados sincronizados':'Synced data','Gratuito':'Free','Grátis + Premium':'Free + Premium','Visual profissional':'Professional look','Pronto para transformar sua vida financeira?':'Ready to transform your financial life?','Comece grátis e tenha controle total das suas finanças.':'Start for free and take full control of your finances.',
+    '100% Seguro':'100% Secure','Nuvem':'Cloud','Beta':'Beta','Premium':'Premium','PREMIUM':'PREMIUM','GRATUITO':'FREE','v2.0':'v2.0',
+
+    // Auth
+    'Email':'Email','E-mail':'Email','Senha':'Password','Nome':'Name','Nome Completo':'Full name','Confirmar Senha':'Confirm password','Mínimo 6 caracteres':'Minimum 6 characters','Repita a senha':'Repeat password','Seu Nome':'Your name','seu@email.com':'your@email.com',
+    'Não tem conta?':'No account?','Cadastre-se':'Sign up','Criar conta':'Create account','Criar Conta':'Create Account','Já tem conta?':'Already have an account?','Esqueceu a senha?':'Forgot password?','Recuperar senha':'Recover password','Enviar Link de Recuperação':'Send recovery link','Voltar para Login':'Back to login','Concordo com os termos e privacidade':'I agree to the terms and privacy policy','Entre com e-mail e senha ou use sua conta Google para sincronizar seus dados.':'Sign in with email and password or use your Google account to sync your data.','Comece a organizar suas finanças agora':'Start organizing your finances now','Digite seu email para receber instruções de recuperação':'Enter your email to receive recovery instructions',
+
+    // App nav
+    'Dashboard':'Dashboard','☰ Dashboard':'☰ Dashboard','▣ Dashboard':'▣ Dashboard','Lançamentos':'Transactions','☰ Lançamentos':'☰ Transactions','Metas':'Goals','◇ Metas':'◇ Goals','Dívidas':'Debts','Orçamentos':'Budgets','▤ Orçamentos':'▤ Budgets','Calendário':'Calendar','Relatórios':'Reports','▥ Relatórios':'▥ Reports','IA Financeira':'Financial AI','✦ IA Financeira':'✦ Financial AI','Configurações':'Settings','⚙ Configurações':'⚙ Settings','Assinatura':'Subscription','Perfil':'Profile','Conta':'Account',
+    'Política':'Privacy','Termos':'Terms','Sobre':'About','Política de Privacidade':'Privacy Policy','Termos de Uso':'Terms of Use','Sobre Nós':'About Us','FAQ':'FAQ','Segurança dos Dados':'Data Security','Contato':'Contact','© 2026 FinanPro. Todos os direitos reservados.':'© 2026 FinanPro. All rights reserved.',
+
+    // Dashboard / metrics
+    'Olá, Rômulo':'Hello, Rômulo','Visão geral das suas finanças':'Overview of your finances','Renda Total':'Total Income','Receitas':'Income','Receita':'Income','Despesas':'Expenses','Despesa':'Expense','Saldo':'Balance','Saldo Total':'Total Balance','Saldo atual':'Current balance','Saldo projetado':'Projected balance','Entrada':'Income','Saída':'Expense','Entradas':'Income','Saídas':'Expenses','Gastos':'Expenses','Gasto':'Expense','Poupança':'Savings','Taxa de poupança':'Savings rate','Resumo':'Summary','Resumo do mês':'Monthly summary','Mês atual':'Current month','Este mês':'This month','Mês anterior':'Previous month','Total':'Total','Disponível':'Available','Em andamento':'In progress','Status':'Status','Verificando':'Checking','Plano atual':'Current plan','Ver assinatura':'View subscription','Modo claro':'Light mode','Modo escuro':'Dark mode','☀️':'☀️',
+    'Receitas, despesas e saldo dos últimos 6 meses':'Income, expenses and balance over the last 6 months','Gastos por categoria':'Expenses by category','Distribuição das despesas deste mês':'This month’s expense distribution','Comparativo do mês':'Monthly comparison','Entradas versus saídas no período atual':'Income versus expenses in the current period','Maior gasto':'Top expense','Meta média':'Average goal','Saúde financeira':'Financial health','Saúde Financeira':'Financial Health','de 100':'out of 100','Ótimo controle entre entradas e saídas.':'Great control between income and expenses.',
+    'Sem despesas no mês.':'No expenses this month.','Cadastre metas para acompanhar o progresso.':'Add goals to track progress.','Adicione receitas e despesas para calcular.':'Add income and expenses to calculate.','Primeiros passos':'First steps','Desbloqueie conquistas conforme registra receitas, despesas, metas e relatórios.':'Unlock achievements as you record income, expenses, goals and reports.','Compare seus meses e acompanhe quando bater novos recordes financeiros.':'Compare your months and track when you break new financial records.','Registre movimentações em dias diferentes para avançar.':'Record transactions on different days to progress.','Nenhuma movimentação ainda. Adicione em Lançamentos.':'No transactions yet. Add one in Transactions.',
+    '🏆 Conquistas':'🏆 Achievements','📈 Ranking pessoal':'📈 Personal ranking','Seu desempenho':'Your performance','🎯 Desafio atual':'🎯 Current challenge','30 dias de controle':'30 days of control',
+
+    // Forms / actions
+    'Adicionar':'Add','Adicionar lançamento':'Add transaction','Adicione e gerencie suas movimentações financeiras':'Add and manage your financial transactions','+ Nova Movimentação':'+ New Transaction','Nova Movimentação':'New Transaction','Novo lançamento':'New transaction','Nova Meta':'New Goal','+ Nova Meta':'+ New Goal','Novo Orçamento':'New Budget','+ Novo Orçamento':'+ New Budget','Nova dívida':'New debt','Descrição':'Description','Categoria':'Category','Valor':'Amount','Valor (R$)':'Amount (R$)','Data':'Date','Tipo':'Type','Modalidade':'Mode','Ações':'Actions','Cancelar':'Cancel','Salvar':'Save','Excluir':'Delete','Editar':'Edit','Atualizar':'Update','Buscar':'Search','Filtrar':'Filter','Todos':'All','Todas':'All','Todos os tipos':'All types','Todas as categorias':'All categories','Limpar':'Clear','🗑 Limpar':'🗑 Clear','Enviar':'Send','Fechar':'Close','Confirmar':'Confirm','Remover':'Remove','Duplicar':'Duplicate','Exportar':'Export','Importar':'Import','Gerar':'Generate','PDF':'PDF','Gerar PDF':'Generate PDF','Exportar PDF':'Export PDF','📄 Exportar Relatório PDF':'📄 Export PDF Report','Baixar':'Download','Visualizar':'View','Abrir':'Open','Concluir':'Finish','Concluído':'Done','Concluída':'Completed','Pendente':'Pending','Pago':'Paid','Paga':'Paid','Vencido':'Overdue','Vence hoje':'Due today','Nenhum lançamento encontrado.':'No transactions found.',
+    'Alimentação':'Food','Transporte':'Transportation','Moradia':'Housing','Saúde':'Health','Educação':'Education','Lazer':'Leisure','Salário':'Salary','Freelance':'Freelance','Outros':'Other','Sem categoria':'Uncategorized','Receita':'Income','Despesa':'Expense','Único':'One-time','Unico':'One-time','Parcelado':'Installment','Recorrente':'Recurring','Nº de parcelas':'Number of installments','Valor de cada parcela (R$)':'Amount per installment (R$)','Configurar parcelamento':'Configure installments','💳 Configurar parcelamento':'💳 Configure installments','Configurar recorrência mensal':'Configure monthly recurrence','🔄 Configurar recorrência mensal':'🔄 Configure monthly recurrence','Repetir por':'Repeat for','Para sempre (sem fim)':'Forever (no end)','Número personalizado':'Custom number','Quantos meses?':'How many months?','3 meses':'3 months','6 meses':'6 months','12 meses (1 ano)':'12 months (1 year)','24 meses (2 anos)':'24 months (2 years)','36 meses (3 anos)':'36 months (3 years)','60 meses (5 anos)':'60 months (5 years)',
+
+    // Goals/budgets/calendar
+    'Metas Financeiras':'Financial Goals','Defina e acompanhe seus objetivos de economia':'Set and track your savings goals','Nenhuma meta criada. Clique em "+ Nova Meta".':'No goal created. Click “+ New Goal”.','Nome da Meta':'Goal Name','Valor Alvo (R$)':'Target Amount (R$)','Valor Atual (R$)':'Current Amount (R$)','Prazo':'Deadline','Cor':'Color','Verde':'Green','Teal':'Teal','Azul':'Blue','Âmbar':'Amber','Vermelho':'Red','Defina limites de gastos por categoria':'Set spending limits by category','Nenhum orçamento criado. Clique em "+ Novo Orçamento".':'No budget created. Click “+ New Budget”.','Limite Mensal (R$)':'Monthly Limit (R$)','Mês/Ano':'Month/Year','Calendário Financeiro':'Financial Calendar','Visualize todos os seus lançamentos futuros — parcelamentos, recorrências e únicos':'View all future transactions — installments, recurring and one-time','Nenhum lançamento neste mês.':'No transactions this month.','Calendário futuro':'Future calendar','Lançamentos futuros':'Future transactions',
+    'Janeiro':'January','Fevereiro':'February','Março':'March','Abril':'April','Maio':'May','Junho':'June','Julho':'July','Agosto':'August','Setembro':'September','Outubro':'October','Novembro':'November','Dezembro':'December','Hoje':'Today','Amanhã':'Tomorrow','Ontem':'Yesterday',
+
+    // AI
+    'Análise consultiva dos seus dados financeiros — com diagnóstico, previsão, risco e próximos passos':'Consultative analysis of your financial data — with diagnosis, forecast, risk and next steps','IA: 0/5 no mês':'AI: 0/5 this month','Perguntas rápidas:':'Quick questions:','💡 Perguntas rápidas:':'💡 Quick questions:','Diagnóstico':'Diagnosis','🧠 Diagnóstico':'🧠 Diagnosis','Plano do mês':'Monthly plan','🗓 Plano do mês':'🗓 Monthly plan','Cortes inteligentes':'Smart cuts','📊 Cortes inteligentes':'📊 Smart cuts','Metas e aportes':'Goals and contributions','🎯 Metas e aportes':'🎯 Goals and contributions','💰 Orçamentos':'💰 Budgets','Previsão':'Forecast','🔮 Previsão':'🔮 Forecast','Simular economia':'Simulate savings','🧮 Simular economia':'🧮 Simulate savings','💳 Dívidas':'💳 Debts','Plano 7 dias':'7-day plan','⚡ Plano 7 dias':'⚡ 7-day plan','Padrões':'Patterns','🔎 Padrões':'🔎 Patterns','Olá! Sou a IA Financeira do FinanPro':'Hi! I’m FinanPro Financial AI','Analiso seus dados financeiros em tempo real e respondo perguntas sobre gastos,':'I analyze your financial data in real time and answer questions about expenses,','metas, orçamentos e como melhorar sua saúde financeira.':'goals, budgets and how to improve your financial health.','Pergunte qualquer coisa sobre suas finanças... (Enter para enviar)':'Ask anything about your finances... (Enter to send)','Conversa reiniciada!':'Conversation restarted!','Use as sugestões acima ou escreva sua pergunta.':'Use the suggestions above or type your question.',
     'Faça um diagnóstico completo da minha saúde financeira e priorize o que devo fazer primeiro':'Give me a complete diagnosis of my financial health and prioritize what I should do first','Monte um plano prático para eu fechar este mês melhor':'Create a practical plan to finish this month better','Analise meus gastos por categoria e encontre cortes inteligentes':'Analyze my expenses by category and find smart cuts','Minhas metas estão viáveis? Calcule os aportes e riscos':'Are my goals viable? Calculate contributions and risks','Estou dentro dos orçamentos? Mostre riscos e folgas':'Am I within my budgets? Show risks and available room','Projete meu fechamento do mês se eu continuar neste ritmo':'Forecast my month-end result if I keep this pace','E se eu economizar R$ 300 este mês?':'What if I save R$300 this month?','Tenho risco com dívidas, juros ou cartão?':'Do I have risk with debts, interest or credit cards?','Aja como meu consultor financeiro e monte um plano de 7 dias':'Act as my financial advisor and create a 7-day plan','Quais padrões inteligentes você detectou nos meus gastos?':'What smart patterns do you detect in my spending?',
-    'Relatório':'Report','Relatório financeiro':'Financial report','Período':'Period','Selecionar período':'Select period','Prévia':'Preview','Modelo':'Template','Completo':'Complete','Categorias':'Categories','Movimentações':'Transactions','Gráficos':'Charts','Insights':'Insights','Calendário futuro':'Future calendar','Lançamentos futuros':'Future transactions','Hoje':'Today','Amanhã':'Tomorrow','Ontem':'Yesterday','Janeiro':'January','Fevereiro':'February','Março':'March','Abril':'April','Maio':'May','Junho':'June','Julho':'July','Agosto':'August','Setembro':'September','Outubro':'October','Novembro':'November','Dezembro':'December',
-    'Carregando...':'Loading...','Salvando...':'Saving...','Enviando...':'Sending...','Processando...':'Processing...','Nenhum dado encontrado.':'No data found.','Nenhum lançamento encontrado.':'No transactions found.','Nenhuma meta cadastrada.':'No goals added.','Nenhum orçamento cadastrado.':'No budgets added.','Sem dados para exibir.':'No data to display.','Operação realizada com sucesso.':'Operation completed successfully.','Algo deu errado. Tente novamente.':'Something went wrong. Please try again.','Campos obrigatórios':'Required fields','Preencha todos os campos obrigatórios.':'Fill in all required fields.','Valor inválido':'Invalid amount','Data inválida':'Invalid date','Sucesso':'Success','Erro':'Error','Atenção':'Attention','Aviso':'Warning','Informação':'Information','Sim':'Yes','Não':'No'
+
+    // Premium/subscription
+    'Gerencie seu plano, veja recursos premium e acompanhe a verificação da sua conta.':'Manage your plan, view premium features and track account verification.','Verificar assinatura':'Check subscription','Você está no plano Gratuito':'You are on the Free plan','Plano Gratuito':'Free Plan','Para organizar a vida financeira com os recursos essenciais.':'To organize your financial life with essential features.','IA: 0/5 perguntas | PDF: 0/1 no mês':'AI: 0/5 questions | PDF: 0/1 this month','Plano Premium':'Premium Plan','Para usar o FinanPro como uma central financeira profissional.':'To use FinanPro as a professional financial hub.','cobrança mensal':'monthly billing','Premium ativo':'Premium active','Premium ativo':'Premium active','Os recursos premium já estão liberados para esta conta.':'Premium features are already enabled for this account.','Gratuito vs Premium':'Free vs Premium','Aguardando verificação':'Awaiting verification','Recurso':'Feature','Liberado':'Enabled','IA Limitada: 5 perguntas/mês':'Limited AI: 5 questions/month','1 relatório PDF básico/mês':'1 basic PDF report/month','Mais completo':'More complete','Plano profissional para quem quer análise, automação e exportação avançada.':'Professional plan for analysis, automation and advanced export.','por mês':'per month','/mês':'/month','IA financeira ilimitada':'Unlimited financial AI','Exportação PDF avançada':'Advanced PDF export','Backup automático':'Automatic backup','Categorias inteligentes':'Smart categories','Relatórios avançados':'Advanced reports','Sem anúncios':'No ads','Assinar Premium':'Subscribe to Premium','Recurso Premium':'Premium Feature','Assine o plano Premium para desbloquear este recurso.':'Subscribe to Premium to unlock this feature.','Agora não':'Not now','Premium custa':'Premium costs','Pix ou cartão via gateway':'Pix or card through gateway','Fluxo de pagamento':'Payment flow','Usuário clica Assinar Premium':'User clicks Subscribe to Premium','O app abre o checkout configurado.':'The app opens the configured checkout.','Paga Pix/cartão':'Pays with Pix/card','O Mercado Pago processa o pagamento.':'Mercado Pago processes the payment.','Pagamento aprovado':'Payment approved','Conta vira Premium':'Account becomes Premium','O Firestore recebe status ativo e o app desbloqueia tudo.':'Firestore receives active status and the app unlocks everything.',
+
+    // Reports/PDF
+    'Relatório':'Report','Relatórios':'Reports','Escolha o tipo de relatório que deseja gerar':'Choose the type of report you want to generate','Relatório Completo':'Complete Report','Dashboard, lançamentos, metas e orçamentos em um único relatório profissional':'Dashboard, transactions, goals and budgets in one professional report','Extrato de Lançamentos':'Transaction Statement','Plano Gratuito: 1 PDF básico por mês para testar a exportação':'Free Plan: 1 basic PDF per month to test export','Relatório de Metas':'Goals Report','Progresso detalhado de cada meta com projeções e aportes necessários':'Detailed progress for each goal with projections and required contributions','Análise de Orçamentos':'Budget Analysis','Comparativo entre limites e gastos reais por categoria':'Comparison between limits and actual spending by category','📊 Relatório Completo':'📊 Complete Report','— Inclui todos os dados financeiros cadastrados.':'— Includes all registered financial data.','O arquivo será aberto na janela de impressão do navegador. Salve como PDF.':'The file will open in the browser print window. Save it as PDF.','Dados pessoais e confidenciais':'Personal and confidential data','Gerado em':'Generated on','Período':'Period','Resumo do Mês':'Monthly Summary','Despesas por Categoria':'Expenses by Category','Mês com saldo positivo!':'Month with positive balance!','Pontos de atenção:':'Attention points:',
+
+    // Legal/pages
+    'Informações importantes sobre privacidade, segurança, contato e regras de uso.':'Important information about privacy, security, contact and usage rules.','Dados financeiros cadastrados são usados para exibir dashboard, metas, orçamentos e relatórios.':'Registered financial data is used to display dashboard, goals, budgets and reports.','O login pode ser feito por e-mail/senha ou conta Google.':'Login can be done by email/password or Google account.','Dados de assinatura são usados para liberar recursos Premium; dados de cartão e Pix devem ser processados pelo gateway de pagamento.':'Subscription data is used to enable Premium features; card and Pix data must be processed by the payment gateway.','O site pode utilizar cookies e tecnologias semelhantes para funcionamento, segurança e análise.':'The site may use cookies and similar technologies for operation, security and analytics.','O FinanPro não vende dados pessoais dos usuários.':'FinanPro does not sell users’ personal data.','Termos de Uso e Isenção':'Terms of Use and Disclaimer','Ao utilizar o FinanPro, o usuário concorda em usar a plataforma de forma responsável e informar dados verdadeiros.':'By using FinanPro, the user agrees to use the platform responsibly and provide accurate data.','As informações exibidas têm caráter organizacional e informativo.':'The displayed information is organizational and informational.','O FinanPro não substitui consultoria financeira, contábil, jurídica ou profissional.':'FinanPro does not replace financial, accounting, legal or professional advice.','O usuário é responsável pelas decisões tomadas com base nos dados cadastrados.':'The user is responsible for decisions made based on registered data.','Funcionalidades podem ser atualizadas para melhorar segurança e desempenho.':'Features may be updated to improve security and performance.','O FinanPro nasceu com o objetivo de ajudar pessoas a organizarem receitas, despesas, metas e orçamentos de forma simples, moderna e acessível.':'FinanPro was created to help people organize income, expenses, goals and budgets in a simple, modern and accessible way.','O projeto foi criado por Rômulo para reunir em um único lugar controle financeiro, relatórios PDF, sincronização na nuvem e análises inteligentes.':'The project was created by Rômulo to bring financial control, PDF reports, cloud sync and smart analysis into one place.','O FinanPro é gratuito?':'Is FinanPro free?','Sim. Há plano Gratuito e plano Premium por R$ 9,90/mês.':'Yes. There is a Free plan and a Premium plan for R$9.90/month.','Meus dados ficam salvos?':'Are my data saved?','Sim, ao entrar na conta, os dados podem ser sincronizados na nuvem.':'Yes, when you sign in, your data can be synced to the cloud.','Posso acessar de outro celular?':'Can I access it from another phone?','Sim, basta usar a mesma conta.':'Yes, just use the same account.','Posso gerar PDF?':'Can I generate PDF?','Sim. No Gratuito você gera 1 PDF básico por mês; no Premium, relatórios avançados ficam liberados.':'Yes. On Free you can generate 1 basic PDF per month; on Premium, advanced reports are unlocked.','O acesso é protegido por autenticação.':'Access is protected by authentication.','Os dados são separados por usuário.':'Data is separated by user.','O usuário deve manter sua senha e conta Google protegidas.':'The user must keep their password and Google account protected.','Informações não são vendidas para terceiros.':'Information is not sold to third parties.','Para suporte, sugestões, parcerias ou dúvidas sobre privacidade, entre em contato pelo e-mail oficial:':'For support, suggestions, partnerships or privacy questions, contact the official email:','Tempo médio de resposta: até 48 horas úteis.':'Average response time: up to 48 business hours.',
+
+    // General messages
+    'Carregando...':'Loading...','Salvando...':'Saving...','Enviando...':'Sending...','Processando...':'Processing...','Nenhum dado encontrado.':'No data found.','Nenhuma meta cadastrada.':'No goals added.','Nenhum orçamento cadastrado.':'No budgets added.','Sem dados para exibir.':'No data to display.','Operação realizada com sucesso.':'Operation completed successfully.','Algo deu errado. Tente novamente.':'Something went wrong. Please try again.','Campos obrigatórios':'Required fields','Preencha todos os campos obrigatórios.':'Fill in all required fields.','Valor inválido':'Invalid amount','Data inválida':'Invalid date','Sucesso':'Success','Erro':'Error','Atenção':'Attention','Aviso':'Warning','Informação':'Information','Sim':'Yes','Não':'No'
   };
 
-  const ATTRS = ['placeholder','title','aria-label','alt','value'];
   const originalText = new WeakMap();
   const originalAttr = new WeakMap();
   let currentLang = localStorage.getItem(STORAGE_KEY) || 'pt';
   let translating = false;
-  const exactKeys = Object.keys(EN).sort((a,b)=>b.length-a.length);
+  const keys = Object.keys(EN).sort((a,b)=>b.length-a.length);
 
   function norm(v){ return String(v || '').replace(/\s+/g,' ').trim(); }
-  function escapeRegExp(str){ return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+  function escRegex(str){ return String(str).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+  function shouldSkip(node){
+    const el = node && node.nodeType === 1 ? node : node && node.parentElement;
+    if(!el) return true;
+    if(SKIP_TAGS.has(el.tagName)) return true;
+    return !!(el.closest && el.closest('script,style,noscript,textarea,code,pre,canvas,svg,[data-no-translate]'));
+  }
   function translateString(value, lang){
-    const raw = String(value || '');
-    const key = norm(raw);
-    if(!key || lang === 'pt') return raw;
-    if(EN[key]) return raw.replace(key, EN[key]);
+    const raw = String(value ?? '');
+    if(lang !== 'en') return raw;
+    const compact = norm(raw);
+    if(!compact) return raw;
+    if(EN[compact]) return raw.replace(compact, EN[compact]);
     let out = raw;
-    for(const k of exactKeys){
+    for(const k of keys){
       if(k.length < 3) continue;
-      if(out.includes(k)) out = out.replace(new RegExp(escapeRegExp(k), 'g'), EN[k]);
+      if(out.includes(k)) out = out.replace(new RegExp(escRegex(k), 'g'), EN[k]);
     }
     return out;
   }
-  function shouldSkip(node){
-    const el = node.nodeType === 1 ? node : node.parentElement;
-    if(!el) return true;
-    if(SKIP_TAGS.has(el.tagName)) return true;
-    if(el.closest && el.closest('script,style,noscript,textarea,code,pre,canvas,svg')) return true;
-    return false;
-  }
-  function translateTextNode(node, lang){
+  function translateTextNode(node, lang, forceOriginal){
     if(!node || !node.nodeValue) return;
+    if(forceOriginal) originalText.set(node, node.nodeValue);
     if(!originalText.has(node)) originalText.set(node, node.nodeValue);
     const original = originalText.get(node);
-    node.nodeValue = lang === 'pt' ? original : translateString(original, lang);
+    node.nodeValue = lang === 'pt' ? original : translateString(original, 'en');
   }
   function translateAttrs(el, lang){
-    if(!el || !el.getAttribute) return;
+    if(!el || !el.getAttribute || shouldSkip(el)) return;
     let map = originalAttr.get(el);
     if(!map){ map = {}; originalAttr.set(el, map); }
     for(const attr of ATTRS){
@@ -5931,7 +5982,7 @@ document.addEventListener('keydown', function(event) {
       if(attr === 'value' && !['BUTTON','INPUT'].includes(el.tagName)) continue;
       if(!(attr in map)) map[attr] = el.getAttribute(attr);
       const original = map[attr];
-      el.setAttribute(attr, lang === 'pt' ? original : translateString(original, lang));
+      el.setAttribute(attr, lang === 'pt' ? original : translateString(original, 'en'));
     }
   }
   function updateMeta(lang){
@@ -5942,7 +5993,7 @@ document.addEventListener('keydown', function(event) {
     const ogTitle = document.querySelector('meta[property="og:title"]');
     if(ogTitle) ogTitle.setAttribute('content', lang === 'en' ? 'FinanPro | Personal finance control' : 'FinanPro | Controle financeiro pessoal');
     const ogDesc = document.querySelector('meta[property="og:description"]');
-    if(ogDesc) ogDesc.setAttribute('content', lang === 'en' ? 'Organize expenses, goals, debts and your monthly budget for free in a professional financial hub.' : 'Organize gastos, metas, dívidas e orçamento mensal gratuitamente em uma central financeira profissional.');
+    if(ogDesc) ogDesc.setAttribute('content', lang === 'en' ? 'Organize expenses, goals, debts and your monthly budget for free in a professional finance hub.' : 'Organize gastos, metas, dívidas e orçamento mensal gratuitamente em uma central financeira profissional.');
   }
   function translateRoot(root, lang){
     if(!root || translating) return;
@@ -5951,23 +6002,27 @@ document.addEventListener('keydown', function(event) {
       updateMeta(lang);
       const base = root.nodeType === 1 ? root : document.body;
       if(!shouldSkip(base)) translateAttrs(base, lang);
-      base.querySelectorAll && base.querySelectorAll('*').forEach(el => { if(!shouldSkip(el)) translateAttrs(el, lang); });
+      if(base.querySelectorAll) base.querySelectorAll('*').forEach(el => translateAttrs(el, lang));
       const walker = document.createTreeWalker(base, NodeFilter.SHOW_TEXT, {
         acceptNode(node){
           if(shouldSkip(node)) return NodeFilter.FILTER_REJECT;
           return norm(node.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
         }
       });
-      const nodes=[]; while(walker.nextNode()) nodes.push(walker.currentNode);
+      const nodes=[];
+      while(walker.nextNode()) nodes.push(walker.currentNode);
       nodes.forEach(node => translateTextNode(node, lang));
       document.querySelectorAll('[data-fp-lang]').forEach(btn => btn.classList.toggle('active', btn.dataset.fpLang === lang));
     } finally { translating = false; }
   }
+
   window.setFinanProLanguage = function(lang){
     currentLang = lang === 'en' ? 'en' : 'pt';
     localStorage.setItem(STORAGE_KEY, currentLang);
     translateRoot(document.body, currentLang);
   };
+  window.setAppLanguage = window.setFinanProLanguage;
+
   function createTools(){
     if(document.querySelector('.fp-floating-tools')) return;
     const tools = document.createElement('div');
@@ -5979,8 +6034,10 @@ document.addEventListener('keydown', function(event) {
     document.querySelectorAll('[data-fp-lang]').forEach(btn => {
       if(btn.dataset.fpI18nBound) return;
       btn.dataset.fpI18nBound = '1';
-      btn.addEventListener('click', function(event){
-        event.preventDefault(); event.stopPropagation(); window.setFinanProLanguage(btn.dataset.fpLang);
+      btn.addEventListener('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        window.setFinanProLanguage(btn.dataset.fpLang);
       }, true);
     });
   }
@@ -5990,35 +6047,67 @@ document.addEventListener('keydown', function(event) {
     const iconUrl = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgIcon);
     const manifest = {name:'FinanPro',short_name:'FinanPro',description:'Personal finance control with AI',start_url:'.',scope:'.',display:'standalone',background_color:'#07110d',theme_color:'#166534',icons:[{src:iconUrl,sizes:'192x192',type:'image/svg+xml',purpose:'any maskable'},{src:iconUrl,sizes:'512x512',type:'image/svg+xml',purpose:'any maskable'}]};
     const blob = new Blob([JSON.stringify(manifest)], {type:'application/manifest+json'});
-    const link = document.createElement('link'); link.rel='manifest'; link.href=URL.createObjectURL(blob); document.head.appendChild(link);
+    const link = document.createElement('link');
+    link.rel = 'manifest';
+    link.href = URL.createObjectURL(blob);
+    document.head.appendChild(link);
   }
   let deferredPrompt = null;
   function setupInstallPrompt(){
-    const installBtn = document.getElementById('fpInstallAppBtn'); if(!installBtn) return;
-    window.addEventListener('beforeinstallprompt', event => { event.preventDefault(); deferredPrompt = event; installBtn.classList.add('show'); });
+    const installBtn = document.getElementById('fpInstallAppBtn');
+    if(!installBtn) return;
+    window.addEventListener('beforeinstallprompt', event => {
+      event.preventDefault();
+      deferredPrompt = event;
+      installBtn.classList.add('show');
+    });
     installBtn.addEventListener('click', async () => {
-      if(deferredPrompt){ deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; installBtn.classList.remove('show'); }
-      else alert(currentLang === 'en' ? 'To install: on mobile, tap Share and then Add to Home Screen.' : 'Para instalar: no celular, toque em Compartilhar e depois em “Adicionar à Tela de Início”.');
+      if(deferredPrompt){
+        deferredPrompt.prompt();
+        await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        installBtn.classList.remove('show');
+      } else {
+        alert(currentLang === 'en' ? 'To install: on mobile, tap Share and then “Add to Home Screen”.' : 'Para instalar: no celular, toque em Compartilhar e depois em “Adicionar à Tela de Início”.');
+      }
     });
   }
+
   function boot(){
-    createTools(); bindLanguageButtons(); setupManifest(); setupInstallPrompt(); window.setFinanProLanguage(currentLang);
+    createTools();
+    bindLanguageButtons();
+    setupManifest();
+    setupInstallPrompt();
+    window.setFinanProLanguage(localStorage.getItem(STORAGE_KEY) || 'pt');
     const observer = new MutationObserver(mutations => {
       if(translating) return;
       bindLanguageButtons();
       if(currentLang !== 'en') return;
-      const changed = [];
+      const changed = new Set();
       for(const m of mutations){
-        m.addedNodes && m.addedNodes.forEach(node => { if(node.nodeType === 1 || node.nodeType === 3) changed.push(node.nodeType === 3 ? node.parentElement || document.body : node); });
-        if(m.type === 'attributes' && m.target) changed.push(m.target);
+        if(m.type === 'characterData'){
+          if(m.target && m.target.nodeValue && !shouldSkip(m.target)){
+            originalText.set(m.target, m.target.nodeValue);
+            changed.add(m.target.parentElement || document.body);
+          }
+        }
+        if(m.type === 'childList'){
+          m.addedNodes.forEach(node => {
+            if(node.nodeType === 3 && node.parentElement) changed.add(node.parentElement);
+            if(node.nodeType === 1) changed.add(node);
+          });
+        }
+        if(m.type === 'attributes' && m.target) changed.add(m.target);
       }
-      if(changed.length) setTimeout(() => changed.forEach(node => translateRoot(node, currentLang)), 0);
+      if(changed.size) setTimeout(() => changed.forEach(node => translateRoot(node, currentLang)), 0);
     });
-    observer.observe(document.body, {childList:true, subtree:true, attributes:true, attributeFilter:ATTRS});
+    observer.observe(document.body, {childList:true, subtree:true, characterData:true, attributes:true, attributeFilter:ATTRS});
   }
+
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
 })();
 </script>
+
 </body>
 </html>  
