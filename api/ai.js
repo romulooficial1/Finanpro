@@ -32,7 +32,9 @@ ${message}
 
   const data = await r.json();
 
-  if (!res.ok) {
-  addIAMessage('ERRO: ' + JSON.stringify(data), 'bot');
-  console.error(data);
+  if (!r.ok) {
+  return res.status(r.status).json({
+    error: data.error?.message || "Erro na OpenAI",
+    details: data
+  });
 }
