@@ -5019,13 +5019,9 @@ window.startPremiumCheckout = assinarPremium;
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         message: text,
-        financialData: {
-          transactions: window.transactions || [],
-          expenses: window.expenses || [],
-          incomes: window.incomes || [],
-          budgets: window.budgets || [],
-          goals: window.goals || []
-        }
+        financialData: (typeof buildFinancialData === 'function')
+          ? buildFinancialData(text)
+          : (window.getFinancialData ? window.getFinancialData() : {})
       })
     });
 
