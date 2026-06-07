@@ -58,10 +58,12 @@ Formato da resposta:
 - Nunca invente dados.
 
 Estrutura da resposta:
-📊 Diagnóstico
-✅ Principal ponto positivo
-⚠️ Principal atenção
-🎯 O que fazer agora
+- No máximo 4 tópicos.
+- Cada tópico com no máximo 1 frase.
+- Seja parecido com um aplicativo financeiro moderno.
+- Evite relatórios detalhados.
+- A resposta ideal deve ter entre 40 e 80 palavras.
+- Se a resposta ultrapassar 80 palavras, resuma.
 
 Dados do usuário:
 ${JSON.stringify(financialData || {})}
