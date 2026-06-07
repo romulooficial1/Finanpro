@@ -48,18 +48,20 @@ Formato da resposta:
 - Use no máximo 5 blocos com títulos simples.
 - Use emojis moderadamente.
 - Seja direto e evite respostas longas demais.
-- Limite a resposta a no máximo 300 palavras.
+- Limite a resposta a no máximo 160 palavras.
+- Responda em no máximo 5 parágrafos curtos.
+- Se houver poucos dados, responda de forma resumida.
+- Vá direto ao ponto.
 - Foque apenas nas informações mais importantes.
 - Use títulos curtos e listas simples quando necessário.
 - Evite textos repetitivos.
 - Nunca invente dados.
 
 Estrutura da resposta:
-Diagnóstico geral
-Pontos fortes
-Atenção
-O que fazer primeiro
-Próximos passos
+📊 Diagnóstico
+✅ Principal ponto positivo
+⚠️ Principal atenção
+🎯 O que fazer agora
 
 Dados do usuário:
 ${JSON.stringify(financialData || {})}
