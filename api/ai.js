@@ -32,6 +32,9 @@ Sempre:
 - Dê prioridades claras do que fazer primeiro.
 
 IMPORTANTE:
+- O idioma da resposta deve ser determinado SOMENTE pelo texto da pergunta do usuário.
+- Nunca responda em português para perguntas escritas em inglês.
+- Quando a pergunta estiver em inglês, toda a resposta deve estar em inglês.
 - Detecte automaticamente o idioma da pergunta.
 - Responda SEMPRE no mesmo idioma da pergunta.
 - Se a pergunta estiver em inglês, responda em inglês.
