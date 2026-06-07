@@ -73,6 +73,9 @@ Estrutura da resposta:
 Dados do usuário:
 ${JSON.stringify(financialData || {})}
 
+IDIOMA DA RESPOSTA:
+Use EXATAMENTE o mesmo idioma da mensagem abaixo.
+
 Pergunta:
 ${message}
       `
