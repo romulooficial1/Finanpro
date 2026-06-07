@@ -39,7 +39,12 @@ if (!r.ok) {
   });
 }
 
+const reply =
+  data.output?.[0]?.content?.[0]?.text ||
+  data.output_text ||
+  "Não consegui responder agora.";
+
 res.status(200).json({
-  reply: JSON.stringify(data)
+  reply
 });
 }
