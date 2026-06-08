@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Como sair das dívidas com planejamento | Blog FinanPro</title>
+  <meta name="description" content="Organize suas dívidas, priorize juros altos, negocie melhor e monte um plano possível para recuperar sua vida financeira.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#07110d">
+  <meta property="og:title" content="Como sair das dívidas com planejamento | Blog FinanPro">
+  <meta property="og:description" content="Organize suas dívidas, priorize juros altos, negocie melhor e monte um plano possível para recuperar sua vida financeira.">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="FinanPro">
+  <link rel="canonical" href="como-sair-das-dividas-com-planejamento.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07110d;
+      --surface: rgba(255,255,255,.055);
+      --surface-strong: rgba(255,255,255,.09);
+      --card: rgba(255,255,255,.075);
+      --card-2: rgba(255,255,255,.045);
+      --line: rgba(255,255,255,.13);
+      --line-strong: rgba(74,222,128,.32);
+      --ink: #ffffff;
+      --muted: rgba(255,255,255,.72);
+      --muted-2: rgba(255,255,255,.58);
+      --green: #4ade80;
+      --green-2: #22c55e;
+      --deep: #052e16;
+      --teal: #2dd4bf;
+      --amber: #facc15;
+      --radius: 8px;
+      --shadow: 0 24px 70px rgba(0,0,0,.28);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 16% 12%, rgba(34,197,94,.22), transparent 28%),
+        radial-gradient(circle at 82% 8%, rgba(45,212,191,.16), transparent 26%),
+        radial-gradient(circle at 50% 76%, rgba(34,197,94,.12), transparent 34%),
+        linear-gradient(180deg,#07110d 0%,#0b1512 46%,#07100d 100%);
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(120deg, transparent 0 30%, rgba(34,197,94,.08) 45%, transparent 60%),
+        radial-gradient(1px 1px at 12% 18%, rgba(86,211,100,.85), transparent 100%),
+        radial-gradient(1px 1px at 30% 34%, rgba(86,211,100,.45), transparent 100%),
+        radial-gradient(1.4px 1.4px at 70% 25%, rgba(45,212,191,.55), transparent 100%),
+        radial-gradient(1px 1px at 88% 58%, rgba(86,211,100,.5), transparent 100%);
+    }
+    a { color: inherit; }
+    .fp-blog-shell {
+      position: relative;
+      z-index: 1;
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 20px 0 42px;
+    }
+    .fp-nav {
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 34px;
+    }
+    .fp-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      font-size: 19px;
+      color: #fff;
+      text-decoration: none;
+    }
+    .fp-logo-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg,#22c55e,#0f766e);
+      color: #fff;
+      box-shadow: 0 18px 36px rgba(34,197,94,.24);
+    }
+    .fp-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 13px;
+      font-weight: 800;
+      color: rgba(255,255,255,.74);
+    }
+    .fp-nav-links a {
+      text-decoration: none;
+    }
+    .fp-nav-links a:hover {
+      color: var(--green);
+    }
+    .fp-btn {
+      min-height: 43px;
+      border-radius: 11px;
+      border: 1px solid rgba(255,255,255,.14);
+      padding: 0 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      font-weight: 900;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      white-space: nowrap;
+    }
+    .fp-btn:hover {
+      transform: translateY(-2px);
+    }
+    .fp-btn.primary {
+      border: 0;
+      color: var(--deep);
+      background: linear-gradient(135deg,#4ade80,#22c55e);
+      box-shadow: 0 20px 50px rgba(34,197,94,.28);
+    }
+    .fp-btn.ghost {
+      background: rgba(255,255,255,.04);
+      color: #fff;
+    }
+    .fp-hero {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(320px, .65fr);
+      gap: 34px;
+      align-items: end;
+      padding: 20px 0 38px;
+    }
+    .fp-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #bbf7d0;
+      background: rgba(34,197,94,.10);
+      border: 1px solid rgba(34,197,94,.18);
+      border-radius: 99px;
+      padding: 9px 13px;
+      font-size: 13px;
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(40px, 6vw, 70px);
+      line-height: .98;
+      letter-spacing: 0;
+      color: #fff;
+    }
+    h1 span { color: var(--green); }
+    .fp-subtitle {
+      margin: 20px 0 0;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.65;
+    }
+    .fp-hero-panel {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+    .fp-hero-panel strong {
+      display: block;
+      color: var(--green);
+      font-size: 26px;
+      margin-bottom: 8px;
+    }
+    .fp-hero-panel p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+    .fp-card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      margin: 10px 0 42px;
+    }
+    .fp-article-card {
+      display: flex;
+      min-height: 290px;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px;
+      background: var(--card);
+      box-shadow: 0 20px 50px rgba(0,0,0,.18);
+    }
+    .fp-article-card h2 {
+      margin: 10px 0 10px;
+      font-size: 22px;
+      line-height: 1.18;
+      color: #fff;
+    }
+    .fp-article-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+    .fp-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: rgba(255,255,255,.68);
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .fp-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      border: 1px solid rgba(74,222,128,.22);
+      border-radius: 99px;
+      padding: 0 10px;
+      background: rgba(34,197,94,.08);
+      color: #bbf7d0;
+    }
+    .fp-article-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      gap: 28px;
+      align-items: start;
+      margin-bottom: 42px;
+    }
+    .fp-article {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,.94);
+      color: #17211c;
+      padding: clamp(22px, 4vw, 46px);
+      box-shadow: var(--shadow);
+    }
+    .fp-article .fp-meta {
+      color: #516058;
+      margin-bottom: 18px;
+    }
+    .fp-article .fp-pill {
+      color: #166534;
+      border-color: rgba(22,101,52,.22);
+      background: rgba(34,197,94,.10);
+    }
+    .fp-article h1 {
+      color: #17211c;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.02;
+      margin-bottom: 18px;
+    }
+    .fp-article h2 {
+      color: #166534;
+      font-size: clamp(24px, 3vw, 32px);
+      line-height: 1.16;
+      margin: 34px 0 12px;
+    }
+    .fp-article p {
+      color: #2d3d35;
+      font-size: 17px;
+      line-height: 1.78;
+      margin: 0 0 16px;
+    }
+    .fp-article ul {
+      margin: 10px 0 18px;
+      padding-left: 22px;
+      color: #2d3d35;
+      line-height: 1.75;
+      font-size: 16px;
+    }
+    .fp-article li { margin: 6px 0; }
+    .fp-example {
+      border-left: 4px solid #22c55e;
+      border-radius: 8px;
+      background: #f0fdf4;
+      padding: 16px 18px;
+      margin: 16px 0 22px;
+      color: #1f3d2d;
+      line-height: 1.65;
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .fp-article-cta {
+      border: 1px solid rgba(22,101,52,.18);
+      border-radius: 14px;
+      background: #f5faf5;
+      padding: 18px;
+      margin-top: 28px;
+    }
+    .fp-article-cta p {
+      margin-bottom: 14px;
+      font-size: 15px;
+    }
+    .fp-side {
+      display: grid;
+      gap: 14px;
+      position: sticky;
+      top: 18px;
+    }
+    .fp-side-card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--surface);
+      padding: 18px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.18);
+    }
+    .fp-side-card h2 {
+      margin: 0 0 12px;
+      color: #fff;
+      font-size: 18px;
+    }
+    .fp-side-card p,
+    .fp-side-card li {
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+    .fp-side-card ul {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .fp-side-card a {
+      color: var(--green);
+      font-weight: 900;
+      text-decoration: none;
+    }
+    .fp-side-card a:hover { text-decoration: underline; }
+    .fp-footer {
+      border-top: 1px solid var(--line);
+      margin-top: 48px;
+      padding: 28px 0 8px;
+      color: var(--muted-2);
+      text-align: center;
+    }
+    .fp-footer strong {
+      display: block;
+      color: #fff;
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+    .fp-footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px 22px;
+      margin-bottom: 12px;
+      font-weight: 900;
+      font-size: 14px;
+    }
+    .fp-footer-links a {
+      color: var(--green);
+      text-decoration: none;
+    }
+    .fp-footer-links a:hover { text-decoration: underline; }
+    @media (max-width: 980px) {
+      .fp-nav {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .fp-nav-links {
+        flex-wrap: wrap;
+        gap: 14px 20px;
+      }
+      .fp-hero,
+      .fp-article-layout {
+        grid-template-columns: 1fr;
+      }
+      .fp-side {
+        position: static;
+      }
+      .fp-card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    @media (max-width: 620px) {
+      .fp-blog-shell {
+        width: min(100% - 28px, 1180px);
+        padding-top: 14px;
+      }
+      h1 {
+        font-size: 40px;
+      }
+      .fp-card-grid {
+        grid-template-columns: 1fr;
+      }
+      .fp-article-card {
+        min-height: auto;
+      }
+      .fp-btn {
+        width: 100%;
+      }
+      .fp-article {
+        border-radius: 14px;
+      }
+    }
+  </style>
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Como sair das dívidas com planejamento",
+  "description": "Organize suas dívidas, priorize juros altos, negocie melhor e monte um plano possível para recuperar sua vida financeira.",
+  "articleSection": "Dívidas",
+  "keywords": "sair das dívidas, planejamento financeiro, renegociação",
+  "timeRequired": "PT9M",
+  "datePublished": "2026-06-08",
+  "dateModified": "2026-06-08",
+  "inLanguage": "pt-BR",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "como-sair-das-dividas-com-planejamento.html"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "FinanPro"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "FinanPro"
+  },
+  "articleBody": "Sair das dívidas exige método. A pior estratégia é pagar o que grita mais alto sem entender juros, prazos e impacto no orçamento. Com planejamento, você transforma uma situação confusa em uma sequência de decisões.\n\nO primeiro passo é abandonar a culpa como ferramenta de gestão. Culpa paralisa; números organizados ajudam a agir.\n\nListe tudo o que deve\n\nInclua cartão, cheque especial, empréstimos, financiamentos, carnês, contas atrasadas e valores emprestados de pessoas próximas. O plano só funciona quando a lista está completa.\n\nPara cada dívida, anote:\n\ncredor\n\nsaldo devedor\n\ntaxa de juros\n\nvalor da parcela\n\natraso existente\n\npossibilidade de negociação\n\nDuas dívidas de R$ 1.000 não são iguais: uma no cartão rotativo pode crescer muito mais rápido do que uma parcela sem juros.\n\nPriorize juros altos\n\nDívidas com juros altos devem receber atenção primeiro porque crescem enquanto você tenta resolver outras pendências. Cartão rotativo e cheque especial costumam ser os maiores vilões.\n\nUma ordem comum de prioridade:\n\ncontas essenciais que podem cortar serviço\n\ndívidas com garantia de bem\n\ncartão e cheque especial\n\nempréstimos pessoais\n\nparcelamentos com juros menores\n\nSe sobram R$ 400 para quitar dívidas, direcionar R$ 300 para a mais cara e R$ 100 para manter acordos mínimos pode ser melhor do que dividir igualmente.\n\nNegocie com base no seu orçamento\n\nNão aceite uma parcela que parece boa hoje mas não cabe nos próximos meses. Uma renegociação ruim apenas troca uma dívida antiga por um novo atraso.\n\nAntes de fechar acordo, confirme:\n\nparcela máxima que cabe no mês\n\nvalor total pago ao final\n\ndesconto para pagamento à vista\n\njuros do novo contrato\n\ndata de vencimento adequada ao salário\n\nSe sua sobra real é R$ 320, uma parcela de R$ 450 vai empurrar você para novo atraso. Negocie prazo maior ou desconto melhor.\n\nDívidas podem ser resolvidas com ordem, negociação e constância. O plano ideal é aquele que reduz juros sem destruir sua rotina básica.\n\nNo FinanPro, você pode registrar dívidas, acompanhar parcelas e enxergar quanto sobra para acelerar a quitação."
+}</script>
+</head>
+<body>
+  <div class="fp-blog-shell">
+    
+    <header class="fp-nav">
+      <a class="fp-logo" href="../index.html" aria-label="FinanPro início">
+        <span class="fp-logo-mark">F</span>
+        <span>FinanPro</span>
+      </a>
+      <nav class="fp-nav-links" aria-label="Navegação pública">
+        <a href="../index.html#recursos">Recursos</a>
+        <a href="../index.html#planos">Planos</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../index.html#entrar">Entrar</a>
+      </nav>
+    </header>
+    <main class="fp-article-layout">
+      <article class="fp-article">
+        <div class="fp-meta">
+          <span class="fp-pill">Dívidas</span>
+          <span>9 min de leitura</span>
+        </div>
+        <h1>Como sair das dívidas com planejamento</h1>
+        <p>Sair das dívidas exige método. A pior estratégia é pagar o que grita mais alto sem entender juros, prazos e impacto no orçamento. Com planejamento, você transforma uma situação confusa em uma sequência de decisões.</p>
+        <p>O primeiro passo é abandonar a culpa como ferramenta de gestão. Culpa paralisa; números organizados ajudam a agir.</p>
+
+          <h2>Liste tudo o que deve</h2>
+          <p>Inclua cartão, cheque especial, empréstimos, financiamentos, carnês, contas atrasadas e valores emprestados de pessoas próximas. O plano só funciona quando a lista está completa.</p>
+          <p><strong>Para cada dívida, anote:</strong></p>
+          <ul>
+            <li>credor</li>
+            <li>saldo devedor</li>
+            <li>taxa de juros</li>
+            <li>valor da parcela</li>
+            <li>atraso existente</li>
+            <li>possibilidade de negociação</li>
+          </ul>
+          <div class="fp-example">Duas dívidas de R$ 1.000 não são iguais: uma no cartão rotativo pode crescer muito mais rápido do que uma parcela sem juros.</div>
+
+          <h2>Priorize juros altos</h2>
+          <p>Dívidas com juros altos devem receber atenção primeiro porque crescem enquanto você tenta resolver outras pendências. Cartão rotativo e cheque especial costumam ser os maiores vilões.</p>
+          <p><strong>Uma ordem comum de prioridade:</strong></p>
+          <ul>
+            <li>contas essenciais que podem cortar serviço</li>
+            <li>dívidas com garantia de bem</li>
+            <li>cartão e cheque especial</li>
+            <li>empréstimos pessoais</li>
+            <li>parcelamentos com juros menores</li>
+          </ul>
+          <div class="fp-example">Se sobram R$ 400 para quitar dívidas, direcionar R$ 300 para a mais cara e R$ 100 para manter acordos mínimos pode ser melhor do que dividir igualmente.</div>
+
+          <h2>Negocie com base no seu orçamento</h2>
+          <p>Não aceite uma parcela que parece boa hoje mas não cabe nos próximos meses. Uma renegociação ruim apenas troca uma dívida antiga por um novo atraso.</p>
+          <p><strong>Antes de fechar acordo, confirme:</strong></p>
+          <ul>
+            <li>parcela máxima que cabe no mês</li>
+            <li>valor total pago ao final</li>
+            <li>desconto para pagamento à vista</li>
+            <li>juros do novo contrato</li>
+            <li>data de vencimento adequada ao salário</li>
+          </ul>
+          <div class="fp-example">Se sua sobra real é R$ 320, uma parcela de R$ 450 vai empurrar você para novo atraso. Negocie prazo maior ou desconto melhor.</div>
+        <h2>Conclusão</h2>
+        <p>Dívidas podem ser resolvidas com ordem, negociação e constância. O plano ideal é aquele que reduz juros sem destruir sua rotina básica.</p>
+        <div class="fp-article-cta">
+          <p>No FinanPro, você pode registrar dívidas, acompanhar parcelas e enxergar quanto sobra para acelerar a quitação.</p>
+          <a class="fp-btn primary" href="../index.html#entrar">Conhecer o FinanPro</a>
+        </div>
+      </article>
+      <aside class="fp-side" aria-label="Navegação do artigo">
+        <div class="fp-side-card">
+          <a class="fp-btn ghost" href="../blog.html">Voltar ao blog</a>
+        </div>
+        <div class="fp-side-card">
+          <h2>Artigos relacionados</h2>
+          <ul>
+            <li><a href="como-usar-cartao-de-credito-com-inteligencia.html">Como usar cartão de crédito com inteligência</a></li>
+            <li><a href="como-controlar-gastos-mensais.html">Como controlar gastos mensais</a></li>
+            <li><a href="guia-de-planejamento-financeiro-pessoal.html">Guia de planejamento financeiro pessoal</a></li>
+          </ul>
+        </div>
+        <div class="fp-side-card">
+          <h2>Organize na prática</h2>
+          <p>Use os conceitos do artigo para revisar seus lançamentos, metas e orçamento antes do próximo mês começar.</p>
+        </div>
+      </aside>
+    </main>
+    
+    <footer class="fp-footer">
+      <strong>FinanPro</strong>
+      <nav class="fp-footer-links" aria-label="Links públicos">
+        <a href="../index.html">Início</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../index.html#planos">Planos</a>
+        <a href="../index.html#entrar">Entrar</a>
+      </nav>
+      <small>© 2026 FinanPro. Todos os direitos reservados.</small>
+    </footer>
+  </div>
+</body>
+</html>
