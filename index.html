@@ -17,13 +17,90 @@
       script.async = true;
       script.crossOrigin = 'anonymous';
       script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + window.FINANPRO_ADSENSE_CLIENT;
+      script.onerror = function () {
+        script.remove();
+        console.warn('FinanPro: anuncios indisponiveis no momento.');
+      };
       document.head.appendChild(script);
     };
   </script>  
+  <script>
+    (function () {
+      'use strict';
+
+      const authLoadingMessage = 'Serviço de autenticação carregando. Tente novamente em alguns segundos.';
+
+      function byId(id) {
+        return document.getElementById(id);
+      }
+
+      function translate(message) {
+        return typeof window.finanproTranslateText === 'function'
+          ? window.finanproTranslateText(message)
+          : message;
+      }
+
+      function setMessage(id, message, type) {
+        const el = byId(id);
+        if (!el) return;
+        el.textContent = translate(message);
+        el.className = 'auth-message ' + (type || 'info');
+      }
+
+      function showAuthView(view) {
+        const signin = byId('signinView');
+        const signup = byId('signupView');
+        const forgot = byId('forgotPasswordView');
+        if (signin) signin.style.display = view === 'signin' ? 'block' : 'none';
+        if (signup) signup.style.display = view === 'signup' ? 'block' : 'none';
+        if (forgot) forgot.style.display = view === 'forgot' ? 'block' : 'none';
+        byId('signupForm')?.classList.toggle('active', view === 'signup');
+        byId('forgotPasswordForm')?.classList.toggle('active', view === 'forgot');
+        if (view === 'signin' && byId('signinMessage')) byId('signinMessage').className = 'auth-message hidden';
+      }
+
+      window.showSignIn = window.showSignIn || function () { showAuthView('signin'); };
+      window.showSignUp = window.showSignUp || function () { showAuthView('signup'); };
+      window.showForgotPassword = window.showForgotPassword || function () { showAuthView('forgot'); };
+      window.handleSignIn = window.handleSignIn || function (event) {
+        event?.preventDefault();
+        setMessage('signinMessage', authLoadingMessage, 'info');
+      };
+      window.handleSignUp = window.handleSignUp || function (event) {
+        event?.preventDefault();
+        setMessage('signupMessage', authLoadingMessage, 'info');
+      };
+      window.handleForgotPassword = window.handleForgotPassword || function (event) {
+        event?.preventDefault();
+        setMessage('forgotMessage', authLoadingMessage, 'info');
+      };
+      window.handleGoogleSignIn = window.handleGoogleSignIn || function () {
+        setMessage('signinMessage', authLoadingMessage, 'info');
+      };
+      window.handleLogout = window.handleLogout || function () {
+        document.body?.classList.add('auth-lock');
+        showAuthView('signin');
+      };
+
+      window.addEventListener('error', function (event) {
+        const target = event.target;
+        if (!target || target === window) return;
+        const tag = String(target.tagName || '').toLowerCase();
+        if (!['script', 'link', 'img'].includes(tag)) return;
+        console.warn('FinanPro: recurso externo/local nao carregou.', target.src || target.href || target.currentSrc || target.outerHTML);
+      }, true);
+
+      window.addEventListener('unhandledrejection', function (event) {
+        console.warn('FinanPro: operacao assincrona falhou.', event.reason);
+      });
+    })();
+  </script>
   <meta property="og:description" content="Organize gastos, metas, dívidas e orçamento mensal gratuitamente em uma central financeira profissional.">  
   <meta property="og:type" content="website">  
   <title>FinanPro | Controle financeiro pessoal</title>  
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">  
   <style>  
     /* ===================================================  
@@ -302,7 +379,7 @@
     .legal-links a, .legal-links button { color: var(--muted); text-decoration: none; font-weight: 700; background: none; border: none; cursor: pointer; padding: 0; font: inherit; }  
     .legal-links a:hover, .legal-links button:hover { color: var(--green); }  
   
-    main { padding: 26px; min-width: 0; overflow-y: auto; }  
+    .app > main { padding: 26px; min-width: 0; overflow-y: auto; }  
   
     .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 22px; }  
     .title-block h1 { margin: 0; font-size: clamp(26px, 3vw, 38px); line-height: 1.05; color: var(--ink); }  
@@ -930,7 +1007,7 @@
       .auth-panel { min-height: auto; }  
     }  
     @media (max-width: 720px) {  
-      main { padding: 18px; }  
+      .app > main { padding: 18px; }  
       .topbar { align-items: flex-start; flex-direction: column; }  
       .top-actions { justify-content: stretch; width: 100%; }  
       .top-actions .btn { flex: 1; }  
@@ -1999,8 +2076,8 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
             <h2>Acessar conta</h2>
             <p>Entre com e-mail e senha ou use sua conta Google para sincronizar seus dados.</p>
             <form class="auth-form active" id="signinForm" onsubmit="handleSignIn(event)">
-              <label>Email<input type="email" placeholder="seu@email.com" id="signinEmail" required /></label>
-              <label>Senha<input type="password" placeholder="••••••••" id="signinPassword" required /></label>
+              <label>Email<input type="email" placeholder="seu@email.com" id="signinEmail" autocomplete="email" required /></label>
+              <label>Senha<input type="password" placeholder="••••••••" id="signinPassword" autocomplete="current-password" required /></label>
               <button type="submit" class="btn primary" id="signinBtn">Entrar</button>
               <button type="button" id="googleBtn" onclick="handleGoogleSignIn()" style="width:100%;margin-top:10px;background:#ffffff;color:#202124;border:1px solid #dadce0;border-radius:12px;padding:14px 16px;font-size:15px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;box-sizing:border-box;">
                 <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.6 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12S17.4 12 24 12c3 0 5.7 1.1 7.8 3l5.7-5.7C34.1 6.1 29.3 4 24 4C12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.3-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3 0 5.7 1.1 7.8 3l5.7-5.7C34.1 6.1 29.3 4 24 4c-7.7 0-14.3 4.3-17.7 10.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 10-2 13.4-5.2l-6.2-5.2c-2 1.5-4.5 2.4-7.2 2.4c-5.2 0-9.6-3.3-11.1-8H6.5C9.8 36.8 16.3 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-1.1 3.1-3.3 5.5-6.1 7.2l6.2 5.2C39.2 36.9 44 31 44 24c0-1.3-.1-2.3-.4-3.5z"/></svg>
@@ -2018,10 +2095,10 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
             <h2>Criar conta</h2>
             <p>Comece a organizar suas finanças agora</p>
             <form class="auth-form" id="signupForm" onsubmit="handleSignUp(event)">
-              <label>Nome Completo<input type="text" placeholder="Seu Nome" id="signupName" required /></label>
-              <label>Email<input type="email" placeholder="seu@email.com" id="signupEmail" required /></label>
-              <label>Senha<input type="password" placeholder="Mínimo 6 caracteres" id="signupPassword" required minlength="6" /></label>
-              <label>Confirmar Senha<input type="password" placeholder="Repita a senha" id="signupConfirmPassword" required /></label>
+              <label>Nome Completo<input type="text" placeholder="Seu Nome" id="signupName" autocomplete="name" required /></label>
+              <label>Email<input type="email" placeholder="seu@email.com" id="signupEmail" autocomplete="email" required /></label>
+              <label>Senha<input type="password" placeholder="Mínimo 6 caracteres" id="signupPassword" autocomplete="new-password" required minlength="6" /></label>
+              <label>Confirmar Senha<input type="password" placeholder="Repita a senha" id="signupConfirmPassword" autocomplete="new-password" required /></label>
               <label class="auth-check"><input type="checkbox" id="agreeTerms" required /> Concordo com os termos e privacidade</label>
               <button type="submit" class="btn primary" id="signupBtn">Criar Conta</button>
               <div class="auth-message hidden" id="signupMessage"></div>
@@ -2032,7 +2109,7 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
             <h2>Recuperar senha</h2>
             <p>Digite seu email para receber instruções de recuperação</p>
             <form class="auth-form" id="forgotPasswordForm" onsubmit="handleForgotPassword(event)">
-              <label>Email<input type="email" placeholder="seu@email.com" id="forgotEmail" required /></label>
+              <label>Email<input type="email" placeholder="seu@email.com" id="forgotEmail" autocomplete="email" required /></label>
               <button type="submit" class="btn primary" id="forgotBtn">Enviar Link de Recuperação</button>
               <div class="auth-message hidden" id="forgotMessage"></div>
               <div style="text-align:center;margin-top:12px;"><button type="button" class="forgot-link" onclick="showSignIn()" style="font-size:13px;">Voltar para Login</button></div>
@@ -2599,7 +2676,7 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
           <a class="btn small" href="#termos-app">Termos de Uso</a>
           <a class="btn small" href="#sobre-nos">Sobre Nós</a>
           <a class="btn small" href="#faq">FAQ</a>
-          <a class="btn small" href="#seguranca">Segurança dos Dados</a>
+            <a class="btn small" href="#seguranca-dados">Segurança dos Dados</a>
           <a class="btn small" href="#contato">Contato</a>
         </div>
 
@@ -2658,7 +2735,7 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
             </ul>
           </article>
 
-          <article class="card legal-page" id="seguranca">
+          <article class="card legal-page" id="seguranca-dados">
             <h2>Segurança dos Dados</h2>
             <p>A segurança das informações dos usuários é prioridade. O FinanPro utiliza autenticação e armazenamento em nuvem para manter os dados vinculados à conta do usuário.</p>
             <ul>
@@ -6327,6 +6404,9 @@ document.addEventListener('keydown', function(event) {
   "Para suporte, sugestões, parcerias ou dúvidas sobre privacidade, entre em contato pelo e-mail oficial:": "For support, suggestions, partnerships or privacy questions, contact the official email:",
   "Tempo médio de resposta: até 48 horas úteis.": "Average response time: up to 48 business hours.",
   "Carregando...": "Loading...",
+  "Serviço de autenticação carregando. Tente novamente em alguns segundos.": "Authentication service is loading. Try again in a few seconds.",
+  "FinanPro: recurso externo/local nao carregou.": "FinanPro: external/local resource did not load.",
+  "FinanPro: operacao assincrona falhou.": "FinanPro: asynchronous operation failed.",
   "Salvando...": "Saving...",
   "Enviando...": "Sending...",
   "Processando...": "Processing...",
@@ -6603,7 +6683,10 @@ document.addEventListener('keydown', function(event) {
   "Recurso Premium": "Recurso Premium",
   "Assine o plano Premium para desbloquear este recurso.": "Suscríbete al plan Premium para desbloquear este recurso.",
   "Premium custa": "Premium cuesta",
-  "Agora não": "Ahora no"
+  "Agora não": "Ahora no",
+  "Serviço de autenticação carregando. Tente novamente em alguns segundos.": "El servicio de autenticación se está cargando. Inténtalo de nuevo en unos segundos.",
+  "FinanPro: recurso externo/local nao carregou.": "FinanPro: el recurso externo/local no se cargó.",
+  "FinanPro: operacao assincrona falhou.": "FinanPro: falló una operación asíncrona."
 }
   };
 
