@@ -2615,13 +2615,13 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
 <footer class="fp-legal-footer" id="legalFooter">
   <div class="fp-footer-brand">FinanPro</div>
   <div class="fp-footer-links">
-    <button type="button" onclick="openLegalModal('privacidade')">Política de Privacidade</button>
-    <button type="button" onclick="openLegalModal('termos')">Termos de Uso</button>
-    <button type="button" onclick="openLegalModal('sobre')">Sobre Nós</button>
-    <button type="button" onclick="openLegalModal('faq')">FAQ</button>
+    <a href="politica-de-privacidade.html">Política de Privacidade</a>
+    <a href="termos-de-uso.html">Termos de Uso</a>
+    <a href="sobre-nos.html">Sobre Nós</a>
+    <a href="faq.html">FAQ</a>
     <a href="blog.html">Blog</a>
-    <button type="button" onclick="openLegalModal('seguranca')">Segurança dos Dados</button>
-    <button type="button" onclick="openLegalModal('contato')">Contato</button>
+    <a href="seguranca-dos-dados.html">Segurança dos Dados</a>
+    <a href="contato.html">Contato</a>
   </div>
   <small>© 2026 FinanPro. Todos os direitos reservados.</small>
 </footer>
@@ -7172,6 +7172,10 @@ window.FINANPRO_LEGAL_CONTENT = {
     title: "Segurança dos Dados",
     html: `<p>A segurança das informações dos usuários é prioridade no <strong>FinanPro</strong>.</p><ul><li>O acesso é protegido por autenticação.</li><li>Os dados são vinculados à conta do usuário.</li><li>As informações são separadas por usuário para preservar privacidade.</li><li>O usuário deve manter sua senha e conta Google protegidas.</li><li>O FinanPro não vende informações pessoais para terceiros.</li></ul>`
   },
+  blog: {
+    title: "Blog FinanPro",
+    html: `<p>Conteúdo prático para cuidar melhor do seu dinheiro e usar o FinanPro com mais clareza.</p><ul><li><strong>Organização financeira:</strong> acompanhe receitas, despesas, metas e dívidas em uma rotina simples.</li><li><strong>Planejamento mensal:</strong> revise seus lançamentos, compare categorias e ajuste o orçamento antes do mês virar.</li><li><strong>Relatórios e IA:</strong> use os resumos do app para entender padrões e tomar decisões com mais confiança.</li></ul><p>Novos guias e novidades da plataforma serão publicados aqui.</p>`
+  },
   contato: {
     title: "Contato",
     html: `<p>Para suporte, sugestões, parcerias ou dúvidas sobre privacidade, entre em contato pelo e-mail oficial:</p><p><a href="mailto:finanproficial@gmail.com">finanproficial@gmail.com</a></p><p>Tempo médio de resposta: até 48 horas úteis.</p>`
@@ -7200,8 +7204,12 @@ window.openLegalModal = function(type) {
 
   title.textContent = modalTitle;
   content.innerHTML = modalHtml;
+  content.scrollTop = 0;
   modal.classList.add('open');
+  modal.style.display = 'grid';
+  modal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
+  modal.querySelector('.fp-legal-close')?.focus({ preventScroll: true });
   window.FinanProMotion?.modalOpened(modal);
 };
 window.closeLegalModal = function(event) {
@@ -7256,7 +7264,18 @@ window.openLandingAbout = function(event) {
 };
 
 document.addEventListener('click', function(event) {
-  const btn = event.target && event.target.closest ? event.target.closest('[data-open-landing-about]') : null;
+  const target = event.target && event.target.closest ? event.target : null;
+  if (!target) return;
+
+  const legalOption = target.closest('[data-legal-option]');
+  if (legalOption) {
+    event.preventDefault();
+    event.stopPropagation();
+    window.openLegalModal?.(legalOption.getAttribute('data-legal-option'));
+    return;
+  }
+
+  const btn = target.closest('[data-open-landing-about]');
   if (btn) window.openLandingAbout(event);
 }, true);
 
