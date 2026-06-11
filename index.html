@@ -2537,7 +2537,7 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
         <div class="eyebrow">Sobre Nós</div>
         <h2>Uma plataforma criada para simplificar sua vida financeira.</h2>
         <p>O FinanPro nasceu para ajudar pessoas a organizarem receitas, despesas, metas, relatórios e orçamentos em uma experiência moderna, clara e acessível.</p>
-        <button type="button" class="fp-btn ghost" onclick="openLegalModal('sobre')">Ler história completa</button>
+        <button type="button" class="fp-btn ghost" id="landingAboutBtn" data-open-landing-about="1" onclick="openLandingAbout(event)">Ler história completa</button>
       </div>
       <div class="fp-about-copy">
         <p><strong>Rômulo Kauan</strong>, nascido em São Luís, Maranhão, Brasil, é o fundador, criador e CEO da FinanPro, plataforma de gestão financeira desenvolvida com o apoio de inteligência artificial.</p>
@@ -7207,9 +7207,59 @@ window.openLegalModal = function(type) {
 window.closeLegalModal = function(event) {
   if (event && event.target && event.target.id !== 'legalModal') return;
   const modal = document.getElementById('legalModal');
-  if (modal) modal.classList.remove('open');
+  if (modal) {
+    modal.classList.remove('open');
+    modal.style.display = '';
+    modal.setAttribute('aria-hidden', 'true');
+  }
   document.body.style.overflow = '';
 };
+window.openLandingAbout = function(event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  const modal = document.getElementById('legalModal');
+  const title = document.getElementById('legalModalTitle');
+  const content = document.getElementById('legalModalContent');
+  if (!modal || !title || !content) {
+    window.openLegalModal?.('sobre');
+    return false;
+  }
+
+  const lang = typeof window.getFinanProLanguage === 'function' ? window.getFinanProLanguage() : 'pt';
+  const titles = { pt: 'Sobre Nós', en: 'About Us', es: 'Sobre nosotros' };
+  title.textContent = titles[lang] || titles.pt;
+  content.innerHTML = window.FINANPRO_LEGAL_CONTENT?.sobre?.html || `<p>O FinanPro nasceu com o objetivo de ajudar pessoas a organizarem suas finanças de forma simples, moderna e acessível. A plataforma reúne recursos de controle financeiro, metas, relatórios, sincronização na nuvem e inteligência artificial para facilitar a tomada de decisões financeiras no dia a dia.</p>
+
+<p><strong>Rômulo Kauan</strong>, nascido em São Luís, Maranhão, Brasil, é o fundador, criador e CEO da FinanPro, plataforma de gestão financeira desenvolvida com o apoio de inteligência artificial para ajudar pessoas a organizarem melhor suas finanças.</p>
+
+<p>A ideia da FinanPro surgiu da vontade de criar uma plataforma moderna que reunisse em um único lugar controle financeiro, planejamento, relatórios inteligentes e ferramentas de produtividade financeira. Mesmo sem experiência avançada em programação ou desenvolvimento de software, Rômulo decidiu transformar essa visão em realidade utilizando inteligência artificial como ferramenta de apoio, além de muita dedicação, estudo e aprendizado contínuo.</p>
+
+<p>Durante a criação da plataforma, Rômulo investiu inúmeras horas aprendendo conceitos de tecnologia, design, experiência do usuário e desenvolvimento de produtos digitais. Através da combinação entre esforço pessoal e inteligência artificial, conseguiu desenvolver a FinanPro do zero e disponibilizá-la para usuários de diferentes lugares.</p>
+
+<p>A história da FinanPro demonstra como a tecnologia moderna pode permitir que pessoas determinadas transformem ideias em projetos reais, mesmo sem uma formação tradicional em engenharia de software. O projeto representa persistência, criatividade, inovação e a busca constante por conhecimento.</p>
+
+<p>Hoje, a FinanPro continua evoluindo com novos recursos, melhorias e funcionalidades, sempre com o objetivo de tornar a gestão financeira mais simples, inteligente e acessível.</p>
+
+<p><strong>Rômulo Kauan</strong> é fundador, criador e CEO da FinanPro, sendo responsável pela visão, desenvolvimento e crescimento da plataforma.</p>
+
+<p><strong>Localização:</strong> São Luís, Maranhão, Brasil.</p>`;
+  content.scrollTop = 0;
+  modal.classList.add('open');
+  modal.style.display = 'grid';
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  window.FinanProMotion?.modalOpened(modal);
+  return false;
+};
+
+document.addEventListener('click', function(event) {
+  const btn = event.target && event.target.closest ? event.target.closest('[data-open-landing-about]') : null;
+  if (btn) window.openLandingAbout(event);
+}, true);
+
 document.addEventListener('keydown', function(event) {
   if (event.key === 'Escape') window.closeLegalModal();
 });
