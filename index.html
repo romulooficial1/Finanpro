@@ -2187,6 +2187,74 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
       transform: translateY(-4px) scale(1.08) rotate(-3deg);
       box-shadow: 0 18px 42px rgba(34,197,94,.32);
     }
+    .fp-floating-tools {
+      pointer-events: none;
+    }
+    .fp-lang-switch,
+    .fp-install-app {
+      pointer-events: auto;
+    }
+    .fp-landing-about {
+      margin: 24px 0 30px;
+      padding: clamp(22px, 3vw, 34px);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 18px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.065), rgba(34,197,94,.055)),
+        rgba(255,255,255,.025);
+      box-shadow: 0 24px 70px rgba(0,0,0,.18);
+      color: #fff;
+      display: grid;
+      grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+      gap: 24px;
+      align-items: start;
+    }
+    .fp-landing-about h2 {
+      margin: 8px 0 12px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.04;
+      color: #fff;
+      letter-spacing: 0;
+    }
+    .fp-landing-about p {
+      margin: 0 0 12px;
+      color: rgba(255,255,255,.76);
+      line-height: 1.68;
+    }
+    .fp-landing-about strong {
+      color: #fff;
+    }
+    .fp-landing-about .fp-btn {
+      margin-top: 8px;
+    }
+    .fp-about-copy {
+      display: grid;
+      gap: 4px;
+    }
+    .fp-about-facts {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .fp-about-facts span {
+      min-width: 0;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,.11);
+      border-radius: 12px;
+      background: rgba(255,255,255,.045);
+      color: rgba(255,255,255,.78);
+      line-height: 1.35;
+      font-size: 12px;
+    }
+    .fp-about-facts strong {
+      display: block;
+      margin-bottom: 3px;
+      color: #86efac;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
     .fp-lang-switch {
       position: relative;
       overflow: hidden;
@@ -2265,12 +2333,23 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
         flex: 1 1 150px;
       }
       .fp-floating-tools {
-        left: 10px;
+        left: auto;
         right: 10px;
-        align-items: stretch;
+        width: auto;
+        align-items: flex-end;
       }
       .fp-lang-switch {
-        justify-content: center;
+        justify-content: flex-end;
+        width: auto;
+        max-width: calc(100vw - 20px);
+      }
+    }
+    @media (max-width: 860px) {
+      .fp-landing-about {
+        grid-template-columns: 1fr;
+      }
+      .fp-about-facts {
+        grid-template-columns: 1fr;
       }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -2310,6 +2389,7 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
         <a href="#recursos">Recursos</a>
         <a href="#funcionalidades">Funcionalidades</a>
         <a href="#planos">Planos</a>
+                <a href="#sobre-nos-landing">Sobre Nós</a>
         <a href="blog.html">Blog</a>
         <a href="#seguranca">Segurança</a>
         <a href="#entrar">Entrar</a>
@@ -2449,6 +2529,26 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
       <div class="fp-stat"><svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h10a4 4 0 10-.7-7.9A6 6 0 105 14.5"/></svg><strong>Nuvem</strong><span>Dados sincronizados</span></div>
       <div class="fp-stat"><svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><strong>Planos</strong><span>Grátis + Premium</span></div>
       <div class="fp-stat"><svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.96a1 1 0 00.95.69h4.164c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.96c.3.921-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.175 0l-3.37 2.448c-.784.57-1.838-.197-1.539-1.118l1.286-3.96a1 1 0 00-.363-1.118L4.047 9.387c-.783-.57-.38-1.81.588-1.81h4.164a1 1 0 00.95-.69l1.3-3.96z"/></svg><strong>Premium</strong><span>Visual profissional</span></div>
+    </section>
+
+
+    <section class="fp-landing-about" id="sobre-nos-landing">
+      <div>
+        <div class="eyebrow">Sobre Nós</div>
+        <h2>Uma plataforma criada para simplificar sua vida financeira.</h2>
+        <p>O FinanPro nasceu para ajudar pessoas a organizarem receitas, despesas, metas, relatórios e orçamentos em uma experiência moderna, clara e acessível.</p>
+        <button type="button" class="fp-btn ghost" onclick="openLegalModal('sobre')">Ler história completa</button>
+      </div>
+      <div class="fp-about-copy">
+        <p><strong>Rômulo Kauan</strong>, nascido em São Luís, Maranhão, Brasil, é o fundador, criador e CEO da FinanPro, plataforma de gestão financeira desenvolvida com o apoio de inteligência artificial.</p>
+        <p>A ideia surgiu da vontade de reunir controle financeiro, planejamento, relatórios inteligentes e ferramentas de produtividade financeira em um único lugar.</p>
+        <p>A FinanPro representa persistência, criatividade, inovação e a busca constante por conhecimento, sempre com o objetivo de tornar a gestão financeira mais simples e inteligente.</p>
+        <div class="fp-about-facts">
+          <span><strong>Fundador</strong>Rômulo Kauan</span>
+          <span><strong>Origem</strong>São Luís, Maranhão</span>
+          <span><strong>Missão</strong>Gestão financeira simples</span>
+        </div>
+      </div>
     </section>
 
     <section class="fp-final-cta">
@@ -7081,12 +7181,28 @@ window.openLegalModal = function(type) {
   const modal = document.getElementById('legalModal');
   const title = document.getElementById('legalModalTitle');
   const content = document.getElementById('legalModalContent');
-  const data = window.FINANPRO_LEGAL_CONTENT[type];
-  if (!modal || !title || !content || !data) return;
-  title.textContent = data.title;
-  content.innerHTML = data.html;
+  const data = window.FINANPRO_LEGAL_CONTENT?.[type];
+  if (!modal || !title || !content) return;
+
+  let modalTitle = data?.title || 'FinanPro';
+  let modalHtml = data?.html || '';
+
+  if (!modalHtml && type === 'sobre') {
+    const about = document.getElementById('sobre-nos-landing') || document.getElementById('sobre-nos');
+    const copy = about?.querySelector('.fp-about-copy') || about;
+    modalTitle = about?.querySelector('h2')?.textContent?.trim() || 'Sobre Nós';
+    modalHtml = copy?.innerHTML || '';
+  }
+
+  if (!modalHtml) {
+    modalHtml = '<p>Conteúdo temporariamente indisponível. Recarregue a página e tente novamente.</p>';
+  }
+
+  title.textContent = modalTitle;
+  content.innerHTML = modalHtml;
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
+  window.FinanProMotion?.modalOpened(modal);
 };
 window.closeLegalModal = function(event) {
   if (event && event.target && event.target.id !== 'legalModal') return;
