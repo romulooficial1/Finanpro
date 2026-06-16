@@ -1242,6 +1242,8 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
   cursor:pointer;
   transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
   white-space:nowrap;
+  position:relative;
+  overflow:hidden;
 }
 .fp-btn:hover{transform:translateY(-2px);}
 .fp-btn.primary{
@@ -1250,6 +1252,18 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
   background:linear-gradient(135deg,#4ade80,#22c55e);
   box-shadow:0 20px 50px rgba(34,197,94,.28);
 }
+.fp-btn.primary::after{
+  content:"";
+  position:absolute;
+  top:-70%;
+  bottom:-70%;
+  left:-42%;
+  width:34%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.48),transparent);
+  transform:rotate(18deg);
+  transition:left .58s ease;
+}
+.fp-btn.primary:hover::after{left:118%;}
 .fp-btn.ghost{background:rgba(255,255,255,.04);color:#fff;}
 .fp-btn.google{background:#fff;color:#202124;border:1px solid #dadce0;box-shadow:0 16px 40px rgba(0,0,0,.22);}
 .fp-hero{
@@ -1264,13 +1278,14 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
   align-items:center;
   gap:8px;
   color:#bbf7d0;
-  background:rgba(34,197,94,.10);
-  border:1px solid rgba(34,197,94,.18);
+  background:linear-gradient(135deg,rgba(34,197,94,.16),rgba(255,255,255,.05));
+  border:1px solid rgba(74,222,128,.24);
   border-radius:99px;
   padding:9px 13px;
   font-size:13px;
   font-weight:900;
   margin-bottom:18px;
+  box-shadow:0 14px 42px rgba(34,197,94,.10);
 }
 .fp-hero h1{
   margin:0;
@@ -1294,9 +1309,65 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
   border-color:rgba(74,222,128,.24);
   box-shadow:0 18px 42px rgba(34,197,94,.12);
 }
-.fp-trust{display:flex;flex-wrap:wrap;gap:18px;margin-top:24px;color:rgba(255,255,255,.72);font-size:13px;font-weight:800;}
-.fp-trust span{display:inline-flex;align-items:center;gap:7px;}
+.fp-trust{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;color:rgba(255,255,255,.76);font-size:13px;font-weight:800;}
+.fp-trust span{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(255,255,255,.10);border-radius:999px;background:rgba(255,255,255,.045);padding:8px 10px;backdrop-filter:blur(12px);}
 .fp-trust svg{width:16px;height:16px;color:#4ade80;}
+.fp-outcome-strip{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:10px;
+  max-width:680px;
+  margin-top:18px;
+}
+.fp-outcome{
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:14px;
+  background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.035));
+  box-shadow:0 18px 42px rgba(0,0,0,.16);
+  padding:12px;
+}
+.fp-outcome span{
+  display:block;
+  color:#4ade80;
+  font-size:10px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+.fp-outcome strong{
+  display:block;
+  margin-top:6px;
+  color:#fff;
+  font-size:13px;
+  line-height:1.28;
+}
+.fp-hero-insight{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  max-width:650px;
+  margin-top:16px;
+  border:1px solid rgba(74,222,128,.20);
+  border-radius:16px;
+  background:rgba(34,197,94,.075);
+  padding:14px;
+  color:rgba(255,255,255,.76);
+  line-height:1.45;
+  box-shadow:0 18px 48px rgba(34,197,94,.08);
+}
+.fp-hero-insight i{
+  flex:0 0 auto;
+  width:34px;
+  height:34px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#4ade80,#0f766e);
+  color:#052e16;
+  font-style:normal;
+  font-weight:900;
+}
+.fp-hero-insight strong{display:block;color:#fff;margin-bottom:3px;}
 
 .fp-device{position:relative;min-height:570px;perspective:1200px;}
 .fp-device::before{
@@ -1321,7 +1392,18 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
   backdrop-filter:blur(18px);
   padding:15px;
   transform:translate(8px,-12px);
+  overflow:hidden;
 }
+.fp-ai-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(115deg,transparent 0 42%,rgba(74,222,128,.16) 48%,transparent 56% 100%);
+  transform:translateX(-120%);
+  animation:fpScan 5.6s ease-in-out infinite;
+  pointer-events:none;
+}
+.fp-ai-card > *{position:relative;z-index:1;}
 .fp-ai-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;}
 .fp-ai-title{display:flex;align-items:center;gap:10px;color:#fff;font-weight:900;font-size:13px;}
 .fp-ai-orb{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,#4ade80,#0f766e);display:grid;place-items:center;color:#052e16;box-shadow:0 14px 34px rgba(34,197,94,.28);}
@@ -1377,7 +1459,17 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
   min-height:430px;
   box-shadow:0 28px 90px rgba(0,0,0,.48), 0 0 0 1px rgba(34,197,94,.08) inset;
   transform:translateY(98px) rotate(-4deg) skewY(.8deg);
+  overflow:hidden;
 }
+.fp-dashboard::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg,rgba(255,255,255,.08),transparent 28%,transparent 70%,rgba(74,222,128,.08));
+  opacity:.55;
+  pointer-events:none;
+}
+.fp-dashboard > *{position:relative;z-index:1;}
 .fp-window-dots{display:flex;gap:7px;margin-bottom:14px;}
 .fp-window-dots i{width:9px;height:9px;border-radius:50%;display:block;}
 .fp-window-dots i:nth-child(1){background:#ff5f56}.fp-window-dots i:nth-child(2){background:#ffbd2e}.fp-window-dots i:nth-child(3){background:#27c93f}
@@ -1423,10 +1515,47 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
 }
 .fp-smart-alert b{color:#4ade80;}
 @keyframes fpBarPulse{0%,100%{transform:scaleY(.72)}50%{transform:scaleY(1)}}
+@keyframes fpScan{0%,54%{transform:translateX(-120%)}72%,100%{transform:translateX(120%)}}
+
+@media(min-width:981px){
+  .fp-device{
+    display:grid;
+    align-content:start;
+    gap:24px;
+    min-height:620px;
+    padding-top:8px;
+  }
+  .fp-ai-card{
+    position:relative;
+    top:auto;
+    right:auto;
+    justify-self:end;
+    width:min(520px,94%);
+    transform:none;
+    z-index:2;
+  }
+  .fp-ai-steps{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:6px 10px;
+  }
+  .fp-ai-step{
+    min-height:28px;
+    font-size:11px;
+  }
+  .fp-ai-result{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .fp-dashboard{
+    width:100%;
+    transform:rotate(-3.5deg) skewY(.7deg);
+    transform-origin:52% 0;
+  }
+}
 
 .fp-section-title{text-align:center;margin:22px auto 30px;font-size:22px;font-weight:900;color:#fff;}.fp-section-title span{color:#4ade80;}
 .fp-features{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin:10px 18px 34px;}
-.fp-feature{border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.045);border-radius:18px;padding:24px;min-height:235px;box-shadow:0 20px 50px rgba(0,0,0,.18);}
+.fp-feature{border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.045);border-radius:18px;padding:24px;min-height:235px;box-shadow:0 20px 50px rgba(0,0,0,.18);transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease,background .22s ease;}
+.fp-feature:hover{transform:translateY(-5px);border-color:rgba(74,222,128,.28);background:rgba(255,255,255,.065);box-shadow:0 28px 70px rgba(0,0,0,.28),0 0 44px rgba(34,197,94,.08);}
 .fp-feature-icon{width:50px;height:50px;border-radius:13px;display:grid;place-items:center;margin-bottom:22px;color:#fff;box-shadow:0 15px 36px rgba(34,197,94,.22);}
 .fp-feature h3{margin:0 0 10px;font-size:20px;color:#fff;line-height:1.2;}.fp-feature p{margin:0;color:rgba(255,255,255,.66);line-height:1.55;font-size:14px;}.fp-feature a{display:inline-flex;margin-top:22px;color:#4ade80;text-decoration:none;font-weight:900;font-size:13px;}
 .fp-help-section,.fp-demo-section{
@@ -1441,7 +1570,9 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
 .fp-section-head h2{margin:0;color:#fff;font-size:clamp(26px,3vw,38px);line-height:1.1;}
 .fp-section-head p{margin:8px 0 0;color:rgba(255,255,255,.66);line-height:1.55;max-width:680px;}
 .fp-help-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
-.fp-help-card{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.10);border-radius:17px;background:rgba(255,255,255,.045);padding:20px;min-height:180px;}
+.fp-help-card{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.10);border-radius:17px;background:rgba(255,255,255,.045);padding:20px;min-height:180px;transition:transform .22s ease,border-color .22s ease,background .22s ease;}
+.fp-help-card:hover{transform:translateY(-4px);border-color:rgba(74,222,128,.24);background:rgba(255,255,255,.065);}
+.fp-help-card::after{content:"";position:absolute;inset:auto 18px 0;height:2px;background:linear-gradient(90deg,transparent,#4ade80,transparent);opacity:.45;}
 .fp-help-card span{width:38px;height:38px;border-radius:13px;background:linear-gradient(135deg,#4ade80,#0f766e);display:grid;place-items:center;color:#052e16;font-weight:900;margin-bottom:18px;box-shadow:0 14px 34px rgba(34,197,94,.22);}
 .fp-help-card h3{margin:0 0 9px;color:#fff;font-size:18px;}
 .fp-help-card p{margin:0;color:rgba(255,255,255,.65);line-height:1.55;font-size:14px;}
@@ -1456,7 +1587,11 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
   background:linear-gradient(160deg,rgba(7,17,13,.92),rgba(18,42,33,.88));
   box-shadow:0 30px 90px rgba(0,0,0,.34),0 0 0 1px rgba(74,222,128,.06) inset;
   padding:22px;
+  position:relative;
+  overflow:hidden;
 }
+.fp-demo-card::before{content:"";position:absolute;inset:-40% -20% auto auto;width:220px;height:220px;background:radial-gradient(circle,rgba(74,222,128,.18),transparent 68%);pointer-events:none;}
+.fp-demo-card > *{position:relative;z-index:1;}
 .fp-demo-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;}
 .fp-demo-top strong{color:#fff;font-size:18px;}
 .fp-demo-badge{border-radius:99px;background:rgba(34,197,94,.14);color:#bbf7d0;padding:7px 10px;font-size:11px;font-weight:900;}
@@ -1467,6 +1602,54 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
 .fp-demo-plan{display:grid;gap:9px;margin:0;padding:0;list-style:none;}
 .fp-demo-plan li{display:flex;align-items:flex-start;gap:10px;color:rgba(255,255,255,.78);font-size:14px;line-height:1.45;font-weight:800;}
 .fp-demo-plan li::before{content:"✓";color:#4ade80;font-weight:900;}
+.fp-capability-section{
+  margin:14px 18px 34px;
+  padding:28px;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:22px;
+  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.025));
+  box-shadow:0 24px 70px rgba(0,0,0,.20);
+}
+.fp-capability-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+}
+.fp-capability-card{
+  min-height:176px;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:18px;
+  background:rgba(7,14,11,.58);
+  padding:18px;
+  position:relative;
+  overflow:hidden;
+  transition:transform .22s ease,border-color .22s ease,background .22s ease;
+}
+.fp-capability-card:hover{transform:translateY(-4px);border-color:rgba(74,222,128,.25);background:rgba(10,23,17,.78);}
+.fp-capability-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(145deg,rgba(74,222,128,.10),transparent 48%);
+  pointer-events:none;
+}
+.fp-capability-card > *{position:relative;z-index:1;}
+.fp-capability-icon{
+  width:40px;
+  height:40px;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  margin-bottom:16px;
+  background:linear-gradient(135deg,#4ade80,#0f766e);
+  color:#052e16;
+  font-weight:900;
+  box-shadow:0 14px 34px rgba(34,197,94,.20);
+}
+.fp-capability-card h3{margin:0 0 8px;color:#fff;font-size:17px;}
+.fp-capability-card p{margin:0;color:rgba(255,255,255,.64);font-size:13px;line-height:1.55;}
+.auth-screen .plan-card{transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;}
+.auth-screen .plan-card:hover{transform:translateY(-5px);border-color:rgba(74,222,128,.28)!important;box-shadow:0 28px 76px rgba(0,0,0,.24)!important;}
 .fp-mobile-section{display:grid;grid-template-columns:320px 1fr 260px;gap:42px;align-items:center;margin:36px 24px 42px;}
 .fp-phone{height:440px;border-radius:42px;border:8px solid rgba(255,255,255,.10);background:#0d1512;box-shadow:0 28px 80px rgba(0,0,0,.42);padding:18px;overflow:hidden;transform:rotate(-6deg);}
 .fp-phone-top{display:flex;align-items:center;gap:8px;color:#fff;font-size:12px;font-weight:900;margin-bottom:18px;}.fp-phone-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px;margin-bottom:12px;}.fp-phone-card h4{margin:0 0 12px;font-size:13px;color:#fff;}.fp-phone-metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px}.fp-phone-metrics span{font-size:12px;font-weight:900}.fp-donut{width:150px;height:150px;border-radius:50%;margin:10px auto;background:conic-gradient(#22c55e 0 32%,#58a6ff 32% 56%,#ff5b57 56% 82%,#f59e0b 82% 100%);display:grid;place-items:center;}.fp-donut::after{content:"R$ 500\ATotal";white-space:pre;text-align:center;width:88px;height:88px;border-radius:50%;background:#0d1512;color:#fff;display:grid;place-items:center;font-size:12px;font-weight:900;}
@@ -1477,10 +1660,10 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
 .fp-auth-area{padding:22px 0 50px;}.fp-auth-card{width:min(100%,440px);margin:0 auto;border:1px solid rgba(255,255,255,.12);border-radius:22px;background:rgba(255,255,255,.96);box-shadow:0 30px 90px rgba(0,0,0,.34);padding:28px;}.fp-auth-card .auth-box{width:100%;border:0;box-shadow:none;padding:0;background:transparent;}.fp-auth-card .auth-box h2{font-size:30px;}.fp-auth-card .btn.primary{background:#166534;color:#fff;border-color:#166534;}
 
 @media(max-width:980px){
-  .fp-nav-links{display:none}.fp-nav{margin-bottom:18px}.fp-hero{grid-template-columns:1fr;gap:26px}.fp-device{min-height:auto;padding-top:18px}.fp-ai-card{position:relative;width:100%;transform:none;margin-bottom:14px}.fp-dashboard{transform:none}.fp-dash-grid{grid-template-columns:1fr}.fp-dash-side{display:none}.fp-help-grid,.fp-demo-section{grid-template-columns:1fr}.fp-demo-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.fp-features{grid-template-columns:1fr 1fr;margin-left:0;margin-right:0}.fp-mobile-section{grid-template-columns:1fr;margin:20px 0}.fp-phone{width:min(310px,100%);margin:auto;transform:none}.fp-stats{grid-template-columns:1fr 1fr}.fp-final-cta{flex-direction:column;align-items:flex-start}.fp-final-actions{width:100%}.fp-final-actions .fp-btn{flex:1}.fp-auth-card{border-radius:18px}
+  .fp-nav-links{display:none}.fp-nav{margin-bottom:18px}.fp-hero{grid-template-columns:1fr;gap:26px}.fp-device{min-height:auto;padding-top:18px}.fp-ai-card{position:relative;width:100%;transform:none;margin-bottom:14px}.fp-dashboard{transform:none}.fp-dash-grid{grid-template-columns:1fr}.fp-dash-side{display:none}.fp-outcome-strip,.fp-capability-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.fp-help-grid,.fp-demo-section{grid-template-columns:1fr}.fp-demo-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.fp-features{grid-template-columns:1fr 1fr;margin-left:0;margin-right:0}.fp-mobile-section{grid-template-columns:1fr;margin:20px 0}.fp-phone{width:min(310px,100%);margin:auto;transform:none}.fp-stats{grid-template-columns:1fr 1fr}.fp-final-cta{flex-direction:column;align-items:flex-start}.fp-final-actions{width:100%}.fp-final-actions .fp-btn{flex:1}.fp-auth-card{border-radius:18px}
 }
 @media(max-width:620px){
-  .fp-landing{width:min(100% - 28px,1180px);padding-top:14px}.fp-nav-actions .fp-btn.ghost{display:none}.fp-nav-actions .fp-btn.primary{padding:0 12px;font-size:13px}.fp-hero{padding-top:8px}.fp-hero h1{font-size:40px;line-height:1.03}.fp-subtitle{font-size:16px}.fp-cta-row .fp-btn{width:100%;min-height:48px}.fp-trust{display:grid;grid-template-columns:1fr;gap:12px}.fp-ai-card{padding:13px;border-radius:16px}.fp-ai-result{grid-template-columns:1fr}.fp-dashboard{padding:14px;border-radius:18px}.fp-metrics{grid-template-columns:1fr}.fp-chart-row{grid-template-columns:1fr}.fp-help-section,.fp-demo-section{margin-left:0;margin-right:0;padding:20px}.fp-section-head{display:block}.fp-help-grid,.fp-demo-grid{grid-template-columns:1fr}.fp-features{grid-template-columns:1fr}.fp-feature{min-height:auto}.fp-mobile-text h2{font-size:30px}.fp-mobile-points{grid-template-columns:1fr}.fp-stats{grid-template-columns:1fr}.fp-stat{border-right:0;border-bottom:1px solid rgba(255,255,255,.08)}.fp-stat:last-child{border-bottom:0}.fp-final-cta{padding:24px}.fp-final-actions .fp-btn{width:100%;}.fp-auth-card{padding:22px}.fp-auth-card .auth-box h2{font-size:28px;}
+  .fp-landing{width:min(100% - 28px,1180px);padding-top:14px}.fp-nav-actions .fp-btn.ghost{display:none}.fp-nav-actions .fp-btn.primary{padding:0 12px;font-size:13px}.fp-hero{padding-top:8px}.fp-hero h1{font-size:40px;line-height:1.03}.fp-subtitle{font-size:16px}.fp-cta-row .fp-btn{width:100%;min-height:48px}.fp-trust{display:grid;grid-template-columns:1fr;gap:12px}.fp-outcome-strip,.fp-capability-grid{grid-template-columns:1fr}.fp-hero-insight{align-items:flex-start}.fp-ai-card{padding:13px;border-radius:16px}.fp-ai-result{grid-template-columns:1fr}.fp-dashboard{padding:14px;border-radius:18px}.fp-metrics{grid-template-columns:1fr}.fp-chart-row{grid-template-columns:1fr}.fp-help-section,.fp-demo-section,.fp-capability-section{margin-left:0;margin-right:0;padding:20px}.fp-section-head{display:block}.fp-help-grid,.fp-demo-grid{grid-template-columns:1fr}.fp-features{grid-template-columns:1fr}.fp-feature{min-height:auto}.fp-mobile-text h2{font-size:30px}.fp-mobile-points{grid-template-columns:1fr}.fp-stats{grid-template-columns:1fr}.fp-stat{border-right:0;border-bottom:1px solid rgba(255,255,255,.08)}.fp-stat:last-child{border-bottom:0}.fp-final-cta{padding:24px}.fp-final-actions .fp-btn{width:100%;}.fp-auth-card{padding:22px}.fp-auth-card .auth-box h2{font-size:28px;}
 }
 
  .auth-box p {
@@ -2607,6 +2790,453 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
       }
     }
 
+    /* ===================================================
+       FINANPRO APP LUXURY UI
+       Camada visual interna: icones, fluidez, cards e estados
+    =================================================== */
+    .app{
+      background:
+        linear-gradient(135deg, rgba(22,101,52,.055), transparent 28%),
+        linear-gradient(180deg, var(--bg), color-mix(in srgb, var(--bg) 84%, var(--green) 16%));
+    }
+    [data-theme="dark"] .app{
+      background:
+        linear-gradient(135deg, rgba(63,185,80,.08), transparent 30%),
+        linear-gradient(180deg, #080c0a, #0f1713 48%, #0b100e);
+    }
+    .app > main{
+      position:relative;
+      background-image:
+        linear-gradient(rgba(22,101,52,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(22,101,52,.025) 1px, transparent 1px);
+      background-size:44px 44px;
+      scroll-behavior:smooth;
+    }
+    [data-theme="dark"] .app > main{
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+    }
+    .sidebar{
+      padding:18px 16px;
+      background:
+        linear-gradient(180deg, color-mix(in srgb, var(--surface) 92%, var(--green) 8%), color-mix(in srgb, var(--surface) 96%, var(--teal) 4%));
+      border-right:1px solid color-mix(in srgb, var(--line) 72%, var(--green) 28%);
+      box-shadow:18px 0 54px rgba(23,33,28,.08);
+    }
+    [data-theme="dark"] .sidebar{
+      background:linear-gradient(180deg, rgba(18,28,24,.96), rgba(10,15,13,.98));
+      box-shadow:22px 0 70px rgba(0,0,0,.38);
+    }
+    .sidebar::-webkit-scrollbar{width:4px;}
+    .brand{
+      padding:12px;
+      border:1px solid color-mix(in srgb, var(--line) 70%, var(--green) 30%);
+      border-radius:20px;
+      background:
+        linear-gradient(145deg, color-mix(in srgb, var(--surface) 88%, white 12%), color-mix(in srgb, var(--surface-2) 92%, var(--green) 8%));
+      box-shadow:0 18px 42px rgba(23,33,28,.08);
+    }
+    [data-theme="dark"] .brand{
+      background:linear-gradient(145deg, rgba(255,255,255,.055), rgba(63,185,80,.065));
+      box-shadow:0 18px 48px rgba(0,0,0,.32);
+    }
+    .brand-mark{
+      width:48px;
+      height:48px;
+      border-radius:16px;
+      background:linear-gradient(135deg, #22c55e, #0f766e 58%, #0ea5e9);
+      box-shadow:0 18px 36px rgba(22,101,52,.24), inset 0 1px 0 rgba(255,255,255,.35);
+    }
+    .brand-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+    .brand-copy{min-width:0;}
+    .nav{gap:8px;}
+    .nav button{
+      min-height:50px;
+      grid-template-columns:42px minmax(0,1fr);
+      gap:10px;
+      padding:5px 12px 5px 6px;
+      border:1px solid transparent;
+      border-radius:16px;
+      font-weight:850;
+      color:color-mix(in srgb, var(--muted) 88%, var(--ink) 12%);
+      transition:transform .24s cubic-bezier(.16,1,.3,1), background .24s ease, color .24s ease, border-color .24s ease, box-shadow .24s ease;
+    }
+    .nav button > svg{
+      width:38px;
+      height:38px;
+      padding:9px;
+      border-radius:14px;
+      background:linear-gradient(180deg, var(--surface), var(--surface-2));
+      border:1px solid var(--line);
+      color:var(--green);
+      stroke-width:2.05;
+      box-shadow:0 10px 24px rgba(23,33,28,.07);
+    }
+    [data-theme="dark"] .nav button > svg{
+      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.035));
+      box-shadow:0 12px 30px rgba(0,0,0,.30);
+    }
+    .nav button:hover,
+    .nav button.active{
+      background:linear-gradient(135deg, rgba(63,185,80,.12), rgba(15,118,110,.075));
+      border-color:color-mix(in srgb, var(--green) 32%, var(--line));
+      color:var(--green);
+      box-shadow:0 14px 32px rgba(22,101,52,.10);
+    }
+    [data-theme="dark"] .nav button:hover,
+    [data-theme="dark"] .nav button.active{
+      background:linear-gradient(135deg, rgba(63,185,80,.14), rgba(45,212,191,.055));
+      box-shadow:0 14px 34px rgba(0,0,0,.30), inset 0 0 0 1px rgba(63,185,80,.10);
+    }
+    .nav button:hover > svg,
+    .nav button.active > svg{
+      background:linear-gradient(135deg, var(--green), var(--teal));
+      border-color:transparent;
+      color:#fff;
+      transform:translateY(-1px) scale(1.04);
+      filter:drop-shadow(0 10px 16px rgba(22,101,52,.24));
+    }
+    .nav .nav-label{display:inline-flex;align-items:center;gap:6px;min-width:0;flex-wrap:wrap;}
+    .nav-badge,
+    .premium-badge,
+    .usage-pill{
+      letter-spacing:.02em;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.18);
+    }
+    .side-panel{
+      border-radius:18px;
+      border-color:color-mix(in srgb, var(--line) 72%, var(--green) 28%);
+      background:linear-gradient(145deg, color-mix(in srgb, var(--side-panel-bg) 88%, white 12%), color-mix(in srgb, var(--side-panel-bg) 92%, var(--green) 8%));
+      box-shadow:0 16px 38px rgba(23,33,28,.07);
+    }
+    [data-theme="dark"] .side-panel{
+      background:linear-gradient(145deg, rgba(255,255,255,.055), rgba(63,185,80,.055));
+      box-shadow:0 16px 42px rgba(0,0,0,.26);
+    }
+    .app .topbar{
+      padding:2px 0 4px;
+    }
+    .title-block h1{
+      letter-spacing:-.045em;
+      position:relative;
+      display:inline-block;
+    }
+    .title-block h1::after{
+      content:"";
+      display:block;
+      width:min(86px,70%);
+      height:4px;
+      margin-top:10px;
+      border-radius:99px;
+      background:linear-gradient(90deg, var(--green), var(--teal), transparent);
+      opacity:.75;
+    }
+    .app .btn{
+      min-height:42px;
+      border-radius:13px;
+      font-weight:850;
+      border-color:color-mix(in srgb, var(--line) 84%, var(--green) 16%);
+      background:linear-gradient(180deg, var(--surface), color-mix(in srgb, var(--surface-2) 88%, white 12%));
+      box-shadow:0 10px 24px rgba(23,33,28,.07);
+    }
+    [data-theme="dark"] .app .btn{
+      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.035));
+      box-shadow:0 12px 28px rgba(0,0,0,.24);
+    }
+    .app .btn.primary,
+    .app .btn.premium-cta{
+      border-color:transparent;
+      color:#fff;
+      background:linear-gradient(135deg, #22c55e, #15803d 55%, #0f766e);
+      box-shadow:0 16px 34px rgba(22,101,52,.24);
+    }
+    .app .btn.pdf-btn{
+      background:linear-gradient(135deg, #dc2626, #b42318 52%, #7f1d1d);
+      box-shadow:0 16px 34px rgba(180,35,24,.22);
+    }
+    .app .card,
+    .app .panel,
+    .app .chart-card,
+    .app .ia-chat-area{
+      border-radius:18px;
+      border-color:color-mix(in srgb, var(--line) 76%, var(--green) 24%);
+      background:
+        linear-gradient(180deg, color-mix(in srgb, var(--card-bg) 92%, white 8%), color-mix(in srgb, var(--card-bg) 96%, var(--green) 4%));
+      box-shadow:0 22px 55px rgba(23,33,28,.09);
+    }
+    [data-theme="dark"] .app .card,
+    [data-theme="dark"] .app .panel,
+    [data-theme="dark"] .app .chart-card,
+    [data-theme="dark"] .app .ia-chat-area{
+      background:linear-gradient(180deg, rgba(22,27,34,.96), rgba(12,18,15,.98));
+      box-shadow:0 24px 60px rgba(0,0,0,.44);
+    }
+    .metric{
+      border-radius:18px;
+      padding:20px;
+      isolation:isolate;
+    }
+    .metric::after{
+      opacity:.68;
+      filter:blur(.1px);
+    }
+    .metric .fp-lux-card-icon,
+    .insight-card .fp-lux-card-icon{
+      position:absolute;
+      right:16px;
+      top:16px;
+      width:42px;
+      height:42px;
+      border-radius:15px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(63,185,80,.16), rgba(15,118,110,.10));
+      border:1px solid color-mix(in srgb, var(--green) 26%, var(--line));
+      color:var(--green);
+      box-shadow:0 14px 30px rgba(22,101,52,.10);
+      z-index:1;
+    }
+    .metric .fp-lux-card-icon svg,
+    .insight-card .fp-lux-card-icon svg{width:21px;height:21px;stroke-width:2.15;}
+    .metric .label,
+    .metric strong,
+    .metric small{position:relative;z-index:2;}
+    .metric strong{letter-spacing:-.035em;}
+    .panel-head h2,
+    .chart-head h2{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      letter-spacing:-.015em;
+    }
+    .fp-lux-head-icon{
+      width:34px;
+      height:34px;
+      border-radius:12px;
+      display:inline-grid;
+      place-items:center;
+      flex:0 0 auto;
+      color:var(--green);
+      background:linear-gradient(135deg, rgba(63,185,80,.14), rgba(15,118,110,.08));
+      border:1px solid color-mix(in srgb, var(--green) 24%, var(--line));
+    }
+    .fp-lux-head-icon svg{width:18px;height:18px;stroke-width:2.2;}
+    .insight-card{
+      position:relative;
+      overflow:hidden;
+      padding:18px;
+      border-radius:18px;
+    }
+    .insight-card strong{letter-spacing:-.025em;}
+    .radar-item,
+    .futuro-item,
+    #diferenciais .achievement-row,
+    #diferenciais .rank-row{
+      border-radius:14px;
+      transition:transform .22s cubic-bezier(.16,1,.3,1), box-shadow .22s ease, border-color .22s ease, background .22s ease;
+    }
+    .radar-item:hover,
+    .futuro-item:hover,
+    #diferenciais .achievement-row:hover,
+    #diferenciais .rank-row:hover{
+      transform:translateY(-2px);
+      border-color:color-mix(in srgb, var(--green) 30%, var(--line));
+      box-shadow:0 14px 34px rgba(23,33,28,.08);
+    }
+    [data-theme="dark"] .radar-item:hover,
+    [data-theme="dark"] .futuro-item:hover,
+    [data-theme="dark"] #diferenciais .achievement-row:hover,
+    [data-theme="dark"] #diferenciais .rank-row:hover{
+      box-shadow:0 14px 34px rgba(0,0,0,.30);
+    }
+    .advisor-hero{
+      border-radius:22px;
+      border-color:color-mix(in srgb, var(--green) 26%, var(--line));
+      background:
+        linear-gradient(135deg, rgba(63,185,80,.12), rgba(36,91,127,.08)),
+        linear-gradient(180deg, var(--card-bg), var(--surface));
+      box-shadow:0 24px 64px rgba(22,101,52,.13);
+    }
+    [data-theme="dark"] .advisor-hero{
+      background:linear-gradient(135deg, rgba(63,185,80,.15), rgba(88,166,255,.055)), rgba(16,24,20,.96);
+      box-shadow:0 28px 70px rgba(0,0,0,.38);
+    }
+    .advisor-score-orb{
+      box-shadow:inset 0 0 0 1px var(--line), 0 22px 48px rgba(22,101,52,.18);
+    }
+    .advisor-card{
+      border-radius:18px;
+      border-top-width:0;
+      position:relative;
+      overflow:hidden;
+    }
+    .advisor-card::before{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      top:0;
+      height:4px;
+      background:linear-gradient(90deg, var(--green), var(--teal));
+    }
+    .advisor-card.accent-blue::before{background:linear-gradient(90deg, var(--blue), var(--teal));}
+    .advisor-card.accent-amber::before{background:linear-gradient(90deg, var(--amber), #f59e0b);}
+    .advisor-card.accent-red::before{background:linear-gradient(90deg, var(--red), #ef4444);}
+    .tipo-btn,
+    .pdf-option{
+      border-radius:16px;
+    }
+    .tipo-btn .tipo-icon,
+    .pdf-option .po-icon,
+    .ia-welcome .ia-bot-icon{
+      display:grid;
+      place-items:center;
+    }
+    .tipo-btn .tipo-icon svg,
+    .pdf-option .po-icon svg,
+    .ia-welcome .ia-bot-icon svg{
+      width:24px;
+      height:24px;
+      stroke:currentColor;
+      stroke-width:2.15;
+      fill:none;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+    .pdf-option{
+      background:linear-gradient(180deg, var(--surface), var(--surface-2));
+      box-shadow:0 14px 34px rgba(23,33,28,.07);
+    }
+    .pdf-option.selected,
+    .pdf-option:hover{
+      box-shadow:0 18px 42px rgba(22,101,52,.12);
+    }
+    .modal,
+    .pdf-modal{
+      border-radius:22px;
+      border:1px solid color-mix(in srgb, var(--line) 72%, var(--green) 28%);
+      box-shadow:0 42px 110px rgba(0,0,0,.42);
+    }
+    input,
+    select,
+    textarea{
+      border-radius:12px;
+      transition:border-color .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    .table-wrap{
+      border-radius:16px;
+    }
+    tbody tr{
+      transition:background .18s ease, transform .18s ease;
+    }
+    .fp-lux-row-icon{
+      width:26px;
+      height:26px;
+      border-radius:10px;
+      display:inline-grid;
+      place-items:center;
+      margin-right:8px;
+      color:var(--green);
+      background:rgba(63,185,80,.12);
+      border:1px solid color-mix(in srgb, var(--green) 22%, var(--line));
+      vertical-align:middle;
+    }
+    .fp-lux-row-icon svg,
+    .fp-lux-inline-icon{
+      width:16px;
+      height:16px;
+      stroke:currentColor;
+      stroke-width:2.2;
+      fill:none;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+    .fp-lux-inline-icon{
+      flex:0 0 18px;
+      width:18px;
+      height:18px;
+    }
+    .fp-lux-resource-icon,
+    .fp-lux-drop-icon{
+      width:42px;
+      height:42px;
+      border-radius:15px;
+      display:grid;
+      place-items:center;
+      color:var(--green);
+      background:linear-gradient(135deg, rgba(63,185,80,.15), rgba(15,118,110,.08));
+      border:1px solid color-mix(in srgb, var(--green) 24%, var(--line));
+      box-shadow:0 14px 30px rgba(22,101,52,.10);
+    }
+    .fp-lux-resource-icon svg,
+    .fp-lux-drop-icon svg{
+      width:21px;
+      height:21px;
+      stroke:currentColor;
+      stroke-width:2.15;
+      fill:none;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+    .premium-resource{
+      position:relative;
+      overflow:hidden;
+      padding-top:18px;
+    }
+    .premium-resource .fp-lux-resource-icon{
+      margin-bottom:2px;
+    }
+    .statement-drop{
+      grid-template-columns:42px minmax(0,1fr);
+      column-gap:14px;
+      align-items:center;
+    }
+    .statement-drop .fp-lux-drop-icon{
+      grid-row:1 / span 2;
+    }
+    .statement-drop strong,
+    .statement-drop span{
+      min-width:0;
+    }
+    .premium-step .fp-lux-step-icon,
+    .advisor-plan-step span{
+      box-shadow:0 12px 26px rgba(22,101,52,.18), inset 0 1px 0 rgba(255,255,255,.24);
+    }
+    .modal h3,
+    .pdf-modal h3{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      line-height:1.15;
+    }
+    .ia-welcome .ia-bot-icon{
+      color:#fff;
+    }
+    .ia-welcome .ia-bot-icon svg{
+      width:30px;
+      height:30px;
+    }
+    @media(max-width:1100px){
+      .sidebar{height:auto;}
+      .nav button{grid-template-columns:38px minmax(0,1fr);min-height:48px;}
+      .nav button > svg{width:36px;height:36px;padding:8px;}
+    }
+    @media(max-width:720px){
+      .sidebar{padding:14px;}
+      .brand{border-radius:18px;}
+      .nav{grid-template-columns:1fr;}
+      .nav button{min-height:48px;}
+      .metric .fp-lux-card-icon,
+      .insight-card .fp-lux-card-icon{width:38px;height:38px;right:14px;top:14px;}
+      .statement-drop{grid-template-columns:1fr;}
+      .statement-drop .fp-lux-drop-icon{grid-row:auto;}
+      .panel-head,
+      .chart-head{align-items:flex-start;}
+      .modal,
+      .pdf-modal{border-radius:18px;}
+    }
+
 </style>
 
   <!-- FINANPRO: PWA + i18n no próprio index -->
@@ -2658,6 +3288,16 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
           <span><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 10-8 0v4"/></svg>100% Seguro</span>
           <span><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-10A7 7 0 103 15z"/></svg>Sincronização na nuvem</span>
           <span><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>IA Financeira</span>
+        </div>
+        <div class="fp-outcome-strip" aria-label="Diferenciais do FinanPro">
+          <div class="fp-outcome"><span>Diagnóstico</span><strong>Score financeiro em segundos</strong></div>
+          <div class="fp-outcome"><span>Radar</span><strong>Alertas antes do mês fechar</strong></div>
+          <div class="fp-outcome"><span>Plano</span><strong>Ações práticas para 30 dias</strong></div>
+          <div class="fp-outcome"><span>Importação</span><strong>CSV e OFX com prévia</strong></div>
+        </div>
+        <div class="fp-hero-insight">
+          <i>IA</i>
+          <div><strong>Mais que registrar gastos.</strong><span>O FinanPro cruza lançamentos, metas e orçamento para mostrar desperdícios, prioridades e o próximo passo com clareza.</span></div>
         </div>
       </div>
 
@@ -2748,6 +3388,21 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
           <li>Revisar assinaturas</li>
           <li>Guardar R$ 150 para a meta principal</li>
         </ul>
+      </div>
+    </section>
+
+    <section class="fp-capability-section" aria-label="Experiência inteligente do FinanPro">
+      <div class="fp-section-head">
+        <div>
+          <h2>O que você enxerga ao entrar</h2>
+          <p>Uma central clara para entender seu mês, detectar riscos e agir sem ficar perdido em números soltos.</p>
+        </div>
+      </div>
+      <div class="fp-capability-grid">
+        <article class="fp-capability-card"><span class="fp-capability-icon">82</span><h3>Score financeiro</h3><p>Uma nota simples para saber se o mês está saudável, em atenção ou crítico.</p></article>
+        <article class="fp-capability-card"><span class="fp-capability-icon">!</span><h3>Radar automático</h3><p>Alertas sobre limite de orçamento, categoria alta, saldo negativo ou bom desempenho.</p></article>
+        <article class="fp-capability-card"><span class="fp-capability-icon">CSV</span><h3>Extrato sem retrabalho</h3><p>Importe CSV ou OFX, revise a prévia e salve nos lançamentos com categoria sugerida.</p></article>
+        <article class="fp-capability-card"><span class="fp-capability-icon">30</span><h3>Plano prático</h3><p>Receba uma direção objetiva para reduzir desperdícios e melhorar o próximo mês.</p></article>
       </div>
     </section>
 
@@ -4513,6 +5168,276 @@ window.startPremiumCheckout = assinarPremium;
     }
   });
   observer.observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
+
+<script>
+(function () {
+  'use strict';
+
+  const PATHS = {
+    dashboard: '<rect x="3" y="3" width="7" height="8" rx="2"></rect><rect x="14" y="3" width="7" height="5" rx="2"></rect><rect x="14" y="12" width="7" height="9" rx="2"></rect><rect x="3" y="15" width="7" height="6" rx="2"></rect>',
+    transactions: '<path d="M4 7h16"></path><path d="M6 11h5"></path><path d="M6 15h3"></path><rect x="3" y="5" width="18" height="14" rx="3"></rect>',
+    calendar: '<path d="M8 2v4"></path><path d="M16 2v4"></path><rect x="3" y="4" width="18" height="18" rx="3"></rect><path d="M3 10h18"></path><path d="M8 14h.01"></path><path d="M12 14h.01"></path><path d="M16 14h.01"></path>',
+    target: '<circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><path d="M12 8v4l3 3"></path>',
+    wallet: '<path d="M20 7H5.5a2.5 2.5 0 0 1 0-5H18"></path><path d="M4 7v12a2 2 0 0 0 2 2h14V7"></path><path d="M16 14h.01"></path>',
+    brain: '<path d="M9 3a3 3 0 0 0-3 3v1a3 3 0 0 0-2 5.2A3 3 0 0 0 7 17h1"></path><path d="M15 3a3 3 0 0 1 3 3v1a3 3 0 0 1 2 5.2A3 3 0 0 1 17 17h-1"></path><path d="M9 3v18"></path><path d="M15 3v18"></path><path d="M9 8H7"></path><path d="M15 8h2"></path><path d="M9 14H7"></path><path d="M15 14h2"></path>',
+    advisor: '<path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8Z"></path><path d="m19 15 .8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8Z"></path>',
+    trophy: '<path d="M8 21h8"></path><path d="M12 17v4"></path><path d="M7 4h10v4a5 5 0 0 1-10 0Z"></path><path d="M7 7H4a2 2 0 0 0 2 4h1"></path><path d="M17 7h3a2 2 0 0 1-2 4h-1"></path>',
+    crown: '<path d="m3 8 4 3 5-7 5 7 4-3-2 11H5Z"></path><path d="M5 19h14"></path>',
+    file: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"></path><path d="M14 2v6h6"></path><path d="M8 13h8"></path><path d="M8 17h5"></path>',
+    income: '<path d="M3 17 9 11l4 4 8-8"></path><path d="M15 7h6v6"></path>',
+    expense: '<path d="M3 7l6 6 4-4 8 8"></path><path d="M15 17h6v-6"></path>',
+    balance: '<path d="M12 3v18"></path><path d="M5 7h14"></path><path d="M6 7l-3 6h6Z"></path><path d="M18 7l-3 6h6Z"></path>',
+    radar: '<path d="M12 20h.01"></path><path d="M8.5 16.5a5 5 0 0 1 7 0"></path><path d="M5 13a10 10 0 0 1 14 0"></path><path d="M2 9.5a15 15 0 0 1 20 0"></path>',
+    chart: '<path d="M4 19V5"></path><path d="M4 19h16"></path><rect x="7" y="11" width="3" height="5" rx="1"></rect><rect x="12" y="7" width="3" height="9" rx="1"></rect><rect x="17" y="3" width="3" height="13" rx="1"></rect>',
+    pie: '<path d="M12 3a9 9 0 1 0 9 9h-9Z"></path><path d="M12 3v9h9a9 9 0 0 0-9-9Z"></path>',
+    compare: '<path d="M7 20V10"></path><path d="M12 20V4"></path><path d="M17 20v-7"></path>',
+    heart: '<path d="M20.8 6.6a5.5 5.5 0 0 0-7.8 0L12 7.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 22l7.8-6.6 1-1a5.5 5.5 0 0 0 0-7.8Z"></path><path d="M8 13h2l1-2 2 4 1-2h2"></path>',
+    upload: '<path d="M12 16V4"></path><path d="m7 9 5-5 5 5"></path><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"></path>',
+    refresh: '<path d="M21 12a9 9 0 0 1-15.5 6.2"></path><path d="M3 12A9 9 0 0 1 18.5 5.8"></path><path d="M18 2v4h4"></path><path d="M6 22v-4H2"></path>',
+    trash: '<path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="m19 6-1 14H6L5 6"></path><path d="M10 11v5"></path><path d="M14 11v5"></path>',
+    edit: '<path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path>',
+    check: '<path d="M20 6 9 17l-5-5"></path>',
+    close: '<path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>',
+    send: '<path d="m22 2-7 20-4-9-9-4Z"></path><path d="M22 2 11 13"></path>',
+    save: '<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path><path d="M17 21v-8H7v8"></path><path d="M7 3v5h8"></path>',
+    card: '<rect x="3" y="5" width="18" height="14" rx="3"></rect><path d="M3 10h18"></path><path d="M7 15h.01"></path><path d="M11 15h2"></path>',
+    repeat: '<path d="M17 2l4 4-4 4"></path><path d="M3 11V9a3 3 0 0 1 3-3h15"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v2a3 3 0 0 1-3 3H3"></path>',
+    pin: '<path d="M12 17v5"></path><path d="M7 3h10l-2 8 3 3H6l3-3Z"></path>',
+    search: '<circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path>',
+    calculator: '<rect x="4" y="2" width="16" height="20" rx="3"></rect><path d="M8 6h8"></path><path d="M8 10h.01"></path><path d="M12 10h.01"></path><path d="M16 10h.01"></path><path d="M8 14h.01"></path><path d="M12 14h.01"></path><path d="M16 14h.01"></path><path d="M8 18h.01"></path><path d="M12 18h.01"></path><path d="M16 18h.01"></path>',
+    scissors: '<circle cx="6" cy="7" r="3"></circle><circle cx="6" cy="17" r="3"></circle><path d="M8.6 8.6 19 19"></path><path d="M8.6 15.4 19 5"></path>',
+    lock: '<rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path>',
+    unlock: '<rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 7.4-2.1"></path>',
+    shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"></path><path d="m9 12 2 2 4-4"></path>'
+  };
+
+  function icon(key, cls) {
+    const paths = PATHS[key] || PATHS.advisor;
+    return '<svg class="' + (cls || 'fp-lux-inline-icon') + '" aria-hidden="true" viewBox="0 0 24 24">' + paths + '</svg>';
+  }
+
+  function norm(text) {
+    return String(text || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
+  }
+
+  function stripLeadingSymbols(text) {
+    return String(text || '')
+      .replace(/^[\s\uFE0F\u200D]*(?:[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}][\uFE0F\u200D\s]*)+/u, '')
+      .replace(/^[\s•·|]+/, '');
+  }
+
+  function cleanTextNodes(el) {
+    if (!el) return;
+    Array.from(el.childNodes).forEach(node => {
+      if (node.nodeType === 3) node.nodeValue = stripLeadingSymbols(node.nodeValue);
+    });
+  }
+
+  function navKey(text) {
+    const value = norm(text);
+    if (value.includes('dashboard')) return 'dashboard';
+    if (value.includes('lancamento')) return 'transactions';
+    if (value.includes('calendario')) return 'calendar';
+    if (value.includes('metas')) return 'target';
+    if (value.includes('orcamento')) return 'wallet';
+    if (value.includes('ia financeira')) return 'brain';
+    if (value.includes('consultor')) return 'advisor';
+    if (value.includes('diferenciais')) return 'trophy';
+    if (value.includes('assinatura')) return 'crown';
+    if (value.includes('paginas')) return 'file';
+    return 'dashboard';
+  }
+
+  function actionKey(text, action) {
+    const raw = String(text || '').trim();
+    const value = norm(text);
+    const on = norm(action || '');
+    if (/^[x×✕]$/.test(raw) || value.includes('excluir') || on.includes('delete')) return 'trash';
+    if (/^✎$/.test(raw) || value.includes('editar') || on.includes('edit')) return 'edit';
+    if (value.includes('salvar')) return 'save';
+    if (value.includes('cancelar') || value.includes('agora nao') || value.includes('voltar')) return 'close';
+    if (value.includes('enviar')) return 'send';
+    if (value.includes('confirmar')) return 'check';
+    if (value.includes('limpar')) return 'trash';
+    if (value.includes('pdf') || value.includes('exportar') || value.includes('gerar')) return 'file';
+    if (value.includes('premium') || value.includes('assinar')) return 'crown';
+    if (value.includes('verificar') || value.includes('atualizar')) return 'refresh';
+    if (value.includes('diagnostico')) return 'brain';
+    if (value.includes('plano')) return 'calendar';
+    if (value.includes('cortes')) return 'scissors';
+    if (value.includes('meta')) return 'target';
+    if (value.includes('orcamento')) return 'wallet';
+    if (value.includes('previsao')) return 'chart';
+    if (value.includes('simular')) return 'calculator';
+    if (value.includes('divida')) return 'card';
+    if (value.includes('padroes')) return 'search';
+    if (value.includes('categoria')) return 'advisor';
+    return null;
+  }
+
+  function setNavIcons() {
+    document.querySelectorAll('.app .nav button').forEach(button => {
+      const key = navKey(button.textContent);
+      const existing = Array.from(button.children).find(child => child.tagName && child.tagName.toLowerCase() === 'svg');
+      if (existing && existing.dataset.fpLuxNav === key) return;
+      const markup = icon(key, 'fp-lux-nav-icon');
+      if (existing) existing.outerHTML = markup;
+      else button.insertAdjacentHTML('afterbegin', markup);
+      const svg = Array.from(button.children).find(child => child.tagName && child.tagName.toLowerCase() === 'svg');
+      if (svg) svg.dataset.fpLuxNav = key;
+    });
+  }
+
+  function ensureIcon(container, key, cls, where) {
+    if (!container || container.querySelector('.' + cls)) return;
+    container.insertAdjacentHTML(where || 'afterbegin', '<span class="' + cls + '">' + icon(key, '') + '</span>');
+  }
+
+  function decorateMetrics() {
+    [
+      ['totalIncome', 'income'],
+      ['totalExpense', 'expense'],
+      ['totalMetas', 'target'],
+      ['totalBalance', 'balance'],
+      ['dashTopCategory', 'pie'],
+      ['dashGoalProgress', 'target'],
+      ['dashHealthScore', 'heart']
+    ].forEach(([id, key]) => {
+      const el = document.getElementById(id);
+      const card = el && (el.closest('.metric') || el.closest('.insight-card'));
+      ensureIcon(card, key, 'fp-lux-card-icon');
+    });
+  }
+
+  function headingKey(text) {
+    const value = norm(text);
+    if (value.includes('radar')) return 'radar';
+    if (value.includes('fluxo')) return 'chart';
+    if (value.includes('categoria')) return 'pie';
+    if (value.includes('comparativo')) return 'compare';
+    if (value.includes('movimentacao') || value.includes('extrato') || value.includes('lancamento')) return 'transactions';
+    if (value.includes('plano') || value.includes('assinatura')) return 'crown';
+    if (value.includes('meta')) return 'target';
+    if (value.includes('orcamento')) return 'wallet';
+    if (value.includes('ia') || value.includes('diagnostico')) return 'brain';
+    if (value.includes('pagamento')) return 'card';
+    if (value.includes('premium')) return 'crown';
+    if (value.includes('pagina') || value.includes('politica') || value.includes('termo')) return 'file';
+    return 'advisor';
+  }
+
+  function decorateHeadings() {
+    document.querySelectorAll('.app .panel-head h2, .app .chart-head h2, .app .modal h3, .pdf-modal h3').forEach(h => {
+      if (h.querySelector('.fp-lux-head-icon')) return;
+      cleanTextNodes(h);
+      h.insertAdjacentHTML('afterbegin', '<span class="fp-lux-head-icon">' + icon(headingKey(h.textContent), '') + '</span>');
+    });
+  }
+
+  function decorateChoices() {
+    const choices = {
+      tipoBtnUnico: 'pin',
+      tipoBtnParcelado: 'card',
+      tipoBtnRecorrente: 'repeat',
+      pdfOptCompleto: 'chart',
+      pdfOptLanc: 'transactions',
+      pdfOptMetas: 'target',
+      pdfOptOrc: 'wallet'
+    };
+    Object.entries(choices).forEach(([id, key]) => {
+      const root = document.getElementById(id);
+      const slot = root && root.querySelector('.tipo-icon, .po-icon');
+      if (slot && slot.dataset.fpLuxChoice !== key) {
+        slot.innerHTML = icon(key, 'fp-lux-choice-icon');
+        slot.dataset.fpLuxChoice = key;
+      }
+    });
+    document.querySelectorAll('.ia-welcome .ia-bot-icon').forEach(slot => {
+      if (slot.dataset.fpLuxBot) return;
+      slot.innerHTML = icon('brain', 'fp-lux-bot-icon');
+      slot.dataset.fpLuxBot = '1';
+    });
+  }
+
+  function decorateFeatureCards() {
+    document.querySelectorAll('.app .feature-kicker').forEach(kicker => {
+      cleanTextNodes(kicker);
+      ensureIcon(kicker, headingKey(kicker.textContent), 'fp-lux-row-icon');
+    });
+    document.querySelectorAll('#diferenciais .achievement-row, #diferenciais .rank-row').forEach((row, index) => {
+      const strong = row.querySelector('strong');
+      if (!strong) return;
+      cleanTextNodes(strong);
+      const key = row.classList.contains('unlocked') || norm(strong.textContent).includes('desbloque') ? 'unlock' : (row.classList.contains('rank-row') ? 'trophy' : 'lock');
+      ensureIcon(strong, key, 'fp-lux-row-icon');
+      row.style.setProperty('--fp-row-delay', (index * 35) + 'ms');
+    });
+  }
+
+  function decoratePremiumResources() {
+    const map = {
+      ia_unlimited: 'brain',
+      pdf_advanced: 'file',
+      backup_auto: 'refresh',
+      smart_categories: 'advisor',
+      advanced_reports: 'chart',
+      no_ads: 'shield'
+    };
+    document.querySelectorAll('.premium-resource[data-premium-card]').forEach(card => {
+      ensureIcon(card, map[card.dataset.premiumCard] || 'crown', 'fp-lux-resource-icon');
+    });
+    document.querySelectorAll('.premium-step span').forEach(step => step.classList.add('fp-lux-step-icon'));
+  }
+
+  function decorateStatementDrop() {
+    document.querySelectorAll('.statement-drop').forEach(drop => ensureIcon(drop, 'upload', 'fp-lux-drop-icon'));
+  }
+
+  function decorateButtons(root) {
+    const base = root && root.querySelectorAll ? root : document;
+    base.querySelectorAll('.app button, .app .btn, .pdf-modal button').forEach(button => {
+      if (button.closest('.nav') || button.classList.contains('dark-toggle')) return;
+      cleanTextNodes(button);
+      if (button.querySelector('svg')) return;
+      const key = actionKey(button.textContent || '', button.getAttribute('onclick') || '');
+      if (!key) return;
+      button.insertAdjacentHTML('afterbegin', icon(key, 'fp-lux-inline-icon'));
+      button.dataset.fpEnhancedIcon = '1';
+    });
+  }
+
+  function paint(root) {
+    setNavIcons();
+    decorateMetrics();
+    decorateHeadings();
+    decorateChoices();
+    decorateFeatureCards();
+    decoratePremiumResources();
+    decorateStatementDrop();
+    decorateButtons(root || document);
+  }
+
+  let queued = false;
+  function schedule() {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => {
+      queued = false;
+      paint(document);
+    });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => paint(document));
+  else paint(document);
+
+  const observer = new MutationObserver(mutations => {
+    if (mutations.some(mutation => Array.from(mutation.addedNodes).some(node => node.nodeType === 1))) schedule();
+  });
+  observer.observe(document.documentElement, { childList: true, subtree: true });
+
+  window.FinanProLuxuryUI = { refresh: paint };
 })();
 </script>
 
@@ -8322,6 +9247,26 @@ document.addEventListener('keydown', function(event) {
   "Score Financeiro": "Financial Score",
   "Economia possível": "Possible savings",
   "Plano recomendado": "Recommended plan",
+  "Diagnóstico": "Diagnosis",
+  "Score financeiro em segundos": "Financial score in seconds",
+  "Radar": "Radar",
+  "Alertas antes do mês fechar": "Alerts before the month closes",
+  "Plano": "Plan",
+  "Ações práticas para 30 dias": "Practical actions for 30 days",
+  "Importação": "Import",
+  "CSV e OFX com prévia": "CSV and OFX with preview",
+  "Mais que registrar gastos.": "More than recording expenses.",
+  "O FinanPro cruza lançamentos, metas e orçamento para mostrar desperdícios, prioridades e o próximo passo com clareza.": "FinanPro cross-checks transactions, goals and budget to show waste, priorities and the next step clearly.",
+  "O que você enxerga ao entrar": "What you see when you enter",
+  "Uma central clara para entender seu mês, detectar riscos e agir sem ficar perdido em números soltos.": "A clear hub to understand your month, detect risks and act without getting lost in loose numbers.",
+  "Score financeiro": "Financial score",
+  "Uma nota simples para saber se o mês está saudável, em atenção ou crítico.": "A simple score to know whether the month is healthy, needs attention or is critical.",
+  "Radar automático": "Automatic radar",
+  "Alertas sobre limite de orçamento, categoria alta, saldo negativo ou bom desempenho.": "Alerts about budget limits, high categories, negative balance or good performance.",
+  "Extrato sem retrabalho": "Statement import without rework",
+  "Importe CSV ou OFX, revise a prévia e salve nos lançamentos com categoria sugerida.": "Import CSV or OFX, review the preview and save transactions with a suggested category.",
+  "Plano prático": "Practical plan",
+  "Receba uma direção objetiva para reduzir desperdícios e melhorar o próximo mês.": "Get clear direction to reduce waste and improve next month.",
   "Organize gastos, metas, dívidas e orçamentos com sincronização na nuvem e relatórios profissionais.": "Organize expenses, goals, debts and budgets with cloud sync and professional reports.",
   "Organize gastos, metas, dívidas e orçamento mensal gratuitamente em uma central financeira profissional.": "Organize expenses, goals, debts and your monthly budget for free in a professional finance hub.",
   "Tudo que você precisa para ter": "Everything you need for",
@@ -8843,6 +9788,26 @@ document.addEventListener('keydown', function(event) {
   "Score Financeiro": "Score financiero",
   "Economia possível": "Ahorro posible",
   "Plano recomendado": "Plan recomendado",
+  "Diagnóstico": "Diagnóstico",
+  "Score financeiro em segundos": "Score financiero en segundos",
+  "Radar": "Radar",
+  "Alertas antes do mês fechar": "Alertas antes de cerrar el mes",
+  "Plano": "Plan",
+  "Ações práticas para 30 dias": "Acciones prácticas para 30 días",
+  "Importação": "Importación",
+  "CSV e OFX com prévia": "CSV y OFX con vista previa",
+  "Mais que registrar gastos.": "Más que registrar gastos.",
+  "O FinanPro cruza lançamentos, metas e orçamento para mostrar desperdícios, prioridades e o próximo passo com clareza.": "FinanPro cruza movimientos, metas y presupuesto para mostrar desperdicios, prioridades y el próximo paso con claridad.",
+  "O que você enxerga ao entrar": "Lo que ves al entrar",
+  "Uma central clara para entender seu mês, detectar riscos e agir sem ficar perdido em números soltos.": "Una central clara para entender tu mes, detectar riesgos y actuar sin perderte en números sueltos.",
+  "Score financeiro": "Score financiero",
+  "Uma nota simples para saber se o mês está saudável, em atenção ou crítico.": "Una nota simple para saber si el mes está saludable, en atención o crítico.",
+  "Radar automático": "Radar automático",
+  "Alertas sobre limite de orçamento, categoria alta, saldo negativo ou bom desempenho.": "Alertas sobre límite de presupuesto, categoría alta, saldo negativo o buen desempeño.",
+  "Extrato sem retrabalho": "Extracto sin retrabajo",
+  "Importe CSV ou OFX, revise a prévia e salve nos lançamentos com categoria sugerida.": "Importa CSV u OFX, revisa la vista previa y guarda movimientos con categoría sugerida.",
+  "Plano prático": "Plan práctico",
+  "Receba uma direção objetiva para reduzir desperdícios e melhorar o próximo mês.": "Recibe una dirección objetiva para reducir desperdicios y mejorar el próximo mes.",
   "Organize gastos, metas, dívidas e orçamentos com sincronização na nuvem e relatórios profissionais.": "Organiza gastos, metas, deudas y presupuestos con sincronización en la nube e informes profesionales.",
   "Continuar com Google": "Continuar con Google",
   "100% Seguro": "100% Seguro",
