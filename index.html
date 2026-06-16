@@ -2255,6 +2255,46 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
 .premium-modal{max-width:560px;}
 .premium-modal h3{display:flex;align-items:center;gap:10px;}
 .premium-modal .modal-actions{justify-content:space-between;}
+.subscription-manage-card{
+  margin-top:16px;
+  border:1px solid rgba(180,35,24,.18);
+  border-radius:16px;
+  background:linear-gradient(135deg,rgba(254,242,242,.72),var(--surface));
+  padding:16px;
+  gap:12px;
+}
+[data-theme="dark"] .subscription-manage-card{background:linear-gradient(135deg,rgba(248,81,73,.10),rgba(22,27,34,.96));}
+.subscription-manage-card strong{color:var(--ink);font-size:16px;}
+.subscription-manage-card p{margin:0;color:var(--muted);line-height:1.5;font-size:13px;font-weight:700;}
+.subscription-manage-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+.btn.cancel-subscription-btn{
+  color:var(--red);
+  border-color:rgba(180,35,24,.30);
+  background:linear-gradient(180deg,rgba(254,242,242,.82),var(--surface));
+}
+[data-theme="dark"] .btn.cancel-subscription-btn{background:rgba(248,81,73,.08);border-color:rgba(248,81,73,.28);}
+.btn.cancel-subscription-btn:hover{border-color:var(--red);box-shadow:0 14px 30px rgba(180,35,24,.16);}
+.cancel-subscription-modal{max-width:620px;}
+.cancel-summary{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--surface-2);
+  padding:14px;
+  display:grid;
+  gap:8px;
+  color:var(--muted);
+  font-size:13px;
+  font-weight:750;
+  line-height:1.5;
+}
+.cancel-summary strong{color:var(--ink);}
+.cancel-checklist{margin:12px 0 0;padding:0;list-style:none;display:grid;gap:8px;}
+.cancel-checklist li{display:flex;gap:9px;align-items:flex-start;color:var(--muted);font-size:13px;font-weight:750;line-height:1.45;}
+.cancel-checklist li::before{content:"✓";color:var(--green);font-weight:900;}
+.cancel-message{display:none;margin-top:12px;}
+.cancel-message.show{display:block;}
+.cancel-message.success{border-color:rgba(22,101,52,.22);background:rgba(34,197,94,.08);color:var(--green);}
+.cancel-message.error{border-color:rgba(180,35,24,.22);background:var(--red-soft);color:var(--red);}
 .gateway-status{
   border:1px solid var(--line);
   border-radius:12px;
@@ -2852,30 +2892,91 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
     .brand-copy{min-width:0;}
     .nav{gap:8px;}
     .nav button{
-      min-height:50px;
-      grid-template-columns:42px minmax(0,1fr);
+      min-height:52px;
+      grid-template-columns:46px minmax(0,1fr);
       gap:10px;
-      padding:5px 12px 5px 6px;
+      padding:5px 12px 5px 7px;
       border:1px solid transparent;
       border-radius:16px;
       font-weight:850;
       color:color-mix(in srgb, var(--muted) 88%, var(--ink) 12%);
       transition:transform .24s cubic-bezier(.16,1,.3,1), background .24s ease, color .24s ease, border-color .24s ease, box-shadow .24s ease;
     }
+    .fp-nav-icon-shell,
     .nav button > svg{
-      width:38px;
-      height:38px;
-      padding:9px;
-      border-radius:14px;
-      background:linear-gradient(180deg, var(--surface), var(--surface-2));
-      border:1px solid var(--line);
-      color:var(--green);
+      width:42px;
+      height:42px;
+      box-sizing:border-box;
+      padding:10px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      position:relative;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at 28% 18%, rgba(255,255,255,.72), transparent 18%),
+        linear-gradient(145deg, color-mix(in srgb, var(--surface) 80%, white 20%), color-mix(in srgb, var(--surface-2) 88%, var(--green) 12%));
+      border:1px solid color-mix(in srgb, var(--line) 70%, var(--green) 30%);
+      color:color-mix(in srgb, var(--green) 76%, var(--muted) 24%);
+      stroke:currentColor;
+      fill:none;
+      stroke-linecap:round;
+      stroke-linejoin:round;
       stroke-width:2.05;
-      box-shadow:0 10px 24px rgba(23,33,28,.07);
+      box-shadow:0 12px 28px rgba(23,33,28,.10), inset 0 1px 0 rgba(255,255,255,.42);
+      transition:transform .24s cubic-bezier(.16,1,.3,1), background .24s ease, color .24s ease, border-color .24s ease, box-shadow .24s ease, filter .24s ease;
     }
+    .fp-nav-icon-shell::before{
+      content:"";
+      position:absolute;
+      inset:7px;
+      border-radius:12px;
+      background:linear-gradient(135deg, rgba(63,185,80,.16), transparent 64%);
+      opacity:.75;
+      pointer-events:none;
+    }
+    .fp-nav-icon-shell::after{
+      content:"";
+      position:absolute;
+      inset:-45%;
+      background:linear-gradient(120deg, transparent 36%, rgba(255,255,255,.34), transparent 62%);
+      transform:translateX(-120%) rotate(18deg);
+      transition:transform .55s ease;
+      pointer-events:none;
+    }
+    .fp-nav-icon-shell svg,
+    .nav button > svg.fp-lux-nav-icon{
+      width:21px;
+      height:21px;
+      padding:0;
+      background:transparent;
+      border:0;
+      border-radius:0;
+      box-shadow:none;
+      color:inherit;
+      stroke:currentColor;
+      fill:none;
+      stroke-width:2.05;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+      overflow:visible;
+      position:relative;
+      z-index:1;
+    }
+    .fp-nav-icon-shell svg *,
+    .nav button > svg *{
+      stroke:currentColor;
+      fill:none;
+      vector-effect:non-scaling-stroke;
+    }
+    [data-theme="dark"] .fp-nav-icon-shell,
     [data-theme="dark"] .nav button > svg{
-      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.035));
-      box-shadow:0 12px 30px rgba(0,0,0,.30);
+      background:
+        radial-gradient(circle at 26% 18%, rgba(255,255,255,.16), transparent 20%),
+        linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.032));
+      border-color:rgba(255,255,255,.10);
+      color:rgba(148,163,184,.92);
+      box-shadow:0 14px 32px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.08);
     }
     .nav button:hover,
     .nav button.active{
@@ -2889,13 +2990,26 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
       background:linear-gradient(135deg, rgba(63,185,80,.14), rgba(45,212,191,.055));
       box-shadow:0 14px 34px rgba(0,0,0,.30), inset 0 0 0 1px rgba(63,185,80,.10);
     }
+    .nav button:hover > .fp-nav-icon-shell,
+    .nav button.active > .fp-nav-icon-shell,
     .nav button:hover > svg,
     .nav button.active > svg{
-      background:linear-gradient(135deg, var(--green), var(--teal));
+      background:
+        radial-gradient(circle at 30% 18%, rgba(255,255,255,.46), transparent 18%),
+        linear-gradient(135deg, #4ade80, #16a34a 52%, #0f766e);
       border-color:transparent;
       color:#fff;
-      transform:translateY(-1px) scale(1.04);
-      filter:drop-shadow(0 10px 16px rgba(22,101,52,.24));
+      transform:translateY(-1px) scale(1.055);
+      box-shadow:0 18px 36px rgba(34,197,94,.26), inset 0 1px 0 rgba(255,255,255,.30);
+      filter:drop-shadow(0 10px 16px rgba(22,101,52,.18));
+    }
+    .nav button:hover > .fp-nav-icon-shell::after,
+    .nav button.active > .fp-nav-icon-shell::after{
+      transform:translateX(120%) rotate(18deg);
+    }
+    .nav button.active > .fp-nav-icon-shell svg,
+    .nav button:hover > .fp-nav-icon-shell svg{
+      stroke-width:2.25;
     }
     .nav .nav-label{display:inline-flex;align-items:center;gap:6px;min-width:0;flex-wrap:wrap;}
     .nav-badge,
@@ -3219,8 +3333,11 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
     }
     @media(max-width:1100px){
       .sidebar{height:auto;}
-      .nav button{grid-template-columns:38px minmax(0,1fr);min-height:48px;}
-      .nav button > svg{width:36px;height:36px;padding:8px;}
+      .nav button{grid-template-columns:42px minmax(0,1fr);min-height:48px;}
+      .fp-nav-icon-shell,
+      .nav button > svg{width:38px;height:38px;}
+      .fp-nav-icon-shell svg,
+      .nav button > svg{width:20px;height:20px;}
     }
     @media(max-width:720px){
       .sidebar{padding:14px;}
@@ -4196,6 +4313,7 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
         <div class="top-actions">
           <button type="button" class="btn" onclick="verifySubscription()">Verificar assinatura</button>
           <button type="button" class="btn premium-cta free-only" onclick="assinarPremium()">Assinar Premium</button>
+          <button type="button" class="btn cancel-subscription-btn premium-only" onclick="openCancelSubscriptionModal()">Cancelar assinatura</button>
         </div>
       </div>
 
@@ -4239,6 +4357,14 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
             <li>Sem anúncios</li>
           </ul>
           <button type="button" class="btn premium-cta free-only" onclick="assinarPremium()">Assinar Premium</button>
+          <div class="subscription-manage-card premium-only">
+            <strong>Gerenciar assinatura</strong>
+            <p id="cancelSubscriptionStatus">Voce pode cancelar o Premium quando quiser. O app volta ao plano Gratuito e os recursos premium sao bloqueados.</p>
+            <div class="subscription-manage-actions">
+              <button type="button" class="btn cancel-subscription-btn" onclick="openCancelSubscriptionModal()">Cancelar assinatura</button>
+              <button type="button" class="btn small" onclick="verifySubscription()">Verificar status</button>
+            </div>
+          </div>
           <div class="subscription-unlocked premium-only">
             <strong>Premium ativo</strong>
             <p>Os recursos premium já estão liberados para esta conta.</p>
@@ -4606,6 +4732,27 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
   </div>
 </div>
 
+<!-- ========== MODAL: CANCELAR ASSINATURA ========== -->
+<div class="modal-overlay" id="cancelSubscriptionModal">
+  <div class="modal cancel-subscription-modal">
+    <h3><span class="premium-badge">PREMIUM</span> Cancelar assinatura</h3>
+    <p style="margin:8px 0 14px;color:var(--muted);line-height:1.55;">Confirme para voltar ao plano Gratuito nesta conta.</p>
+    <div class="cancel-summary">
+      <strong>O que acontece ao cancelar?</strong>
+      <ul class="cancel-checklist">
+        <li>O acesso Premium e os recursos ilimitados sao desativados no app.</li>
+        <li>Seus lancamentos, metas e orcamentos continuam salvos.</li>
+        <li>Voce pode assinar novamente quando quiser.</li>
+      </ul>
+    </div>
+    <div class="gateway-status cancel-message" id="cancelSubscriptionMessage"></div>
+    <div class="modal-actions">
+      <button type="button" class="btn" onclick="closeCancelSubscriptionModal()">Manter Premium</button>
+      <button type="button" class="btn cancel-subscription-btn" id="confirmCancelSubscriptionBtn" onclick="cancelPremiumSubscription()">Confirmar cancelamento</button>
+    </div>
+  </div>
+</div>
+
 <!-- PDF Print Frame (hidden, shown on print) -->
 <div class="pdf-print-frame" id="pdfPrintFrame"></div>
 
@@ -4617,7 +4764,8 @@ window.FINANPRO_PREMIUM_CONFIG = {
   priceCents: 990,
   currency: 'BRL',
   checkoutUrl: '',
-  preferenceEndpoint: '/api/create-payment'
+  preferenceEndpoint: '/api/create-payment',
+  cancelEndpoint: ''
 };
 
 async function assinarPremium() {
@@ -4778,6 +4926,20 @@ window.startPremiumCheckout = assinarPremium;
     return date ? date.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) : 'Aguardando verificação';
   }
 
+  function setCancelMessage(text, type = 'success') {
+    const el = document.getElementById('cancelSubscriptionMessage');
+    if (!el) return;
+    el.textContent = text || '';
+    el.className = `gateway-status cancel-message show ${type}`;
+  }
+
+  function clearCancelMessage() {
+    const el = document.getElementById('cancelSubscriptionMessage');
+    if (!el) return;
+    el.textContent = '';
+    el.className = 'gateway-status cancel-message';
+  }
+
   function updateUsageUI() {
     const premium = isPremiumSubscription();
     const used = getIAUsageCount();
@@ -4802,6 +4964,9 @@ window.startPremiumCheckout = assinarPremium;
       : 'Controle financeiro, metas, IA limitada e 1 relatório PDF básico por mês continuam liberados. Assine Premium para desbloquear IA ilimitada, PDF avançado, backup automático e mais.');
     setText('subscriptionVerifiedAt', premium ? `Verificado em ${formatDate(subscriptionState.verifiedAt)}` : 'Plano gratuito verificado');
     setText('premiumResourceStatus', premium ? 'Todos liberados' : 'Bloqueados no plano gratuito');
+    setText('cancelSubscriptionStatus', premium
+      ? 'Voce pode cancelar o Premium quando quiser. O app volta ao plano Gratuito e os recursos premium sao bloqueados.'
+      : 'Nenhuma assinatura Premium ativa nesta conta.');
 
     document.querySelectorAll('[data-premium-card]').forEach(card => {
       card.classList.toggle('locked', !premium);
@@ -4821,6 +4986,7 @@ window.startPremiumCheckout = assinarPremium;
     if (gateway) {
       const cfg = window.FINANPRO_PREMIUM_CONFIG || {};
       if (premium) gateway.innerHTML = '<strong>Assinatura ativa:</strong> recursos premium liberados para esta conta.';
+      else if (subscriptionState.status === 'canceled' || subscriptionState.status === 'cancelled') gateway.innerHTML = '<strong>Assinatura cancelada:</strong> sua conta esta no plano Gratuito. Voce pode assinar novamente quando quiser.';
       else if (cfg.preferenceEndpoint || cfg.checkoutUrl) gateway.innerHTML = '<strong>Gateway Mercado Pago:</strong> checkout configurado. Após aprovação, o webhook deve gravar <code>subscription.status = active</code> no Firestore.';
       else gateway.innerHTML = '<strong>Gateway Mercado Pago:</strong> pendente de configuração. Defina uma URL de checkout ou endpoint seguro para criar preferência de pagamento.';
     }
@@ -4838,6 +5004,106 @@ window.startPremiumCheckout = assinarPremium;
     setText('premiumModalTitle', copy.title);
     setText('premiumModalText', copy.text);
     openModal('premiumModal');
+  }
+
+  function openCancelSubscriptionModal() {
+    if (!isPremiumSubscription()) {
+      renderSubscriptionUI();
+      setText('subscriptionVerifiedAt', 'Nenhuma assinatura Premium ativa para cancelar.');
+      return;
+    }
+    clearCancelMessage();
+    const btn = document.getElementById('confirmCancelSubscriptionBtn');
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = 'Confirmar cancelamento';
+    }
+    openModal('cancelSubscriptionModal');
+  }
+
+  function closeCancelSubscriptionModal() {
+    closeModal('cancelSubscriptionModal');
+  }
+
+  async function cancelPremiumSubscription() {
+    const user = window.auth?.currentUser || window._currentUser;
+    const btn = document.getElementById('confirmCancelSubscriptionBtn');
+
+    if (!user?.uid) {
+      setCancelMessage('Entre na sua conta antes de cancelar a assinatura.', 'error');
+      return;
+    }
+
+    if (!isPremiumSubscription()) {
+      setCancelMessage('Nao existe assinatura Premium ativa nesta conta.', 'error');
+      renderSubscriptionUI();
+      return;
+    }
+
+    const canceledAt = new Date();
+    const cancelPayload = {
+      plan: 'free',
+      status: 'canceled',
+      provider: subscriptionState.provider || 'mercadopago',
+      canceledAt: canceledAt.toISOString(),
+      cancelReason: 'user_request',
+      previousPlan: subscriptionState.plan,
+      previousStatus: subscriptionState.status,
+      paymentId: subscriptionState.paymentId || null,
+      verificationSource: 'user'
+    };
+
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = 'Cancelando...';
+    }
+    setCancelMessage('Cancelando assinatura...', 'success');
+
+    const cfg = window.FINANPRO_PREMIUM_CONFIG || {};
+    let endpointOk = false;
+    if (cfg.cancelEndpoint) {
+      try {
+        const response = await fetch(cfg.cancelEndpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            uid: user.uid,
+            email: user.email || '',
+            subscription: subscriptionState.raw || {},
+            cancel: cancelPayload
+          })
+        });
+        endpointOk = response.ok;
+      } catch (err) {
+        console.warn('Cancelamento no gateway indisponivel. Aplicando cancelamento no app.', err);
+      }
+    }
+
+    let cloudOk = false;
+    try {
+      if (typeof window.cancelSubscriptionInCloud === 'function') {
+        cloudOk = await window.cancelSubscriptionInCloud(user, cancelPayload);
+      }
+    } catch (err) {
+      console.warn('Nao foi possivel salvar cancelamento na nuvem agora.', err);
+    }
+
+    localStorage.setItem(`finanpro_${user.uid}_subscription_cancel`, JSON.stringify(cancelPayload));
+    applySubscription(cancelPayload, { source: cloudOk ? 'cloud' : 'local' });
+    updateUsageUI();
+
+    const detail = endpointOk
+      ? 'Cancelamento enviado ao gateway e aplicado no app.'
+      : cloudOk
+        ? 'Cancelamento salvo na sua conta e aplicado no app.'
+        : 'Cancelamento aplicado neste navegador. Verifique o status quando a nuvem estiver disponivel.';
+    setCancelMessage(detail, 'success');
+    setText('subscriptionVerifiedAt', `Cancelada em ${formatDate(canceledAt)}`);
+
+    setTimeout(() => {
+      closeCancelSubscriptionModal();
+      renderSubscriptionUI();
+    }, 1300);
   }
 
   function requirePremium(feature) {
@@ -4894,16 +5160,38 @@ window.startPremiumCheckout = assinarPremium;
     return rules.find(([, rx]) => rx.test(txt))?.[0] || 'Outros';
   }
 
+  function readLocalSubscriptionCancel(uid) {
+    if (!uid) return null;
+    try {
+      const saved = JSON.parse(localStorage.getItem(`finanpro_${uid}_subscription_cancel`) || 'null');
+      return saved?.status === 'canceled' ? saved : null;
+    } catch {
+      return null;
+    }
+  }
+
   window.applySubscription = applySubscription;
   window.renderSubscriptionUI = renderSubscriptionUI;
   window.applySubscriptionFromCloud = function applySubscriptionFromCloud(uid, userDoc) {
     const raw = userDoc?.subscription || userDoc?.assinatura || null;
+    const localCancel = readLocalSubscriptionCancel(uid);
+    if (localCancel) {
+      const cloudDate = parseDate(raw?.updatedAt || raw?.verifiedAt || raw?.approvedAt || raw?.createdAt);
+      const cancelDate = parseDate(localCancel.canceledAt);
+      if (!cloudDate || (cancelDate && cancelDate.getTime() >= cloudDate.getTime())) {
+        applySubscription(localCancel, { source: 'local', uid });
+        return;
+      }
+    }
     if (raw) applySubscription(raw, { source: 'cloud', uid });
     else applySubscription({ plan: 'free', status: 'free' }, { source: 'cloud', uid });
   };
   window.hasPremiumAccess = isPremiumSubscription;
   window.requirePremiumFeature = requirePremium;
   window.openPremiumModal = openPremiumModal;
+  window.openCancelSubscriptionModal = openCancelSubscriptionModal;
+  window.closeCancelSubscriptionModal = closeCancelSubscriptionModal;
+  window.cancelPremiumSubscription = cancelPremiumSubscription;
   window.canUseIA = canUseIA;
   window.registerIAUsage = registerIAUsage;
   window.getPdfUsageCount = getPdfUsageCount;
@@ -5280,13 +5568,16 @@ window.startPremiumCheckout = assinarPremium;
   function setNavIcons() {
     document.querySelectorAll('.app .nav button').forEach(button => {
       const key = navKey(button.textContent);
-      const existing = Array.from(button.children).find(child => child.tagName && child.tagName.toLowerCase() === 'svg');
-      if (existing && existing.dataset.fpLuxNav === key) return;
-      const markup = icon(key, 'fp-lux-nav-icon');
-      if (existing) existing.outerHTML = markup;
+      const existingShell = button.querySelector(':scope > .fp-nav-icon-shell');
+      const existingSvg = Array.from(button.children).find(child => child.tagName && child.tagName.toLowerCase() === 'svg');
+      if (existingShell && existingShell.dataset.fpLuxNav === key) return;
+      const markup = '<span class="fp-nav-icon-shell" data-fp-lux-nav="' + key + '">' + icon(key, 'fp-lux-nav-icon') + '</span>';
+      if (existingShell) {
+        existingShell.outerHTML = markup;
+        return;
+      }
+      if (existingSvg) existingSvg.outerHTML = markup;
       else button.insertAdjacentHTML('afterbegin', markup);
-      const svg = Array.from(button.children).find(child => child.tagName && child.tagName.toLowerCase() === 'svg');
-      if (svg) svg.dataset.fpLuxNav = key;
     });
   }
 
@@ -5583,6 +5874,23 @@ window.startPremiumCheckout = assinarPremium;
     } catch (err) {
       console.warn('Nao foi possivel verificar assinatura agora.', err);
     }
+  };
+
+  window.cancelSubscriptionInCloud = async (user = window._currentUser, cancelPayload = {}) => {
+    if (!user?.uid) return false;
+    const subscription = {
+      ...cancelPayload,
+      plan: 'free',
+      status: 'canceled',
+      provider: cancelPayload.provider || 'mercadopago',
+      canceledAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    };
+    await setDoc(doc(db, 'users', user.uid), {
+      subscription,
+      updatedAt: serverTimestamp()
+    }, { merge: true });
+    return true;
   };
 
   window.runPremiumBackup = async () => {
@@ -9345,6 +9653,18 @@ document.addEventListener('keydown', function(event) {
   "Configurações": "Settings",
   "⚙ Configurações": "⚙ Settings",
   "Assinatura": "Subscription",
+  "Cancelar assinatura": "Cancel subscription",
+  "Gerenciar assinatura": "Manage subscription",
+  "Voce pode cancelar o Premium quando quiser. O app volta ao plano Gratuito e os recursos premium sao bloqueados.": "You can cancel Premium anytime. The app returns to the Free plan and premium features are locked.",
+  "Verificar status": "Check status",
+  "Confirme para voltar ao plano Gratuito nesta conta.": "Confirm to return this account to the Free plan.",
+  "O que acontece ao cancelar?": "What happens when you cancel?",
+  "O acesso Premium e os recursos ilimitados sao desativados no app.": "Premium access and unlimited features are disabled in the app.",
+  "Seus lancamentos, metas e orcamentos continuam salvos.": "Your transactions, goals and budgets stay saved.",
+  "Voce pode assinar novamente quando quiser.": "You can subscribe again anytime.",
+  "Manter Premium": "Keep Premium",
+  "Confirmar cancelamento": "Confirm cancellation",
+  "Nenhuma assinatura Premium ativa nesta conta.": "No active Premium subscription on this account.",
   "Perfil": "Profile",
   "Conta": "Account",
   "Política": "Privacy",
@@ -9921,6 +10241,18 @@ document.addEventListener('keydown', function(event) {
   "Padrões": "Patrones",
   "Enviar": "Enviar",
   "Diferenciais": "Diferenciales",
+  "Cancelar assinatura": "Cancelar suscripcion",
+  "Gerenciar assinatura": "Gestionar suscripcion",
+  "Voce pode cancelar o Premium quando quiser. O app volta ao plano Gratuito e os recursos premium sao bloqueados.": "Puedes cancelar Premium cuando quieras. La app vuelve al plan Gratis y las funciones premium se bloquean.",
+  "Verificar status": "Verificar estado",
+  "Confirme para voltar ao plano Gratuito nesta conta.": "Confirma para volver esta cuenta al plan Gratis.",
+  "O que acontece ao cancelar?": "Que pasa al cancelar?",
+  "O acesso Premium e os recursos ilimitados sao desativados no app.": "El acceso Premium y las funciones ilimitadas se desactivan en la app.",
+  "Seus lancamentos, metas e orcamentos continuam salvos.": "Tus movimientos, metas y presupuestos siguen guardados.",
+  "Voce pode assinar novamente quando quiser.": "Puedes suscribirte de nuevo cuando quieras.",
+  "Manter Premium": "Mantener Premium",
+  "Confirmar cancelamento": "Confirmar cancelacion",
+  "Nenhuma assinatura Premium ativa nesta conta.": "No hay una suscripcion Premium activa en esta cuenta.",
   "Assinatura": "Suscripción",
   "Verificar assinatura": "Verificar suscripción",
   "Você está no plano Gratuito": "Estás en el plan Gratis",
