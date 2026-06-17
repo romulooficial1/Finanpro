@@ -510,7 +510,7 @@
     .panel-head span { color: var(--muted); font-size: 13px; }
 
     .dashboard-charts { grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr); margin-top: 16px; align-items: stretch; }
-    .chart-card { padding: 18px; min-height: 320px; overflow: hidden; }
+    .chart-card { padding: 18px; min-height: 320px; overflow: visible; }
     .chart-card.wide { min-height: 360px; }
     .chart-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
     .chart-head h2 { margin: 0; font-size: 18px; color: var(--ink); line-height: 1.2; }
@@ -526,7 +526,7 @@
     .chart-legend { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 12px; color: var(--muted); font-size: 12px; font-weight: 800; position: relative; }
     .chart-legend span { display: inline-flex; align-items: center; gap: 6px; }
     .chart-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-    .chart-bars { display: grid; gap: 12px; margin-top: 8px; }
+    .chart-bars { display: grid; gap: 12px; margin-top: 8px; position: relative; overflow: visible; }
     .chart-bar-row { display: grid; grid-template-columns: minmax(92px, 0.8fr) minmax(0, 1.6fr) auto; align-items: center; gap: 10px; color: var(--muted); font-size: 13px; font-weight: 800; }
     .chart-bar-track { height: 12px; border-radius: 99px; background: var(--surface-2); overflow: hidden; border: 1px solid var(--line); }
     .chart-bar-fill { height: 100%; border-radius: inherit; min-width: 4px; transition: width 0.45s ease; }
@@ -561,6 +561,7 @@
       transition: opacity .12s ease;
       white-space: normal;
     }
+    .chart-tooltip.place-below { transform: translate(-50%, 12px); }
     .chart-tooltip.show { opacity: 1; visibility: visible; }
     .chart-tooltip strong { display: block; margin-bottom: 4px; font-size: 13px; color: var(--ink); }
     .chart-tooltip span { display: block; color: var(--muted); font-weight: 800; }
@@ -3306,7 +3307,10 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
       border:1px solid color-mix(in srgb, var(--green) 24%, var(--line));
       line-height:0;
     }
-    .fp-lux-head-icon svg{display:block;width:18px;height:18px;stroke-width:2.2;margin:auto;}
+    .fp-lux-head-icon svg{display:block;width:18px;height:18px;stroke-width:2.2;margin:auto;overflow:visible;}
+    .fp-lux-head-icon svg[data-fp-icon-key="chart"] .fp-lux-icon-glyph{transform:translate(0,1px);}
+    .fp-lux-head-icon svg[data-fp-icon-key="pie"] .fp-lux-icon-glyph{transform:translate(.4px,.4px);}
+    .fp-lux-head-icon svg[data-fp-icon-key="compare"] .fp-lux-icon-glyph{transform:translate(.5px,.2px);}
     .insight-card{
       position:relative;
       overflow:hidden;
@@ -5852,7 +5856,26 @@ window.startPremiumCheckout = assinarPremium;
 
   function icon(key, cls) {
     const paths = PATHS[key] || PATHS.advisor;
-    return '<svg class="' + (cls || 'fp-lux-inline-icon') + '" aria-hidden="true" viewBox="0 0 24 24">' + paths + '</svg>';
+    return '<svg class="' + (cls || 'fp-lux-inline-icon') + '" aria-hidden="true" viewBox="0 0 24 24" data-fp-icon-key="' + key + '"><g class="fp-lux-icon-glyph">' + paths + '</g></svg>';
+  }
+
+  function centerSvgGlyph(svg) {
+    const glyph = svg && svg.querySelector ? svg.querySelector('.fp-lux-icon-glyph') : null;
+    if (!glyph || typeof glyph.getBBox !== 'function') return;
+    requestAnimationFrame(() => {
+      try {
+        const box = glyph.getBBox();
+        if (!box.width || !box.height) return;
+        const dx = 12 - (box.x + box.width / 2);
+        const dy = 12 - (box.y + box.height / 2);
+        glyph.setAttribute('transform', `translate(${dx.toFixed(2)} ${dy.toFixed(2)})`);
+      } catch (error) {}
+    });
+  }
+
+  function centerHeadingIcons(root) {
+    const base = root && root.querySelectorAll ? root : document;
+    base.querySelectorAll('.fp-lux-head-icon svg').forEach(centerSvgGlyph);
   }
 
   function norm(text) {
@@ -5970,9 +5993,14 @@ window.startPremiumCheckout = assinarPremium;
 
   function decorateHeadings() {
     document.querySelectorAll('.app .panel-head h2, .app .chart-head h2, .app .modal h3, .pdf-modal h3').forEach(h => {
-      if (h.querySelector('.fp-lux-head-icon')) return;
+      const existing = h.querySelector('.fp-lux-head-icon');
+      if (existing) {
+        centerSvgGlyph(existing.querySelector('svg'));
+        return;
+      }
       cleanTextNodes(h);
       h.insertAdjacentHTML('afterbegin', '<span class="fp-lux-head-icon">' + icon(headingKey(h.textContent), '') + '</span>');
+      centerSvgGlyph(h.querySelector('.fp-lux-head-icon svg'));
     });
   }
 
@@ -6057,6 +6085,7 @@ window.startPremiumCheckout = assinarPremium;
     decoratePremiumResources();
     decorateStatementDrop();
     decorateButtons(root || document);
+    centerHeadingIcons(root || document);
   }
 
   let queued = false;
@@ -7644,10 +7673,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const rawY = event?.clientY ? event.clientY - stageRect.top : targetRect.top - stageRect.top + targetRect.height / 2;
       const x = Math.min(Math.max(rawX, 110), Math.max(110, stageRect.width - 110));
       const y = Math.max(34, rawY);
+      tooltip.classList.remove('place-below');
       tooltip.innerHTML = target.dataset.tooltip;
       tooltip.style.left = `${x}px`;
       tooltip.style.top = `${y}px`;
       tooltip.classList.add('show');
+      if (y - tooltip.offsetHeight - 14 < 0) tooltip.classList.add('place-below');
     }
 
     stage.addEventListener('pointermove', event => {
