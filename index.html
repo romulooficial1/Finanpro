@@ -6084,7 +6084,7 @@ window.startPremiumCheckout = assinarPremium;
 <!-- Firebase SDK -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, setPersistence, browserLocalPersistence, inMemoryPersistence, browserPopupRedirectResolver } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
   import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -6100,7 +6100,21 @@ window.startPremiumCheckout = assinarPremium;
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const googleProvider = new GoogleAuthProvider();
+  googleProvider.setCustomParameters({ prompt: 'select_account' });
+  auth.useDeviceLanguage?.();
   const db = getFirestore(app);
+  async function ensureAuthPersistence() {
+    try {
+      await setPersistence(auth, browserLocalPersistence);
+      return true;
+    } catch (error) {
+      try {
+        await setPersistence(auth, inMemoryPersistence);
+      } catch (fallbackError) {}
+      return false;
+    }
+  }
+  const authPersistenceReady = ensureAuthPersistence();
   let analyticsLoaded = false;
   async function loadFinanProAnalytics() {
     if (analyticsLoaded) return;
@@ -6400,13 +6414,54 @@ window.startPremiumCheckout = assinarPremium;
     document.getElementById('forgotPasswordView').style.display = 'block';
     document.getElementById('forgotPasswordForm').classList.add('active');
   };
-  window.handleGoogleSignIn = async function handleGoogleSignIn() {
-  try {
-    await signInWithPopup(auth, googleProvider);
-  } catch (e) {
-    alert('Erro ao entrar com Google: ' + (e.message || e.code));
+  let googleSignInRunning = false;
+  function getGoogleAuthErrorMessage(error) {
+    const code = String(error?.code || '');
+    const message = String(error?.message || '');
+    if (code === 'auth/popup-closed-by-user' || code === 'auth/cancelled-popup-request') {
+      return 'Login com Google cancelado. Tente novamente quando quiser.';
+    }
+    if (code === 'auth/popup-blocked') {
+      return 'O navegador bloqueou a janela do Google. Libere pop-ups para este site ou entre com e-mail e senha.';
+    }
+    if (code === 'auth/unauthorized-domain') {
+      return 'Este domínio ainda não está autorizado para login Google no Firebase.';
+    }
+    if (code === 'auth/web-storage-unsupported' || /missing initial state|sessionStorage|storage-partitioned/i.test(message)) {
+      return 'Este navegador não conseguiu concluir o login Google por bloqueio de armazenamento. Volte ao site e tente novamente ou entre com e-mail e senha.';
+    }
+    if (code === 'auth/network-request-failed') {
+      return 'Erro de conexão ao abrir o Google. Verifique a internet e tente novamente.';
+    }
+    return 'Não foi possível entrar com Google agora. Tente novamente ou use e-mail e senha.';
   }
-};
+
+  window.handleGoogleSignIn = async function handleGoogleSignIn(event) {
+    event?.preventDefault?.();
+    if (googleSignInRunning) return;
+    const msg = document.getElementById('signinMessage');
+    const buttons = document.querySelectorAll('#googleBtn, .fp-btn.google');
+    googleSignInRunning = true;
+    buttons.forEach(btn => {
+      btn.disabled = true;
+      btn.setAttribute('aria-busy', 'true');
+    });
+    showMsg(msg, 'Abrindo login do Google...', 'info');
+    try {
+      await authPersistenceReady;
+      await signInWithPopup(auth, googleProvider, browserPopupRedirectResolver);
+      showMsg(msg, 'Login Google confirmado. Entrando...', 'success');
+    } catch (e) {
+      showMsg(msg, getGoogleAuthErrorMessage(e), 'error');
+      console.warn('FinanPro: login Google nao concluido.', e?.code || e?.message || e);
+    } finally {
+      googleSignInRunning = false;
+      buttons.forEach(btn => {
+        btn.disabled = false;
+        btn.removeAttribute('aria-busy');
+      });
+    }
+  };
 </script>
 
 <!-- APP SCRIPTS -->
