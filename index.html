@@ -58,6 +58,11 @@
         if (type === 'marketing') return !!consent.cookiesMarketing;
         return false;
       };
+      window.canLoadExternalTracking = function () {
+        const host = String(location.hostname || '').toLowerCase();
+        const isLocal = host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0' || host === '';
+        return location.protocol === 'https:' && !isLocal;
+      };
       window.saveCookieConsent = function (preferences) {
         return writeSavedConsent(preferences || EMPTY_CONSENT);
       };
@@ -68,6 +73,7 @@
     window.loadFinanProAds = function loadFinanProAds() {
       if (document.body && document.body.classList.contains('is-premium')) return;
       if (typeof window.hasCookieConsent !== 'function' || !window.hasCookieConsent('marketing')) return;
+      if (typeof window.canLoadExternalTracking === 'function' && !window.canLoadExternalTracking()) return;
       if (document.getElementById('fpAdsenseLoader')) return;
       const script = document.createElement('script');
       script.id = 'fpAdsenseLoader';
@@ -507,17 +513,17 @@
     .chart-card { padding: 18px; min-height: 320px; overflow: hidden; }
     .chart-card.wide { min-height: 360px; }
     .chart-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
-    .chart-head h2 { margin: 0; font-size: 18px; color: var(--ink); }
+    .chart-head h2 { margin: 0; font-size: 18px; color: var(--ink); line-height: 1.2; }
     .chart-head span { display: block; margin-top: 4px; color: var(--muted); font-size: 13px; }
     .chart-kpi { text-align: right; color: var(--muted); font-size: 12px; font-weight: 800; text-transform: uppercase; }
     .chart-kpi strong { display: block; margin-top: 4px; color: var(--ink); font-size: 20px; text-transform: none; }
-    .chart-stage { width: 100%; min-height: 230px; }
+    .chart-stage { width: 100%; min-height: 230px; position: relative; }
     .chart-stage svg { display: block; width: 100%; height: auto; overflow: visible; }
     .chart-empty { min-height: 230px; display: grid; place-items: center; text-align: center; color: var(--muted); border: 1px dashed var(--line); border-radius: var(--radius); background: var(--empty-bg); padding: 20px; font-weight: 700; }
     .chart-grid-line { stroke: var(--line); stroke-width: 1; }
     .chart-axis-label { fill: var(--muted); font-size: 11px; font-weight: 800; }
     .chart-value-label { fill: var(--ink); font-size: 12px; font-weight: 900; }
-    .chart-legend { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 12px; color: var(--muted); font-size: 12px; font-weight: 800; }
+    .chart-legend { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 12px; color: var(--muted); font-size: 12px; font-weight: 800; position: relative; }
     .chart-legend span { display: inline-flex; align-items: center; gap: 6px; }
     .chart-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
     .chart-bars { display: grid; gap: 12px; margin-top: 8px; }
@@ -525,6 +531,39 @@
     .chart-bar-track { height: 12px; border-radius: 99px; background: var(--surface-2); overflow: hidden; border: 1px solid var(--line); }
     .chart-bar-fill { height: 100%; border-radius: inherit; min-width: 4px; transition: width 0.45s ease; }
     .chart-bar-value { min-width: 86px; text-align: right; color: var(--ink); }
+    .chart-hotspot { cursor: pointer; outline: none; }
+    .chart-hotspot:focus-visible { filter: drop-shadow(0 0 0.35rem var(--green-glow)); }
+    .chart-hover-bar { opacity: 0; transition: opacity .16s ease; }
+    .chart-hotspot:hover .chart-hover-bar,
+    .chart-hotspot:focus .chart-hover-bar { opacity: .10; }
+    .chart-hotspot:hover .chart-bar-fill,
+    .chart-hotspot:focus .chart-bar-fill { filter: brightness(1.08); }
+    .chart-donut-segment { transition: stroke-width .16s ease, filter .16s ease; }
+    .chart-donut-segment:hover,
+    .chart-donut-segment:focus { stroke-width: 28; filter: drop-shadow(0 8px 18px rgba(0,0,0,.22)); }
+    .chart-tooltip {
+      position: absolute;
+      z-index: 20;
+      max-width: 220px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface);
+      color: var(--ink);
+      box-shadow: var(--shadow-sm);
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 800;
+      pointer-events: none;
+      transform: translate(-50%, calc(-100% - 12px));
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .12s ease;
+      white-space: normal;
+    }
+    .chart-tooltip.show { opacity: 1; visibility: visible; }
+    .chart-tooltip strong { display: block; margin-bottom: 4px; font-size: 13px; color: var(--ink); }
+    .chart-tooltip span { display: block; color: var(--muted); font-weight: 800; }
     .dashboard-insights { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
     .insight-card { padding: 16px; min-height: 118px; display: flex; flex-direction: column; justify-content: space-between; gap: 12px; }
     .insight-card span { color: var(--muted); font-size: 12px; font-weight: 800; text-transform: uppercase; }
@@ -3252,19 +3291,22 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
       align-items:center;
       gap:10px;
       letter-spacing:-.015em;
+      line-height:1.18;
     }
     .fp-lux-head-icon{
       width:34px;
       height:34px;
       border-radius:12px;
-      display:inline-grid;
-      place-items:center;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
       flex:0 0 auto;
       color:var(--green);
       background:linear-gradient(135deg, rgba(63,185,80,.14), rgba(15,118,110,.08));
       border:1px solid color-mix(in srgb, var(--green) 24%, var(--line));
+      line-height:0;
     }
-    .fp-lux-head-icon svg{width:18px;height:18px;stroke-width:2.2;}
+    .fp-lux-head-icon svg{display:block;width:18px;height:18px;stroke-width:2.2;margin:auto;}
     .insight-card{
       position:relative;
       overflow:hidden;
@@ -6063,6 +6105,7 @@ window.startPremiumCheckout = assinarPremium;
   async function loadFinanProAnalytics() {
     if (analyticsLoaded) return;
     if (typeof window.hasCookieConsent !== 'function' || !window.hasCookieConsent('analytics')) return;
+    if (typeof window.canLoadExternalTracking === 'function' && !window.canLoadExternalTracking()) return;
     try {
       const { getAnalytics } = await import("https://www.gstatic.com/firebasejs/12.14.0/firebase-analytics.js");
       getAnalytics(app);
@@ -7509,6 +7552,62 @@ document.addEventListener('DOMContentLoaded', () => {
     return `<div class="chart-empty">${message}</div>`;
   }
 
+  function chartTooltipContent(title, lines) {
+    return `<strong>${escapeHtml(title)}</strong>${lines.map(line => `<span>${escapeHtml(line)}</span>`).join('')}`;
+  }
+
+  function chartTooltipAttr(title, lines) {
+    return `data-tooltip="${escapeHtml(chartTooltipContent(title, lines))}" aria-label="${escapeHtml([title, ...lines].join('. '))}"`;
+  }
+
+  function bindChartTooltips(stage) {
+    if (!stage) return;
+    let tooltip = stage.querySelector(':scope > .chart-tooltip');
+    if (!tooltip) {
+      tooltip = document.createElement('div');
+      tooltip.className = 'chart-tooltip';
+      tooltip.setAttribute('role', 'status');
+      tooltip.setAttribute('aria-live', 'polite');
+      stage.appendChild(tooltip);
+    }
+    if (stage.dataset.chartTooltipBound) return;
+    stage.dataset.chartTooltipBound = '1';
+
+    function targetFrom(event) {
+      return event.target?.closest?.('.chart-hotspot');
+    }
+
+    function hide() {
+      tooltip.classList.remove('show');
+    }
+
+    function show(target, event) {
+      if (!target?.dataset?.tooltip) return hide();
+      const stageRect = stage.getBoundingClientRect();
+      const targetRect = target.getBoundingClientRect();
+      const rawX = event?.clientX ? event.clientX - stageRect.left : targetRect.left - stageRect.left + targetRect.width / 2;
+      const rawY = event?.clientY ? event.clientY - stageRect.top : targetRect.top - stageRect.top + targetRect.height / 2;
+      const x = Math.min(Math.max(rawX, 110), Math.max(110, stageRect.width - 110));
+      const y = Math.max(34, rawY);
+      tooltip.innerHTML = target.dataset.tooltip;
+      tooltip.style.left = `${x}px`;
+      tooltip.style.top = `${y}px`;
+      tooltip.classList.add('show');
+    }
+
+    stage.addEventListener('pointermove', event => {
+      const target = targetFrom(event);
+      if (target) show(target, event);
+      else hide();
+    });
+    stage.addEventListener('pointerleave', hide);
+    stage.addEventListener('focusin', event => {
+      const target = targetFrom(event);
+      if (target) show(target, event);
+    });
+    stage.addEventListener('focusout', hide);
+  }
+
   function getLastMonths(count) {
     const [year, month] = currentMonth().split('-').map(Number);
     return Array.from({ length: count }, (_, i) => {
@@ -7555,25 +7654,38 @@ document.addEventListener('DOMContentLoaded', () => {
       const label = fmtBRL(maxY - span * p).replace(',00', '');
       return `<line class="chart-grid-line" x1="${left}" y1="${yy}" x2="${w - right}" y2="${yy}"></line><text class="chart-axis-label" x="0" y="${yy + 4}">${label}</text>`;
     }).join('');
-    const bars = data.map((d, i) => {
+    const monthGroups = data.map((d, i) => {
       const xi = x(i);
       const receitaH = Math.abs(zeroY - y(d.receita));
       const despesaH = Math.abs(zeroY - y(d.despesa));
+      const bandW = plotW / data.length;
+      const hoverX = Math.max(left, Math.min(w - right - bandW, xi - bandW / 2));
+      const savingRate = d.receita > 0 ? ((d.receita - d.despesa) / d.receita) * 100 : 0;
+      const tooltip = chartTooltipAttr(fmtMonth(d.key), [
+        `Receitas: ${fmtBRL(d.receita)}`,
+        `Despesas: ${fmtBRL(d.despesa)}`,
+        `Saldo: ${fmtBRL(d.saldo)}`,
+        `Poupança: ${savingRate.toFixed(1)}%`
+      ]);
       return `
-        <rect x="${xi - barW - 3}" y="${y(d.receita)}" width="${barW}" height="${receitaH}" rx="5" fill="${green}" opacity="0.88"></rect>
-        <rect x="${xi + 3}" y="${y(d.despesa)}" width="${barW}" height="${despesaH}" rx="5" fill="${red}" opacity="0.82"></rect>
-        <text class="chart-axis-label" x="${xi}" y="${h - 12}" text-anchor="middle">${d.label}</text>`;
+        <g class="chart-hotspot" tabindex="0" role="listitem" ${tooltip}>
+          <rect class="chart-hover-bar" x="${hoverX}" y="${top}" width="${bandW}" height="${plotH}" rx="10" fill="${blue}"></rect>
+          <rect x="${xi - barW - 3}" y="${y(d.receita)}" width="${barW}" height="${receitaH}" rx="5" fill="${green}" opacity="0.88"></rect>
+          <rect x="${xi + 3}" y="${y(d.despesa)}" width="${barW}" height="${despesaH}" rx="5" fill="${red}" opacity="0.82"></rect>
+          <circle cx="${xi}" cy="${y(d.saldo)}" r="5" fill="${blue}" stroke="white" stroke-width="2"></circle>
+          <rect x="${hoverX}" y="${top}" width="${bandW}" height="${plotH + 24}" fill="transparent" pointer-events="all"></rect>
+          <text class="chart-axis-label" x="${xi}" y="${h - 12}" text-anchor="middle">${d.label}</text>
+        </g>`;
     }).join('');
-    const points = data.map((d, i) => `<circle cx="${x(i)}" cy="${y(d.saldo)}" r="5" fill="${blue}" stroke="white" stroke-width="2"></circle>`).join('');
 
     el.innerHTML = `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Fluxo mensal de receitas, despesas e saldo">
       ${grid}
       <line class="chart-grid-line" x1="${left}" y1="${zeroY}" x2="${w - right}" y2="${zeroY}"></line>
-      ${bars}
       <path d="${area}" fill="${blue}" opacity="0.10"></path>
       <path d="${line}" fill="none" stroke="${blue}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
-      ${points}
+      ${monthGroups}
     </svg>`;
+    bindChartTooltips(el);
   }
 
   function renderCategoryChart(despesas) {
@@ -7596,7 +7708,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let offset = 0;
     const circles = items.map(([cat, value], i) => {
       const len = (value / total) * c;
-      const circle = `<circle cx="120" cy="120" r="${r}" fill="none" stroke="${colors[i]}" stroke-width="24" stroke-linecap="round" stroke-dasharray="${len} ${c - len}" stroke-dashoffset="${-offset}" transform="rotate(-90 120 120)"></circle>`;
+      const pct = Math.round((value / total) * 100);
+      const tooltip = chartTooltipAttr(cat, [
+        `Valor: ${fmtBRL(value)}`,
+        `Participação: ${pct}%`
+      ]);
+      const circle = `<circle class="chart-hotspot chart-donut-segment" tabindex="0" role="listitem" ${tooltip} cx="120" cy="120" r="${r}" fill="none" stroke="${colors[i]}" stroke-width="24" stroke-linecap="round" stroke-dasharray="${len} ${c - len}" stroke-dashoffset="${-offset}" transform="rotate(-90 120 120)"></circle>`;
       offset += len;
       return circle;
     }).join('');
@@ -7607,10 +7724,13 @@ document.addEventListener('DOMContentLoaded', () => {
       <text class="chart-axis-label" x="120" y="110" text-anchor="middle">Total</text>
       <text class="chart-value-label" x="120" y="132" text-anchor="middle">${fmtBRL(total).replace(',00', '')}</text>
     </svg>`;
+    bindChartTooltips(el);
     legend.innerHTML = items.map(([cat, value], i) => {
       const pct = Math.round((value / total) * 100);
-      return `<span><i class="chart-dot" style="background:${colors[i]};"></i>${escapeHtml(cat)} · ${pct}%</span>`;
+      const tooltip = chartTooltipAttr(cat, [`Valor: ${fmtBRL(value)}`, `Participação: ${pct}%`]);
+      return `<span class="chart-hotspot" tabindex="0" ${tooltip}><i class="chart-dot" style="background:${colors[i]};"></i>${escapeHtml(cat)} · ${pct}%</span>`;
     }).join('');
+    bindChartTooltips(legend);
   }
 
   function renderMonthlyBars(totalReceita, totalDespesa, saldo) {
@@ -7625,12 +7745,18 @@ document.addEventListener('DOMContentLoaded', () => {
     el.innerHTML = rows.map(row => {
       const width = Math.max(4, (row.value / max) * 100);
       const shown = row.shown ?? row.value;
-      return `<div class="chart-bar-row">
+      const pct = max > 0 ? (row.value / max) * 100 : 0;
+      const tooltip = chartTooltipAttr(row.label, [
+        `Valor: ${fmtBRL(shown)}`,
+        `Proporção no comparativo: ${pct.toFixed(1)}%`
+      ]);
+      return `<div class="chart-bar-row chart-hotspot" tabindex="0" ${tooltip}>
         <span>${row.label}</span>
         <div class="chart-bar-track"><div class="chart-bar-fill" style="width:${width}%;background:${row.color};"></div></div>
         <strong class="chart-bar-value">${fmtBRL(shown)}</strong>
       </div>`;
     }).join('');
+    bindChartTooltips(el);
   }
 
   function renderDashboardInsights(metas, despesas, totalReceita, totalDespesa, saldo) {
