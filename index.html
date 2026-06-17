@@ -8,9 +8,66 @@
   <meta property="og:title" content="FinanPro | Controle financeiro pessoal">
   <meta name="google-adsense-account" content="ca-pub-6540675678844098">
   <script>
+    (function () {
+      'use strict';
+
+      const STORAGE_KEY = 'finanpro_cookie_consent_v1';
+      const EMPTY_CONSENT = {
+        cookiesNecessary: true,
+        cookiesAnalytics: false,
+        cookiesMarketing: false
+      };
+
+      function normalizeConsent(value) {
+        return {
+          cookiesNecessary: true,
+          cookiesAnalytics: !!(value && value.cookiesAnalytics),
+          cookiesMarketing: !!(value && value.cookiesMarketing)
+        };
+      }
+
+      function readSavedConsent() {
+        try {
+          const saved = localStorage.getItem(STORAGE_KEY);
+          return saved ? normalizeConsent(JSON.parse(saved)) : null;
+        } catch (error) {
+          return window.__finanproCookieConsentMemory || null;
+        }
+      }
+
+      function writeSavedConsent(consent) {
+        const normalized = normalizeConsent(consent);
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
+        } catch (error) {
+          window.__finanproCookieConsentMemory = normalized;
+        }
+        window.dispatchEvent(new CustomEvent('finanpro:cookies-updated', { detail: normalized }));
+        return normalized;
+      }
+
+      window.FINANPRO_COOKIE_CONSENT_KEY = STORAGE_KEY;
+      window.getCookieConsent = function () {
+        return readSavedConsent();
+      };
+      window.hasCookieConsent = function (type) {
+        const consent = readSavedConsent();
+        if (type === 'necessary') return true;
+        if (!consent) return false;
+        if (type === 'analytics') return !!consent.cookiesAnalytics;
+        if (type === 'marketing') return !!consent.cookiesMarketing;
+        return false;
+      };
+      window.saveCookieConsent = function (preferences) {
+        return writeSavedConsent(preferences || EMPTY_CONSENT);
+      };
+    })();
+  </script>
+  <script>
     window.FINANPRO_ADSENSE_CLIENT = 'ca-pub-6540675678844098';
     window.loadFinanProAds = function loadFinanProAds() {
       if (document.body && document.body.classList.contains('is-premium')) return;
+      if (typeof window.hasCookieConsent !== 'function' || !window.hasCookieConsent('marketing')) return;
       if (document.getElementById('fpAdsenseLoader')) return;
       const script = document.createElement('script');
       script.id = 'fpAdsenseLoader';
@@ -103,7 +160,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
-  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     /* ===================================================
@@ -2103,6 +2159,79 @@ body:not(.auth-lock) .auth-screen{display:none!important;}
    FINANPRO — Botões PT/EN e instalar app
    Tudo dentro do index.html
 =================================================== */
+body:not(.cookies-marketing-allowed) .ad-slot{display:none!important;}
+.cookie-consent-banner[hidden],
+.cookie-consent-modal[hidden]{display:none!important;}
+.cookie-consent-banner{
+  position:fixed;
+  left:16px;
+  right:16px;
+  bottom:16px;
+  z-index:10020;
+  width:min(100% - 32px, 920px);
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:16px;
+  align-items:center;
+  padding:16px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--surface);
+  color:var(--ink);
+  box-shadow:0 18px 48px rgba(23,33,28,.18);
+}
+[data-theme="dark"] .cookie-consent-banner{box-shadow:0 18px 48px rgba(0,0,0,.46);}
+.cookie-consent-copy{display:grid;gap:6px;min-width:0;}
+.cookie-consent-copy strong{font-size:14px;color:var(--ink);}
+.cookie-consent-copy p{margin:0;color:var(--muted);font-size:13px;line-height:1.5;}
+.cookie-consent-link{color:var(--green);font-weight:800;text-decoration:none;}
+.cookie-consent-link:hover{text-decoration:underline;}
+.cookie-consent-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap;}
+.cookie-consent-actions .btn{box-shadow:none;white-space:nowrap;}
+.cookie-consent-actions .btn.cookie-reject{background:var(--surface-2);}
+.cookie-consent-actions .btn.cookie-config{background:transparent;}
+.cookie-consent-modal{
+  position:fixed;
+  inset:0;
+  z-index:10030;
+  display:grid;
+  place-items:center;
+  padding:16px;
+  background:rgba(23,33,28,.38);
+}
+[data-theme="dark"] .cookie-consent-modal{background:rgba(0,0,0,.68);}
+.cookie-consent-dialog{
+  width:min(100%, 520px);
+  max-height:min(92vh, 680px);
+  overflow:auto;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--surface);
+  color:var(--ink);
+  box-shadow:var(--shadow);
+  padding:20px;
+}
+.cookie-consent-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:12px;}
+.cookie-consent-head h2{margin:0;font-size:22px;line-height:1.15;color:var(--ink);}
+.cookie-consent-head p{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.5;}
+.cookie-consent-close{border:1px solid var(--line);background:var(--surface-2);color:var(--ink);width:34px;height:34px;border-radius:8px;font-size:20px;line-height:1;box-shadow:none;}
+.cookie-consent-options{display:grid;gap:10px;margin:14px 0;}
+.cookie-consent-option{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:12px;background:var(--surface-2);padding:12px;}
+.cookie-consent-option strong{display:block;color:var(--ink);font-size:14px;}
+.cookie-consent-option span{display:block;margin-top:3px;color:var(--muted);font-size:12px;line-height:1.45;}
+.cookie-consent-option input{width:20px;height:20px;accent-color:var(--green);}
+.cookie-consent-always{color:var(--green);font-size:12px;font-weight:900;text-transform:uppercase;}
+.cookie-consent-modal-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:14px;}
+.cookie-consent-note{margin:10px 0 0;color:var(--muted);font-size:12px;line-height:1.45;}
+@media(max-width:720px){
+  .cookie-consent-banner{left:10px;right:10px;bottom:10px;width:calc(100% - 20px);grid-template-columns:1fr;padding:14px;}
+  .cookie-consent-actions{justify-content:stretch;}
+  .cookie-consent-actions .btn{flex:1 1 100%;min-height:42px;}
+  .cookie-consent-modal{align-items:end;padding:10px;}
+  .cookie-consent-dialog{border-radius:14px;padding:16px;}
+  .cookie-consent-modal-actions .btn{flex:1 1 100%;}
+}
 .fp-floating-tools{position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
 .fp-lang-switch,.fp-install-app{border:1px solid rgba(255,255,255,.18);background:rgba(7,17,13,.88);color:#fff;backdrop-filter:blur(12px);border-radius:999px;box-shadow:0 14px 35px rgba(0,0,0,.28);}
 .fp-lang-switch{display:flex;padding:4px;gap:3px;}
@@ -3689,6 +3818,7 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
   <div class="fp-footer-brand">FinanPro</div>
   <div class="fp-footer-links">
     <a href="politica-de-privacidade.html">Política de Privacidade</a>
+    <button type="button" onclick="openCookiePreferences()">Preferências de cookies</button>
     <a href="termos-de-uso.html">Termos de Uso</a>
     <a href="sobre-nos.html">Sobre Nós</a>
     <a href="faq.html">FAQ</a>
@@ -3837,6 +3967,7 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
         </button>
         <span id="darkModeLabel" style="font-size:12px;font-weight:700;color:var(--muted);">Modo claro</span>
       </div>
+      <button type="button" onclick="openCookiePreferences()">Preferências de cookies</button>
       <button onclick="handleLogout()">Sair da conta</button>
     </div>
   </aside>
@@ -4752,6 +4883,182 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
     </div>
   </div>
 </div>
+
+<!-- ========== COOKIES / LGPD ========== -->
+<div class="cookie-consent-banner" id="cookieConsentBanner" role="region" aria-label="Consentimento de cookies" hidden>
+  <div class="cookie-consent-copy">
+    <strong>Controle sua privacidade</strong>
+    <p>Usamos cookies para melhorar sua experiência, analisar o uso da plataforma e oferecer recursos personalizados. Você pode aceitar todos, rejeitar os opcionais ou configurar suas preferências.</p>
+    <a class="cookie-consent-link" href="#politica" onclick="window.openLegalModal?.('privacidade'); return false;">Política de Privacidade</a>
+  </div>
+  <div class="cookie-consent-actions">
+    <button type="button" class="btn cookie-config" onclick="openCookiePreferences()">Configurar</button>
+    <button type="button" class="btn cookie-reject" onclick="rejectCookieConsent()">Rejeitar</button>
+    <button type="button" class="btn primary" onclick="acceptAllCookieConsent()">Aceitar tudo</button>
+  </div>
+</div>
+
+<div class="cookie-consent-modal" id="cookiePreferencesModal" aria-hidden="true" hidden>
+  <div class="cookie-consent-dialog" role="dialog" aria-modal="true" aria-labelledby="cookiePreferencesTitle">
+    <div class="cookie-consent-head">
+      <div>
+        <h2 id="cookiePreferencesTitle">Preferências de cookies</h2>
+        <p>Escolha quais cookies opcionais o FinanPro pode usar. Você pode alterar isso quando quiser.</p>
+      </div>
+      <button type="button" class="cookie-consent-close" onclick="closeCookiePreferences()" aria-label="Fechar preferências">×</button>
+    </div>
+
+    <div class="cookie-consent-options">
+      <div class="cookie-consent-option">
+        <div>
+          <strong>Cookies necessários</strong>
+          <span>Essenciais para login, segurança, preferências básicas e funcionamento da plataforma.</span>
+        </div>
+        <span class="cookie-consent-always">Sempre ativo</span>
+      </div>
+      <label class="cookie-consent-option" for="cookieAnalyticsOption">
+        <div>
+          <strong>Analytics</strong>
+          <span>Ajuda a entender o uso da plataforma e melhorar a experiência.</span>
+        </div>
+        <input type="checkbox" id="cookieAnalyticsOption">
+      </label>
+      <label class="cookie-consent-option" for="cookieMarketingOption">
+        <div>
+          <strong>Marketing/Anúncios</strong>
+          <span>Permite anúncios, recursos personalizados e medições de campanhas.</span>
+        </div>
+        <input type="checkbox" id="cookieMarketingOption">
+      </label>
+    </div>
+
+    <p class="cookie-consent-note">Você pode alterar sua escolha depois pelo link “Preferências de cookies”.</p>
+
+    <div class="cookie-consent-modal-actions">
+      <button type="button" class="btn" onclick="closeCookiePreferences()">Cancelar</button>
+      <button type="button" class="btn primary" onclick="saveCookiePreferencesFromModal()">Salvar preferências</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  const ACCEPT_ALL = {
+    cookiesNecessary: true,
+    cookiesAnalytics: true,
+    cookiesMarketing: true
+  };
+  const REJECT_OPTIONAL = {
+    cookiesNecessary: true,
+    cookiesAnalytics: false,
+    cookiesMarketing: false
+  };
+
+  function byId(id) {
+    return document.getElementById(id);
+  }
+
+  function currentOrDefault() {
+    return window.getCookieConsent?.() || REJECT_OPTIONAL;
+  }
+
+  function applyCookieConsentEffects() {
+    const consent = window.getCookieConsent?.();
+    const analyticsAllowed = !!(consent && consent.cookiesAnalytics);
+    const marketingAllowed = !!(consent && consent.cookiesMarketing);
+
+    document.body?.classList.toggle('cookies-analytics-allowed', analyticsAllowed);
+    document.body?.classList.toggle('cookies-marketing-allowed', marketingAllowed);
+
+    if (analyticsAllowed) {
+      window.loadFinanProAnalytics?.();
+      // Futuro Analytics: carregue gtag, ferramentas de métricas ou scripts equivalentes aqui.
+    }
+
+    if (marketingAllowed) {
+      if (!document.body?.classList.contains('auth-lock')) window.loadFinanProAds?.();
+      // Futuro Marketing/Pixel: carregue pixels, tags de campanha e scripts de anúncios aqui.
+    } else {
+      document.getElementById('fpAdsenseLoader')?.remove();
+    }
+  }
+
+  function hideCookieBanner() {
+    const banner = byId('cookieConsentBanner');
+    if (banner) banner.hidden = true;
+  }
+
+  function refreshCookieConsentUI() {
+    const saved = window.getCookieConsent?.();
+    const banner = byId('cookieConsentBanner');
+    if (banner) banner.hidden = !!saved;
+    applyCookieConsentEffects();
+  }
+
+  window.acceptAllCookieConsent = function () {
+    window.saveCookieConsent?.(ACCEPT_ALL);
+    hideCookieBanner();
+    window.closeCookiePreferences?.();
+  };
+
+  window.rejectCookieConsent = function () {
+    window.saveCookieConsent?.(REJECT_OPTIONAL);
+    hideCookieBanner();
+    window.closeCookiePreferences?.();
+  };
+
+  window.openCookiePreferences = function () {
+    const consent = currentOrDefault();
+    const analytics = byId('cookieAnalyticsOption');
+    const marketing = byId('cookieMarketingOption');
+    const modal = byId('cookiePreferencesModal');
+
+    if (analytics) analytics.checked = !!consent.cookiesAnalytics;
+    if (marketing) marketing.checked = !!consent.cookiesMarketing;
+    if (!modal) return;
+
+    modal.hidden = false;
+    modal.setAttribute('aria-hidden', 'false');
+    setTimeout(() => analytics?.focus({ preventScroll: true }), 0);
+  };
+
+  window.closeCookiePreferences = function () {
+    const modal = byId('cookiePreferencesModal');
+    if (!modal) return;
+    modal.hidden = true;
+    modal.setAttribute('aria-hidden', 'true');
+  };
+
+  window.saveCookiePreferencesFromModal = function () {
+    window.saveCookieConsent?.({
+      cookiesNecessary: true,
+      cookiesAnalytics: !!byId('cookieAnalyticsOption')?.checked,
+      cookiesMarketing: !!byId('cookieMarketingOption')?.checked
+    });
+    hideCookieBanner();
+    window.closeCookiePreferences?.();
+  };
+
+  function bootCookieConsent() {
+    refreshCookieConsentUI();
+
+    const modal = byId('cookiePreferencesModal');
+    if (modal && !modal.dataset.bound) {
+      modal.dataset.bound = '1';
+      modal.addEventListener('click', event => {
+        if (event.target === modal) window.closeCookiePreferences?.();
+      });
+    }
+  }
+
+  window.addEventListener('finanpro:cookies-updated', refreshCookieConsentUI);
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bootCookieConsent);
+  else bootCookieConsent();
+})();
+</script>
 
 <!-- PDF Print Frame (hidden, shown on print) -->
 <div class="pdf-print-frame" id="pdfPrintFrame"></div>
@@ -5737,7 +6044,6 @@ window.startPremiumCheckout = assinarPremium;
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
   import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
   import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-analytics.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyD6pQO5Ma3tRv_td8fTTdIFYl7HXyUZ0YQ",
@@ -5753,7 +6059,18 @@ window.startPremiumCheckout = assinarPremium;
   const auth = getAuth(app);
   const googleProvider = new GoogleAuthProvider();
   const db = getFirestore(app);
-  try { getAnalytics(app); } catch(e) {}
+  let analyticsLoaded = false;
+  async function loadFinanProAnalytics() {
+    if (analyticsLoaded) return;
+    if (typeof window.hasCookieConsent !== 'function' || !window.hasCookieConsent('analytics')) return;
+    try {
+      const { getAnalytics } = await import("https://www.gstatic.com/firebasejs/12.14.0/firebase-analytics.js");
+      getAnalytics(app);
+      analyticsLoaded = true;
+    } catch(e) {}
+  }
+  window.loadFinanProAnalytics = loadFinanProAnalytics;
+  loadFinanProAnalytics();
   window.auth = auth;
   window.db = db;
 
