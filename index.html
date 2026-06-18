@@ -4020,135 +4020,183 @@ body.is-premium .premium-badge{background:linear-gradient(135deg,#fef3c7,#f59e0b
 
   <main>
     <!-- Dashboard -->
-    <section id="dashboard" class="section active">
-      <div class="topbar">
-        <div class="title-block">
-          <h1>Dashboard</h1>
-          <p>Visão geral das suas finanças</p>
-        </div>
-        <div class="top-actions">
-          <button type="button" class="btn pdf-btn" onclick="openPdfModal()">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-            Exportar PDF
-          </button>
-          <button type="button" class="btn premium-cta free-only" onclick="assinarPremium()">Assinar Premium</button>
-          <span class="usage-pill premium-only">PREMIUM ativo</span>
-        </div>
-      </div>
-      <div class="ad-slot free-only" data-ad-slot>Publicidade removida no Premium</div>
-      <div class="grid metrics card">
-        <div class="metric">
-          <span class="label">Renda Total</span>
-          <strong class="positive" id="totalIncome">R$ 0,00</strong>
-          <small>Este mês</small>
-        </div>
-        <div class="metric">
-          <span class="label">Despesas</span>
-          <strong class="negative" id="totalExpense">R$ 0,00</strong>
-          <small>Este mês</small>
-        </div>
-        <div class="metric">
-          <span class="label">Metas Ativas</span>
-          <strong class="warning" id="totalMetas">0</strong>
-          <small>Em andamento</small>
-        </div>
-        <div class="metric">
-          <span class="label">Saldo</span>
-          <strong id="totalBalance">R$ 0,00</strong>
-          <small>Disponível</small>
-        </div>
-      </div>
-      <div class="card panel radar-card">
-        <div class="panel-head">
-          <div>
-            <h2>Radar Inteligente</h2>
-            <span>Até 3 alertas automáticos gerados pelos seus dados locais.</span>
+    <section id="dashboard" class="section active dashboard-premium">
+      <div class="premium-dashboard-shell">
+        <div class="premium-dashboard-bg" aria-hidden="true"></div>
+
+        <div class="premium-dashboard-top">
+          <div class="title-block">
+            <span class="premium-eyebrow">Painel inteligente</span>
+            <h1>Dashboard</h1>
+            <p>Seu controle financeiro com visão de app premium, usando os dados reais da sua conta.</p>
           </div>
-          <span class="radar-count" id="radarCount">0 alertas</span>
+          <div class="top-actions">
+            <button type="button" class="btn pdf-btn" onclick="openPdfModal()">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              Exportar PDF
+            </button>
+            <button type="button" class="btn premium-cta free-only" onclick="assinarPremium()">Assinar Premium</button>
+            <span class="usage-pill premium-only">PREMIUM ativo</span>
+          </div>
         </div>
-        <div class="radar-list" id="radarList">
-          <div class="empty">Adicione lançamentos, metas ou orçamentos para ativar o radar.</div>
-        </div>
-      </div>
-      <div class="grid dashboard-charts">
-        <div class="card chart-card wide">
-          <div class="chart-head">
-            <div>
-              <h2>Fluxo mensal</h2>
-              <span>Receitas, despesas e saldo dos últimos 6 meses</span>
+
+        <div class="ad-slot free-only" data-ad-slot>Publicidade removida no Premium</div>
+
+        <div class="premium-hero-grid">
+          <article class="premium-balance-card card">
+            <div class="premium-card-head">
+              <span>Saldo atual</span>
+              <small>Disponível</small>
             </div>
-            <div class="chart-kpi">Poupança<strong id="dashSavingsRate">0%</strong></div>
-          </div>
-          <div class="chart-stage" id="cashflowChart"></div>
-          <div class="chart-legend">
-            <span><i class="chart-dot" style="background:var(--green);"></i>Receitas</span>
-            <span><i class="chart-dot" style="background:var(--red);"></i>Despesas</span>
-            <span><i class="chart-dot" style="background:var(--blue);"></i>Saldo</span>
-          </div>
-        </div>
-        <div class="card chart-card">
-          <div class="chart-head">
-            <div>
-              <h2>Gastos por categoria</h2>
-              <span>Distribuição das despesas deste mês</span>
+            <strong id="totalBalance">R$ 0,00</strong>
+            <div class="premium-mini-trend" aria-hidden="true">
+              <svg viewBox="0 0 320 92" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="premiumTrendFill" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="currentColor" stop-opacity=".30"/>
+                    <stop offset="100%" stop-color="currentColor" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,72 C28,54 42,62 64,48 C90,30 108,60 134,44 C160,28 176,64 204,49 C230,34 248,42 270,24 C292,8 304,18 320,6 L320,92 L0,92 Z" fill="url(#premiumTrendFill)"></path>
+                <path d="M0,72 C28,54 42,62 64,48 C90,30 108,60 134,44 C160,28 176,64 204,49 C230,34 248,42 270,24 C292,8 304,18 320,6" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"></path>
+              </svg>
             </div>
-          </div>
-          <div class="chart-stage" id="categoryChart"></div>
-          <div class="chart-legend" id="categoryLegend"></div>
-        </div>
-      </div>
-      <div class="grid dashboard-charts">
-        <div class="card chart-card">
-          <div class="chart-head">
-            <div>
-              <h2>Comparativo do mês</h2>
-              <span>Entradas versus saídas no período atual</span>
+            <div class="premium-balance-footer">
+              <span><b id="dashSavingsRate">0%</b> taxa de poupança</span>
+              <button type="button" onclick="showSection('lancamentos')">Ver lançamentos</button>
             </div>
+          </article>
+
+          <div class="premium-side-stack">
+            <article class="premium-stat-card income card">
+              <span>Receitas</span>
+              <strong class="positive" id="totalIncome">R$ 0,00</strong>
+              <small>Este mês</small>
+            </article>
+            <article class="premium-stat-card expense card">
+              <span>Despesas</span>
+              <strong class="negative" id="totalExpense">R$ 0,00</strong>
+              <small>Este mês</small>
+            </article>
+            <article class="premium-stat-card goals card">
+              <span>Metas ativas</span>
+              <strong class="warning" id="totalMetas">0</strong>
+              <small>Em andamento</small>
+            </article>
           </div>
-          <div id="monthlyBars" class="chart-bars"></div>
-        </div>
-        <div class="dashboard-insights">
-          <div class="card insight-card">
-            <span>Maior gasto</span>
-            <strong id="dashTopCategory">-</strong>
-            <small id="dashTopCategoryValue">Sem despesas no mês.</small>
-          </div>
-          <div class="card insight-card">
-            <span>Meta média</span>
-            <strong id="dashGoalProgress">0%</strong>
-            <small id="dashGoalText">Cadastre metas para acompanhar o progresso.</small>
-          </div>
-          <div class="card insight-card">
-            <span>Saúde financeira</span>
+
+          <article class="premium-ai-card card">
+            <div class="premium-ai-icon">✦</div>
+            <span>Insight da IA</span>
             <strong id="dashHealthScore">0</strong>
-            <small id="dashHealthText">Adicione receitas e despesas para calcular.</small>
+            <p id="dashHealthText">Adicione receitas e despesas para calcular.</p>
+            <button type="button" onclick="showSection('ia')">Abrir IA Financeira</button>
+          </article>
+        </div>
+
+        <div class="premium-grid-main">
+          <div class="premium-main-col">
+            <div class="card panel radar-card premium-radar">
+              <div class="panel-head">
+                <div>
+                  <h2>Radar Inteligente</h2>
+                  <span>Alertas automáticos gerados pelos seus dados locais.</span>
+                </div>
+                <span class="radar-count" id="radarCount">0 alertas</span>
+              </div>
+              <div class="radar-list" id="radarList">
+                <div class="empty">Adicione lançamentos, metas ou orçamentos para ativar o radar.</div>
+              </div>
+            </div>
+
+            <div class="grid dashboard-charts premium-chart-grid">
+              <div class="card chart-card wide">
+                <div class="chart-head">
+                  <div>
+                    <h2>Fluxo mensal</h2>
+                    <span>Receitas, despesas e saldo dos últimos 6 meses</span>
+                  </div>
+                </div>
+                <div class="chart-stage" id="cashflowChart"></div>
+                <div class="chart-legend">
+                  <span><i class="chart-dot" style="background:var(--green);"></i>Receitas</span>
+                  <span><i class="chart-dot" style="background:var(--red);"></i>Despesas</span>
+                  <span><i class="chart-dot" style="background:var(--blue);"></i>Saldo</span>
+                </div>
+              </div>
+
+              <div class="card chart-card">
+                <div class="chart-head">
+                  <div>
+                    <h2>Gastos por categoria</h2>
+                    <span>Distribuição das despesas deste mês</span>
+                  </div>
+                </div>
+                <div class="chart-stage" id="categoryChart"></div>
+                <div class="chart-legend" id="categoryLegend"></div>
+              </div>
+            </div>
+
+            <div class="card chart-card premium-bars-card">
+              <div class="chart-head">
+                <div>
+                  <h2>Comparativo do mês</h2>
+                  <span>Entradas versus saídas no período atual</span>
+                </div>
+              </div>
+              <div id="monthlyBars" class="chart-bars"></div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="feature-grid">
-        <div class="card feature-card">
-          <span class="feature-kicker">🏆 Conquistas</span>
-          <h3 id="dashAchievementTitle">Primeiros passos</h3>
-          <p id="dashAchievementText">Desbloqueie conquistas conforme registra receitas, despesas, metas e relatórios.</p>
+
+          <aside class="premium-aside-col">
+            <div class="dashboard-insights premium-insights">
+              <div class="card insight-card">
+                <span>Maior gasto</span>
+                <strong id="dashTopCategory">-</strong>
+                <small id="dashTopCategoryValue">Sem despesas no mês.</small>
+              </div>
+              <div class="card insight-card">
+                <span>Meta média</span>
+                <strong id="dashGoalProgress">0%</strong>
+                <small id="dashGoalText">Cadastre metas para acompanhar o progresso.</small>
+              </div>
+              <div class="card insight-card">
+                <span>Saúde financeira</span>
+                <strong>Score <b id="premiumHealthMirror">IA</b></strong>
+                <small>Use a IA para transformar seu diagnóstico em plano de ação.</small>
+              </div>
+            </div>
+
+            <div class="feature-grid premium-feature-grid">
+              <div class="card feature-card">
+                <span class="feature-kicker">🏆 Conquistas</span>
+                <h3 id="dashAchievementTitle">Primeiros passos</h3>
+                <p id="dashAchievementText">Desbloqueie conquistas conforme registra receitas, despesas, metas e relatórios.</p>
+              </div>
+
+              <div class="card feature-card">
+                <span class="feature-kicker">📈 Ranking pessoal</span>
+                <h3 id="dashRankingTitle">Seu desempenho</h3>
+                <p id="dashRankingText">Compare seus meses e acompanhe quando bater novos recordes financeiros.</p>
+              </div>
+
+              <div class="card feature-card">
+                <span class="feature-kicker">🎯 Desafio atual</span>
+                <h3>30 dias de controle</h3>
+                <div class="challenge-progress"><span id="dashChallengeProgress"></span></div>
+                <small id="dashChallengeText">Registre movimentações em dias diferentes para avançar.</small>
+              </div>
+            </div>
+          </aside>
         </div>
 
-        <div class="card feature-card">
-          <span class="feature-kicker">📈 Ranking pessoal</span>
-          <h3 id="dashRankingTitle">Seu desempenho</h3>
-          <p id="dashRankingText">Compare seus meses e acompanhe quando bater novos recordes financeiros.</p>
+        <div class="card panel premium-recent-card">
+          <div class="panel-head">
+            <h2>Últimas movimentações</h2>
+            <button type="button" class="btn small" onclick="showSection('lancamentos')">Adicionar</button>
+          </div>
+          <div id="dashRecentList"><div class="empty">Nenhuma movimentação ainda. Adicione em Lançamentos.</div></div>
         </div>
-
-        <div class="card feature-card">
-          <span class="feature-kicker">🎯 Desafio atual</span>
-          <h3>30 dias de controle</h3>
-          <div class="challenge-progress"><span id="dashChallengeProgress"></span></div>
-          <small id="dashChallengeText">Registre movimentações em dias diferentes para avançar.</small>
-        </div>
-      </div>
-
-      <div class="card panel" style="margin-top:16px;">
-        <div class="panel-head"><h2>Últimas movimentações</h2></div>
-        <div id="dashRecentList"><div class="empty">Nenhuma movimentação ainda. Adicione em Lançamentos.</div></div>
       </div>
     </section>
 
@@ -8756,7 +8804,491 @@ document.addEventListener('DOMContentLoaded', () => {
       <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      </style>
+      
+/* ===================================================
+   DASHBOARD INTERNO PREMIUM — FinanPro App Style
+   Visual aplicado somente após login, sem alterar a landing.
+=================================================== */
+.dashboard-premium {
+  position: relative;
+}
+
+.premium-dashboard-shell {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 26px;
+  padding: clamp(18px, 2.4vw, 28px);
+  background:
+    radial-gradient(circle at 12% 10%, rgba(34,197,94,.18), transparent 32%),
+    radial-gradient(circle at 86% 8%, rgba(45,212,191,.14), transparent 30%),
+    linear-gradient(180deg, rgba(6,18,14,.98), rgba(8,15,13,.98));
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 30px 90px rgba(0,0,0,.28);
+}
+
+[data-theme="light"] .premium-dashboard-shell,
+:root .premium-dashboard-shell {
+  color: #ecfdf5;
+}
+
+.premium-dashboard-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(120deg, transparent 0 32%, rgba(34,197,94,.08) 48%, transparent 66%),
+    radial-gradient(1px 1px at 14% 18%, rgba(134,239,172,.65) 0, transparent 2px),
+    radial-gradient(1px 1px at 76% 14%, rgba(45,212,191,.52) 0, transparent 2px),
+    radial-gradient(1px 1px at 90% 42%, rgba(134,239,172,.45) 0, transparent 2px),
+    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+  background-size: auto, auto, auto, auto, 68px 68px, 68px 68px;
+  opacity: .88;
+}
+
+.premium-dashboard-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.premium-dashboard-top .title-block h1 {
+  color: #ffffff;
+  letter-spacing: -0.04em;
+}
+
+.premium-dashboard-top .title-block p {
+  color: rgba(209,250,229,.72);
+}
+
+.premium-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 11px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+  color: #86efac;
+  background: rgba(34,197,94,.12);
+  border: 1px solid rgba(134,239,172,.18);
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.premium-dashboard-shell .top-actions .btn:not(.pdf-btn),
+.premium-dashboard-shell .usage-pill {
+  background: rgba(255,255,255,.08);
+  color: #ecfdf5;
+  border-color: rgba(255,255,255,.12);
+  box-shadow: 0 14px 28px rgba(0,0,0,.18);
+}
+
+.premium-dashboard-shell .premium-cta {
+  background: linear-gradient(135deg, #22c55e, #0f766e) !important;
+  border-color: rgba(134,239,172,.25) !important;
+}
+
+.premium-dashboard-shell .ad-slot {
+  border-color: rgba(255,255,255,.10);
+  background: rgba(255,255,255,.06);
+  color: rgba(209,250,229,.64);
+}
+
+.premium-dashboard-shell .card {
+  border-color: rgba(255,255,255,.10);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.095), rgba(255,255,255,.045));
+  color: #ecfdf5;
+  box-shadow: 0 24px 70px rgba(0,0,0,.26);
+  backdrop-filter: blur(18px);
+}
+
+.premium-dashboard-shell .card:hover {
+  border-color: rgba(74,222,128,.24);
+  box-shadow: 0 28px 90px rgba(0,0,0,.34), 0 0 50px rgba(34,197,94,.07);
+}
+
+.premium-dashboard-shell h2,
+.premium-dashboard-shell h3,
+.premium-dashboard-shell .panel-head h2,
+.premium-dashboard-shell .chart-head h2,
+.premium-dashboard-shell .feature-card h3,
+.premium-dashboard-shell .insight-card strong,
+.premium-dashboard-shell .chart-kpi strong,
+.premium-dashboard-shell .metric strong {
+  color: #fff;
+}
+
+.premium-dashboard-shell small,
+.premium-dashboard-shell .panel-head span,
+.premium-dashboard-shell .chart-head span,
+.premium-dashboard-shell .feature-card p,
+.premium-dashboard-shell .insight-card small,
+.premium-dashboard-shell .chart-legend,
+.premium-dashboard-shell .empty {
+  color: rgba(209,250,229,.66);
+}
+
+.premium-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.24fr) minmax(230px, .48fr) minmax(260px, .58fr);
+  gap: 16px;
+  align-items: stretch;
+  margin-top: 16px;
+}
+
+.premium-balance-card {
+  min-height: 270px;
+  padding: clamp(20px, 2.6vw, 30px);
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 82% 18%, rgba(134,239,172,.26), transparent 36%),
+    linear-gradient(135deg, rgba(22,101,52,.88), rgba(5,46,22,.92)) !important;
+}
+
+.premium-balance-card::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(120deg, rgba(255,255,255,.18), transparent 38%, rgba(74,222,128,.13));
+  opacity: .8;
+  pointer-events: none;
+}
+
+.premium-balance-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.premium-card-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.premium-card-head span,
+.premium-stat-card span,
+.premium-ai-card span {
+  color: rgba(209,250,229,.72);
+  font-weight: 900;
+  font-size: 13px;
+}
+
+.premium-card-head small {
+  color: rgba(209,250,229,.58);
+  font-weight: 800;
+}
+
+.premium-balance-card > strong {
+  display: block;
+  margin: 22px 0 8px;
+  color: #fff;
+  font-size: clamp(38px, 5.4vw, 64px);
+  line-height: .95;
+  letter-spacing: -0.06em;
+}
+
+.premium-mini-trend {
+  height: 96px;
+  color: #4ade80;
+  margin: 10px 0 4px;
+  opacity: .95;
+  filter: drop-shadow(0 12px 28px rgba(74,222,128,.18));
+}
+
+.premium-mini-trend svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.premium-balance-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: rgba(209,250,229,.72);
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.premium-balance-footer b {
+  color: #bbf7d0;
+  font-size: 18px;
+}
+
+.premium-balance-footer button,
+.premium-ai-card button {
+  min-height: 36px;
+  border: 1px solid rgba(134,239,172,.22);
+  border-radius: 999px;
+  background: rgba(255,255,255,.10);
+  color: #ecfdf5;
+  padding: 0 13px;
+  font-weight: 900;
+}
+
+.premium-balance-footer button:hover,
+.premium-ai-card button:hover {
+  background: rgba(34,197,94,.20);
+  transform: translateY(-2px);
+}
+
+.premium-side-stack {
+  display: grid;
+  gap: 12px;
+}
+
+.premium-stat-card {
+  min-height: 82px;
+  padding: 17px;
+  position: relative;
+  overflow: hidden;
+}
+
+.premium-stat-card::after {
+  content: "";
+  position: absolute;
+  right: -28px;
+  top: -28px;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  border: 16px solid rgba(255,255,255,.055);
+}
+
+.premium-stat-card strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 24px;
+  letter-spacing: -0.04em;
+}
+
+.premium-stat-card small {
+  display: block;
+  margin-top: 3px;
+}
+
+.premium-stat-card.income { background: linear-gradient(145deg, rgba(34,197,94,.18), rgba(255,255,255,.045)) !important; }
+.premium-stat-card.expense { background: linear-gradient(145deg, rgba(248,81,73,.16), rgba(255,255,255,.045)) !important; }
+.premium-stat-card.goals { background: linear-gradient(145deg, rgba(227,179,65,.16), rgba(255,255,255,.045)) !important; }
+
+.premium-ai-card {
+  padding: 22px;
+  min-height: 270px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 82% 16%, rgba(74,222,128,.22), transparent 34%),
+    linear-gradient(180deg, rgba(10,30,22,.92), rgba(255,255,255,.045)) !important;
+}
+
+.premium-ai-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #4ade80, #0f766e);
+  color: #052e16;
+  font-weight: 900;
+  box-shadow: 0 16px 34px rgba(34,197,94,.26);
+}
+
+.premium-ai-card strong {
+  display: block;
+  color: #fff;
+  font-size: 48px;
+  line-height: 1;
+  letter-spacing: -0.06em;
+}
+
+.premium-ai-card p {
+  margin: 0;
+  color: rgba(209,250,229,.72);
+  line-height: 1.45;
+  font-weight: 700;
+}
+
+.premium-grid-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, .38fr);
+  gap: 16px;
+  margin-top: 16px;
+  align-items: start;
+}
+
+.premium-main-col,
+.premium-aside-col {
+  display: grid;
+  gap: 16px;
+}
+
+.premium-chart-grid {
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, .72fr);
+  margin-top: 0;
+}
+
+.premium-bars-card {
+  min-height: auto;
+}
+
+.premium-insights {
+  grid-template-columns: 1fr;
+  margin-top: 0;
+}
+
+.premium-insights .insight-card {
+  min-height: 126px;
+  background: linear-gradient(180deg, rgba(255,255,255,.085), rgba(255,255,255,.04)) !important;
+}
+
+.premium-feature-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 0;
+}
+
+.premium-feature-grid .feature-card {
+  min-height: auto;
+  padding: 16px;
+}
+
+.premium-dashboard-shell .challenge-progress {
+  background: rgba(255,255,255,.10);
+}
+
+.premium-recent-card {
+  margin-top: 16px;
+}
+
+.premium-dashboard-shell table tbody tr:hover,
+.premium-dashboard-shell .radar-item,
+.premium-dashboard-shell .futuro-item {
+  background: rgba(255,255,255,.055);
+  border-color: rgba(255,255,255,.09);
+}
+
+.premium-dashboard-shell .radar-count {
+  background: rgba(34,197,94,.14);
+  color: #86efac;
+}
+
+.premium-dashboard-shell .chart-empty,
+.premium-dashboard-shell .empty {
+  background: rgba(255,255,255,.045);
+  border-color: rgba(255,255,255,.10);
+}
+
+.premium-dashboard-shell .chart-grid-line {
+  stroke: rgba(255,255,255,.10);
+}
+
+.premium-dashboard-shell .chart-axis-label,
+.premium-dashboard-shell .chart-value-label {
+  fill: rgba(209,250,229,.72);
+}
+
+.premium-dashboard-shell .chart-tooltip {
+  background: rgba(10,15,13,.96);
+  color: #fff;
+  border-color: rgba(134,239,172,.18);
+}
+
+@media (max-width: 1180px) {
+  .premium-hero-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(260px, .55fr);
+  }
+  .premium-ai-card {
+    grid-column: 1 / -1;
+    min-height: 190px;
+  }
+  .premium-grid-main,
+  .premium-chart-grid {
+    grid-template-columns: 1fr;
+  }
+  .premium-insights {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .premium-feature-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 820px) {
+  .premium-dashboard-shell {
+    border-radius: 20px;
+    padding: 16px;
+    margin: -4px;
+  }
+  .premium-dashboard-top {
+    flex-direction: column;
+  }
+  .premium-dashboard-top .top-actions {
+    width: 100%;
+  }
+  .premium-dashboard-top .top-actions .btn,
+  .premium-dashboard-top .top-actions .usage-pill {
+    flex: 1;
+  }
+  .premium-hero-grid,
+  .premium-insights,
+  .premium-feature-grid {
+    grid-template-columns: 1fr;
+  }
+  .premium-balance-card {
+    min-height: 240px;
+  }
+  .premium-balance-card > strong {
+    font-size: clamp(34px, 11vw, 48px);
+  }
+  .premium-balance-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .premium-side-stack {
+    grid-template-columns: 1fr;
+  }
+  .premium-ai-card {
+    min-height: 220px;
+  }
+  .premium-chart-grid .chart-card {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .premium-dashboard-shell {
+    border-radius: 0;
+    margin: -18px;
+    padding: 18px;
+    border-left: 0;
+    border-right: 0;
+  }
+  .premium-mini-trend {
+    height: 76px;
+  }
+  .premium-card-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .premium-ai-card strong {
+    font-size: 40px;
+  }
+}
+
+</style>
       <div class="pdf-report">
         ${header}
         ${body}
